@@ -612,14 +612,114 @@
       position: fixed;
       inset: 0 0 0 246px;
       z-index: 80;
-      padding: 56px;
-      background: #121212;
+      padding: 68px 54px;
+      overflow: auto;
+      background: #151716;
       margin-left: 0;
     }
     .profile-page[hidden] { display: none; }
-    .profile-page h2 { margin: 0 0 10px; font-size: 26px; }
-    .profile-page p { color: #888; font-size: 14px; }
-    .profile-page button { height: 34px; padding: 0 14px; border: 1px solid #444; border-radius: 7px; color: #ddd; background: #292929; cursor: pointer; }
+    .profile-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      width: min(1000px, 100%);
+      margin: 0 auto;
+    }
+    .profile-heading h2 { margin: 0; color: #eaf0ee; font-size: 24px; line-height: 32px; }
+    .profile-heading p { margin: 8px 0 0; color: #a6afab; font-size: 13px; line-height: 20px; }
+    .profile-page button { cursor: pointer; }
+    .new-profile {
+      flex: 0 0 auto;
+      height: 36px;
+      padding: 0 18px;
+      border: 0;
+      border-radius: 8px;
+      color: #111312;
+      background: #20d0c4;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .profile-toolbar {
+      display: grid;
+      grid-template-columns: minmax(240px, 1fr) 170px 170px;
+      gap: 10px;
+      width: min(1000px, 100%);
+      margin: 30px auto 20px;
+    }
+    .profile-toolbar input,
+    .profile-toolbar select {
+      height: 38px;
+      padding: 0 12px;
+      border: 1px solid #323835;
+      border-radius: 8px;
+      outline: none;
+      color: #eaf0ee;
+      background: #202423;
+      font-size: 12px;
+    }
+    .profile-toolbar input:focus,
+    .profile-toolbar select:focus { border-color: #20d0c4; }
+    .profile-list {
+      display: grid;
+      gap: 12px;
+      width: min(1000px, 100%);
+      margin: 0 auto;
+    }
+    .profile-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 22px;
+      min-height: 128px;
+      padding: 18px 20px;
+      border: 1px solid #323835;
+      border-radius: 12px;
+      background: #202423;
+    }
+    .profile-card h3 {
+      margin: 0;
+      color: #eaf0ee;
+      font-size: 16px;
+      line-height: 24px;
+    }
+    .profile-summary {
+      margin: 6px 0 14px;
+      color: #a6afab;
+      font-size: 12px;
+      line-height: 18px;
+    }
+    .profile-meta { display: flex; flex-wrap: wrap; gap: 8px; }
+    .profile-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 0 12px;
+      border: 1px solid #323835;
+      border-radius: 14px;
+      color: #a6afab;
+      background: #252a28;
+      font-size: 12px;
+    }
+    .profile-actions { display: flex; align-items: flex-end; gap: 10px; }
+    .profile-action {
+      height: 36px;
+      min-width: 72px;
+      padding: 0 14px;
+      border: 1px solid #323835;
+      border-radius: 8px;
+      color: #eaf0ee;
+      background: #252a28;
+      font-size: 13px;
+    }
+    .profile-action.delete { color: #e98080; border-color: #6d4141; background: #3a2424; }
+    .profile-empty {
+      padding: 64px 24px;
+      border: 1px dashed #323835;
+      border-radius: 12px;
+      color: #727b77;
+      text-align: center;
+      font-size: 13px;
+    }
     .toast {
       position: fixed;
       left: calc(50% + 123px);
@@ -868,9 +968,31 @@
       </section>
     </main>
     <section class="profile-page" id="profile-page" hidden>
-      <h2 id="profile-page-title">创建企业档案</h2>
-      <p id="profile-page-desc">企业档案创建页的字段与交互将在对应页面继续对齐。</p>
-      <button id="back-home">返回功能首页</button>
+      <div class="profile-header">
+        <div class="profile-heading">
+          <h2 id="profile-page-title">企业灵感档案</h2>
+          <p id="profile-page-desc">管理长期稳定的企业信息；任务开始前，可在任务输入区选择一个档案。</p>
+        </div>
+        <button class="new-profile" id="new-profile">＋ 新建档案</button>
+      </div>
+      <div class="profile-toolbar">
+        <input id="profile-search" type="search" maxlength="40" placeholder="按档案名称搜索">
+        <select id="profile-type-filter" aria-label="按档案类型筛选">
+          <option value="">全部类型</option>
+          <option value="电商">电商</option>
+          <option value="线下零售">线下零售</option>
+          <option value="品牌/OBM">品牌 / OBM</option>
+          <option value="ODM/OEM">ODM / OEM</option>
+        </select>
+        <select id="profile-market-filter" aria-label="按主市场筛选">
+          <option value="">全部主市场</option>
+          <option value="中国">中国</option>
+          <option value="日本">日本</option>
+          <option value="北美">北美</option>
+          <option value="欧洲">欧洲</option>
+        </select>
+      </div>
+      <div class="profile-list" id="profile-list" aria-label="企业档案列表"></div>
     </section>
     <div class="modal-backdrop" id="project-modal" hidden>
       <div class="modal" role="dialog" aria-modal="true" aria-labelledby="project-modal-title">
@@ -948,9 +1070,9 @@
 
     document.querySelector("#new-task-nav").addEventListener("click", showHomeInitialState);
     document.querySelector("#archive-nav").addEventListener("click", () => {
-      document.querySelector("#profile-page-title").textContent = "企业档案列表";
-      document.querySelector("#profile-page-desc").textContent = "列表页面代码待接入。";
+      setSidebarCollapsed(false);
       document.querySelector("#profile-page").hidden = false;
+      renderProfiles();
     });
 
     document.querySelector("#attach").addEventListener("click", () => {
@@ -975,9 +1097,35 @@
       button.addEventListener("click", () => showToast("该入口的交互等待对齐"));
     });
 
-    const archives = [{ id: "archive-1", name: "轻户外女装档案" }];
+    let archives = [
+      {
+        id: "archive-1",
+        name: "春夏女装品牌档案",
+        type: "品牌/OBM",
+        market: "中国",
+        summary: "简约、柔和、都市感 · 低饱和色彩"
+      },
+      {
+        id: "archive-2",
+        name: "淘系通勤女装档案",
+        type: "电商",
+        market: "中国",
+        summary: "价格带 199–299 元 · 通勤风 · 图文电商表达"
+      },
+      {
+        id: "archive-3",
+        name: "日本买手店合作档案",
+        type: "ODM/OEM",
+        market: "日本",
+        summary: "日系轻松感 · 小批量开发 · 参考图优先"
+      }
+    ];
     const archivePrompt = document.querySelector("#archive-prompt");
     const archiveSelector = document.querySelector(".archive-select");
+    const profileList = document.querySelector("#profile-list");
+    const profileSearch = document.querySelector("#profile-search");
+    const profileTypeFilter = document.querySelector("#profile-type-filter");
+    const profileMarketFilter = document.querySelector("#profile-market-filter");
 
     function renderArchiveState() {
       archivePrompt.hidden = archives.length > 0;
@@ -987,13 +1135,63 @@
     }
     renderArchiveState();
 
-    document.querySelector(".create").addEventListener("click", () => {
-      document.querySelector("#profile-page-title").textContent = "创建企业档案";
-      document.querySelector("#profile-page-desc").textContent = "企业档案创建页的字段与交互将在对应页面继续对齐。";
-      document.querySelector("#profile-page").hidden = false;
+    function renderProfiles() {
+      const keyword = profileSearch.value.trim().toLowerCase();
+      const type = profileTypeFilter.value;
+      const market = profileMarketFilter.value;
+      const matches = archives.filter((item) =>
+        (!keyword || item.name.toLowerCase().includes(keyword))
+        && (!type || item.type === type)
+        && (!market || item.market === market)
+      );
+
+      profileList.innerHTML = matches.length
+        ? matches.map((item) => `
+          <article class="profile-card" data-profile-id="${item.id}">
+            <div>
+              <h3>${item.name}</h3>
+              <p class="profile-summary">${item.summary}</p>
+              <div class="profile-meta">
+                <span class="profile-chip">${item.type}</span>
+                <span class="profile-chip">主市场：${item.market}</span>
+              </div>
+            </div>
+            <div class="profile-actions">
+              <button class="profile-action edit-profile" data-profile-id="${item.id}">编辑</button>
+              <button class="profile-action delete delete-profile" data-profile-id="${item.id}">删除</button>
+            </div>
+          </article>
+        `).join("")
+        : '<div class="profile-empty">没有匹配的企业档案</div>';
+    }
+
+    [profileSearch, profileTypeFilter, profileMarketFilter].forEach((control) => {
+      control.addEventListener(control === profileSearch ? "input" : "change", renderProfiles);
     });
-    document.querySelector("#back-home").addEventListener("click", () => {
-      document.querySelector("#profile-page").hidden = true;
+
+    document.querySelector("#new-profile").addEventListener("click", () => {
+      showToast("进入企业档案创建页：页面交互待下一步对齐");
+    });
+
+    profileList.addEventListener("click", (event) => {
+      const editButton = event.target.closest(".edit-profile");
+      const deleteButton = event.target.closest(".delete-profile");
+      if (editButton) {
+        showToast("进入企业档案编辑页：页面交互待下一步对齐");
+        return;
+      }
+      if (!deleteButton) return;
+      const profile = archives.find((item) => item.id === deleteButton.dataset.profileId);
+      if (!profile || !confirm(`确认删除“${profile.name}”吗？删除后不可恢复。`)) return;
+      archives = archives.filter((item) => item.id !== profile.id);
+      renderProfiles();
+      renderArchiveState();
+      showToast(`已删除 ${profile.name}`);
+    });
+
+    document.querySelector(".create").addEventListener("click", () => {
+      document.querySelector("#profile-page").hidden = false;
+      showToast("进入企业档案创建页：页面交互待下一步对齐");
     });
 
     let historyItems = [
@@ -1216,7 +1414,13 @@
         if (element.matches("#search-input")) return "输入任务或项目关键词，搜索结果随输入实时刷新。";
         if (element.matches(".search-result")) return "点击打开对应的历史任务或项目。具体打开后的页面交互待后续对齐。";
         if (element.matches("#new-task-nav")) return "点击返回功能首页初始状态：展开侧栏、清空当前输入和附件，并恢复“选品测款”默认场景。";
-        if (element.matches("#archive-nav")) return "点击进入企业档案列表。列表页面 UI 待提供页面代码后接入。";
+        if (element.matches("#archive-nav")) return "点击进入企业档案管理页。左侧栏保持首页结构，右侧展示档案名称搜索、类型/主市场筛选和档案列表。";
+        if (element.matches("#new-profile")) return "点击进入企业档案创建页。创建页字段与交互将在下一页面继续对齐。";
+        if (element.matches("#profile-search")) return "按档案名称实时搜索企业档案。";
+        if (element.matches("#profile-type-filter")) return "按电商、线下零售、品牌/OBM、ODM/OEM 类型筛选档案。";
+        if (element.matches("#profile-market-filter")) return "按中国、日本、北美、欧洲主市场筛选档案。";
+        if (element.matches(".edit-profile")) return "点击进入当前企业档案的编辑页。编辑页交互将在下一页面继续对齐。";
+        if (element.matches(".delete-profile")) return "点击后二次确认；确认后删除当前档案并刷新列表。";
         if (element.matches("#create-project")) return "点击打开创建项目弹窗。项目名称最多 40 个字符；未填写时默认命名为“项目”。";
         if (element.matches(".history-row")) {
           const item = historyItems.find((entry) => entry.id === element.dataset.id);
@@ -1234,7 +1438,6 @@
         if (element.matches("#project-name")) return "输入项目文件夹名称，最多 40 个字符；不填写则使用默认名称“项目”。";
         if (element.matches("#confirm-project")) return "创建项目，并将新项目显示在历史列表中。";
         if (element.matches("#cancel-project")) return "关闭创建项目弹窗，不保存输入内容。";
-        if (element.matches("#back-home")) return "返回功能首页。该按钮属于企业档案页面占位状态。";
         return `点击触发“${labelOf(element)}”操作，详细交互待后续页面对齐。`;
       };
 
@@ -1326,7 +1529,7 @@
       const componentTarget = (source) => source.closest([
         "button", "select", "textarea", "input:not([type='file'])",
         ".history-row", ".prompt-box", ".scene-tabs", ".archive-prompt",
-        ".search-panel", ".sidebar", ".launcher", ".profile-page",
+        ".search-panel", ".sidebar", ".launcher", ".profile-page", ".profile-card",
         ".modal", "h1", "main"
       ].join(","));
 
@@ -1347,6 +1550,12 @@
           [".sidebar", "应用侧边栏"],
           ["#history-list", "历史任务列表"],
           [".archive-select", "企业档案选择"],
+          ["#profile-list", "企业档案列表"],
+          ["#profile-search", "档案名称搜索"],
+          ["#profile-type-filter", "档案类型筛选"],
+          ["#profile-market-filter", "主市场筛选"],
+          ["#new-profile", "新建档案"],
+          [".profile-card", "企业档案卡片"],
           ["#attach", "添加附件"],
           ["#send", "发起任务"],
           ["#sidebar-toggle", "折叠侧栏"],
