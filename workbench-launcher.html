@@ -1450,6 +1450,19 @@
         return rect.width > 0 && rect.height > 0 && style.display !== "none" && style.visibility !== "hidden";
       };
 
+      const belongsToCurrentPage = (element) => {
+        const openModal = [...document.querySelectorAll(".modal-backdrop")]
+          .find((modal) => !modal.hidden && visible(modal));
+        if (openModal) return openModal.contains(element);
+
+        const profilePage = document.querySelector("#profile-page");
+        if (!profilePage.hidden && visible(profilePage)) {
+          return profilePage.contains(element) || !!element.closest(".sidebar");
+        }
+
+        return !!element.closest("main, .sidebar");
+      };
+
       const placeNote = (element) => {
         if (!reviewEnabled) return;
         activeElement?.removeAttribute("data-review-active");
@@ -1473,7 +1486,7 @@
           markerLayer.replaceChildren();
           if (!reviewEnabled) return;
           document.querySelectorAll(interactiveSelector).forEach((element) => {
-            if (!visible(element) || markerLayer.contains(element) || note.contains(element) || modeSwitch.contains(element)) return;
+            if (!visible(element) || !belongsToCurrentPage(element) || markerLayer.contains(element) || note.contains(element) || modeSwitch.contains(element)) return;
             const rect = element.getBoundingClientRect();
             const dot = document.createElement("button");
             dot.className = "review-dot";
