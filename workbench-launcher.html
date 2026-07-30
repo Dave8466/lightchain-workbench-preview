@@ -739,232 +739,7 @@
       cursor: pointer;
     }
     .review-mode-switch button.active { color: #151515; background: #e7ecea; font-weight: 600; }
-    body.review-clean .review-marker-layer,
-    body.review-clean .interaction-note { display: none !important; }
-    body.review-clean [data-review-active="true"] { outline: none !important; }
-
-    @media (max-width: 900px) {
-      .launcher { width: min(720px, calc(100vw - 96px)); }
-      .toast { left: 50%; }
-    }
-
-    @media (max-width: 720px) {
-      .launcher { top: 108px; width: calc(100vw - 92px); }
-      h1 { font-size: 24px; }
-      .subhead { padding: 0 20px; }
-      .scene-tabs { flex-wrap: wrap; margin-top: 22px; gap: 8px; }
-      .prompt-box, .quick-controls { width: 100%; }
-      .prompt-box { margin-top: 14px; }
-      textarea { width: calc(100% - 36px); }
-      .mode-select { right: 72px; }
-      .send { right: 20px; }
-      .quick-controls { flex-wrap: wrap; }
-      .archive-prompt { width: 100%; grid-template-columns: 40px 1fr; height: auto; padding: 12px 16px; margin-top: 24px; }
-      .create { grid-column: 2; width: 78px; }
-      .archive-copy span { white-space: normal; }
-    }
-  </style>
-</head>
-<body>
-  <div class="app">
-    <aside class="sidebar" aria-label="应用侧边栏">
-      <div class="window-controls" aria-hidden="true"><i></i><i></i><i></i></div>
-      <div class="utilities">
-        <button class="icon-btn" id="search-toggle" title="搜索">⌕</button>
-        <button class="icon-btn" id="sidebar-toggle" title="折叠侧栏">‹</button>
-      </div>
-      <div class="search-panel" id="search-panel">
-        <input id="search-input" maxlength="40" placeholder="搜索历史任务或项目">
-        <div class="search-results" id="search-results"></div>
-      </div>
-      <p class="product-name">Lightchain 灵感决策工作台</p>
-
-      <nav class="nav">
-        <button class="nav-item active" id="new-task-nav" title="新任务"><span class="nav-icon">＋</span><span class="label">新任务</span></button>
-        <button class="nav-item" id="archive-nav" title="企业档案"><span class="nav-icon">▣</span><span class="label">企业档案<span class="sub">长期业务上下文</span></span></button>
-      </nav>
-
-      <div class="space-section">
-        <span>历史</span>
-        <button class="history-toggle" id="history-toggle" title="展开历史">◷</button>
-        <button class="create-project-icon" id="create-project" title="创建项目" aria-label="创建项目">
-          <svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
-            <path d="M2.25 4.25h4l1.2 1.5h7.3v7.5a1.5 1.5 0 0 1-1.5 1.5h-9.5a1.5 1.5 0 0 1-1.5-1.5v-9Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
-            <path d="M8.5 8v4M6.5 10h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-          </svg>
-        </button>
-      </div>
-      <div class="history-list" id="history-list" aria-label="历史任务列表"></div>
-      <button class="sidebar-expand" id="sidebar-expand" title="展开侧栏" aria-label="展开侧栏">›</button>
-      <button class="back-saas" title="退出" aria-label="退出">
-        <span class="back-saas-icon">←</span>
-        <span class="back-saas-label">退出</span>
-      </button>
-
-    </aside>
-
-    <main>
-      <section class="launcher" aria-labelledby="headline">
-        <div class="agent-mark" aria-hidden="true"><span class="face"></span></div>
-        <h1 id="headline">今天想从哪里开始？</h1>
-        <p class="subhead">选择一个业务场景，描述你的目标，Agent 会带你完成后续步骤。</p>
-
-        <div class="scene-tabs" role="tablist" aria-label="业务场景">
-          <button class="scene-tab active" data-scene="selection">选品测款</button>
-          <button class="scene-tab" data-scene="planning">新品方向探索</button>
-          <button class="scene-tab" data-scene="proposal">客户提案生成</button>
-          <button class="scene-tab" data-scene="variation">款式裂变生成</button>
-        </div>
-
-        <div class="prompt-box">
-          <textarea id="prompt" aria-label="任务描述" placeholder="描述你想调研的市场、品类或款式方向…"></textarea>
-          <button class="attach" id="attach" title="添加附件">＋</button>
-          <input type="file" id="file-input" multiple>
-          <select class="control archive-select" aria-label="企业档案">
-            <option>企业灵感档案</option>
-            <option>暂不使用档案</option>
-            <option>轻户外女装档案</option>
-          </select>
-          <button class="send" id="send" title="开始任务">↑</button>
-        </div>
-
-        <div class="archive-prompt" id="archive-prompt" hidden>
-          <div class="folder">档</div>
-          <div class="archive-copy">
-            <strong>建立你的企业灵感档案</strong>
-            <span>让 Agent 更了解你的市场、渠道和业务约束</span>
-          </div>
-          <button class="create">立即创建</button>
-        </div>
-      </section>
-    </main>
-    <section class="profile-page" id="profile-page" hidden>
-      <h2 id="profile-page-title">创建企业档案</h2>
-      <p id="profile-page-desc">企业档案创建页的字段与交互将在对应页面继续对齐。</p>
-      <button id="back-home">返回功能首页</button>
-    </section>
-    <div class="modal-backdrop" id="project-modal" hidden>
-      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="project-modal-title">
-        <h2 id="project-modal-title">创建项目</h2>
-        <p>项目用于整理历史任务，名称最多 40 个字符。</p>
-        <input id="project-name" maxlength="40" placeholder="项目">
-        <div class="char-count"><span id="project-name-count">0</span>/40</div>
-        <div class="modal-actions">
-          <button id="cancel-project">取消</button>
-          <button class="primary" id="confirm-project">创建</button>
-        </div>
-      </div>
-    </div>
-    <div class="toast" role="status" aria-live="polite"></div>
-  </div>
-
-  <script>
-    const scenes = {
-      selection: "描述你想调研的市场、品类或款式方向…",
-      planning: "描述下一季的市场、人群、品类和经营目标…",
-      proposal: "输入客户需求，或上传 brief、邮件和会议纪要…",
-      variation: "描述要延伸的款式方向，或上传图片和情绪板…"
-    };
-
-    const prompt = document.querySelector("#prompt");
-    const toast = document.querySelector(".toast");
-    let toastTimer;
-
-    function showToast(message) {
-      toast.textContent = message;
-      toast.classList.add("show");
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => toast.classList.remove("show"), 1800);
-    }
-
-    document.querySelectorAll(".scene-tab").forEach((tab) => {
-      tab.addEventListener("click", () => {
-        document.querySelector(".scene-tab.active")?.classList.remove("active");
-        tab.classList.add("active");
-        prompt.placeholder = scenes[tab.dataset.scene];
-        prompt.focus();
-      });
-    });
-
-    document.querySelectorAll(".nav-item").forEach((item) => {
-      item.addEventListener("click", () => {
-        document.querySelector(".nav-item.active")?.classList.remove("active");
-        item.classList.add("active");
-        showToast(`${item.querySelector(".label")?.childNodes[0].textContent.trim() || "页面"}：交互待对齐`);
-      });
-    });
-
-    const setSidebarCollapsed = (collapsed) => {
-      document.body.classList.toggle("sidebar-collapsed", collapsed);
-      document.querySelector("#sidebar-toggle").title = collapsed ? "展开侧栏" : "折叠侧栏";
-    };
-
-    document.querySelector("#sidebar-toggle").addEventListener("click", () => setSidebarCollapsed(true));
-    document.querySelector("#history-toggle").addEventListener("click", () => setSidebarCollapsed(false));
-    document.querySelector("#sidebar-expand").addEventListener("click", () => setSidebarCollapsed(false));
-
-    function showHomeInitialState() {
-      setSidebarCollapsed(false);
-      document.querySelector("#profile-page").hidden = true;
-      document.querySelector(".nav-item.active")?.classList.remove("active");
-      document.querySelector("#new-task-nav").classList.add("active");
-      document.querySelector(".scene-tab.active")?.classList.remove("active");
-      const defaultScene = document.querySelector('.scene-tab[data-scene="selection"]');
-      defaultScene.classList.add("active");
-      prompt.value = "";
-      prompt.placeholder = scenes.selection;
-      document.querySelector("#file-input").value = "";
-      searchPanel?.classList.remove("open");
-    }
-
-    document.querySelector("#new-task-nav").addEventListener("click", showHomeInitialState);
-    document.querySelector("#archive-nav").addEventListener("click", () => {
-      document.querySelector("#profile-page-title").textContent = "企业档案列表";
-      document.querySelector("#profile-page-desc").textContent = "列表页面代码待接入。";
-      document.querySelector("#profile-page").hidden = false;
-    });
-
-    document.querySelector("#attach").addEventListener("click", () => {
-      document.querySelector("#file-input").click();
-    });
-
-    document.querySelector("#file-input").addEventListener("change", (event) => {
-      const count = event.target.files.length;
-      if (count) showToast(`已选择 ${count} 个附件`);
-    });
-
-    document.querySelector("#send").addEventListener("click", () => {
-      if (!prompt.value.trim()) {
-        prompt.focus();
-        showToast("请先描述你的任务目标");
-        return;
-      }
-      showToast("任务发起后的交互等待下一步对齐");
-    });
-
-    document.querySelectorAll(".create").forEach((button) => {
-      button.addEventListener("click", () => showToast("该入口的交互等待对齐"));
-    });
-
-    const archives = [{ id: "archive-1", name: "轻户外女装档案" }];
-    const archivePrompt = document.querySelector("#archive-prompt");
-    const archiveSelector = document.querySelector(".archive-select");
-
-    function renderArchiveState() {
-      archivePrompt.hidden = archives.length > 0;
-      archiveSelector.innerHTML = archives.length
-        ? `<option>企业灵感档案</option><option>暂不使用档案</option>${archives.map((item) => `<option>${item.name}</option>`).join("")}`
-        : "<option>暂无企业档案</option>";
-    }
-    renderArchiveState();
-
-    document.querySelector(".create").addEventListener("click", () => {
-      document.querySelector("#profile-page-title").textContent = "创建企业档案";
-      document.querySelector("#profile-page-desc").textContent = "企业档案创建页的字段与交互将在对应页面继续对齐。";
-      document.querySelector("#profile-page").hidden = false;
-    });
-    document.querySelector("#back-home").addEventListener("click", () => {
-      document.querySelector("#profile-page").hidden = true;
+    body.revi…2958 tokens truncated…  document.querySelector("#profile-page").hidden = true;
     });
 
     let historyItems = [
@@ -1153,9 +928,15 @@
       note.hidden = true;
       const modeSwitch = document.createElement("div");
       modeSwitch.className = "review-mode-switch";
-      modeSwitch.innerHTML = '<button type="button" data-mode="clean">纯净模式</button><button type="button" data-mode="review" class="active">评审模式</button>';
-      document.body.append(markerLayer, note, modeSwitch);
+      modeSwitch.innerHTML = '<button type="button" data-mode="clean">纯净模式</button><button type="button" data-mode="review" class="active">评审模式</button><button type="button" data-mode="edit">修改模式</button>';
+      const copyToast = document.createElement("div");
+      copyToast.className = "copy-toast";
+      copyToast.setAttribute("role", "status");
+      document.body.append(markerLayer, note, modeSwitch, copyToast);
       let reviewEnabled = true;
+      let editEnabled = false;
+      let editHover;
+      let copyToastTimer;
 
       const interactiveSelector = [
         "button",
@@ -1272,15 +1053,95 @@
         const button = event.target.closest("button[data-mode]");
         if (!button) return;
         reviewEnabled = button.dataset.mode === "review";
+        editEnabled = button.dataset.mode === "edit";
         document.body.classList.toggle("review-clean", !reviewEnabled);
+        document.body.classList.toggle("review-edit", editEnabled);
         modeSwitch.querySelectorAll("button").forEach((item) => item.classList.toggle("active", item === button));
-        if (!reviewEnabled) {
+        if (!reviewEnabled || editEnabled) {
           activeElement?.removeAttribute("data-review-active");
           activeElement = null;
           note.hidden = true;
         }
+        if (!editEnabled) {
+          editHover?.removeAttribute("data-edit-hover");
+          editHover = null;
+        }
         refreshMarkers();
       });
+
+      const componentTarget = (source) => source.closest([
+        "button", "select", "textarea", "input:not([type='file'])",
+        ".history-row", ".prompt-box", ".scene-tabs", ".archive-prompt",
+        ".search-panel", ".sidebar", ".launcher", ".profile-page",
+        ".modal", "h1", "main"
+      ].join(","));
+
+      const selectorOf = (element) => {
+        if (element.id) return `#${element.id}`;
+        const stableClasses = [...element.classList].filter((name) =>
+          !["active", "open", "show", "child", "dragging", "drop-target", "insert-before", "insert-after", "review-selected"].includes(name)
+        );
+        return stableClasses.length ? `.${stableClasses.join(".")}` : element.tagName.toLowerCase();
+      };
+
+      const componentNameOf = (element) => {
+        const known = [
+          ["#prompt", "任务描述"],
+          [".prompt-box", "任务输入区"],
+          [".scene-tabs", "业务场景选择"],
+          ["#headline", "首页标题"],
+          [".sidebar", "应用侧边栏"],
+          ["#history-list", "历史任务列表"],
+          [".archive-select", "企业档案选择"],
+          ["#attach", "添加附件"],
+          ["#send", "发起任务"],
+          ["#sidebar-toggle", "折叠侧栏"],
+          ["#sidebar-expand", "展开侧栏"],
+          ["#search-toggle", "搜索"],
+          ["#create-project", "创建项目"],
+          [".back-saas", "退出"]
+        ];
+        const matched = known.find(([selector]) => element.matches(selector));
+        const name = matched?.[1] || labelOf(element);
+        return `${name}（${selectorOf(element)}）`;
+      };
+
+      const copyText = async (text) => {
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch {
+          const helper = document.createElement("textarea");
+          helper.value = text;
+          helper.style.position = "fixed";
+          helper.style.opacity = "0";
+          document.body.appendChild(helper);
+          helper.select();
+          document.execCommand("copy");
+          helper.remove();
+        }
+        copyToast.textContent = `已复制 ${text}`;
+        copyToast.classList.add("show");
+        clearTimeout(copyToastTimer);
+        copyToastTimer = setTimeout(() => copyToast.classList.remove("show"), 1800);
+      };
+
+      document.addEventListener("mousemove", (event) => {
+        if (!editEnabled || modeSwitch.contains(event.target)) return;
+        const target = componentTarget(event.target);
+        if (target === editHover) return;
+        editHover?.removeAttribute("data-edit-hover");
+        editHover = target;
+        editHover?.setAttribute("data-edit-hover", "true");
+      }, true);
+
+      document.addEventListener("click", (event) => {
+        if (!editEnabled || modeSwitch.contains(event.target)) return;
+        const target = componentTarget(event.target);
+        if (!target) return;
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        copyText(componentNameOf(target));
+      }, true);
 
       const observer = new MutationObserver((mutations) => {
         if (mutations.every((mutation) => markerLayer.contains(mutation.target) || note.contains(mutation.target) || modeSwitch.contains(mutation.target))) return;
@@ -1294,3 +1155,4 @@
   </script>
 </body>
 </html>
+
