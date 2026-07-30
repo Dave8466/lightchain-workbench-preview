@@ -1157,7 +1157,7 @@
               </div>
             </div>
             <div class="profile-actions">
-              <button class="profile-action edit-profile" data-profile-id="${item.id}">编辑</button>
+              <button class="profile-action edit-profile" data-profile-id="${item.id}">查看</button>
               <button class="profile-action delete delete-profile" data-profile-id="${item.id}">删除</button>
             </div>
           </article>
@@ -1177,7 +1177,7 @@
       const editButton = event.target.closest(".edit-profile");
       const deleteButton = event.target.closest(".delete-profile");
       if (editButton) {
-        showToast("进入企业档案编辑页：页面交互待下一步对齐");
+        showToast("进入企业档案详情页：页面交互待下一步对齐");
         return;
       }
       if (!deleteButton) return;
@@ -1419,7 +1419,7 @@
         if (element.matches("#profile-search")) return "按档案名称实时搜索企业档案。";
         if (element.matches("#profile-type-filter")) return "按电商、线下零售、品牌/OBM、ODM/OEM 类型筛选档案。";
         if (element.matches("#profile-market-filter")) return "按中国、日本、北美、欧洲主市场筛选档案。";
-        if (element.matches(".edit-profile")) return "点击进入当前企业档案的编辑页。编辑页交互将在下一页面继续对齐。";
+        if (element.matches(".edit-profile")) return "点击进入当前企业档案的详情页。详情页交互将在下一页面继续对齐。";
         if (element.matches(".delete-profile")) return "点击后二次确认；确认后删除当前档案并刷新列表。";
         if (element.matches("#create-project")) return "点击打开创建项目弹窗。项目名称最多 40 个字符；未填写时默认命名为“项目”。";
         if (element.matches(".history-row")) {
