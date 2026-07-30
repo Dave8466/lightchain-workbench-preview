@@ -1,0 +1,1296 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>5.2 功能首页 · Workbench Launcher</title>
+  <style>
+    :root {
+      --bg: #121212;
+      --sidebar: #202020;
+      --panel: #1e1e1e;
+      --raised: #2a2a2a;
+      --line: #363636;
+      --text: #efefef;
+      --muted: #9c9c9c;
+      --accent: #20d0c4;
+      --light: #e7ecea;
+      font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
+      color-scheme: dark;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-width: 320px; min-height: 100%; background: var(--bg); }
+    button, textarea, select { font: inherit; }
+    button, select { -webkit-tap-highlight-color: transparent; }
+
+    .app {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .sidebar {
+      position: fixed;
+      inset: 0 auto 0 0;
+      z-index: 5;
+      width: 246px;
+      min-height: 900px;
+      background: var(--sidebar);
+      border-right: 1px solid #2b2b2b;
+      transition: width .18s ease;
+    }
+    body.sidebar-collapsed .sidebar { width: 64px; min-height: 100vh; }
+    body.sidebar-collapsed main,
+    body.sidebar-collapsed .profile-page { margin-left: 0; left: 64px; }
+    body.sidebar-collapsed main { margin-left: 64px; }
+    body.sidebar-collapsed .window-controls,
+    body.sidebar-collapsed .utilities,
+    body.sidebar-collapsed .product-name,
+    body.sidebar-collapsed .search-panel,
+    body.sidebar-collapsed .history-list,
+    body.sidebar-collapsed .create-project-icon { display: none; }
+
+    .window-controls {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .window-controls i {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #5d5d5d;
+    }
+
+    .utilities {
+      position: absolute;
+      top: 14px;
+      right: 12px;
+      display: flex;
+      gap: 4px;
+    }
+
+    .icon-btn {
+      display: grid;
+      place-items: center;
+      border: 0;
+      color: #b7b7b7;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .utilities .icon-btn { width: 26px; height: 26px; border-radius: 5px; }
+    .utilities .icon-btn:hover { background: #303030; color: #fff; }
+    .search-panel {
+      position: absolute;
+      z-index: 8;
+      top: 47px;
+      left: 12px;
+      width: 222px;
+      display: none;
+      padding: 8px;
+      border: 1px solid #3a3a3a;
+      border-radius: 8px;
+      background: #282828;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, .32);
+    }
+    .search-panel.open { display: block; }
+    .search-panel input {
+      width: 100%;
+      height: 32px;
+      padding: 0 10px;
+      border: 1px solid #444;
+      border-radius: 6px;
+      outline: none;
+      color: #eee;
+      background: #1d1d1d;
+      font-size: 12px;
+    }
+    .search-results { max-height: 240px; margin-top: 6px; overflow: auto; }
+    .search-result {
+      width: 100%;
+      padding: 7px 8px;
+      border: 0;
+      border-radius: 5px;
+      color: #bbb;
+      background: transparent;
+      text-align: left;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .search-result:hover { color: #fff; background: #343434; }
+    .search-result small { display: block; margin-top: 2px; color: #777; font-size: 10px; }
+
+    .product-name {
+      position: absolute;
+      top: 53px;
+      left: 20px;
+      margin: 0;
+      color: #999;
+      font-size: 12px;
+      line-height: 18px;
+      font-weight: 400;
+    }
+
+    .nav {
+      position: absolute;
+      top: 82px;
+      left: 12px;
+      width: 222px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .nav-item {
+      width: 222px;
+      min-height: 34px;
+      display: grid;
+      grid-template-columns: 26px 1fr;
+      align-items: start;
+      gap: 0;
+      border: 0;
+      border-radius: 6px;
+      padding: 7px 12px;
+      color: #b8b8b8;
+      background: transparent;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .nav-item:hover { background: #2a2a2a; color: #e3e3e3; }
+    .nav-item.active { color: #f1f1f1; background: #3f3f3f; font-weight: 500; }
+    .nav-item .nav-icon { width: 22px; text-align: center; color: #8d8d8d; }
+    .nav-item.active .nav-icon { color: #f2f2f2; }
+    .nav-item .label { font-size: 13px; line-height: 20px; }
+    .nav-item .sub {
+      display: block;
+      margin-top: 0;
+      color: #7b7b7b;
+      font-size: 11px;
+      line-height: 16px;
+      font-weight: 400;
+    }
+    body.sidebar-collapsed .nav {
+      top: 66px;
+      left: 8px;
+      width: 48px;
+      gap: 8px;
+    }
+    body.sidebar-collapsed .nav-item {
+      width: 48px;
+      height: 40px;
+      min-height: 40px;
+      grid-template-columns: 1fr;
+      place-items: center;
+      padding: 10px 13px;
+    }
+    body.sidebar-collapsed .nav-item .label { display: none; }
+    body.sidebar-collapsed .nav-item .nav-icon { width: 22px; }
+
+    .space-section {
+      position: absolute;
+      top: 176px;
+      left: 20px;
+      width: 202px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #8d8d8d;
+      font-size: 12px;
+      line-height: 18px;
+    }
+    .history-toggle {
+      display: none;
+      width: 48px;
+      height: 40px;
+      border: 0;
+      border-radius: 6px;
+      color: #8d8d8d;
+      background: transparent;
+      cursor: pointer;
+    }
+    .history-toggle:hover { color: #fff; background: #2f2f2f; }
+    .sidebar-expand {
+      display: none;
+      position: absolute;
+      left: 8px;
+      top: 18px;
+      width: 48px;
+      height: 40px;
+      border: 0;
+      border-radius: 6px;
+      color: #aaa;
+      background: transparent;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    .sidebar-expand:hover { color: #fff; background: #303030; }
+    body.sidebar-collapsed .sidebar-expand { display: grid; place-items: center; }
+    .back-saas {
+      position: absolute;
+      left: 12px;
+      bottom: 18px;
+      width: 222px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 12px;
+      border: 0;
+      border-radius: 6px;
+      color: #9a9a9a;
+      background: transparent;
+      text-align: left;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .back-saas:hover { color: #eee; background: #2c2c2c; }
+    .back-saas-icon { width: 20px; flex: 0 0 auto; text-align: center; font-size: 16px; }
+    body.sidebar-collapsed .back-saas {
+      left: 8px;
+      width: 48px;
+      height: 40px;
+      justify-content: center;
+      padding: 0;
+    }
+    body.sidebar-collapsed .back-saas-label { display: none; }
+    body.sidebar-collapsed .space-section {
+      top: 162px;
+      left: 8px;
+      width: 48px;
+      height: 40px;
+    }
+    body.sidebar-collapsed .space-section > span { display: none; }
+    body.sidebar-collapsed .history-toggle { display: grid; place-items: center; }
+
+    .create-project-icon {
+      width: 22px;
+      height: 22px;
+      border: 0;
+      border-radius: 5px;
+      color: #999;
+      background: transparent;
+      cursor: pointer;
+    }
+    .create-project-icon:hover { color: #fff; background: #303030; }
+
+    .history-list {
+      position: absolute;
+      top: 204px;
+      left: 12px;
+      width: 222px;
+      max-height: 520px;
+      overflow-y: auto;
+      font-size: 13px;
+    }
+
+    .history-row {
+      position: relative;
+      min-height: 32px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 8px;
+      border-radius: 6px;
+      color: #aaa;
+      user-select: none;
+      cursor: pointer;
+    }
+    .history-row:hover { color: #eee; background: #2b2b2b; }
+    .history-row.child { padding-left: 28px; font-size: 12px; }
+    .history-row.dragging { opacity: .38; }
+    .history-row.drop-target { background: rgba(32, 208, 196, .12); outline: 1px solid rgba(32, 208, 196, .55); }
+    .history-row.insert-before::before,
+    .history-row.insert-after::after {
+      content: "";
+      position: absolute;
+      right: 4px;
+      left: 4px;
+      height: 2px;
+      border-radius: 2px;
+      background: var(--accent);
+    }
+    .history-row.insert-before::before { top: -1px; }
+    .history-row.insert-after::after { bottom: -1px; }
+    .history-icon { width: 16px; flex: 0 0 auto; color: #787878; text-align: center; }
+    .history-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    .workspace-card {
+      position: absolute;
+      left: 12px;
+      bottom: 41px;
+      width: 222px;
+      height: 74px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 14px 12px;
+      border: 1px solid #343434;
+      border-radius: 10px;
+      color: inherit;
+      background: #252525;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .workspace-card:hover { border-color: #4b4b4b; background: #292929; }
+    .avatar {
+      flex: 0 0 auto;
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: #08211f;
+      background: var(--accent);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .workspace-copy strong { display: block; font-size: 13px; line-height: 20px; font-weight: 500; }
+    .workspace-copy span { display: block; color: #8d8d8d; font-size: 11px; line-height: 16px; }
+
+    main {
+      position: relative;
+      min-height: 900px;
+      margin-left: 246px;
+      transition: margin-left .18s ease;
+    }
+
+    .launcher {
+      position: absolute;
+      top: 206px;
+      left: 50%;
+      width: 720px;
+      transform: translateX(-50%) translateX(51px);
+      text-align: center;
+    }
+
+    .agent-mark {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      color: #071716;
+      background: var(--accent);
+      transform: translateX(-102px);
+    }
+
+    .face { transform: translateY(-1px); font-size: 16px; font-weight: 700; line-height: 1; }
+    .face::before { content: "•  •"; display: block; letter-spacing: 3px; font-size: 14px; }
+    .face::after { content: "⌣"; display: block; margin-top: 2px; font-size: 18px; }
+
+    h1 {
+      margin: 10px 0 0;
+      font-size: 30px;
+      line-height: 42px;
+      letter-spacing: -.02em;
+    }
+
+    .subhead {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 22px;
+    }
+
+    .scene-tabs {
+      margin-top: 29px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .scene-tab {
+      height: 34px;
+      padding: 0 22px;
+      border: 1px solid rgba(52, 52, 52, .9);
+      border-radius: 8px;
+      color: #c9cfcc;
+      background: #242424;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: border-color .16s, background .16s, color .16s;
+    }
+
+    .scene-tab:first-child { min-width: 112px; }
+    .scene-tab:not(:first-child) { min-width: 132px; }
+    .scene-tab:hover { border-color: #646464; }
+    .scene-tab.active { border-color: var(--light); color: #121212; background: var(--light); }
+
+    .prompt-box {
+      position: relative;
+      width: 620px;
+      height: 138px;
+      margin: 20px auto 0;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--panel);
+      box-shadow: 0 16px 32px -18px rgba(0, 0, 0, .28);
+      text-align: left;
+    }
+
+    textarea {
+      position: absolute;
+      top: 14px;
+      left: 18px;
+      width: 574px;
+      height: 48px;
+      padding: 4px;
+      border: 0;
+      outline: 0;
+      resize: none;
+      color: #dedede;
+      background: transparent;
+      font-size: 14px;
+      line-height: 22px;
+    }
+
+    textarea::placeholder { color: #7e7e7e; opacity: 1; }
+    .slash-hint { position: absolute; top: 43px; left: 22px; color: #5f5f5f; font-size: 12px; line-height: 18px; pointer-events: none; }
+    textarea:not(:placeholder-shown) + .slash-hint { display: none; }
+
+    .attach {
+      position: absolute;
+      left: 18px;
+      top: 88px;
+      width: 32px;
+      height: 32px;
+      border: 1px solid #3a3a3a;
+      border-radius: 50%;
+      color: #d6d6d6;
+      background: var(--raised);
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    .attach:hover { border-color: #666; background: #343434; }
+    #file-input { display: none; }
+
+    .control {
+      height: 32px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      color: #d0d0d0;
+      background: var(--raised);
+      font-size: 12px;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .archive-select { position: absolute; top: 88px; left: 62px; width: 150px; padding: 0 10px; }
+    .mode-select { position: absolute; top: 88px; right: 117px; width: 88px; padding: 0 8px; text-align: center; }
+
+    .send {
+      position: absolute;
+      top: 86px;
+      right: 27px;
+      width: 36px;
+      height: 36px;
+      border: 0;
+      border-radius: 50%;
+      color: #121212;
+      background: var(--light);
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .send:hover { transform: translateY(-1px); background: #fff; }
+    .send:disabled { color: #626262; background: #333; cursor: default; transform: none; }
+
+    .quick-controls {
+      width: 620px;
+      margin: 16px auto 0;
+      display: flex;
+      gap: 12px;
+      text-align: left;
+    }
+
+    .quick-control {
+      height: 30px;
+      padding: 0 14px;
+      border: 1px solid #2d2d2d;
+      border-radius: 6px;
+      color: #909090;
+      background: #171717;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .quick-control.workspace { width: 180px; }
+    .quick-control.hint { width: 246px; color: #767676; }
+    .quick-control:hover { border-color: #454545; color: #bbb; }
+
+    .archive-prompt {
+      width: 476px;
+      height: 58px;
+      margin: 41px auto 0;
+      display: grid;
+      grid-template-columns: 44px 1fr 78px;
+      align-items: center;
+      gap: 14px;
+      padding: 0 25px 0 20px;
+      border: 1px solid rgba(43, 43, 43, .8);
+      border-radius: 10px;
+      background: #191919;
+      text-align: left;
+    }
+
+    .folder {
+      width: 44px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border-radius: 6px;
+      color: #bfbfbf;
+      background: #323232;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .archive-copy strong { display: block; color: #e1e1e1; font-size: 13px; line-height: 20px; font-weight: 500; }
+    .archive-copy span { display: block; color: #7d7d7d; font-size: 11px; line-height: 16px; white-space: nowrap; }
+    .create {
+      height: 28px;
+      border: 0;
+      border-radius: 14px;
+      color: #121212;
+      background: var(--light);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .create:hover { background: #fff; }
+    .archive-prompt[hidden] { display: none; }
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 90;
+      display: grid;
+      place-items: center;
+      background: rgba(0, 0, 0, .58);
+    }
+    .modal-backdrop[hidden] { display: none; }
+    .modal {
+      width: 360px;
+      padding: 20px;
+      border: 1px solid #414141;
+      border-radius: 12px;
+      background: #242424;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, .45);
+    }
+    .modal h2 { margin: 0 0 6px; font-size: 16px; }
+    .modal p { margin: 0 0 14px; color: #888; font-size: 12px; line-height: 18px; }
+    .modal input {
+      width: 100%;
+      height: 38px;
+      padding: 0 11px;
+      border: 1px solid #484848;
+      border-radius: 7px;
+      outline: none;
+      color: #eee;
+      background: #191919;
+      font-size: 13px;
+    }
+    .char-count { margin-top: 5px; color: #777; text-align: right; font-size: 11px; }
+    .modal-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
+    .modal-actions button { height: 32px; padding: 0 14px; border: 1px solid #444; border-radius: 7px; color: #ccc; background: #303030; cursor: pointer; }
+    .modal-actions .primary { border-color: var(--light); color: #121212; background: var(--light); font-weight: 600; }
+    .profile-page {
+      position: fixed;
+      inset: 0 0 0 246px;
+      z-index: 80;
+      padding: 56px;
+      background: #121212;
+      margin-left: 0;
+    }
+    .profile-page[hidden] { display: none; }
+    .profile-page h2 { margin: 0 0 10px; font-size: 26px; }
+    .profile-page p { color: #888; font-size: 14px; }
+    .profile-page button { height: 34px; padding: 0 14px; border: 1px solid #444; border-radius: 7px; color: #ddd; background: #292929; cursor: pointer; }
+    .toast {
+      position: fixed;
+      left: calc(50% + 123px);
+      bottom: 28px;
+      z-index: 20;
+      padding: 9px 14px;
+      border: 1px solid #424242;
+      border-radius: 7px;
+      color: #ddd;
+      background: #292929;
+      font-size: 12px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, 10px);
+      transition: .2s ease;
+    }
+
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+    .review-toolbar {
+      position: fixed;
+      z-index: 100;
+      right: 20px;
+      bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px;
+      border: 1px solid #484848;
+      border-radius: 10px;
+      background: rgba(35, 35, 35, .94);
+      box-shadow: 0 12px 34px rgba(0, 0, 0, .35);
+      backdrop-filter: blur(12px);
+    }
+    .review-toolbar button {
+      height: 30px;
+      padding: 0 12px;
+      border: 1px solid #4b4b4b;
+      border-radius: 6px;
+      color: #ddd;
+      background: #303030;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .review-toolbar button.active { border-color: var(--accent); color: #08211f; background: var(--accent); }
+    .review-toolbar output { min-width: 160px; max-width: 300px; color: #aaa; font-size: 12px; }
+    body.inspecting * { cursor: crosshair !important; }
+    .review-selected { outline: 2px solid var(--accent) !important; outline-offset: 3px; }
+    .review-marker-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 110;
+      pointer-events: none;
+    }
+    .review-dot {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      padding: 0;
+      border: 2px solid #fff;
+      border-radius: 50%;
+      background: #ef3f4d;
+      box-shadow: 0 2px 7px rgba(0, 0, 0, .5);
+      pointer-events: auto;
+      cursor: pointer;
+    }
+    .review-dot:hover {
+      transform: scale(1.35);
+      background: #ff5965;
+    }
+    .interaction-note {
+      position: fixed;
+      z-index: 120;
+      width: min(310px, calc(100vw - 28px));
+      padding: 12px 14px;
+      border: 1px solid #4c4c4c;
+      border-left: 3px solid #ef3f4d;
+      border-radius: 8px;
+      color: #dcdcdc;
+      background: rgba(38, 38, 38, .97);
+      box-shadow: 0 16px 38px rgba(0, 0, 0, .4);
+      font-size: 12px;
+      line-height: 1.65;
+    }
+    .interaction-note strong {
+      display: block;
+      margin-bottom: 3px;
+      color: #fff;
+      font-size: 13px;
+    }
+    .interaction-note[hidden] { display: none; }
+    body.ui-review-mode [data-review-active="true"] {
+      outline: 2px solid rgba(239, 63, 77, .9) !important;
+      outline-offset: 2px;
+    }
+    .review-mode-switch {
+      position: fixed;
+      z-index: 130;
+      top: 18px;
+      right: 18px;
+      display: flex;
+      gap: 3px;
+      padding: 3px;
+      border: 1px solid #454545;
+      border-radius: 8px;
+      background: rgba(35, 35, 35, .94);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, .28);
+      backdrop-filter: blur(10px);
+    }
+    .review-mode-switch button {
+      height: 28px;
+      padding: 0 12px;
+      border: 0;
+      border-radius: 5px;
+      color: #8f8f8f;
+      background: transparent;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .review-mode-switch button.active { color: #151515; background: #e7ecea; font-weight: 600; }
+    body.review-clean .review-marker-layer,
+    body.review-clean .interaction-note { display: none !important; }
+    body.review-clean [data-review-active="true"] { outline: none !important; }
+
+    @media (max-width: 900px) {
+      .launcher { width: min(720px, calc(100vw - 96px)); }
+      .toast { left: 50%; }
+    }
+
+    @media (max-width: 720px) {
+      .launcher { top: 108px; width: calc(100vw - 92px); }
+      h1 { font-size: 24px; }
+      .subhead { padding: 0 20px; }
+      .scene-tabs { flex-wrap: wrap; margin-top: 22px; gap: 8px; }
+      .prompt-box, .quick-controls { width: 100%; }
+      .prompt-box { margin-top: 14px; }
+      textarea { width: calc(100% - 36px); }
+      .mode-select { right: 72px; }
+      .send { right: 20px; }
+      .quick-controls { flex-wrap: wrap; }
+      .archive-prompt { width: 100%; grid-template-columns: 40px 1fr; height: auto; padding: 12px 16px; margin-top: 24px; }
+      .create { grid-column: 2; width: 78px; }
+      .archive-copy span { white-space: normal; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar" aria-label="应用侧边栏">
+      <div class="window-controls" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="utilities">
+        <button class="icon-btn" id="search-toggle" title="搜索">⌕</button>
+        <button class="icon-btn" id="sidebar-toggle" title="折叠侧栏">‹</button>
+      </div>
+      <div class="search-panel" id="search-panel">
+        <input id="search-input" maxlength="40" placeholder="搜索历史任务或项目">
+        <div class="search-results" id="search-results"></div>
+      </div>
+      <p class="product-name">Lightchain 灵感决策工作台</p>
+
+      <nav class="nav">
+        <button class="nav-item active" id="new-task-nav" title="新任务"><span class="nav-icon">＋</span><span class="label">新任务</span></button>
+        <button class="nav-item" id="archive-nav" title="企业档案"><span class="nav-icon">▣</span><span class="label">企业档案<span class="sub">长期业务上下文</span></span></button>
+      </nav>
+
+      <div class="space-section">
+        <span>历史</span>
+        <button class="history-toggle" id="history-toggle" title="展开历史">◷</button>
+        <button class="create-project-icon" id="create-project" title="创建项目" aria-label="创建项目">
+          <svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
+            <path d="M2.25 4.25h4l1.2 1.5h7.3v7.5a1.5 1.5 0 0 1-1.5 1.5h-9.5a1.5 1.5 0 0 1-1.5-1.5v-9Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+            <path d="M8.5 8v4M6.5 10h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="history-list" id="history-list" aria-label="历史任务列表"></div>
+      <button class="sidebar-expand" id="sidebar-expand" title="展开侧栏" aria-label="展开侧栏">›</button>
+      <button class="back-saas" title="退出" aria-label="退出">
+        <span class="back-saas-icon">←</span>
+        <span class="back-saas-label">退出</span>
+      </button>
+
+    </aside>
+
+    <main>
+      <section class="launcher" aria-labelledby="headline">
+        <div class="agent-mark" aria-hidden="true"><span class="face"></span></div>
+        <h1 id="headline">今天想从哪里开始？</h1>
+        <p class="subhead">选择一个业务场景，描述你的目标，Agent 会带你完成后续步骤。</p>
+
+        <div class="scene-tabs" role="tablist" aria-label="业务场景">
+          <button class="scene-tab active" data-scene="selection">选品测款</button>
+          <button class="scene-tab" data-scene="planning">新品方向探索</button>
+          <button class="scene-tab" data-scene="proposal">客户提案生成</button>
+          <button class="scene-tab" data-scene="variation">款式裂变生成</button>
+        </div>
+
+        <div class="prompt-box">
+          <textarea id="prompt" aria-label="任务描述" placeholder="描述你想调研的市场、品类或款式方向…"></textarea>
+          <button class="attach" id="attach" title="添加附件">＋</button>
+          <input type="file" id="file-input" multiple>
+          <select class="control archive-select" aria-label="企业档案">
+            <option>企业灵感档案</option>
+            <option>暂不使用档案</option>
+            <option>轻户外女装档案</option>
+          </select>
+          <button class="send" id="send" title="开始任务">↑</button>
+        </div>
+
+        <div class="archive-prompt" id="archive-prompt" hidden>
+          <div class="folder">档</div>
+          <div class="archive-copy">
+            <strong>建立你的企业灵感档案</strong>
+            <span>让 Agent 更了解你的市场、渠道和业务约束</span>
+          </div>
+          <button class="create">立即创建</button>
+        </div>
+      </section>
+    </main>
+    <section class="profile-page" id="profile-page" hidden>
+      <h2 id="profile-page-title">创建企业档案</h2>
+      <p id="profile-page-desc">企业档案创建页的字段与交互将在对应页面继续对齐。</p>
+      <button id="back-home">返回功能首页</button>
+    </section>
+    <div class="modal-backdrop" id="project-modal" hidden>
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="project-modal-title">
+        <h2 id="project-modal-title">创建项目</h2>
+        <p>项目用于整理历史任务，名称最多 40 个字符。</p>
+        <input id="project-name" maxlength="40" placeholder="项目">
+        <div class="char-count"><span id="project-name-count">0</span>/40</div>
+        <div class="modal-actions">
+          <button id="cancel-project">取消</button>
+          <button class="primary" id="confirm-project">创建</button>
+        </div>
+      </div>
+    </div>
+    <div class="toast" role="status" aria-live="polite"></div>
+  </div>
+
+  <script>
+    const scenes = {
+      selection: "描述你想调研的市场、品类或款式方向…",
+      planning: "描述下一季的市场、人群、品类和经营目标…",
+      proposal: "输入客户需求，或上传 brief、邮件和会议纪要…",
+      variation: "描述要延伸的款式方向，或上传图片和情绪板…"
+    };
+
+    const prompt = document.querySelector("#prompt");
+    const toast = document.querySelector(".toast");
+    let toastTimer;
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove("show"), 1800);
+    }
+
+    document.querySelectorAll(".scene-tab").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        document.querySelector(".scene-tab.active")?.classList.remove("active");
+        tab.classList.add("active");
+        prompt.placeholder = scenes[tab.dataset.scene];
+        prompt.focus();
+      });
+    });
+
+    document.querySelectorAll(".nav-item").forEach((item) => {
+      item.addEventListener("click", () => {
+        document.querySelector(".nav-item.active")?.classList.remove("active");
+        item.classList.add("active");
+        showToast(`${item.querySelector(".label")?.childNodes[0].textContent.trim() || "页面"}：交互待对齐`);
+      });
+    });
+
+    const setSidebarCollapsed = (collapsed) => {
+      document.body.classList.toggle("sidebar-collapsed", collapsed);
+      document.querySelector("#sidebar-toggle").title = collapsed ? "展开侧栏" : "折叠侧栏";
+    };
+
+    document.querySelector("#sidebar-toggle").addEventListener("click", () => setSidebarCollapsed(true));
+    document.querySelector("#history-toggle").addEventListener("click", () => setSidebarCollapsed(false));
+    document.querySelector("#sidebar-expand").addEventListener("click", () => setSidebarCollapsed(false));
+
+    function showHomeInitialState() {
+      setSidebarCollapsed(false);
+      document.querySelector("#profile-page").hidden = true;
+      document.querySelector(".nav-item.active")?.classList.remove("active");
+      document.querySelector("#new-task-nav").classList.add("active");
+      document.querySelector(".scene-tab.active")?.classList.remove("active");
+      const defaultScene = document.querySelector('.scene-tab[data-scene="selection"]');
+      defaultScene.classList.add("active");
+      prompt.value = "";
+      prompt.placeholder = scenes.selection;
+      document.querySelector("#file-input").value = "";
+      searchPanel?.classList.remove("open");
+    }
+
+    document.querySelector("#new-task-nav").addEventListener("click", showHomeInitialState);
+    document.querySelector("#archive-nav").addEventListener("click", () => {
+      document.querySelector("#profile-page-title").textContent = "企业档案列表";
+      document.querySelector("#profile-page-desc").textContent = "列表页面代码待接入。";
+      document.querySelector("#profile-page").hidden = false;
+    });
+
+    document.querySelector("#attach").addEventListener("click", () => {
+      document.querySelector("#file-input").click();
+    });
+
+    document.querySelector("#file-input").addEventListener("change", (event) => {
+      const count = event.target.files.length;
+      if (count) showToast(`已选择 ${count} 个附件`);
+    });
+
+    document.querySelector("#send").addEventListener("click", () => {
+      if (!prompt.value.trim()) {
+        prompt.focus();
+        showToast("请先描述你的任务目标");
+        return;
+      }
+      showToast("任务发起后的交互等待下一步对齐");
+    });
+
+    document.querySelectorAll(".create").forEach((button) => {
+      button.addEventListener("click", () => showToast("该入口的交互等待对齐"));
+    });
+
+    const archives = [{ id: "archive-1", name: "轻户外女装档案" }];
+    const archivePrompt = document.querySelector("#archive-prompt");
+    const archiveSelector = document.querySelector(".archive-select");
+
+    function renderArchiveState() {
+      archivePrompt.hidden = archives.length > 0;
+      archiveSelector.innerHTML = archives.length
+        ? `<option>企业灵感档案</option><option>暂不使用档案</option>${archives.map((item) => `<option>${item.name}</option>`).join("")}`
+        : "<option>暂无企业档案</option>";
+    }
+    renderArchiveState();
+
+    document.querySelector(".create").addEventListener("click", () => {
+      document.querySelector("#profile-page-title").textContent = "创建企业档案";
+      document.querySelector("#profile-page-desc").textContent = "企业档案创建页的字段与交互将在对应页面继续对齐。";
+      document.querySelector("#profile-page").hidden = false;
+    });
+    document.querySelector("#back-home").addEventListener("click", () => {
+      document.querySelector("#profile-page").hidden = true;
+    });
+
+    let historyItems = [
+      { id: "p1", type: "project", name: "2027 春夏企划", editedAt: 1785376200000, expanded: true },
+      { id: "t1", type: "task", name: "北美女性瑜伽服企划", parentId: "p1", editedAt: 1785375900000 },
+      { id: "t2", type: "task", name: "日本通勤针织开衫测款", parentId: null, editedAt: 1785286800000 },
+      { id: "t3", type: "task", name: "欧洲轻户外客户提案", parentId: null, editedAt: 1785114000000 }
+    ];
+
+    const historyList = document.querySelector("#history-list");
+    const searchPanel = document.querySelector("#search-panel");
+    const searchInput = document.querySelector("#search-input");
+    const searchResults = document.querySelector("#search-results");
+    let draggedId = null;
+    let holdTimer;
+    let suppressProjectClick = false;
+
+    function orderedItems() {
+      const rows = [];
+      historyItems.filter((item) => !item.parentId).forEach((item) => {
+        rows.push(item);
+        if (item.type === "project" && item.expanded !== false) {
+          rows.push(...historyItems.filter((child) => child.parentId === item.id));
+        }
+      });
+      return rows;
+    }
+
+    function clearDropState() {
+      document.querySelectorAll(".drop-target, .insert-before, .insert-after").forEach((row) => {
+        row.classList.remove("drop-target", "insert-before", "insert-after");
+      });
+    }
+
+    function moveItem(sourceId, targetId, position) {
+      if (sourceId === targetId) return;
+      const source = historyItems.find((item) => item.id === sourceId);
+      const target = historyItems.find((item) => item.id === targetId);
+      if (!source || !target) return;
+
+      if (position === "inside" && target.type === "project" && source.type === "task") {
+        source.parentId = target.id;
+        target.expanded = true;
+        historyItems = historyItems.filter((item) => item.id !== sourceId);
+        const lastChild = historyItems.reduce((last, item, index) => item.parentId === target.id ? index : last, historyItems.indexOf(target));
+        historyItems.splice(lastChild + 1, 0, source);
+      } else {
+        source.parentId = target.parentId || null;
+        historyItems = historyItems.filter((item) => item.id !== sourceId);
+        let targetIndex = historyItems.findIndex((item) => item.id === targetId);
+        if (position === "after") {
+          targetIndex += 1;
+          if (target.type === "project") {
+            while (targetIndex < historyItems.length && historyItems[targetIndex].parentId === target.id) targetIndex += 1;
+          }
+        }
+        historyItems.splice(targetIndex, 0, source);
+      }
+      source.editedAt = Date.now();
+      renderHistory();
+    }
+
+    function makeHistoryRow(item) {
+      const row = document.createElement("div");
+      row.className = `history-row${item.parentId ? " child" : ""}`;
+      row.dataset.id = item.id;
+      row.innerHTML = `<span class="history-icon">${item.type === "project" ? (item.expanded === false ? "▸" : "▾") : "·"}</span><span class="history-name">${item.name}</span>`;
+      if (item.type === "project") {
+        row.setAttribute("aria-expanded", String(item.expanded !== false));
+        row.addEventListener("click", () => {
+          if (suppressProjectClick) return;
+          item.expanded = item.expanded === false;
+          renderHistory();
+        });
+      }
+
+      row.addEventListener("pointerdown", () => {
+        clearTimeout(holdTimer);
+        holdTimer = setTimeout(() => {
+          row.draggable = true;
+          row.classList.add("drag-ready");
+          showToast(`可拖动：${item.name}`);
+        }, 350);
+      });
+      ["pointerup", "pointercancel", "pointerleave"].forEach((eventName) => {
+        row.addEventListener(eventName, () => clearTimeout(holdTimer));
+      });
+      row.addEventListener("dragstart", (event) => {
+        draggedId = item.id;
+        suppressProjectClick = true;
+        row.classList.add("dragging");
+        event.dataTransfer.effectAllowed = "move";
+        event.dataTransfer.setData("text/plain", item.id);
+      });
+      row.addEventListener("dragend", () => {
+        draggedId = null;
+        row.draggable = false;
+        row.classList.remove("dragging", "drag-ready");
+        clearDropState();
+        setTimeout(() => { suppressProjectClick = false; }, 0);
+      });
+      row.addEventListener("dragover", (event) => {
+        event.preventDefault();
+        clearDropState();
+        const rect = row.getBoundingClientRect();
+        const ratio = (event.clientY - rect.top) / rect.height;
+        if (item.type === "project" && ratio > .25 && ratio < .75) row.classList.add("drop-target");
+        else row.classList.add(ratio < .5 ? "insert-before" : "insert-after");
+      });
+      row.addEventListener("drop", (event) => {
+        event.preventDefault();
+        const position = row.classList.contains("drop-target") ? "inside" : row.classList.contains("insert-before") ? "before" : "after";
+        moveItem(draggedId || event.dataTransfer.getData("text/plain"), item.id, position);
+        clearDropState();
+      });
+      return row;
+    }
+
+    function renderHistory() {
+      historyList.replaceChildren(...orderedItems().map(makeHistoryRow));
+      renderSearchResults(searchInput.value);
+    }
+
+    function renderSearchResults(keyword = "") {
+      const query = keyword.trim().toLowerCase();
+      const matches = historyItems
+        .filter((item) => !query || item.name.toLowerCase().includes(query))
+        .sort((a, b) => b.editedAt - a.editedAt);
+      searchResults.innerHTML = matches.length
+        ? matches.map((item) => `<button class="search-result" data-id="${item.id}">${item.name}<small>${item.type === "project" ? "项目" : "任务"} · 最近编辑</small></button>`).join("")
+        : '<div class="search-result">没有匹配结果</div>';
+    }
+
+    document.querySelector("#search-toggle").addEventListener("click", (event) => {
+      event.stopPropagation();
+      searchPanel.classList.toggle("open");
+      if (searchPanel.classList.contains("open")) {
+        renderSearchResults(searchInput.value);
+        searchInput.focus();
+      }
+    });
+    searchPanel.addEventListener("click", (event) => event.stopPropagation());
+    document.addEventListener("click", () => searchPanel.classList.remove("open"));
+    searchInput.addEventListener("input", () => renderSearchResults(searchInput.value));
+
+    const projectModal = document.querySelector("#project-modal");
+    const projectName = document.querySelector("#project-name");
+    document.querySelector("#create-project").addEventListener("click", () => {
+      projectModal.hidden = false;
+      projectName.value = "";
+      document.querySelector("#project-name-count").textContent = "0";
+      projectName.focus();
+    });
+    projectName.addEventListener("input", () => {
+      document.querySelector("#project-name-count").textContent = projectName.value.length;
+    });
+    document.querySelector("#cancel-project").addEventListener("click", () => projectModal.hidden = true);
+    document.querySelector("#confirm-project").addEventListener("click", () => {
+      historyItems.push({
+        id: `p-${Date.now()}`,
+        type: "project",
+        name: projectName.value.trim() || "项目",
+        editedAt: Date.now(),
+        expanded: true
+      });
+      projectModal.hidden = true;
+      renderHistory();
+    });
+    projectModal.addEventListener("click", (event) => {
+      if (event.target === projectModal) projectModal.hidden = true;
+    });
+
+    renderHistory();
+
+    if (new URLSearchParams(location.search).has("collapsed")) {
+      setSidebarCollapsed(true);
+    }
+
+    if (new URLSearchParams(location.search).has("review")) {
+      document.body.classList.add("ui-review-mode");
+
+      const markerLayer = document.createElement("div");
+      markerLayer.className = "review-marker-layer";
+      const note = document.createElement("aside");
+      note.className = "interaction-note";
+      note.hidden = true;
+      const modeSwitch = document.createElement("div");
+      modeSwitch.className = "review-mode-switch";
+      modeSwitch.innerHTML = '<button type="button" data-mode="clean">纯净模式</button><button type="button" data-mode="review" class="active">评审模式</button>';
+      document.body.append(markerLayer, note, modeSwitch);
+      let reviewEnabled = true;
+
+      const interactiveSelector = [
+        "button",
+        "select",
+        "textarea",
+        "input:not([type='file'])",
+        ".history-row"
+      ].join(",");
+
+      const labelOf = (element) => {
+        if (element.classList.contains("history-row")) return element.querySelector(".history-name")?.textContent || "历史项目";
+        return element.getAttribute("aria-label")
+          || element.getAttribute("title")
+          || element.textContent.trim().replace(/\s+/g, " ").slice(0, 32)
+          || element.getAttribute("placeholder")
+          || "交互组件";
+      };
+
+      const descriptionOf = (element) => {
+        if (element.matches("#sidebar-toggle")) return "点击收起侧边栏。收起后仅保留展开、新任务、企业档案、历史和退出图标。";
+        if (element.matches("#sidebar-expand, #history-toggle")) return "点击重新展开侧边栏，恢复完整导航、搜索和历史任务列表。";
+        if (element.matches("#search-toggle")) return "点击展开搜索输入框；根据关键词实时匹配历史任务和项目，结果按最近编辑时间由近到远排序。";
+        if (element.matches("#search-input")) return "输入任务或项目关键词，搜索结果随输入实时刷新。";
+        if (element.matches(".search-result")) return "点击打开对应的历史任务或项目。具体打开后的页面交互待后续对齐。";
+        if (element.matches("#new-task-nav")) return "点击返回功能首页初始状态：展开侧栏、清空当前输入和附件，并恢复“选品测款”默认场景。";
+        if (element.matches("#archive-nav")) return "点击进入企业档案列表。列表页面 UI 待提供页面代码后接入。";
+        if (element.matches("#create-project")) return "点击打开创建项目弹窗。项目名称最多 40 个字符；未填写时默认命名为“项目”。";
+        if (element.matches(".history-row")) {
+          const item = historyItems.find((entry) => entry.id === element.dataset.id);
+          return item?.type === "project"
+            ? "点击展开或收起项目。长按约 350ms 后可拖动排序；移动项目时，其全部子任务跟随移动。任务可拖入项目。"
+            : "点击打开历史任务。长按约 350ms 后可拖动到列表任意位置或任意项目中；拖动时展示插入线。";
+        }
+        if (element.matches(".back-saas")) return "退出入口。当前仅保留按钮样式，不配置具体退出流程。";
+        if (element.matches(".scene-tab")) return "点击切换业务场景，并同步更新任务输入框的示例提示；不会自动调用外部数据。";
+        if (element.matches("#prompt")) return "输入本次任务目标与条件。不同场景展示不同示例提示，内容随新任务提交。";
+        if (element.matches("#attach")) return "点击选择并上传本任务需要的图片、文档、表格等资料。资料解析在任务内进行。";
+        if (element.matches(".archive-select")) return "为本次任务选择一个企业档案，或选择暂不使用。一个任务仅应用一个档案。";
+        if (element.matches("#send")) return "点击发起新任务。任务描述为空时提示用户补充目标；有内容时进入对应 Agent 的任务流程。";
+        if (element.matches(".create")) return "仅在企业档案为空时展示。点击进入企业档案创建页。";
+        if (element.matches("#project-name")) return "输入项目文件夹名称，最多 40 个字符；不填写则使用默认名称“项目”。";
+        if (element.matches("#confirm-project")) return "创建项目，并将新项目显示在历史列表中。";
+        if (element.matches("#cancel-project")) return "关闭创建项目弹窗，不保存输入内容。";
+        if (element.matches("#back-home")) return "返回功能首页。该按钮属于企业档案页面占位状态。";
+        return `点击触发“${labelOf(element)}”操作，详细交互待后续页面对齐。`;
+      };
+
+      let activeElement;
+      let markerFrame;
+
+      const visible = (element) => {
+        const rect = element.getBoundingClientRect();
+        const style = getComputedStyle(element);
+        return rect.width > 0 && rect.height > 0 && style.display !== "none" && style.visibility !== "hidden";
+      };
+
+      const placeNote = (element) => {
+        if (!reviewEnabled) return;
+        activeElement?.removeAttribute("data-review-active");
+        activeElement = element;
+        activeElement.setAttribute("data-review-active", "true");
+        note.innerHTML = `<strong>${labelOf(element)}</strong>${descriptionOf(element)}`;
+        note.hidden = false;
+
+        const rect = element.getBoundingClientRect();
+        const noteWidth = 310;
+        const left = rect.right + 12 + noteWidth <= innerWidth
+          ? rect.right + 12
+          : Math.max(14, rect.left - noteWidth - 12);
+        note.style.left = `${left}px`;
+        note.style.top = `${Math.min(Math.max(14, rect.top), innerHeight - note.offsetHeight - 14)}px`;
+      };
+
+      const refreshMarkers = () => {
+        cancelAnimationFrame(markerFrame);
+        markerFrame = requestAnimationFrame(() => {
+          markerLayer.replaceChildren();
+          if (!reviewEnabled) return;
+          document.querySelectorAll(interactiveSelector).forEach((element) => {
+            if (!visible(element) || markerLayer.contains(element) || note.contains(element) || modeSwitch.contains(element)) return;
+            const rect = element.getBoundingClientRect();
+            const dot = document.createElement("button");
+            dot.className = "review-dot";
+            dot.type = "button";
+            dot.title = `查看交互说明：${labelOf(element)}`;
+            dot.style.left = `${Math.min(innerWidth - 13, rect.right - 5)}px`;
+            dot.style.top = `${Math.max(3, rect.top - 5)}px`;
+            dot.addEventListener("click", (event) => {
+              event.preventDefault();
+              event.stopPropagation();
+              placeNote(element);
+            });
+            markerLayer.appendChild(dot);
+          });
+        });
+      };
+
+      document.addEventListener("click", (event) => {
+        if (!reviewEnabled || markerLayer.contains(event.target) || note.contains(event.target) || modeSwitch.contains(event.target)) return;
+        const target = event.target.closest(interactiveSelector);
+        if (target && visible(target)) {
+          setTimeout(() => {
+            placeNote(target);
+            refreshMarkers();
+          }, 0);
+        } else {
+          activeElement?.removeAttribute("data-review-active");
+          activeElement = null;
+          note.hidden = true;
+        }
+      }, true);
+
+      modeSwitch.addEventListener("click", (event) => {
+        const button = event.target.closest("button[data-mode]");
+        if (!button) return;
+        reviewEnabled = button.dataset.mode === "review";
+        document.body.classList.toggle("review-clean", !reviewEnabled);
+        modeSwitch.querySelectorAll("button").forEach((item) => item.classList.toggle("active", item === button));
+        if (!reviewEnabled) {
+          activeElement?.removeAttribute("data-review-active");
+          activeElement = null;
+          note.hidden = true;
+        }
+        refreshMarkers();
+      });
+
+      const observer = new MutationObserver((mutations) => {
+        if (mutations.every((mutation) => markerLayer.contains(mutation.target) || note.contains(mutation.target) || modeSwitch.contains(mutation.target))) return;
+        refreshMarkers();
+      });
+      observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["class", "hidden", "aria-expanded"] });
+      addEventListener("resize", refreshMarkers);
+      addEventListener("scroll", refreshMarkers, true);
+      refreshMarkers();
+    }
+  </script>
+</body>
+</html>
