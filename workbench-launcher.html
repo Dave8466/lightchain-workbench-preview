@@ -903,6 +903,19 @@
       color: #fff;
       font-size: 13px;
     }
+    .interaction-note .component-type {
+      display: block;
+      margin-bottom: 6px;
+      color: #90f0e4;
+      font-size: 11px;
+    }
+    .interaction-note .state-change {
+      display: block;
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px solid #424745;
+      color: #b8c0bd;
+    }
     .interaction-note[hidden] { display: none; }
     body.ui-review-mode [data-review-active="true"] {
       outline: 2px solid rgba(239, 63, 77, .9) !important;
@@ -1626,11 +1639,45 @@
 
       const labelOf = (element) => {
         if (element.classList.contains("history-row")) return element.querySelector(".history-name")?.textContent || "历史项目";
-        return element.getAttribute("aria-label")
+        return element.labels?.[0]?.textContent.trim()
+          || element.getAttribute("aria-label")
           || element.getAttribute("title")
           || element.textContent.trim().replace(/\s+/g, " ").slice(0, 32)
           || element.getAttribute("placeholder")
           || "交互组件";
+      };
+
+      const componentTypeOf = (element) => {
+        if (element.matches("input[type='search']")) return "搜索输入框";
+        if (element.matches("input:not([type]), input[type='text']")) return "单行输入框";
+        if (element.matches("textarea")) return "多行输入框";
+        if (element.matches("select")) return element.multiple ? "多选下拉菜单" : "单选下拉菜单";
+        if (element.matches(".profile-type-option")) return "卡片式单选按钮";
+        if (element.matches(".scene-tab")) return "页签式单选按钮";
+        if (element.matches(".history-row.project")) return "可展开项目行";
+        if (element.matches(".history-row")) return "可拖动任务行";
+        if (element.matches(".search-result")) return "搜索结果按钮";
+        if (element.matches(".delete-profile")) return "危险操作按钮";
+        if (element.matches("button")) return "按钮";
+        return "可交互组件";
+      };
+
+      const stateChangeOf = (element) => {
+        if (element.matches("#search-toggle")) return "状态切换：点击展开搜索框；再次点击收起搜索框。";
+        if (element.matches("#sidebar-toggle")) return "状态切换：点击收起侧栏；收起后顶部显示“展开侧栏”按钮。";
+        if (element.matches("#sidebar-expand, #history-toggle")) return "状态切换：点击展开侧栏；展开后恢复文字导航、搜索与历史列表。";
+        if (element.matches(".history-row.project")) return "状态切换：点击展开子任务；再次点击收起子任务，并保留项目及子任务排序。";
+        if (element.matches(".scene-tab")) return "状态切换：点击后设为选中状态，并取消原场景选中状态。";
+        if (element.matches(".profile-type-option")) return "状态切换：点击后设为选中状态，并更新下方专属字段；再次点击保持选中。";
+        if (element.matches("select")) return "状态切换：点击展开选项；选择一项后收起，并立即应用当前选项。";
+        if (element.matches("#project-modal button, #confirm-project, #cancel-project")) return "状态切换：操作完成后关闭当前弹窗。";
+        if (element.matches("#new-profile")) return "状态切换：点击由档案列表切换至新建档案页。";
+        if (element.matches("#cancel-create-profile")) return "状态切换：点击关闭新建档案页并返回档案列表。";
+        if (element.matches("#archive-nav")) return "状态切换：点击由当前页面切换至企业档案列表，并保持侧栏展开。";
+        if (element.matches("#new-task-nav")) return "状态切换：点击返回功能首页初始状态。";
+        if (element.matches(".delete-profile")) return "状态切换：点击打开二次确认；确认后删除，取消则关闭确认并保留档案。";
+        if (element.matches("input, textarea")) return "状态切换：输入时实时保留当前页面内容；离开输入框后保持已输入值。";
+        return "";
       };
 
       const descriptionOf = (element) => {
@@ -1703,7 +1750,13 @@
         activeElement?.removeAttribute("data-review-active");
         activeElement = element;
         activeElement.setAttribute("data-review-active", "true");
-        note.innerHTML = `<strong>${labelOf(element)}</strong>${descriptionOf(element)}`;
+        const stateChange = stateChangeOf(element);
+        note.innerHTML = `
+          <strong>${labelOf(element)}</strong>
+          <span class="component-type">组件类型：${componentTypeOf(element)}</span>
+          <span>${descriptionOf(element)}</span>
+          ${stateChange ? `<span class="state-change">${stateChange}</span>` : ""}
+        `;
         note.hidden = false;
 
         const rect = element.getBoundingClientRect();
