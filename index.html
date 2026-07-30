@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <meta name="description" content="Lightchain 灵感决策工作台功能首页 UI 评审原型">
   <title>Lightchain Workbench Launcher · UI 评审</title>
   <style>
@@ -17,6 +20,10 @@
   </style>
 </head>
 <body>
-  <iframe src="./workbench-launcher.html?review=1&amp;v=daa473fa" title="Lightchain 功能首页 UI 评审原型"></iframe>
+  <iframe id="prototype-frame" title="Lightchain 功能首页 UI 评审原型"></iframe>
+  <script>
+    document.querySelector("#prototype-frame").src =
+      `./workbench-launcher.html?review=1&v=${Date.now()}`;
+  </script>
 </body>
 </html>
