@@ -814,6 +814,110 @@
       font-size: 13px;
     }
     .create-profile-actions .primary { border-color: #20d0c4; color: #111312; background: #20d0c4; font-weight: 600; }
+    .create-stepper { display: flex; align-items: center; gap: 10px; margin: 22px 0 26px; color: #727b77; font-size: 12px; }
+    .create-stepper span { display: inline-flex; align-items: center; gap: 7px; }
+    .create-stepper i { display: grid; place-items: center; width: 24px; height: 24px; border: 1px solid #3b423f; border-radius: 50%; font-style: normal; }
+    .create-stepper span.active { color: #90f0e4; }
+    .create-stepper span.active i { border-color: #20d0c4; background: #203634; }
+    .create-stepper b { width: 46px; height: 1px; background: #323835; }
+    .create-step[hidden] { display: none; }
+    .type-validation { min-height: 18px; margin: 10px 0 0; color: #e98080; font-size: 12px; }
+    .step-two-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 20px; }
+    .upload-large {
+      display: grid;
+      place-items: center;
+      min-height: 326px;
+      padding: 30px;
+      border: 1px dashed #43504b;
+      border-radius: 12px;
+      color: #a6afab;
+      background: #1d2220;
+      text-align: center;
+    }
+    .upload-large strong { display: block; margin-bottom: 10px; color: #eaf0ee; font-size: 15px; }
+    .upload-large p { max-width: 330px; margin: 5px 0; font-size: 12px; line-height: 20px; }
+    .upload-large button { margin-top: 18px; height: 34px; padding: 0 16px; border: 1px solid #3d4743; border-radius: 8px; color: #eaf0ee; background: #252a28; }
+    .required-mark { color: #e98080; }
+    .tag-input-wrap { min-height: 38px; padding: 5px 7px; border: 1px solid #323835; border-radius: 8px; background: #252a28; }
+    .tag-list { display: inline-flex; flex-wrap: wrap; gap: 5px; vertical-align: middle; }
+    .tag-item { display: inline-flex; align-items: center; gap: 5px; min-height: 25px; padding: 0 8px; border-radius: 13px; color: #c8d0cd; background: #303735; font-size: 11px; }
+    .tag-item button { padding: 0; border: 0; color: #87918d; background: none; }
+    .tag-input-wrap input { display: inline-block; width: 150px; min-height: 26px; padding: 0 5px; border: 0; background: transparent; }
+    .tag-suggestions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 7px; }
+    .tag-suggestions button { padding: 4px 8px; border: 1px solid #39413e; border-radius: 12px; color: #919b97; background: transparent; font-size: 10px; }
+    .price-row { display: grid; grid-template-columns: 1fr 18px 1fr 92px; align-items: center; gap: 7px; }
+    .draft-card { padding: 24px; border: 1px solid #323835; border-radius: 12px; background: #202423; }
+    .draft-card-head { display: flex; align-items: center; gap: 10px; }
+    .draft-card-head h3 { margin: 0; font-size: 19px; }
+    .draft-card dl { display: grid; grid-template-columns: 130px 1fr; gap: 12px; margin: 22px 0; font-size: 13px; }
+    .draft-card dt { color: #8d9793; }
+    .draft-card dd { margin: 0; color: #e0e6e4; }
+    .status-chip { display: inline-flex; align-items: center; min-height: 26px; padding: 0 9px; border: 1px solid #35615d; border-radius: 13px; color: #90f0e4; background: #203634; font-size: 11px; }
+    .profile-card { cursor: pointer; }
+    .profile-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .profile-card { min-height: 174px; }
+    .profile-card-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; }
+    .completion { color: #90f0e4; font-size: 11px; }
+    .updated-at { color: #727b77; font-size: 11px; }
+    .profile-more { align-self: flex-start; width: 34px; height: 32px; border: 1px solid #323835; border-radius: 7px; color: #a6afab; background: #252a28; }
+    .profile-menu { position: absolute; z-index: 25; width: 150px; padding: 5px; border: 1px solid #3a413e; border-radius: 8px; background: #272c2a; box-shadow: 0 12px 28px #0008; }
+    .profile-menu button { width: 100%; padding: 8px 10px; border: 0; border-radius: 5px; color: #dce3e0; background: transparent; text-align: left; font-size: 12px; }
+    .profile-menu button:hover { background: #343a37; }
+    .profile-menu button.danger { color: #e98080; }
+    .archive-overlay { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; padding: 24px; background: rgba(0,0,0,.68); }
+    .archive-overlay[hidden] { display: none; }
+    .archive-dialog { width: min(760px, calc(100vw - 48px)); max-height: calc(100vh - 48px); overflow: auto; padding: 22px; border: 1px solid #3a423f; border-radius: 12px; background: #202423; box-shadow: 0 22px 70px #000a; }
+    .archive-dialog.wide { width: min(1040px, calc(100vw - 48px)); }
+    .archive-dialog h2 { margin: 0; font-size: 19px; }
+    .archive-dialog > p { margin: 7px 0 18px; color: #a6afab; font-size: 12px; }
+    .dialog-actions { display: flex; justify-content: flex-end; gap: 9px; margin-top: 20px; }
+    .dialog-actions button { height: 35px; padding: 0 15px; border: 1px solid #3a423f; border-radius: 7px; color: #eaf0ee; background: #272d2a; }
+    .dialog-actions .primary { border-color: #20d0c4; color: #101211; background: #20d0c4; }
+    .dialog-actions .danger { border-color: #844848; color: #f0a0a0; background: #3a2424; }
+    .upload-dropzone { padding: 26px; border: 1px dashed #43504b; border-radius: 10px; text-align: center; }
+    .file-list { display: grid; gap: 8px; margin-top: 14px; }
+    .file-row { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 12px; padding: 10px 12px; border: 1px solid #323835; border-radius: 8px; background: #252a28; font-size: 12px; }
+    .file-status { color: #90f0e4; }
+    .mapping-layout { display: grid; grid-template-columns: 200px 1fr; gap: 18px; }
+    .mapping-nav { display: grid; align-content: start; gap: 5px; }
+    .mapping-nav button { padding: 9px 10px; border: 0; border-radius: 6px; color: #a6afab; background: transparent; text-align: left; }
+    .mapping-nav button.active { color: #90f0e4; background: #203634; }
+    .mapping-list { display: grid; gap: 8px; }
+    .mapping-row { display: grid; grid-template-columns: 24px 120px 1fr 120px 64px; gap: 9px; align-items: center; padding: 10px; border: 1px solid #323835; border-radius: 8px; font-size: 11px; }
+    .conflict { color: #f2b36f; }
+    .profile-detail-page, .task-workbench-page { position: fixed; inset: 0 0 0 246px; z-index: 84; padding: 54px; overflow: auto; background: #151716; }
+    .profile-detail-page[hidden], .task-workbench-page[hidden] { display: none; }
+    body.sidebar-collapsed .profile-detail-page, body.sidebar-collapsed .task-workbench-page { left: 64px; }
+    .detail-wrap { width: min(1080px, 100%); margin: 0 auto; }
+    .detail-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
+    .detail-top h2 { margin: 8px 0; font-size: 24px; }
+    .detail-actions { display: flex; gap: 8px; }
+    .detail-actions button, .back-list { height: 35px; padding: 0 13px; border: 1px solid #3a423f; border-radius: 7px; color: #eaf0ee; background: #252a28; }
+    .module-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 24px; }
+    .module-card { min-height: 174px; padding: 17px; border: 1px solid #323835; border-radius: 11px; background: #202423; }
+    .module-card-head { display: flex; justify-content: space-between; gap: 14px; }
+    .module-card h3 { margin: 0; font-size: 14px; }
+    .module-card p { color: #a6afab; font-size: 12px; line-height: 20px; }
+    .module-edit { border: 0; color: #90f0e4; background: transparent; }
+    .source-link { border: 0; color: #7fd8cf; background: transparent; font-size: 11px; }
+    .drawer-backdrop { position: fixed; inset: 0; z-index: 220; background: rgba(0,0,0,.55); }
+    .drawer-backdrop[hidden] { display: none; }
+    .edit-drawer { position: absolute; inset: 0 0 0 auto; width: min(560px, 44vw); padding: 22px; overflow: auto; border-left: 1px solid #3a423f; background: #202423; }
+    .drawer-head { display: flex; justify-content: space-between; align-items: center; }
+    .drawer-form { display: grid; gap: 14px; margin-top: 22px; }
+    .drawer-actions { position: sticky; bottom: -22px; display: flex; justify-content: flex-end; gap: 9px; margin: 30px -22px -22px; padding: 14px 22px; border-top: 1px solid #323835; background: #202423; }
+    .task-layout { display: grid; grid-template-columns: minmax(0,1fr) 290px; gap: 18px; width: min(1120px,100%); margin: 0 auto; }
+    .task-context { display: flex; justify-content: space-between; padding: 12px 14px; border: 1px solid #323835; border-radius: 9px; background: #202423; }
+    .task-chat { min-height: 560px; margin-top: 12px; padding: 18px; border: 1px solid #323835; border-radius: 10px; background: #1b1e1d; }
+    .system-message { margin: 10px 0; padding: 10px 12px; border-radius: 8px; color: #cbd4d1; background: #252a28; font-size: 12px; }
+    .task-side { padding: 16px; border: 1px solid #323835; border-radius: 10px; background: #202423; }
+    .task-step { padding: 10px 0; border-bottom: 1px solid #303633; color: #a6afab; font-size: 12px; }
+    .task-step.rerun { color: #f2b36f; }
+    .task-step.updated { color: #90f0e4; }
+    @media (max-width: 980px) {
+      .profile-list, .module-grid, .step-two-grid { grid-template-columns: 1fr; }
+      .profile-type-options { grid-template-columns: 1fr 1fr; }
+    }
     .toast {
       position: fixed;
       left: calc(50% + 123px);
@@ -1078,7 +1182,7 @@
       <div class="profile-header">
         <div class="profile-heading">
           <h2 id="profile-page-title">企业灵感档案</h2>
-          <p id="profile-page-desc">管理长期稳定的企业信息；任务开始前，可在任务输入区选择一个档案。</p>
+          <p id="profile-page-desc">保存长期稳定的市场、品类、风格和经营边界，供任务自动应用。</p>
         </div>
         <button class="new-profile" id="new-profile">＋ 新建档案</button>
       </div>
@@ -1104,76 +1208,220 @@
     <section class="profile-create-page" id="profile-create-page" hidden>
       <div class="create-profile-wrap">
         <h2>新建企业灵感档案</h2>
-        <p class="create-profile-intro">先选择档案类型，再填写长期稳定的信息；系统将生成结构化档案草稿供你确认。</p>
+        <p class="create-profile-intro">用最少的必要信息建立基础画像，也可以上传既有资料自动补充。</p>
+        <div class="create-stepper">
+          <span class="active" data-step-indicator="1"><i>1</i>选择类型</span><b></b>
+          <span data-step-indicator="2"><i>2</i>创建基础画像</span><b></b>
+          <span data-step-indicator="3"><i>3</i>确认并保存</span>
+        </div>
 
-        <section class="create-section">
-          <h3>1. 选择档案类型</h3>
-          <p class="create-section-desc">每个档案只能对应一种类型；后续可以继续新建其他类型的档案。</p>
+        <section class="create-step" data-create-step="1">
+          <section class="create-section">
+          <h3>选择档案类型</h3>
+          <p class="create-section-desc">每个档案只能对应一种类型。保存后不可直接修改类型；如判断错误，可复制为新档案。</p>
           <div class="profile-type-options" role="radiogroup" aria-label="档案类型">
             <button class="profile-type-option" type="button" data-profile-type="电商">
-              <strong>电商</strong><span>以平台、价格带、商品与内容表达为主</span>
+              <strong>电商</strong><span>用于选品、测款、店铺经营与平台商品判断</span>
             </button>
             <button class="profile-type-option" type="button" data-profile-type="线下零售">
-              <strong>线下零售</strong><span>以区域门店、上新波段和补货方式为主</span>
+              <strong>线下零售</strong><span>用于门店货品规划、上新节奏与售罄复盘</span>
             </button>
-            <button class="profile-type-option active" type="button" data-profile-type="品牌/OBM">
-              <strong>✓ 品牌 / OBM</strong><span>以产品线、企划节奏与产品能力为主</span>
+            <button class="profile-type-option" type="button" data-profile-type="品牌/OBM">
+              <strong>品牌 / OBM</strong><span>用于季节企划、产品线规划与品牌一致性管理</span>
             </button>
             <button class="profile-type-option" type="button" data-profile-type="ODM/OEM">
-              <strong>ODM / OEM</strong><span>以客户服务、开发能力、工艺与交期为主</span>
+              <strong>ODM / OEM</strong><span>用于客户提案、能力匹配与开发边界说明</span>
             </button>
+          </div>
+          <p class="type-validation" id="type-validation"></p>
+          </section>
+          <div class="create-profile-actions">
+            <button id="cancel-create-profile" type="button">取消</button>
+            <button class="primary" id="next-create-profile" type="button">下一步</button>
           </div>
         </section>
 
-        <section class="create-section">
-          <h3>2. 填写长期企业信息</h3>
-          <p class="create-section-desc" id="profile-fields-desc">以下包含通用字段；专属字段会随所选档案类型变化。</p>
+        <section class="create-step" data-create-step="2" hidden>
+          <div class="step-two-grid">
+            <section class="create-section">
+          <h3>基础信息</h3>
+          <p class="create-section-desc">先完成 4 个必填项，其他信息可在保存后继续补充。</p>
           <div class="profile-form-grid">
-            <div class="profile-field">
-              <label for="create-profile-name">档案名称</label>
-              <input id="create-profile-name" maxlength="40" placeholder="例如：春夏女装品牌档案">
+            <div class="profile-field full">
+              <label for="create-profile-name">档案名称 <span class="required-mark">*</span></label>
+              <input id="create-profile-name" maxlength="40" placeholder="例如：日本通勤女装档案">
             </div>
-            <div class="profile-field">
-              <label for="create-profile-market">常用市场 / 默认主地域</label>
+            <div class="profile-field full">
+              <label for="create-profile-market">默认主市场 <span class="required-mark">*</span></label>
               <select id="create-profile-market">
                 <option value="">请选择</option>
                 <option>中国</option><option>日本</option><option>北美</option><option>欧洲</option>
               </select>
             </div>
-            <div class="profile-field">
-              <label for="create-profile-scope">业务范围与定位</label>
-              <input id="create-profile-scope" placeholder="例如：都市女装 / 针织 / 通勤">
-            </div>
-            <div class="profile-field">
-              <label for="create-profile-audience">目标人群</label>
-              <input id="create-profile-audience" placeholder="例如：28–38 岁城市通勤女性">
-            </div>
-            <div class="profile-field">
-              <label for="create-profile-style">风格、颜色与视觉表达偏好</label>
-              <input id="create-profile-style" placeholder="例如：简约、低饱和色彩、自然光感">
-            </div>
-            <div class="profile-field">
-              <label for="create-profile-strength">设计强项</label>
-              <input id="create-profile-strength" placeholder="例如：轻结构针织、材质细节">
+            <div class="profile-field full">
+              <label for="create-profile-scope">核心业务 / 品类 <span class="required-mark">*</span></label>
+              <div class="tag-input-wrap" id="category-tag-input">
+                <span class="tag-list" id="category-tags"></span>
+                <input id="create-profile-scope" placeholder="输入后按 Enter">
+              </div>
+              <div class="tag-suggestions">
+                <button type="button" data-suggest-tag="女装">女装</button>
+                <button type="button" data-suggest-tag="针织">针织</button>
+                <button type="button" data-suggest-tag="通勤">通勤</button>
+                <button type="button" data-suggest-tag="轻户外">轻户外</button>
+              </div>
             </div>
             <div class="profile-field full">
-              <label for="create-profile-specific">品牌 / OBM 专属信息</label>
-              <textarea id="create-profile-specific" placeholder="产品线、年度/季度节奏、经营目标、面料/工艺偏好及 MOQ、成本、打样、大货、交期约束"></textarea>
+              <label for="create-profile-audience">目标人群 <span class="required-mark">*</span></label>
+              <textarea id="create-profile-audience" placeholder="例如：25–35 岁东京都市通勤女性"></textarea>
+            </div>
+            <div class="profile-field full">
+              <label>价格带（选填）</label>
+              <div class="price-row">
+                <input id="price-min" type="number" placeholder="最低价"><span>—</span>
+                <input id="price-max" type="number" placeholder="最高价">
+                <select id="price-currency"><option>¥</option><option>JPY ¥</option><option>$</option><option>€</option></select>
+              </div>
+            </div>
+            <div class="profile-field full">
+              <label for="create-profile-positioning">一句话经营定位（选填）</label>
+              <textarea id="create-profile-positioning" placeholder="例如：中端都市通勤针织女装"></textarea>
             </div>
           </div>
-          <div class="profile-upload">
-            <span id="profile-upload-status">也可以上传销售、库存、企划、供应链等资料，由系统解析后生成草稿。</span>
-            <button id="upload-profile-material" type="button">上传资料</button>
-            <input id="profile-material-input" type="file" multiple hidden>
+            </section>
+            <section class="upload-large">
+              <div>
+                <strong>上传现有资料，自动补充企业画像</strong>
+                <p>支持 PDF、PPT、Word、Excel、CSV、图片</p>
+                <p>可上传销售复盘、商品企划、品牌手册、客户提案、面料资料、款式图</p>
+                <button id="upload-profile-material" type="button">上传资料</button>
+                <p id="profile-upload-status"></p>
+              </div>
+            </section>
+          </div>
+          <div class="create-profile-actions">
+            <button id="back-create-type" type="button">返回上一步</button>
+            <button class="primary" id="generate-profile-draft" type="button">生成档案草稿</button>
           </div>
         </section>
 
-        <div class="create-profile-actions">
-          <button id="cancel-create-profile" type="button">取消</button>
-          <button class="primary" id="generate-profile-draft" type="button">生成档案草稿</button>
-        </div>
+        <section class="create-step" data-create-step="3" hidden>
+          <div class="draft-card">
+            <div class="draft-card-head"><h3 id="draft-name">档案草稿</h3><span class="status-chip" id="draft-type"></span></div>
+            <dl>
+              <dt>默认主市场</dt><dd id="draft-market"></dd>
+              <dt>核心品类</dt><dd id="draft-categories"></dd>
+              <dt>目标人群</dt><dd id="draft-audience"></dd>
+              <dt>价格带</dt><dd id="draft-price"></dd>
+            </dl>
+            <p class="create-section-desc">系统已基于你的输入生成企业画像草稿。保存后可以继续补充各模块信息。</p>
+          </div>
+          <div class="create-profile-actions">
+            <button id="back-create-edit" type="button">返回修改</button>
+            <button class="primary" id="save-profile" type="button">保存档案</button>
+          </div>
+        </section>
       </div>
     </section>
+    <section class="profile-detail-page" id="profile-detail-page" hidden>
+      <div class="detail-wrap">
+        <button class="back-list" id="back-profile-list">← 返回企业档案列表</button>
+        <div class="detail-top">
+          <div>
+            <h2 id="detail-name"></h2>
+            <div><span class="status-chip" id="detail-type"></span> <span class="status-chip" id="detail-completion"></span></div>
+            <p class="profile-summary" id="detail-meta"></p>
+          </div>
+          <div class="detail-actions">
+            <button id="detail-upload">从资料补充</button>
+            <button id="detail-more">··· 更多</button>
+          </div>
+        </div>
+        <div class="module-grid" id="module-grid"></div>
+      </div>
+    </section>
+    <section class="task-workbench-page" id="task-workbench-page" hidden>
+      <div class="task-layout">
+        <div>
+          <div class="task-context">
+            <span>当前场景：<b id="task-scene">新品方向探索-企划</b></span>
+            <label>企业档案：
+              <select id="task-profile-select" aria-label="任务企业档案"></select>
+            </label>
+          </div>
+          <div class="task-chat" id="task-chat">
+            <div class="system-message">请选择企业档案。任务开始前可直接切换；任务开始后切换会说明受影响步骤。</div>
+            <button id="simulate-task-start">模拟任务已启动</button>
+          </div>
+        </div>
+        <aside class="task-side">
+          <h3>任务步骤</h3>
+          <div class="task-step">目标人群与市场假设</div>
+          <div class="task-step">品类与价格带判断</div>
+          <div class="task-step">风格与视觉方向</div>
+        </aside>
+      </div>
+    </section>
+    <div class="archive-overlay" id="upload-modal" hidden>
+      <div class="archive-dialog">
+        <h2>从资料补充企业画像</h2>
+        <p>解析后由你确认哪些信息写入档案。</p>
+        <div class="upload-dropzone">
+          <strong>拖拽文件到这里，或点击添加模拟资料</strong><br>
+          <button id="add-mock-files">添加模拟资料</button>
+        </div>
+        <div class="file-list" id="upload-file-list"></div>
+        <div class="dialog-actions">
+          <button id="close-upload-modal">取消</button>
+          <button class="primary" id="start-parse" disabled>开始解析</button>
+        </div>
+      </div>
+    </div>
+    <div class="archive-overlay" id="mapping-modal" hidden>
+      <div class="archive-dialog wide">
+        <h2>确认资料解析结果</h2>
+        <p>选择需要回填的字段；冲突内容默认不勾选。</p>
+        <div class="mapping-layout">
+          <nav class="mapping-nav">
+            <button class="active">已识别业务信息</button><button>风格与视觉偏好</button>
+            <button>类型专属信息</button><button>待确认与冲突项</button>
+          </nav>
+          <div class="mapping-list" id="mapping-list"></div>
+        </div>
+        <div class="dialog-actions">
+          <button id="apply-high-confidence">全部应用</button>
+          <button id="close-mapping-modal">关闭</button>
+          <button class="primary" id="apply-mapping">应用已选字段</button>
+        </div>
+      </div>
+    </div>
+    <div class="archive-overlay" id="source-modal" hidden>
+      <div class="archive-dialog">
+        <h2>资料来源</h2>
+        <p>查看原始资料、解析时间及已引用字段。</p>
+        <div class="file-list" id="source-file-list"></div>
+        <div class="dialog-actions"><button id="close-source-modal">关闭</button></div>
+      </div>
+    </div>
+    <div class="archive-overlay" id="switch-profile-modal" hidden>
+      <div class="archive-dialog">
+        <h2>切换企业档案？</h2>
+        <p id="switch-profile-copy"></p>
+        <ul><li>目标人群与市场假设</li><li>品类与价格带判断</li><li>风格与视觉方向</li></ul>
+        <p>已上传的本任务资料和历史对话将保留。</p>
+        <div class="dialog-actions"><button id="cancel-profile-switch">取消</button><button class="primary" id="confirm-profile-switch">确认切换并更新</button></div>
+      </div>
+    </div>
+    <div class="drawer-backdrop" id="edit-drawer-backdrop" hidden>
+      <aside class="edit-drawer">
+        <div class="drawer-head"><h2 id="drawer-title">编辑模块</h2><button id="close-edit-drawer">×</button></div>
+        <div class="drawer-form">
+          <div class="profile-field"><label for="drawer-summary">模块内容</label><textarea id="drawer-summary"></textarea></div>
+          <button id="drawer-upload">从资料补充</button>
+        </div>
+        <div class="drawer-actions"><button id="cancel-drawer">取消</button><button class="primary" id="save-drawer">保存修改</button></div>
+      </aside>
+    </div>
     <div class="modal-backdrop" id="project-modal" hidden>
       <div class="modal" role="dialog" aria-modal="true" aria-labelledby="project-modal-title">
         <h2 id="project-modal-title">创建项目</h2>
@@ -1238,6 +1486,8 @@
       setSidebarCollapsed(false);
       document.querySelector("#profile-page").hidden = true;
       document.querySelector("#profile-create-page").hidden = true;
+      document.querySelector("#profile-detail-page").hidden = true;
+      document.querySelector("#task-workbench-page").hidden = true;
       document.querySelector(".nav-item.active")?.classList.remove("active");
       document.querySelector("#new-task-nav").classList.add("active");
       document.querySelector(".scene-tab.active")?.classList.remove("active");
@@ -1253,6 +1503,8 @@
     document.querySelector("#archive-nav").addEventListener("click", () => {
       setSidebarCollapsed(false);
       document.querySelector("#profile-create-page").hidden = true;
+      document.querySelector("#profile-detail-page").hidden = true;
+      document.querySelector("#task-workbench-page").hidden = true;
       document.querySelector("#profile-page").hidden = false;
       renderProfiles();
     });
@@ -1272,31 +1524,19 @@
         showToast("请先描述你的任务目标");
         return;
       }
-      showToast("任务发起后的交互等待下一步对齐");
+      const sceneNames = {selection:"选品推荐",planning:"新品方向探索-企划",proposal:"客户提案生成",variation:"款式裂变"};
+      document.querySelector("#task-scene").textContent = sceneNames[document.querySelector(".scene-tab.active").dataset.scene];
+      document.querySelector("#task-workbench-page").hidden = false;
+      document.querySelector("#profile-page").hidden = true;
+      document.querySelector("#profile-create-page").hidden = true;
+      document.querySelector("#profile-detail-page").hidden = true;
     });
 
     let archives = [
-      {
-        id: "archive-1",
-        name: "春夏女装品牌档案",
-        type: "品牌/OBM",
-        market: "中国",
-        summary: "简约、柔和、都市感 · 低饱和色彩"
-      },
-      {
-        id: "archive-2",
-        name: "淘系通勤女装档案",
-        type: "电商",
-        market: "中国",
-        summary: "价格带 199–299 元 · 通勤风 · 图文电商表达"
-      },
-      {
-        id: "archive-3",
-        name: "日本买手店合作档案",
-        type: "ODM/OEM",
-        market: "日本",
-        summary: "日系轻松感 · 小批量开发 · 参考图优先"
-      }
+      { id:"archive-1", name:"日本通勤女装档案", type:"电商", market:"日本", categories:["女装","针织","通勤"], completion:72, updated:"2026-07-31", audience:"25–35 岁东京都市通勤女性", price:"JPY ¥8,000 – ¥18,000", positioning:"中端都市通勤针织女装" },
+      { id:"archive-2", name:"华东轻奢女装门店档案", type:"线下零售", market:"中国", categories:["女装","连衣裙","针织"], completion:58, updated:"2026-07-28", audience:"28–42 岁华东城市女性", price:"¥699 – ¥1,899", positioning:"区域轻奢女装门店货品规划" },
+      { id:"archive-3", name:"北美轻户外品牌档案", type:"品牌/OBM", market:"北美", categories:["女装","轻户外","功能外套"], completion:86, updated:"2026-07-30", audience:"25–40 岁北美城市户外女性", price:"$80 – $260", positioning:"城市与周末轻户外生活方式品牌" },
+      { id:"archive-4", name:"欧美快反开发档案", type:"ODM/OEM", market:"欧洲", categories:["女装","梭织","快返开发"], completion:64, updated:"2026-07-26", audience:"欧洲中端女装品牌客户", price:"€18 – €55 FOB", positioning:"小单快反女装开发与交付" }
     ];
     const archivePrompt = document.querySelector("#archive-prompt");
     const archiveSelector = document.querySelector(".archive-select");
@@ -1308,8 +1548,9 @@
     function renderArchiveState() {
       archivePrompt.hidden = archives.length > 0;
       archiveSelector.innerHTML = archives.length
-        ? `<option>企业灵感档案</option><option>暂不使用档案</option>${archives.map((item) => `<option>${item.name}</option>`).join("")}`
+        ? `<option value="">企业灵感档案</option><option value="none">暂不使用档案</option>${archives.map((item) => `<option value="${item.id}">${item.name}</option>`).join("")}`
         : "<option>暂无企业档案</option>";
+      renderTaskProfileOptions();
     }
     renderArchiveState();
 
@@ -1328,71 +1569,79 @@
           <article class="profile-card" data-profile-id="${item.id}">
             <div>
               <h3>${item.name}</h3>
-              <p class="profile-summary">${item.summary}</p>
               <div class="profile-meta">
                 <span class="profile-chip">${item.type}</span>
                 <span class="profile-chip">主市场：${item.market}</span>
+                ${item.categories.map((tag) => `<span class="profile-chip">${tag}</span>`).join("")}
+              </div>
+              <div class="profile-card-footer">
+                <span class="completion">完整度 ${item.completion}%</span>
+                <span class="updated-at">最近更新：${item.updated}</span>
               </div>
             </div>
             <div class="profile-actions">
-              <button class="profile-action edit-profile" data-profile-id="${item.id}">查看</button>
-              <button class="profile-action delete delete-profile" data-profile-id="${item.id}">删除</button>
+              <button class="profile-more" data-profile-id="${item.id}" aria-label="更多操作">···</button>
             </div>
           </article>
         `).join("")
-        : '<div class="profile-empty">没有匹配的企业档案</div>';
+        : `<div class="profile-empty"><strong>还没有企业档案</strong><br>先建立长期业务上下文，让每次任务更贴近你的市场、品类与经营边界。<br><button id="empty-new-profile">新建第一个档案</button></div>`;
     }
 
     [profileSearch, profileTypeFilter, profileMarketFilter].forEach((control) => {
       control.addEventListener(control === profileSearch ? "input" : "change", renderProfiles);
     });
 
-    document.querySelector("#new-profile").addEventListener("click", () => {
+    function resetCreateForm() {
+      selectedProfileType = "";
+      categoryTags = [];
+      document.querySelectorAll(".profile-type-option").forEach((item) => {
+        item.classList.remove("active");
+        item.querySelector("strong").textContent = item.querySelector("strong").textContent.replace(/^✓\s*/, "");
+      });
+      ["#create-profile-name","#create-profile-scope","#create-profile-audience","#price-min","#price-max","#create-profile-positioning"].forEach((selector) => document.querySelector(selector).value = "");
+      document.querySelector("#create-profile-market").value = "";
+      document.querySelector("#type-validation").textContent = "";
+      document.querySelector("#profile-upload-status").textContent = "";
+      renderCategoryTags();
+      showCreateStep(1);
+    }
+
+    function openProfileCreation() {
+      resetCreateForm();
       document.querySelector("#profile-page").hidden = true;
+      document.querySelector("#profile-detail-page").hidden = true;
       document.querySelector("#profile-create-page").hidden = false;
-    });
+    }
+    document.querySelector("#new-profile").addEventListener("click", openProfileCreation);
 
     profileList.addEventListener("click", (event) => {
-      const editButton = event.target.closest(".edit-profile");
-      const deleteButton = event.target.closest(".delete-profile");
-      if (editButton) {
-        showToast("进入企业档案详情页：页面交互待下一步对齐");
+      const emptyButton = event.target.closest("#empty-new-profile");
+      if (emptyButton) { openProfileCreation(); return; }
+      const moreButton = event.target.closest(".profile-more");
+      const card = event.target.closest(".profile-card");
+      if (moreButton) {
+        event.stopPropagation();
+        openProfileMenu(moreButton);
         return;
       }
-      if (!deleteButton) return;
-      const profile = archives.find((item) => item.id === deleteButton.dataset.profileId);
-      if (!profile || !confirm(`确认删除“${profile.name}”吗？删除后不可恢复。`)) return;
-      archives = archives.filter((item) => item.id !== profile.id);
-      renderProfiles();
-      renderArchiveState();
-      showToast(`已删除 ${profile.name}`);
+      if (card) openProfileDetail(card.dataset.profileId);
     });
 
-    document.querySelector(".create").addEventListener("click", () => {
-      document.querySelector("#profile-page").hidden = true;
-      document.querySelector("#profile-create-page").hidden = false;
-    });
+    document.querySelector(".create").addEventListener("click", openProfileCreation);
 
-    const profileTypeDetails = {
-      "电商": {
-        title: "电商专属信息",
-        placeholder: "平台、店铺别名/链接、经营模式、过往爆款、销售/库存资料、更新频率与快返能力"
-      },
-      "线下零售": {
-        title: "线下零售专属信息",
-        placeholder: "区域与门店类型、销售/售罄/库存资料、门店反馈、上新波段、陈列与补货方式"
-      },
-      "品牌/OBM": {
-        title: "品牌 / OBM 专属信息",
-        placeholder: "产品线、年度/季度节奏、经营目标、面料/工艺偏好及 MOQ、成本、打样、大货、交期约束"
-      },
-      "ODM/OEM": {
-        title: "ODM / OEM 专属信息",
-        placeholder: "服务模式、目标客户类型、优势品类、面料/工艺能力、MOQ、打样与生产周期、产能、案例、合规能力"
-      }
-    };
-    let selectedProfileType = "品牌/OBM";
-    const profileSpecific = document.querySelector("#create-profile-specific");
+    let selectedProfileType = "";
+    let categoryTags = [];
+    let uploadReturnContext = "create";
+    let currentProfileId = null;
+    let currentModuleTitle = "";
+    let taskStarted = false;
+    let activeTaskProfileId = "";
+    let pendingTaskProfileId = "";
+
+    function showCreateStep(step) {
+      document.querySelectorAll("[data-create-step]").forEach((panel) => panel.hidden = Number(panel.dataset.createStep) !== step);
+      document.querySelectorAll("[data-step-indicator]").forEach((item) => item.classList.toggle("active", Number(item.dataset.stepIndicator) <= step));
+    }
 
     document.querySelectorAll(".profile-type-option").forEach((option) => {
       option.addEventListener("click", () => {
@@ -1403,35 +1652,297 @@
           label.textContent = label.textContent.replace(/^✓\s*/, "");
         });
         option.querySelector("strong").textContent = `✓ ${option.querySelector("strong").textContent}`;
-        const detail = profileTypeDetails[selectedProfileType];
-        profileSpecific.closest(".profile-field").querySelector("label").textContent = detail.title;
-        profileSpecific.placeholder = detail.placeholder;
+        document.querySelector("#type-validation").textContent = "";
       });
     });
 
-    document.querySelector("#upload-profile-material").addEventListener("click", () => {
-      document.querySelector("#profile-material-input").click();
+    document.querySelector("#next-create-profile").addEventListener("click", () => {
+      if (!selectedProfileType) {
+        document.querySelector("#type-validation").textContent = "请选择档案类型。";
+        return;
+      }
+      showCreateStep(2);
     });
-    document.querySelector("#profile-material-input").addEventListener("change", (event) => {
-      const count = event.target.files.length;
-      document.querySelector("#profile-upload-status").textContent = count
-        ? `已选择 ${count} 个资料文件；生成草稿时将一并解析。`
-        : "也可以上传销售、库存、企划、供应链等资料，由系统解析后生成草稿。";
+
+    const categoryInput = document.querySelector("#create-profile-scope");
+    function addCategoryTag(value) {
+      const tag = value.trim();
+      if (!tag || categoryTags.includes(tag)) return;
+      categoryTags.push(tag);
+      renderCategoryTags();
+      categoryInput.value = "";
+    }
+    function renderCategoryTags() {
+      document.querySelector("#category-tags").innerHTML = categoryTags.map((tag) => `<span class="tag-item">${tag}<button type="button" data-remove-tag="${tag}">×</button></span>`).join("");
+    }
+    categoryInput.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") { event.preventDefault(); addCategoryTag(categoryInput.value); }
     });
+    document.querySelector(".tag-suggestions").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-suggest-tag]");
+      if (button) addCategoryTag(button.dataset.suggestTag);
+    });
+    document.querySelector("#category-tags").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-remove-tag]");
+      if (!button) return;
+      categoryTags = categoryTags.filter((tag) => tag !== button.dataset.removeTag);
+      renderCategoryTags();
+    });
+
+    document.querySelector("#upload-profile-material").addEventListener("click", () => openUploadModal("create"));
     document.querySelector("#cancel-create-profile").addEventListener("click", () => {
       document.querySelector("#profile-create-page").hidden = true;
       document.querySelector("#profile-page").hidden = false;
       renderProfiles();
     });
+    document.querySelector("#back-create-type").addEventListener("click", () => showCreateStep(1));
     document.querySelector("#generate-profile-draft").addEventListener("click", () => {
-      const nameInput = document.querySelector("#create-profile-name");
-      if (!nameInput.value.trim()) {
-        nameInput.focus();
-        showToast("请先填写档案名称");
+      const required = [
+        ["#create-profile-name", document.querySelector("#create-profile-name").value.trim()],
+        ["#create-profile-market", document.querySelector("#create-profile-market").value],
+        ["#create-profile-scope", categoryTags.length],
+        ["#create-profile-audience", document.querySelector("#create-profile-audience").value.trim()]
+      ];
+      const missing = required.find(([, value]) => !value);
+      if (missing) {
+        document.querySelector(missing[0]).focus();
+        showToast("请完成档案名称、默认主市场、核心业务/品类和目标人群");
         return;
       }
-      showToast(`正在生成“${nameInput.value.trim()}”档案草稿，确认页待下一步对齐`);
+      const button = event.currentTarget;
+      button.disabled = true;
+      button.textContent = "正在生成…";
+      setTimeout(() => {
+        document.querySelector("#draft-name").textContent = document.querySelector("#create-profile-name").value.trim();
+        document.querySelector("#draft-type").textContent = selectedProfileType;
+        document.querySelector("#draft-market").textContent = document.querySelector("#create-profile-market").value;
+        document.querySelector("#draft-categories").textContent = categoryTags.join(" / ");
+        document.querySelector("#draft-audience").textContent = document.querySelector("#create-profile-audience").value.trim();
+        const min = document.querySelector("#price-min").value, max = document.querySelector("#price-max").value, currency = document.querySelector("#price-currency").value;
+        document.querySelector("#draft-price").textContent = min || max ? `${currency}${min || "—"} – ${currency}${max || "—"}` : "待补充";
+        button.disabled = false;
+        button.textContent = "生成档案草稿";
+        showCreateStep(3);
+      }, 900);
     });
+    document.querySelector("#back-create-edit").addEventListener("click", () => showCreateStep(2));
+    document.querySelector("#save-profile").addEventListener("click", () => {
+      const min = document.querySelector("#price-min").value, max = document.querySelector("#price-max").value, currency = document.querySelector("#price-currency").value;
+      const item = {
+        id:`archive-${Date.now()}`, name:document.querySelector("#create-profile-name").value.trim(), type:selectedProfileType,
+        market:document.querySelector("#create-profile-market").value, categories:[...categoryTags], completion:46,
+        updated:"2026-07-31", audience:document.querySelector("#create-profile-audience").value.trim(),
+        price:min || max ? `${currency}${min || "—"} – ${currency}${max || "—"}` : "待补充",
+        positioning:document.querySelector("#create-profile-positioning").value.trim() || "待补充"
+      };
+      archives.unshift(item);
+      renderArchiveState();
+      showToast("企业档案已保存。");
+      openProfileDetail(item.id);
+    });
+
+    function openProfileMenu(button) {
+      document.querySelector(".profile-menu")?.remove();
+      const item = archives.find((entry) => entry.id === button.dataset.profileId);
+      const menu = document.createElement("div");
+      menu.className = "profile-menu";
+      const rect = button.getBoundingClientRect();
+      menu.style.left = `${Math.min(innerWidth - 164, rect.right - 150)}px`;
+      menu.style.top = `${rect.bottom + 5}px`;
+      menu.innerHTML = `<button data-action="rename">重命名</button><button data-action="copy">复制为新档案</button><button class="danger" data-action="delete">删除</button>`;
+      menu.addEventListener("click", (event) => {
+        const action = event.target.dataset.action;
+        if (action === "rename") {
+          const name = window.prompt("输入新的档案名称", item.name);
+          if (name?.trim()) item.name = name.trim().slice(0, 40);
+        }
+        if (action === "copy") archives.unshift({...item, id:`archive-${Date.now()}`, name:`${item.name} 副本`, updated:"2026-07-31"});
+        if (action === "delete" && confirm(`确认删除“${item.name}”吗？`)) archives = archives.filter((entry) => entry.id !== item.id);
+        menu.remove(); renderProfiles(); renderArchiveState();
+      });
+      document.body.appendChild(menu);
+    }
+
+    const typeModuleTitles = {
+      "电商":"店铺经营与商品表现", "线下零售":"门店网络与货品节奏",
+      "品牌/OBM":"产品线与季节开发", "ODM/OEM":"服务能力与交付边界"
+    };
+    function openProfileDetail(id) {
+      currentProfileId = id;
+      const item = archives.find((entry) => entry.id === id);
+      if (!item) return;
+      document.querySelector("#profile-page").hidden = true;
+      document.querySelector("#profile-create-page").hidden = true;
+      document.querySelector("#profile-detail-page").hidden = false;
+      document.querySelector("#detail-name").textContent = item.name;
+      document.querySelector("#detail-type").textContent = item.type;
+      document.querySelector("#detail-completion").textContent = `完整度 ${item.completion}%`;
+      document.querySelector("#detail-meta").textContent = `默认主市场：${item.market} · 最近更新：${item.updated}`;
+      const modules = [
+        ["业务定位与目标人群",`${item.positioning}；${item.audience}；主市场 ${item.market}`],
+        ["商品与价格策略",`核心品类：${item.categories.join("、")}；价格带：${item.price}`],
+        ["风格与视觉偏好","简约、都市感、低饱和色彩；避免过度装饰与不适用气候的方向"],
+        ["渠道与经营节奏","主要渠道和上新节奏待继续补充"],
+        ["能力与约束","设计强项、供应链约束与禁止方向待继续补充"],
+        [typeModuleTitles[item.type], typeSpecificSummary(item.type)],
+        ["资料来源","4 个文件 · 最近解析：2026-07-31 · 已回填 9 个字段"]
+      ];
+      document.querySelector("#module-grid").innerHTML = modules.map(([title,summary], index) => `
+        <article class="module-card" data-module="${title}">
+          <div class="module-card-head"><h3>${title}</h3><span class="completion">${index === 6 ? "4 个文件" : `${Math.max(40,item.completion-index*4)}%`}</span></div>
+          <p>${summary}</p>
+          ${index === 6 ? `<button class="source-link">查看资料来源</button>` : `<button class="module-edit">编辑</button> <button class="source-link">来源：2027SS 商品企划.pdf</button>`}
+        </article>`).join("");
+    }
+    function typeSpecificSummary(type) {
+      return {
+        "电商":"淘宝、抖音电商；平台店与直播；历史爆款针织开衫；快返能力有限",
+        "线下零售":"华东商场店与直营网点；季度波段上新；现货补货与快返混合",
+        "品牌/OBM":"轻户外女装产品线；季度开发；功能面料；MOQ 与交期边界明确",
+        "ODM/OEM":"ODM、共同开发、快速打样；优势品类为女装梭织与快返开发"
+      }[type];
+    }
+    document.querySelector("#back-profile-list").addEventListener("click", () => {
+      document.querySelector("#profile-detail-page").hidden = true;
+      document.querySelector("#profile-page").hidden = false;
+      renderProfiles();
+    });
+    document.querySelector("#detail-upload").addEventListener("click", () => openUploadModal("detail"));
+    document.querySelector("#detail-more").addEventListener("click", (event) => {
+      const fake = event.currentTarget;
+      fake.dataset.profileId = currentProfileId;
+      openProfileMenu(fake);
+    });
+    document.querySelector("#module-grid").addEventListener("click", (event) => {
+      const card = event.target.closest(".module-card");
+      if (!card) return;
+      if (event.target.closest(".source-link") || card.dataset.module === "资料来源") { openSourceModal(); return; }
+      if (event.target.closest(".module-edit")) openEditDrawer(card);
+    });
+
+    function openEditDrawer(card) {
+      currentModuleTitle = card.dataset.module;
+      document.querySelector("#drawer-title").textContent = `编辑${currentModuleTitle}`;
+      document.querySelector("#drawer-summary").value = card.querySelector("p").textContent;
+      document.querySelector("#edit-drawer-backdrop").hidden = false;
+    }
+    function closeEditDrawer() { document.querySelector("#edit-drawer-backdrop").hidden = true; }
+    document.querySelector("#close-edit-drawer").addEventListener("click", closeEditDrawer);
+    document.querySelector("#cancel-drawer").addEventListener("click", closeEditDrawer);
+    document.querySelector("#save-drawer").addEventListener("click", () => {
+      const card = [...document.querySelectorAll(".module-card")].find((item) => item.dataset.module === currentModuleTitle);
+      card.querySelector("p").textContent = document.querySelector("#drawer-summary").value;
+      closeEditDrawer(); showToast("模块已更新。");
+    });
+    document.querySelector("#drawer-upload").addEventListener("click", () => openUploadModal("detail"));
+
+    const mockFiles = [
+      ["2027SS_商品企划.pdf","PDF · 4.8 MB"],["历史销售复盘.xlsx","Excel · 1.9 MB"],
+      ["客户提案参考.pptx","PPT · 6.2 MB"],["针织款式参考.jpg","Image · 2.1 MB"]
+    ];
+    function openUploadModal(context) {
+      uploadReturnContext = context;
+      document.querySelector("#upload-modal").hidden = false;
+      document.querySelector("#upload-file-list").innerHTML = "";
+      document.querySelector("#start-parse").disabled = true;
+      document.querySelector("#start-parse").textContent = "开始解析";
+    }
+    document.querySelector("#add-mock-files").addEventListener("click", () => {
+      document.querySelector("#upload-file-list").innerHTML = mockFiles.slice(0,2).map(([name,meta]) => `<div class="file-row"><span>${name}<small> · ${meta}</small></span><span class="file-status">待解析</span><button class="remove-file">删除</button></div>`).join("");
+      document.querySelector("#start-parse").disabled = false;
+    });
+    document.querySelector("#upload-file-list").addEventListener("click", (event) => {
+      if (event.target.closest(".remove-file")) event.target.closest(".file-row").remove();
+      document.querySelector("#start-parse").disabled = !document.querySelector("#upload-file-list .file-row");
+    });
+    document.querySelector("#close-upload-modal").addEventListener("click", () => document.querySelector("#upload-modal").hidden = true);
+    document.querySelector("#start-parse").addEventListener("click", (event) => {
+      const rows = [...document.querySelectorAll("#upload-file-list .file-status")];
+      const parseButton = event.currentTarget;
+      if (parseButton.textContent === "查看解析结果") {
+        document.querySelector("#upload-modal").hidden = true;
+        openMappingModal(); return;
+      }
+      rows.forEach((status) => status.textContent = "解析中");
+      parseButton.disabled = true;
+      setTimeout(() => {
+        rows.forEach((status) => status.textContent = "已完成");
+        parseButton.disabled = false;
+        parseButton.textContent = "查看解析结果";
+      }, 900);
+    });
+    function openMappingModal() {
+      const rows = [
+        {field:"默认主市场",value:"日本",source:"企划.pdf · P3",confidence:"高",checked:true},
+        {field:"核心品类",value:"女装、针织、通勤",source:"企划.pdf · P5",confidence:"高",checked:true},
+        {field:"目标人群",value:"25–35 岁东京都市通勤女性",source:"企划.pdf · P7",confidence:"高",checked:true},
+        {field:"价格带",value:"JPY ¥8,000–¥18,000",source:"销售复盘 · Sheet2",confidence:"中",checked:false,conflict:true}
+      ];
+      document.querySelector("#mapping-list").innerHTML = rows.map((row,index) => `<div class="mapping-row">
+        <input type="checkbox" data-map-index="${index}" ${row.checked?"checked":""}><b>${row.field}</b>
+        <input class="mapping-value" value="${row.value}"><button class="source-link">${row.source}</button>
+        <span class="${row.conflict?"conflict":""}">${row.conflict?"冲突":row.confidence}</span></div>`).join("");
+      document.querySelector("#mapping-modal").hidden = false;
+    }
+    document.querySelector("#close-mapping-modal").addEventListener("click", () => document.querySelector("#mapping-modal").hidden = true);
+    document.querySelector("#apply-high-confidence").addEventListener("click", () => {
+      document.querySelectorAll("#mapping-list input[type='checkbox']").forEach((box,index) => box.checked = index < 3);
+    });
+    document.querySelector("#apply-mapping").addEventListener("click", () => {
+      const checked = [...document.querySelectorAll("#mapping-list input[type='checkbox']")].map((box,index) => box.checked ? index : -1);
+      if (uploadReturnContext === "create") {
+        if (checked.includes(0)) document.querySelector("#create-profile-market").value = "日本";
+        if (checked.includes(1)) { categoryTags = ["女装","针织","通勤"]; renderCategoryTags(); }
+        if (checked.includes(2)) document.querySelector("#create-profile-audience").value = "25–35 岁东京都市通勤女性";
+        document.querySelector("#profile-upload-status").textContent = "已应用 3 个解析字段";
+      } else {
+        showToast("已将所选字段回填到企业档案。");
+      }
+      document.querySelector("#mapping-modal").hidden = true;
+    });
+    function openSourceModal() {
+      document.querySelector("#source-file-list").innerHTML = mockFiles.map(([name,meta],index) => `<div class="file-row"><span>${name}<small> · 上传于 2026-07-${28+index}</small></span><span>已回填 ${index+2} 个字段</span><button class="source-expand">展开</button></div>`).join("");
+      document.querySelector("#source-modal").hidden = false;
+    }
+    document.querySelector("#close-source-modal").addEventListener("click", () => document.querySelector("#source-modal").hidden = true);
+    document.querySelector("#source-file-list").addEventListener("click", (event) => {
+      const row = event.target.closest(".file-row");
+      if (event.target.closest(".source-expand")) row.insertAdjacentHTML("beforeend", `<div style="grid-column:1/-1;color:#a6afab">已提取：主市场、核心品类、目标人群；来源页码与文本摘录为模拟内容。</div>`);
+    });
+
+    function renderTaskProfileOptions() {
+      const select = document.querySelector("#task-profile-select");
+      if (!select) return;
+      select.innerHTML = `<option value="">请选择</option>${archives.map((item) => `<option value="${item.id}">${item.name} · ${item.type} · ${item.market}</option>`).join("")}<option value="new">＋ 新建企业档案</option>`;
+    }
+    document.querySelector("#task-profile-select").addEventListener("change", (event) => {
+      const nextId = event.target.value;
+      if (nextId === "new") { openProfileCreation(); event.target.value = activeTaskProfileId; return; }
+      if (!nextId) return;
+      if (!taskStarted || !activeTaskProfileId) { applyTaskProfile(nextId,false); return; }
+      pendingTaskProfileId = nextId;
+      const from = archives.find((item) => item.id === activeTaskProfileId), to = archives.find((item) => item.id === nextId);
+      document.querySelector("#switch-profile-copy").textContent = `你正在将“${from.name}”切换为“${to.name}”。以下已完成内容将受影响并重新生成：`;
+      document.querySelector("#switch-profile-modal").hidden = false;
+      event.target.value = activeTaskProfileId;
+    });
+    function applyTaskProfile(id,rerun) {
+      activeTaskProfileId = id;
+      document.querySelector("#task-profile-select").value = id;
+      const item = archives.find((entry) => entry.id === id);
+      document.querySelector("#task-chat").insertAdjacentHTML("beforeend", `<div class="system-message">${rerun?"已切换企业档案，正在更新受影响的分析步骤。":`已应用“${item.name}”。后续分析将参考其市场、品类、风格与经营边界。`}</div>`);
+      if (rerun) {
+        document.querySelectorAll(".task-step").forEach((step) => { step.className="task-step rerun"; step.textContent += " · 待重新运行"; });
+        setTimeout(() => document.querySelectorAll(".task-step").forEach((step) => { step.className="task-step updated"; step.textContent = step.textContent.replace(" · 待重新运行","") + " · 已按新档案更新"; }), 1100);
+      }
+    }
+    document.querySelector("#simulate-task-start").addEventListener("click", (event) => { taskStarted = true; event.currentTarget.textContent = "任务已启动"; event.currentTarget.disabled = true; });
+    document.querySelector("#cancel-profile-switch").addEventListener("click", () => document.querySelector("#switch-profile-modal").hidden = true);
+    document.querySelector("#confirm-profile-switch").addEventListener("click", () => {
+      document.querySelector("#switch-profile-modal").hidden = true;
+      applyTaskProfile(pendingTaskProfileId,true);
+    });
+    renderArchiveState();
 
     let historyItems = [
       { id: "p1", type: "project", name: "2027 春夏企划", editedAt: 1785376200000, expanded: true },
@@ -1634,7 +2145,9 @@
         "select",
         "textarea",
         "input:not([type='file'])",
-        ".history-row"
+        ".history-row",
+        ".profile-card",
+        ".module-card"
       ].join(",");
 
       const labelOf = (element) => {
@@ -1654,6 +2167,10 @@
         if (element.matches("select")) return element.multiple ? "多选下拉菜单" : "单选下拉菜单";
         if (element.matches(".profile-type-option")) return "卡片式单选按钮";
         if (element.matches(".scene-tab")) return "页签式单选按钮";
+        if (element.matches("input[type='checkbox']")) return "复选框";
+        if (element.matches(".tag-suggestions button, [data-remove-tag]")) return "标签操作按钮";
+        if (element.matches(".profile-card")) return "档案信息卡片";
+        if (element.matches(".module-card")) return "画像模块卡片";
         if (element.matches(".history-row.project")) return "可展开项目行";
         if (element.matches(".history-row")) return "可拖动任务行";
         if (element.matches(".search-result")) return "搜索结果按钮";
@@ -1672,6 +2189,17 @@
         if (element.matches("select")) return "状态切换：点击展开选项；选择一项后收起，并立即应用当前选项。";
         if (element.matches("#project-modal button, #confirm-project, #cancel-project")) return "状态切换：操作完成后关闭当前弹窗。";
         if (element.matches("#new-profile")) return "状态切换：点击由档案列表切换至新建档案页。";
+        if (element.matches("#next-create-profile")) return "状态切换：已选类型时进入第二步；未选择时停留当前步骤并显示校验提示。";
+        if (element.matches("#back-create-type")) return "状态切换：返回第一步，保留当前已填写内容。";
+        if (element.matches("#generate-profile-draft")) return "状态切换：完成必填项后进入生成状态，约 1 秒后展示第三步草稿预览。";
+        if (element.matches("#back-create-edit")) return "状态切换：返回第二步修改，并保留全部输入和资料回填内容。";
+        if (element.matches("#save-profile")) return "状态切换：保存档案后进入档案详情页，并显示保存成功提示。";
+        if (element.matches(".profile-card")) return "状态切换：点击卡片主体进入对应档案详情页。";
+        if (element.matches(".profile-more, #detail-more")) return "状态切换：点击打开更多菜单；点击菜单外或完成操作后关闭。";
+        if (element.matches(".module-edit")) return "状态切换：点击从右侧打开模块编辑抽屉；保存或取消后关闭。";
+        if (element.matches("#upload-profile-material, #detail-upload, #drawer-upload")) return "状态切换：点击打开上传资料弹窗；解析完成后进入字段映射确认弹窗。";
+        if (element.matches("#start-parse")) return "状态切换：开始解析后显示“解析中”；完成后按钮变为“查看解析结果”。";
+        if (element.matches("#task-profile-select")) return "状态切换：任务未启动时立即应用；任务已启动时先打开受影响步骤确认弹窗。";
         if (element.matches("#cancel-create-profile")) return "状态切换：点击关闭新建档案页并返回档案列表。";
         if (element.matches("#archive-nav")) return "状态切换：点击由当前页面切换至企业档案列表，并保持侧栏展开。";
         if (element.matches("#new-task-nav")) return "状态切换：点击返回功能首页初始状态。";
@@ -1688,11 +2216,21 @@
         if (element.matches(".search-result")) return "点击打开对应的历史任务或项目。具体打开后的页面交互待后续对齐。";
         if (element.matches("#new-task-nav")) return "点击返回功能首页初始状态：展开侧栏、清空当前输入和附件，并恢复“选品测款”默认场景。";
         if (element.matches("#archive-nav")) return "点击进入企业档案管理页。左侧栏保持首页结构，右侧展示档案名称搜索、类型/主市场筛选和档案列表。";
-        if (element.matches("#new-profile")) return "点击进入企业档案创建页。创建页字段与交互将在下一页面继续对齐。";
-        if (element.matches(".profile-type-option")) return "选择企业档案类型；每个档案只能对应一种类型，专属字段会随类型切换。";
-        if (element.matches("#upload-profile-material")) return "上传企业资料；系统将在生成档案草稿时解析资料内容。";
+        if (element.matches("#new-profile")) return "点击进入两步式企业档案创建流程，初始不预选档案类型。";
+        if (element.matches(".profile-type-option")) return "选择一种企业档案类型；保存后不可直接修改类型，如判断错误可复制为新档案。";
+        if (element.matches("#next-create-profile")) return "校验档案类型后进入基础画像填写步骤。";
+        if (element.matches("#upload-profile-material, #detail-upload, #drawer-upload")) return "打开模拟资料上传弹窗；支持添加文件、解析、确认字段映射并回填。";
         if (element.matches("#cancel-create-profile")) return "取消新建并返回企业档案列表，不保存当前填写内容。";
-        if (element.matches("#generate-profile-draft")) return "根据手动填写和上传资料生成结构化档案草稿；用户确认后才保存。";
+        if (element.matches("#generate-profile-draft")) return "校验档案名称、默认主市场、核心业务/品类和目标人群，再生成结构化档案草稿。";
+        if (element.matches("#save-profile")) return "保存草稿为企业档案并进入详情页。";
+        if (element.matches(".profile-card")) return "展示档案名称、类型、主市场、核心品类、完整度和最近更新日期；点击主体进入详情。";
+        if (element.matches(".profile-more")) return "打开档案操作菜单：重命名、复制为新档案、删除。";
+        if (element.matches(".module-edit")) return "打开当前画像模块的右侧编辑抽屉。";
+        if (element.matches(".source-link")) return "打开资料来源，查看文件、解析时间及已引用字段。";
+        if (element.matches("#start-parse")) return "模拟解析文件；完成后可查看字段映射、置信度与冲突项。";
+        if (element.matches("#apply-mapping")) return "应用已勾选字段，关闭确认弹窗并直接回填创建页或详情页。";
+        if (element.matches("#task-profile-select")) return "为当前任务选择一个企业档案；一个任务同一时刻只应用一个档案。";
+        if (element.matches("#confirm-profile-switch")) return "确认切换档案，保留历史对话与任务资料，仅模拟重跑受影响步骤。";
         if (element.matches("#profile-search")) return "按档案名称实时搜索企业档案。";
         if (element.matches("#profile-type-filter")) return "按电商、线下零售、品牌/OBM、ODM/OEM 类型筛选档案。";
         if (element.matches("#profile-market-filter")) return "按中国、日本、北美、欧洲主市场筛选档案。";
@@ -1728,7 +2266,7 @@
       };
 
       const belongsToCurrentPage = (element) => {
-        const openModal = [...document.querySelectorAll(".modal-backdrop")]
+        const openModal = [...document.querySelectorAll(".modal-backdrop, .archive-overlay, .drawer-backdrop")]
           .find((modal) => !modal.hidden && visible(modal));
         if (openModal) return openModal.contains(element);
 
@@ -1740,6 +2278,16 @@
         const profileCreatePage = document.querySelector("#profile-create-page");
         if (!profileCreatePage.hidden && visible(profileCreatePage)) {
           return profileCreatePage.contains(element) || !!element.closest(".sidebar");
+        }
+
+        const profileDetailPage = document.querySelector("#profile-detail-page");
+        if (!profileDetailPage.hidden && visible(profileDetailPage)) {
+          return profileDetailPage.contains(element) || !!element.closest(".sidebar");
+        }
+
+        const taskWorkbenchPage = document.querySelector("#task-workbench-page");
+        if (!taskWorkbenchPage.hidden && visible(taskWorkbenchPage)) {
+          return taskWorkbenchPage.contains(element) || !!element.closest(".sidebar");
         }
 
         return !!element.closest("main, .sidebar");
@@ -1832,6 +2380,8 @@
         ".history-row", ".prompt-box", ".scene-tabs", ".archive-prompt",
         ".search-panel", ".sidebar", ".launcher", ".profile-page", ".profile-card",
         ".profile-create-page", ".create-section", ".profile-type-options",
+        ".profile-detail-page", ".module-card", ".task-workbench-page",
+        ".archive-dialog", ".edit-drawer",
         ".modal", "h1", "main"
       ].join(","));
 
@@ -1859,6 +2409,9 @@
           ["#new-profile", "新建档案"],
           [".profile-card", "企业档案卡片"],
           [".profile-create-page", "新建企业档案页面"],
+          [".profile-detail-page", "企业档案详情页面"],
+          [".module-card", "企业画像模块卡片"],
+          [".task-workbench-page", "统一任务工作台"],
           [".profile-type-options", "档案类型选择"],
           ["#upload-profile-material", "上传企业资料"],
           ["#generate-profile-draft", "生成档案草稿"],
