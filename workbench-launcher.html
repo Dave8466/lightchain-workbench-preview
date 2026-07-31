@@ -665,7 +665,7 @@
       display: grid;
       gap: 12px;
       width: min(1000px, 100%);
-      margin: 0 auto;
+      margin: 30px auto 0;
     }
     .profile-card {
       display: grid;
@@ -855,7 +855,8 @@
     .status-chip { display: inline-flex; align-items: center; min-height: 26px; padding: 0 9px; border: 1px solid #35615d; border-radius: 13px; color: #90f0e4; background: #203634; font-size: 11px; }
     .profile-card { cursor: pointer; }
     .profile-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .profile-card { min-height: 174px; }
+    .profile-card { min-height: 112px; align-items: center; }
+    .profile-created-at { margin: 10px 0 0; color: #727b77; font-size: 12px; }
     .profile-card-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; }
     .completion { color: #90f0e4; font-size: 11px; }
     .updated-at { color: #727b77; font-size: 11px; }
@@ -1185,23 +1186,6 @@
           <p id="profile-page-desc">保存长期稳定的市场、品类、风格和经营边界，供任务自动应用。</p>
         </div>
         <button class="new-profile" id="new-profile">＋ 新建档案</button>
-      </div>
-      <div class="profile-toolbar">
-        <input id="profile-search" type="search" maxlength="40" placeholder="按档案名称搜索">
-        <select id="profile-type-filter" aria-label="按档案类型筛选">
-          <option value="">全部类型</option>
-          <option value="电商">电商</option>
-          <option value="线下零售">线下零售</option>
-          <option value="品牌/OBM">品牌 / OBM</option>
-          <option value="ODM/OEM">ODM / OEM</option>
-        </select>
-        <select id="profile-market-filter" aria-label="按主市场筛选">
-          <option value="">全部主市场</option>
-          <option value="中国">中国</option>
-          <option value="日本">日本</option>
-          <option value="北美">北美</option>
-          <option value="欧洲">欧洲</option>
-        </select>
       </div>
       <div class="profile-list" id="profile-list" aria-label="企业档案列表"></div>
     </section>
@@ -1533,17 +1517,14 @@
     });
 
     let archives = [
-      { id:"archive-1", name:"日本通勤女装档案", type:"电商", market:"日本", categories:["女装","针织","通勤"], completion:72, updated:"2026-07-31", audience:"25–35 岁东京都市通勤女性", price:"JPY ¥8,000 – ¥18,000", positioning:"中端都市通勤针织女装" },
-      { id:"archive-2", name:"华东轻奢女装门店档案", type:"线下零售", market:"中国", categories:["女装","连衣裙","针织"], completion:58, updated:"2026-07-28", audience:"28–42 岁华东城市女性", price:"¥699 – ¥1,899", positioning:"区域轻奢女装门店货品规划" },
-      { id:"archive-3", name:"北美轻户外品牌档案", type:"品牌/OBM", market:"北美", categories:["女装","轻户外","功能外套"], completion:86, updated:"2026-07-30", audience:"25–40 岁北美城市户外女性", price:"$80 – $260", positioning:"城市与周末轻户外生活方式品牌" },
-      { id:"archive-4", name:"欧美快反开发档案", type:"ODM/OEM", market:"欧洲", categories:["女装","梭织","快返开发"], completion:64, updated:"2026-07-26", audience:"欧洲中端女装品牌客户", price:"€18 – €55 FOB", positioning:"小单快反女装开发与交付" }
+      { id:"archive-1", name:"日本通勤女装档案", created:"2026-07-12", type:"电商", market:"日本", categories:["女装","针织","通勤"], completion:72, updated:"2026-07-31", audience:"25–35 岁东京都市通勤女性", price:"JPY ¥8,000 – ¥18,000", positioning:"中端都市通勤针织女装" },
+      { id:"archive-2", name:"华东轻奢女装门店档案", created:"2026-07-16", type:"线下零售", market:"中国", categories:["女装","连衣裙","针织"], completion:58, updated:"2026-07-28", audience:"28–42 岁华东城市女性", price:"¥699 – ¥1,899", positioning:"区域轻奢女装门店货品规划" },
+      { id:"archive-3", name:"北美轻户外品牌档案", created:"2026-07-20", type:"品牌/OBM", market:"北美", categories:["女装","轻户外","功能外套"], completion:86, updated:"2026-07-30", audience:"25–40 岁北美城市户外女性", price:"$80 – $260", positioning:"城市与周末轻户外生活方式品牌" },
+      { id:"archive-4", name:"欧美快反开发档案", created:"2026-07-23", type:"ODM/OEM", market:"欧洲", categories:["女装","梭织","快返开发"], completion:64, updated:"2026-07-26", audience:"欧洲中端女装品牌客户", price:"€18 – €55 FOB", positioning:"小单快反女装开发与交付" }
     ];
     const archivePrompt = document.querySelector("#archive-prompt");
     const archiveSelector = document.querySelector(".archive-select");
     const profileList = document.querySelector("#profile-list");
-    const profileSearch = document.querySelector("#profile-search");
-    const profileTypeFilter = document.querySelector("#profile-type-filter");
-    const profileMarketFilter = document.querySelector("#profile-market-filter");
 
     function renderArchiveState() {
       archivePrompt.hidden = archives.length > 0;
@@ -1555,41 +1536,17 @@
     renderArchiveState();
 
     function renderProfiles() {
-      const keyword = profileSearch.value.trim().toLowerCase();
-      const type = profileTypeFilter.value;
-      const market = profileMarketFilter.value;
-      const matches = archives.filter((item) =>
-        (!keyword || item.name.toLowerCase().includes(keyword))
-        && (!type || item.type === type)
-        && (!market || item.market === market)
-      );
-
-      profileList.innerHTML = matches.length
-        ? matches.map((item) => `
+      profileList.innerHTML = archives.length
+        ? archives.map((item) => `
           <article class="profile-card" data-profile-id="${item.id}">
             <div>
               <h3>${item.name}</h3>
-              <div class="profile-meta">
-                <span class="profile-chip">${item.type}</span>
-                <span class="profile-chip">主市场：${item.market}</span>
-                ${item.categories.map((tag) => `<span class="profile-chip">${tag}</span>`).join("")}
-              </div>
-              <div class="profile-card-footer">
-                <span class="completion">完整度 ${item.completion}%</span>
-                <span class="updated-at">最近更新：${item.updated}</span>
-              </div>
-            </div>
-            <div class="profile-actions">
-              <button class="profile-more" data-profile-id="${item.id}" aria-label="更多操作">···</button>
+              <p class="profile-created-at">创建时间：${item.created || item.updated}</p>
             </div>
           </article>
         `).join("")
         : `<div class="profile-empty"><strong>还没有企业档案</strong><br>先建立长期业务上下文，让每次任务更贴近你的市场、品类与经营边界。<br><button id="empty-new-profile">新建第一个档案</button></div>`;
     }
-
-    [profileSearch, profileTypeFilter, profileMarketFilter].forEach((control) => {
-      control.addEventListener(control === profileSearch ? "input" : "change", renderProfiles);
-    });
 
     function resetCreateForm() {
       selectedProfileType = "";
@@ -1617,13 +1574,7 @@
     profileList.addEventListener("click", (event) => {
       const emptyButton = event.target.closest("#empty-new-profile");
       if (emptyButton) { openProfileCreation(); return; }
-      const moreButton = event.target.closest(".profile-more");
       const card = event.target.closest(".profile-card");
-      if (moreButton) {
-        event.stopPropagation();
-        openProfileMenu(moreButton);
-        return;
-      }
       if (card) openProfileDetail(card.dataset.profileId);
     });
 
@@ -1731,7 +1682,7 @@
       const item = {
         id:`archive-${Date.now()}`, name:document.querySelector("#create-profile-name").value.trim(), type:selectedProfileType,
         market:document.querySelector("#create-profile-market").value, categories:[...categoryTags], completion:46,
-        updated:"2026-07-31", audience:document.querySelector("#create-profile-audience").value.trim(),
+        created:"2026-07-31", updated:"2026-07-31", audience:document.querySelector("#create-profile-audience").value.trim(),
         price:min || max ? `${currency}${min || "—"} – ${currency}${max || "—"}` : "待补充",
         positioning:document.querySelector("#create-profile-positioning").value.trim() || "待补充"
       };
@@ -2195,7 +2146,7 @@
         if (element.matches("#back-create-edit")) return "状态切换：返回第二步修改，并保留全部输入和资料回填内容。";
         if (element.matches("#save-profile")) return "状态切换：保存档案后进入档案详情页，并显示保存成功提示。";
         if (element.matches(".profile-card")) return "状态切换：点击卡片主体进入对应档案详情页。";
-        if (element.matches(".profile-more, #detail-more")) return "状态切换：点击打开更多菜单；点击菜单外或完成操作后关闭。";
+        if (element.matches("#detail-more")) return "状态切换：点击打开详情页更多菜单；完成操作后关闭。";
         if (element.matches(".module-edit")) return "状态切换：点击从右侧打开模块编辑抽屉；保存或取消后关闭。";
         if (element.matches("#upload-profile-material, #detail-upload, #drawer-upload")) return "状态切换：点击打开上传资料弹窗；解析完成后进入字段映射确认弹窗。";
         if (element.matches("#start-parse")) return "状态切换：开始解析后显示“解析中”；完成后按钮变为“查看解析结果”。";
@@ -2223,17 +2174,13 @@
         if (element.matches("#cancel-create-profile")) return "取消新建并返回企业档案列表，不保存当前填写内容。";
         if (element.matches("#generate-profile-draft")) return "校验档案名称、默认主市场、核心业务/品类和目标人群，再生成结构化档案草稿。";
         if (element.matches("#save-profile")) return "保存草稿为企业档案并进入详情页。";
-        if (element.matches(".profile-card")) return "展示档案名称、类型、主市场、核心品类、完整度和最近更新日期；点击主体进入详情。";
-        if (element.matches(".profile-more")) return "打开档案操作菜单：重命名、复制为新档案、删除。";
+        if (element.matches(".profile-card")) return "仅展示档案名称和创建时间；点击卡片进入详情页后再进行编辑或删除。";
         if (element.matches(".module-edit")) return "打开当前画像模块的右侧编辑抽屉。";
         if (element.matches(".source-link")) return "打开资料来源，查看文件、解析时间及已引用字段。";
         if (element.matches("#start-parse")) return "模拟解析文件；完成后可查看字段映射、置信度与冲突项。";
         if (element.matches("#apply-mapping")) return "应用已勾选字段，关闭确认弹窗并直接回填创建页或详情页。";
         if (element.matches("#task-profile-select")) return "为当前任务选择一个企业档案；一个任务同一时刻只应用一个档案。";
         if (element.matches("#confirm-profile-switch")) return "确认切换档案，保留历史对话与任务资料，仅模拟重跑受影响步骤。";
-        if (element.matches("#profile-search")) return "按档案名称实时搜索企业档案。";
-        if (element.matches("#profile-type-filter")) return "按电商、线下零售、品牌/OBM、ODM/OEM 类型筛选档案。";
-        if (element.matches("#profile-market-filter")) return "按中国、日本、北美、欧洲主市场筛选档案。";
         if (element.matches(".edit-profile")) return "点击进入当前企业档案的详情页。详情页交互将在下一页面继续对齐。";
         if (element.matches(".delete-profile")) return "点击后二次确认；确认后删除当前档案并刷新列表。";
         if (element.matches("#create-project")) return "点击打开创建项目弹窗。项目名称最多 40 个字符；未填写时默认命名为“项目”。";
@@ -2403,9 +2350,6 @@
           ["#history-list", "历史任务列表"],
           [".archive-select", "企业档案选择"],
           ["#profile-list", "企业档案列表"],
-          ["#profile-search", "档案名称搜索"],
-          ["#profile-type-filter", "档案类型筛选"],
-          ["#profile-market-filter", "主市场筛选"],
           ["#new-profile", "新建档案"],
           [".profile-card", "企业档案卡片"],
           [".profile-create-page", "新建企业档案页面"],
