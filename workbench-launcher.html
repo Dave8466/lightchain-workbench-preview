@@ -1192,7 +1192,7 @@
 
       <nav class="nav">
         <button class="nav-item active" id="new-task-nav" title="新任务"><span class="nav-icon">＋</span><span class="label">新任务</span></button>
-        <button class="nav-item" id="archive-nav" title="业务约束档案"><span class="nav-icon">▣</span><span class="label">业务约束档案<span class="sub">跨任务业务边界</span></span></button>
+        <button class="nav-item" id="archive-nav" title="业务偏好档案"><span class="nav-icon">▣</span><span class="label">业务偏好档案<span class="sub">长期业务上下文</span></span></button>
       </nav>
 
       <div class="space-section">
@@ -2412,6 +2412,10 @@
         if (!editEnabled || modeSwitch.contains(event.target)) return;
         const target = componentTarget(event.target);
         if (!target) return;
+        if (target.matches("#archive-nav")) {
+          copyText(componentNameOf(target));
+          return;
+        }
         event.preventDefault();
         event.stopImmediatePropagation();
         copyText(componentNameOf(target));
