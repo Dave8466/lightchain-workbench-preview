@@ -306,6 +306,12 @@
       cursor: pointer;
     }
     .history-row:hover { color: #eee; background: #2b2b2b; }
+    .history-row.active {
+      color: #f1f7f5;
+      background: #2b302e;
+      box-shadow: inset 2px 0 0 var(--accent);
+    }
+    .history-row.active .history-icon { color: var(--accent); }
     .history-row.child { padding-left: 28px; font-size: 12px; }
     .history-row.dragging { opacity: .38; }
     .history-row.drop-target { background: rgba(32, 208, 196, .12); outline: 1px solid rgba(32, 208, 196, .55); }
@@ -908,17 +914,61 @@
     .drawer-head { display: flex; justify-content: space-between; align-items: center; }
     .drawer-form { display: grid; gap: 14px; margin-top: 22px; }
     .drawer-actions { position: sticky; bottom: -22px; display: flex; justify-content: flex-end; gap: 9px; margin: 30px -22px -22px; padding: 14px 22px; border-top: 1px solid #323835; background: #202423; }
-    .task-layout { display: grid; grid-template-columns: minmax(0,1fr) 290px; gap: 18px; width: min(1120px,100%); margin: 0 auto; }
-    .task-context { display: flex; justify-content: space-between; padding: 12px 14px; border: 1px solid #323835; border-radius: 9px; background: #202423; }
-    .task-chat { min-height: 560px; margin-top: 12px; padding: 18px; border: 1px solid #323835; border-radius: 10px; background: #1b1e1d; }
+    .task-workbench-page { padding: 0; overflow: hidden; background: #171918; }
+    .task-layout { display: grid; grid-template-columns: minmax(520px,1fr) 318px; width: 100%; height: 100vh; margin: 0; }
+    .task-conversation { min-width: 0; display: grid; grid-template-rows: 64px minmax(0,1fr) auto; border-right: 1px solid #2d3230; background: #171918; }
+    .task-context { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 0 30px; border-bottom: 1px solid #292e2c; background: rgba(23,25,24,.96); }
+    .task-context-title { min-width: 0; display: flex; align-items: center; gap: 10px; }
+    .task-context-title b { overflow: hidden; color: #edf4f1; font-size: 14px; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+    .task-status-pill { flex: 0 0 auto; padding: 3px 8px; border-radius: 999px; color: #7bd9d0; background: rgba(32,208,196,.10); font-size: 10px; }
+    #task-profile-trigger { flex: 0 0 auto; height: 32px; padding: 0 10px; border: 1px solid #343a37; border-radius: 7px; color: #aab3af; background: #202422; font-size: 11px; cursor: pointer; }
+    #task-profile-trigger:hover { border-color: #48514d; color: #e8efec; }
+    #task-profile-trigger b { color: #dbe4e0; font-weight: 500; }
+    .task-chat { min-height: 0; overflow-y: auto; padding: 46px clamp(34px,7vw,104px) 28px; scroll-behavior: smooth; }
+    .task-chat-inner { width: min(760px,100%); margin: 0 auto; }
+    .task-message { display: flex; margin-bottom: 34px; }
+    .task-message.user { justify-content: flex-end; }
+    .user-message-bubble { max-width: min(620px,88%); padding: 13px 16px; border: 1px solid #343936; border-radius: 14px 14px 4px 14px; color: #eef3f1; background: #252927; font-size: 14px; line-height: 1.65; white-space: pre-wrap; }
+    .agent-thinking { display: grid; grid-template-columns: 30px minmax(0,1fr); gap: 12px; width: min(650px,92%); }
+    .thinking-mark { width: 30px; height: 30px; display: grid; place-items: center; border: 1px solid #35403c; border-radius: 9px; color: #151817; background: var(--accent); font-size: 15px; font-weight: 800; }
+    .thinking-content { padding-top: 2px; }
+    .thinking-title { display: flex; align-items: center; gap: 8px; color: #e5ece9; font-size: 14px; font-weight: 600; }
+    .thinking-dots { display: inline-flex; gap: 3px; }
+    .thinking-dots i { width: 4px; height: 4px; border-radius: 50%; background: #7bd9d0; animation: thinkingPulse 1.2s infinite ease-in-out; }
+    .thinking-dots i:nth-child(2) { animation-delay: .16s; }
+    .thinking-dots i:nth-child(3) { animation-delay: .32s; }
+    .thinking-content p { margin: 8px 0 0; color: #8f9995; font-size: 12px; line-height: 1.7; }
+    @keyframes thinkingPulse { 0%,70%,100% { opacity:.28; transform:translateY(0) } 35% { opacity:1; transform:translateY(-2px) } }
+    .task-composer-area { padding: 12px clamp(34px,7vw,104px) 22px; background: linear-gradient(180deg,rgba(23,25,24,0),#171918 28%); }
+    .task-condition-box { width: min(760px,100%); min-height: 104px; display: grid; grid-template-columns: auto minmax(0,1fr) auto; grid-template-rows: minmax(46px,auto) 34px; gap: 8px; margin: 0 auto; padding: 13px; border: 1px solid #383e3b; border-radius: 15px; background: #222624; box-shadow: 0 14px 36px rgba(0,0,0,.18); }
+    .task-condition-box textarea { position: static; grid-column: 1 / -1; width: 100%; height: auto; min-height: 42px; padding: 0; resize: none; border: 0; outline: 0; color: #edf3f0; background: transparent; font: inherit; font-size: 13px; line-height: 1.6; }
+    .task-condition-box textarea::placeholder { color: #69736f; }
+    .task-composer-tool { width: 34px; height: 34px; display: grid; place-items: center; border: 1px solid #363c39; border-radius: 9px; color: #9ca6a2; background: transparent; cursor: pointer; }
+    .task-composer-tool:hover { color: #e8efec; background: #2a2f2c; }
+    .task-composer-hint { align-self: center; color: #707a76; font-size: 10px; }
+    #check-task-boundary { width: 34px; height: 34px; border: 0; border-radius: 9px; color: #10201e; background: var(--accent); font-size: 18px; cursor: pointer; }
+    #check-task-boundary:disabled { color: #68716e; background: #303633; cursor: default; }
     .system-message { margin: 10px 0; padding: 10px 12px; border-radius: 8px; color: #cbd4d1; background: #252a28; font-size: 12px; }
-    .task-side { padding: 16px; border: 1px solid #323835; border-radius: 10px; background: #202423; }
-    .task-step { padding: 10px 0; border-bottom: 1px solid #303633; color: #a6afab; font-size: 12px; }
+    .task-panel { min-width: 0; overflow-y: auto; padding: 24px 20px; background: #191c1b; }
+    .task-panel-header { height: 40px; display: flex; align-items: flex-start; justify-content: space-between; }
+    .task-panel-header h2 { margin: 0; color: #edf3f0; font-size: 15px; font-weight: 600; }
+    .task-panel-sections { display: grid; gap: 30px; margin-top: 12px; }
+    .task-panel-section h3 { margin: 0 0 10px; color: #88928e; font-size: 11px; font-weight: 500; }
+    .task-panel-list { display: grid; gap: 7px; margin: 0; padding: 0; list-style: none; }
+    .task-panel-item { display: flex; align-items: flex-start; gap: 8px; padding: 9px 10px; border: 1px solid #303633; border-radius: 8px; color: #c7cfcc; background: #202422; font-size: 11px; line-height: 1.45; }
+    .task-panel-item .item-state { margin-left: auto; color: #6fd7cd; font-size: 9px; white-space: nowrap; }
+    .task-panel-item a { min-width: 0; overflow: hidden; color: #a8c9c4; text-decoration: none; text-overflow: ellipsis; white-space: nowrap; }
+    .task-panel-item a:hover { color: #8ce8de; text-decoration: underline; }
+    .task-panel-section.outputs .task-panel-item { min-height: 58px; }
+    .task-panel-section.outputs .item-icon { color: #7bd9d0; }
+    .task-panel-empty { display: none; }
     .task-step.rerun { color: #f2b36f; }
     .task-step.updated { color: #90f0e4; }
     @media (max-width: 980px) {
       .profile-list, .module-grid, .step-two-grid { grid-template-columns: 1fr; }
       .profile-type-options { grid-template-columns: 1fr 1fr; }
+      .task-layout { grid-template-columns: minmax(0,1fr) 272px; }
+      .task-chat, .task-composer-area { padding-right: 28px; padding-left: 28px; }
     }
     .toast {
       position: fixed;
@@ -1172,7 +1222,7 @@
     .constraint-form-shell .preference-header{align-items:flex-start}.form-progress{margin-top:8px;color:#31d7c8;font-size:13px}.constraint-form-card{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:26px;padding:24px;border:1px solid #353c39;border-radius:14px;background:#202523}.constraint-form-card .full{grid-column:1/-1}.field{display:flex;min-width:0;flex-direction:column;gap:9px;margin:0;border:0;padding:0;color:#f4f7f5;font-size:13px}.field>span,.field legend{font-weight:600}.field input,.field select,.select-trigger{height:44px;border:1px solid #353c39;border-radius:10px;background:#272d2a;color:#f4f7f5;padding:0 12px;text-align:left}.field input:focus,.field select:focus,.select-trigger:focus{outline:2px solid #31d7c8;outline-offset:1px}.field-error{min-height:16px;color:#ef6b6b}.field.has-error input,.field.has-error select,.field.has-error .select-trigger,.field.has-error .choice-group{border-color:#ef6b6b}.choice-group{display:flex;gap:8px;min-height:44px}.choice-group button{min-width:92px;border:1px solid #353c39;border-radius:10px;background:#272d2a;color:#aab4af}.choice-group button.selected{border-color:#31d7c8;background:rgba(49,215,200,.12);color:#31d7c8}.choice-group button.selected:before{content:'✓ ';font-weight:700}.price-row{display:grid;grid-template-columns:1fr 20px 1fr 92px;align-items:center;gap:8px}.price-row span{text-align:center;color:#77817c}.form-section-title{margin:4px 0 -4px;font-size:16px}.constraint-upload-zone{display:flex;align-items:center;justify-content:space-between;min-height:108px;border:1px dashed #4b5752;border-radius:14px;background:#272d2a;color:#f4f7f5;padding:20px;text-align:left}.constraint-upload-zone strong,.constraint-upload-zone small{display:block}.constraint-upload-zone small{margin-top:8px;color:#aab4af;line-height:1.7}.constraint-upload-zone em{height:40px;padding:0 16px;border-radius:9px;background:#31d7c8;color:#0f1917;font-style:normal;line-height:40px}.parse-status,.prefill-banner{padding:16px;border:1px solid #353c39;border-radius:10px;background:#272d2a}.prefill-banner{border-color:#31d7c8;color:#31d7c8}.constraint-bottom-bar{position:fixed;right:0;bottom:0;left:var(--sidebar-width);display:flex;justify-content:flex-end;gap:12px;padding:16px max(32px,calc((100% - var(--sidebar-width) - 1080px)/2));border-top:1px solid #353c39;background:rgba(26,29,28,.96);z-index:8}.constraint-bottom-bar button{height:40px;min-width:96px}.tag-list{display:flex;flex-wrap:wrap;gap:7px}.tag-list:empty{display:none}.tag-list span{display:inline-flex;align-items:center;gap:6px;padding:6px 9px;border-radius:8px;background:rgba(49,215,200,.12);color:#31d7c8;font-size:12px}.tag-list button{border:0;background:transparent;color:inherit;padding:0}.data-prefilled:after{content:'资料识别';align-self:flex-start;padding:3px 7px;border-radius:6px;background:rgba(49,215,200,.12);color:#31d7c8;font-size:11px}
     .constraint-detail-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;margin-top:26px;overflow:hidden;border:1px solid #353c39;border-radius:14px;background:#353c39}.detail-field{min-height:118px;padding:20px;background:#202523}.detail-field strong{display:block;margin-bottom:12px;color:#77817c;font-size:12px}.detail-field p{margin:0;line-height:1.65}.uploaded-summary{display:flex;align-items:center;justify-content:space-between;margin-top:18px;padding:20px;border:1px solid #353c39;border-radius:14px;background:#202523}.uploaded-summary strong,.uploaded-summary span{display:block}.uploaded-summary span{margin-top:7px;color:#aab4af;font-size:13px}
     .constraint-edit-drawer{position:absolute;right:0;top:0;bottom:0;width:min(520px,100%);overflow:auto;background:#202523;padding:24px 24px 92px}.constraint-edit-drawer #edit-form{display:grid;gap:18px;margin-top:24px}.drawer-actions{position:absolute;right:0;bottom:0;left:0;display:flex;justify-content:flex-end;gap:10px;padding:16px 24px;border-top:1px solid #353c39;background:#202523}
-    .task-condition-box{display:flex;gap:10px;margin:16px 28px}.task-condition-box input{flex:1;height:44px;border:1px solid #353c39;border-radius:10px;background:#202523;color:#f4f7f5;padding:0 14px}.boundary-warning{padding:18px;border:1px solid #f5a742;border-radius:12px;background:rgba(245,167,66,.09)}.boundary-warning p{color:#f4c480}.parse-result-list p{color:#45c98b}.parse-result-list fieldset{display:grid;gap:10px;margin-top:18px;border:1px solid #353c39;border-radius:10px;padding:15px}.parse-result-list label{display:block}
+    .boundary-warning{padding:18px;border:1px solid #f5a742;border-radius:12px;background:rgba(245,167,66,.09)}.boundary-warning p{color:#f4c480}.parse-result-list p{color:#45c98b}.parse-result-list fieldset{display:grid;gap:10px;margin-top:18px;border:1px solid #353c39;border-radius:10px;padding:15px}.parse-result-list label{display:block}
     @media(max-width:900px){.constraint-profile-grid,.constraint-form-card,.constraint-detail-grid{grid-template-columns:1fr}.constraint-form-card .full{grid-column:auto}.constraint-shell{width:calc(100% - 32px);padding-top:36px}.constraint-list-toolbar input{width:100%}.constraint-bottom-bar{padding-right:16px}.price-row{grid-template-columns:1fr 16px 1fr}.price-row select{grid-column:1/-1}.constraint-page .preference-header{gap:18px;align-items:flex-start}}
     @media(max-width:640px){.constraint-page{left:0}.constraint-bottom-bar{left:0}.constraint-shell{padding-top:72px}.constraint-profile-grid{grid-template-columns:1fr}}
   </style>
@@ -1225,7 +1275,6 @@
           <button class="scene-tab active" data-scene="selection">选品测款</button>
           <button class="scene-tab" data-scene="planning">新品方向探索</button>
           <button class="scene-tab" data-scene="proposal">客户提案生成</button>
-          <button class="scene-tab" data-scene="variation">款式裂变生成</button>
         </div>
 
         <div class="prompt-box">
@@ -1288,7 +1337,27 @@
       </div>
     </section>
     <section class="task-workbench-page" id="task-workbench-page" hidden>
-      <div class="task-layout"><div><div class="task-context"><span>当前场景：<b id="task-scene">新品方向探索-企划</b></span><button id="task-profile-trigger">业务偏好档案：<b id="task-profile-name">请选择</b>⌄</button></div><div class="task-chat" id="task-chat"><div class="system-message">选择业务偏好档案后，系统会自动补齐重复条件并校验生成边界。</div></div><div class="task-condition-box"><input id="task-condition" placeholder="试试输入：为韩国市场做童装，价格上限 JPY 25,000"><button id="check-task-boundary">发送并校验</button></div></div><aside class="task-side"><h3>任务步骤</h3><div class="task-step">需求解析</div><div class="task-step">市场与品类判断</div><div class="task-step">方向建议</div></aside></div>
+      <div class="task-layout">
+        <section class="task-conversation" aria-label="任务对话">
+          <header class="task-context">
+            <div class="task-context-title"><b id="task-scene">新品方向探索-企划</b><span class="task-status-pill">思考中</span></div>
+            <button id="task-profile-trigger">业务偏好档案：<b id="task-profile-name">未选择</b>⌄</button>
+          </header>
+          <div class="task-chat" id="task-chat"><div class="task-chat-inner" id="task-chat-inner"></div></div>
+          <div class="task-composer-area">
+            <div class="task-condition-box">
+              <textarea id="task-condition" rows="2" aria-label="继续补充任务条件" placeholder="补充条件或继续提问…"></textarea>
+              <button class="task-composer-tool" id="task-attach" title="添加附件" aria-label="添加附件">＋</button>
+              <span class="task-composer-hint">Enter 发送 · Shift + Enter 换行</span>
+              <button id="check-task-boundary" title="发送" aria-label="发送">↑</button>
+            </div>
+          </div>
+        </section>
+        <aside class="task-panel" id="task-panel" aria-label="任务面板">
+          <div class="task-panel-header"><h2>任务面板</h2></div>
+          <div class="task-panel-sections" id="task-panel-sections"></div>
+        </aside>
+      </div>
     </section>
     <div class="archive-overlay" id="upload-modal" hidden><div class="archive-dialog"><div class="dialog-head"><div><h2>上传资料包</h2><p>系统只预填资料中明确提到的信息，未提及的字段将保持为空。</p></div><button id="close-upload-modal">×</button></div><button class="upload-picker" id="choose-files">拖拽文件到这里，或点击选择<br><small>PDF、PPT、Word、Excel、CSV、JPG、PNG</small></button><input id="real-file-input" type="file" multiple accept=".jpg,.jpeg,.png,.pdf,.ppt,.pptx,.doc,.docx,.xls,.xlsx,.csv" hidden><div class="file-list" id="upload-file-list"></div><div class="dialog-actions"><button id="cancel-upload">取消</button><button class="primary" id="start-parse" disabled>开始解析</button></div></div></div>
     <div class="archive-overlay" id="mapping-modal" hidden><div class="archive-dialog"><div class="dialog-head"><div><h2>资料解析完成</h2><p>已识别并可预填 5 项信息，未提及内容保持为空。</p></div><button id="close-mapping-modal">×</button></div><div class="parse-result-list"><p>✓ 品类：女装</p><p>✓ 价格段：JPY 8,000 - 18,000</p><p>✓ 国家：日本</p><p>✓ 年龄段：25-34岁、35-44岁</p><p>✓ 渠道：ZOZOTOWN、Rakuten Fashion</p><h4>未识别：参考品牌</h4><fieldset><legend>价格段同时出现两个候选，请选择</legend><label><input type="radio" name="price-candidate" value="8000-18000" checked> JPY 8,000 - 18,000</label><label><input type="radio" name="price-candidate" value="12000-25000"> JPY 12,000 - 25,000</label><label><input type="radio" name="price-candidate" value="none"> 暂不预填</label></fieldset></div><div class="dialog-actions"><button id="later-confirm">取消</button><button class="primary" id="apply-mapping">应用到档案</button></div></div></div>
@@ -1313,8 +1382,7 @@
     const scenes = {
       selection: "描述你想调研的市场、品类或款式方向…",
       planning: "描述下一季的市场、人群、品类和经营目标…",
-      proposal: "输入客户需求，或上传 brief、邮件和会议纪要…",
-      variation: "描述要延伸的款式方向，或上传图片和情绪板…"
+      proposal: "输入客户需求，或上传 brief、邮件和会议纪要…"
     };
 
     const prompt = document.querySelector("#prompt");
@@ -1409,12 +1477,8 @@
         showToast("请先描述你的任务目标");
         return;
       }
-      const sceneNames = {selection:"选品推荐",planning:"新品方向探索-企划",proposal:"客户提案生成",variation:"款式裂变"};
-      document.querySelector("#task-scene").textContent = sceneNames[document.querySelector(".scene-tab.active").dataset.scene];
-      document.querySelector("#task-workbench-page").hidden = false;
-      document.querySelector("#profile-page").hidden = true;
-      document.querySelector("#profile-create-page").hidden = true;
-      document.querySelector("#profile-detail-page").hidden = true;
+      const scene = document.querySelector(".scene-tab.active").dataset.scene;
+      startTask(prompt.value.trim(), scene);
     });
 
     if (false) {
@@ -1919,7 +1983,10 @@
     document.querySelector("#edit-profile").onclick=openEditProfile;
     function renderConstraintPicker(){const q=(document.querySelector("#profile-picker-search")?.value||"").toLowerCase();document.querySelector("#profile-picker-list").innerHTML=constraints.filter(p=>p.name.toLowerCase().includes(q)).map(p=>`<button class="picker-option" data-pick-constraint="${p.id}">${p.name}<small>${p.categories.join("、")} · ${p.countries.join("、")} · ${p.priceRange.currency} ${p.priceRange.min}-${p.priceRange.max}</small></button>`).join("")}
     document.querySelector("#task-profile-trigger").onclick=e=>{const picker=document.querySelector("#profile-picker"),r=e.currentTarget.getBoundingClientRect();picker.style.left=`${Math.min(innerWidth-374,r.left)}px`;picker.style.top=`${r.bottom+8}px`;picker.hidden=!picker.hidden;renderConstraintPicker()};document.querySelector("#profile-picker-search").oninput=renderConstraintPicker;document.querySelector("#profile-picker-list").onclick=e=>{const b=e.target.closest("[data-pick-constraint]");if(!b)return;const p=constraints.find(x=>x.id===b.dataset.pickConstraint);constraintState.currentId=p.id;document.querySelector("#task-profile-name").textContent=p.name;document.querySelector("#profile-picker").hidden=true;document.querySelector("#task-chat").insertAdjacentHTML("beforeend",`<div class="system-message preference-applied"><strong>已应用业务偏好档案：${p.name}</strong><p>品类：${p.categories.join("、")}<br>价格段：${p.priceRange.currency} ${p.priceRange.min}-${p.priceRange.max}<br>国家：${p.countries.join("、")}<br>年龄段：${p.ageRanges.join("、")}</p></div>`)};document.querySelector("#picker-new-profile").onclick=()=>{document.querySelector("#profile-picker").hidden=true;openCreateProfile()};
-    document.querySelector("#check-task-boundary").onclick=()=>{if(!constraintState.currentId){showToast("请先选择业务偏好档案");return}const text=document.querySelector("#task-condition").value;if(/童装|韩国|25[,，]?000|25000/.test(text)){document.querySelector("#boundary-profile-name").textContent=constraints.find(x=>x.id===constraintState.currentId).name;document.querySelector("#boundary-modal").hidden=false}else document.querySelector("#task-chat").insertAdjacentHTML("beforeend",'<div class="system-message">需求在档案范围内，已进入需求解析。</div>')};
+    function sendTaskFollowup(){const input=document.querySelector("#task-condition"),text=input.value.trim();if(!text){input.focus();return}if(constraintState.currentId&&/童装|韩国|25[,，]?000|25000/.test(text)){document.querySelector("#boundary-profile-name").textContent=constraints.find(x=>x.id===constraintState.currentId).name;document.querySelector("#boundary-modal").hidden=false;return}const chat=document.querySelector("#task-chat-inner");chat.insertAdjacentHTML("beforeend",`<div class="task-message user"><div class="user-message-bubble">${escapeHtml(text)}</div></div><div class="task-message agent"><div class="agent-thinking"><span class="thinking-mark">L</span><div class="thinking-content"><div class="thinking-title">正在根据补充条件继续思考<span class="thinking-dots" aria-label="思考中"><i></i><i></i><i></i></span></div><p>将仅更新受新条件影响的判断，并保留本任务已有对话。</p></div></div></div>`);input.value="";document.querySelector("#task-chat").scrollTop=document.querySelector("#task-chat").scrollHeight}
+    document.querySelector("#check-task-boundary").onclick=sendTaskFollowup;
+    document.querySelector("#task-condition").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendTaskFollowup()}});
+    document.querySelector("#task-attach").onclick=()=>document.querySelector("#file-input").click();
     const closeBoundary=()=>document.querySelector("#boundary-modal").hidden=true;document.querySelector("#close-boundary-modal").onclick=document.querySelector("#return-modify").onclick=closeBoundary;document.querySelector("#continue-task").onclick=()=>{closeBoundary();document.querySelector("#task-chat").insertAdjacentHTML("beforeend",'<div class="system-message" style="border-color:#f5a742">本任务已临时超出档案范围，档案本身不会被修改。</div>')};
     renderProfiles();
     if (location.hash === "#archive") showArchivePage(false);
@@ -1935,6 +2002,7 @@
     const searchPanel = document.querySelector("#search-panel");
     const searchInput = document.querySelector("#search-input");
     const searchResults = document.querySelector("#search-results");
+    let activeHistoryTaskId = null;
     let draggedId = null;
     let holdTimer;
     let suppressProjectClick = false;
@@ -1986,7 +2054,7 @@
 
     function makeHistoryRow(item) {
       const row = document.createElement("div");
-      row.className = `history-row${item.parentId ? " child" : ""}`;
+      row.className = `history-row${item.parentId ? " child" : ""}${item.id === activeHistoryTaskId ? " active" : ""}`;
       row.dataset.id = item.id;
       row.innerHTML = `<span class="history-icon">${item.type === "project" ? (item.expanded === false ? "▸" : "▾") : "·"}</span><span class="history-name">${item.name}</span>`;
       if (item.type === "project") {
@@ -1995,6 +2063,11 @@
           if (suppressProjectClick) return;
           item.expanded = item.expanded === false;
           renderHistory();
+        });
+      } else {
+        row.addEventListener("click", () => {
+          if (suppressProjectClick) return;
+          openHistoryTask(item);
         });
       }
 
@@ -2043,6 +2116,64 @@
     function renderHistory() {
       historyList.replaceChildren(...orderedItems().map(makeHistoryRow));
       renderSearchResults(searchInput.value);
+    }
+
+    const taskPanelData = { plans: [], outputs: [], references: [] };
+    const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[char]));
+
+    function renderTaskPanel(next = taskPanelData) {
+      taskPanelData.plans = Array.isArray(next.plans) ? next.plans.slice(0, 12) : [];
+      taskPanelData.outputs = Array.isArray(next.outputs) ? next.outputs.slice(0, 12) : [];
+      taskPanelData.references = Array.isArray(next.references) ? next.references.slice(0, 12) : [];
+      const groups = [];
+      if (taskPanelData.plans.length) groups.push(`<section class="task-panel-section plans"><h3>计划列表</h3><ol class="task-panel-list">${taskPanelData.plans.map((item) => `<li class="task-panel-item"><span>○</span><span>${escapeHtml(item.label || item)}</span>${item.state ? `<span class="item-state">${escapeHtml(item.state)}</span>` : ""}</li>`).join("")}</ol></section>`);
+      if (taskPanelData.outputs.length) groups.push(`<section class="task-panel-section outputs"><h3>任务产物</h3><ul class="task-panel-list">${taskPanelData.outputs.map((item) => `<li class="task-panel-item"><span class="item-icon">□</span><span>${escapeHtml(item.label || item)}</span></li>`).join("")}</ul></section>`);
+      if (taskPanelData.references.length) groups.push(`<section class="task-panel-section references"><h3>参考信息</h3><ul class="task-panel-list">${taskPanelData.references.map((item) => `<li class="task-panel-item"><span>↗</span><a href="${escapeHtml(item.url || "#")}" target="_blank" rel="noopener">${escapeHtml(item.label || item.url || item)}</a></li>`).join("")}</ul></section>`);
+      document.querySelector("#task-panel-sections").innerHTML = groups.join("");
+    }
+    window.updateTaskPanel = renderTaskPanel;
+
+    function renderInitialConversation(userText) {
+      document.querySelector("#task-chat-inner").innerHTML = `
+        <div class="task-message user"><div class="user-message-bubble">${escapeHtml(userText)}</div></div>
+        <div class="task-message agent"><div class="agent-thinking">
+          <span class="thinking-mark">L</span>
+          <div class="thinking-content"><div class="thinking-title">正在理解你的需求<span class="thinking-dots" aria-label="思考中"><i></i><i></i><i></i></span></div><p>正在梳理市场、品类、目标人群与经营条件，稍后会先与你确认调研范围。</p></div>
+        </div></div>`;
+    }
+
+    function showTaskPage() {
+      document.querySelector("#task-workbench-page").hidden = false;
+      document.querySelector("#profile-page").hidden = true;
+      document.querySelector("#profile-create-page").hidden = true;
+      document.querySelector("#profile-detail-page").hidden = true;
+      document.querySelector(".nav-item.active")?.classList.remove("active");
+      renderHistory();
+      setTimeout(() => dispatchEvent(new Event("resize")), 0);
+    }
+
+    function startTask(userText, scene = "selection") {
+      const sceneNames = {selection:"选品推荐", planning:"新品方向探索-企划", proposal:"客户提案生成"};
+      const now = Date.now();
+      const task = { id:`task-${now}`, type:"task", name:userText.slice(0, 24) || "新任务", parentId:null, editedAt:now, prompt:userText, scene };
+      historyItems.unshift(task);
+      activeHistoryTaskId = task.id;
+      document.querySelector("#task-scene").textContent = sceneNames[scene] || sceneNames.selection;
+      document.querySelector("#task-profile-name").textContent = "未选择";
+      document.querySelector("#task-condition").value = "";
+      renderInitialConversation(userText);
+      renderTaskPanel({plans:[], outputs:[], references:[]});
+      showTaskPage();
+    }
+
+    function openHistoryTask(item) {
+      activeHistoryTaskId = item.id;
+      const text = item.prompt || item.name;
+      const sceneNames = {selection:"选品推荐", planning:"新品方向探索-企划", proposal:"客户提案生成"};
+      document.querySelector("#task-scene").textContent = sceneNames[item.scene] || "任务对话";
+      renderInitialConversation(text);
+      renderTaskPanel({plans:[], outputs:[], references:[]});
+      showTaskPage();
     }
 
     function renderSearchResults(keyword = "") {
