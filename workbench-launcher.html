@@ -15,6 +15,7 @@
       --muted: #9c9c9c;
       --accent: #20d0c4;
       --light: #e7ecea;
+      --sidebar-width: 246px;
       font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
       color-scheme: dark;
     }
@@ -1356,7 +1357,7 @@
     document.querySelector("#history-toggle").addEventListener("click", () => setSidebarCollapsed(false));
     document.querySelector("#sidebar-expand").addEventListener("click", () => setSidebarCollapsed(false));
 
-    function showHomeInitialState() {
+    function showHomeInitialState(updateRoute = true) {
       setSidebarCollapsed(false);
       document.querySelector("#profile-page").hidden = true;
       document.querySelector("#profile-create-page").hidden = true;
@@ -1371,18 +1372,27 @@
       prompt.placeholder = scenes.selection;
       document.querySelector("#file-input").value = "";
       searchPanel?.classList.remove("open");
+      if (updateRoute && location.hash) history.pushState(null, "", location.pathname + location.search);
       setTimeout(() => dispatchEvent(new Event("resize")), 0);
     }
 
     document.querySelector("#new-task-nav").addEventListener("click", showHomeInitialState);
-    document.querySelector("#archive-nav").addEventListener("click", () => {
+    function showArchivePage(updateRoute = true) {
       setSidebarCollapsed(false);
       document.querySelector("#profile-create-page").hidden = true;
       document.querySelector("#profile-detail-page").hidden = true;
       document.querySelector("#task-workbench-page").hidden = true;
       document.querySelector("#profile-page").hidden = false;
+      document.querySelector(".nav-item.active")?.classList.remove("active");
+      document.querySelector("#archive-nav").classList.add("active");
       renderProfiles();
+      if (updateRoute && location.hash !== "#archive") location.hash = "archive";
       setTimeout(() => dispatchEvent(new Event("resize")), 0);
+    }
+    document.querySelector("#archive-nav").addEventListener("click", () => showArchivePage(true));
+    addEventListener("hashchange", () => {
+      if (location.hash === "#archive") showArchivePage(false);
+      else showHomeInitialState(false);
     });
 
     document.querySelector("#attach").addEventListener("click", () => {
@@ -1911,6 +1921,7 @@
     document.querySelector("#check-task-boundary").onclick=()=>{if(!constraintState.currentId){showToast("请先选择业务约束档案");return}const text=document.querySelector("#task-condition").value;if(/童装|韩国|25[,，]?000|25000/.test(text)){document.querySelector("#boundary-profile-name").textContent=constraints.find(x=>x.id===constraintState.currentId).name;document.querySelector("#boundary-modal").hidden=false}else document.querySelector("#task-chat").insertAdjacentHTML("beforeend",'<div class="system-message">需求在档案范围内，已进入需求解析。</div>')};
     const closeBoundary=()=>document.querySelector("#boundary-modal").hidden=true;document.querySelector("#close-boundary-modal").onclick=document.querySelector("#return-modify").onclick=closeBoundary;document.querySelector("#continue-task").onclick=()=>{closeBoundary();document.querySelector("#task-chat").insertAdjacentHTML("beforeend",'<div class="system-message" style="border-color:#f5a742">本任务已临时超出档案范围，档案本身不会被修改。</div>')};
     renderProfiles();
+    if (location.hash === "#archive") showArchivePage(false);
 
     let historyItems = [
       { id: "p1", type: "project", name: "2027 春夏企划", editedAt: 1785376200000, expanded: true },
@@ -2416,12 +2427,6 @@
         if (!editEnabled || modeSwitch.contains(event.target)) return;
         const target = componentTarget(event.target);
         if (!target) return;
-        if (target.matches("#archive-nav")) {
-          copyText(componentNameOf(target));
-          return;
-        }
-        event.preventDefault();
-        event.stopImmediatePropagation();
         copyText(componentNameOf(target));
       }, true);
 
