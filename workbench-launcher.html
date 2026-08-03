@@ -1341,7 +1341,9 @@
       item.addEventListener("click", () => {
         document.querySelector(".nav-item.active")?.classList.remove("active");
         item.classList.add("active");
-        showToast(`${item.querySelector(".label")?.childNodes[0].textContent.trim() || "页面"}：交互待对齐`);
+        if (!item.matches("#new-task-nav, #archive-nav")) {
+          showToast(`${item.querySelector(".label")?.childNodes[0].textContent.trim() || "页面"}：交互待对齐`);
+        }
       });
     });
 
@@ -1369,6 +1371,7 @@
       prompt.placeholder = scenes.selection;
       document.querySelector("#file-input").value = "";
       searchPanel?.classList.remove("open");
+      setTimeout(() => dispatchEvent(new Event("resize")), 0);
     }
 
     document.querySelector("#new-task-nav").addEventListener("click", showHomeInitialState);
@@ -1379,6 +1382,7 @@
       document.querySelector("#task-workbench-page").hidden = true;
       document.querySelector("#profile-page").hidden = false;
       renderProfiles();
+      setTimeout(() => dispatchEvent(new Event("resize")), 0);
     });
 
     document.querySelector("#attach").addEventListener("click", () => {
