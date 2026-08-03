@@ -1242,7 +1242,6 @@
           <div><h2>业务偏好档案</h2><p>保存长期稳定的产品经验、设计偏好和执行边界，供任务按需参考。</p></div>
           <button class="preference-primary" id="new-profile">＋ 新建档案</button>
         </div>
-        <div class="preference-list-tools"><input id="preference-search" type="search" placeholder="搜索档案名称" aria-label="搜索档案名称"></div>
         <div class="preference-profile-grid" id="profile-list" aria-label="业务偏好档案列表"></div>
       </div>
     </section>
@@ -1781,7 +1780,6 @@
     const archivePrompt=document.querySelector("#archive-prompt");
     const archiveSelector=document.querySelector(".archive-select");
     const profileList=document.querySelector("#profile-list");
-    const preferenceSearch=document.querySelector("#preference-search");
     let currentProfileId=null,currentModuleId=null,uploadMode="module",uploadFiles=[],draftModuleState={},draftFiles=[];
     const persistProfiles=()=>localStorage.setItem("lightchain-preference-profiles",JSON.stringify(archives));
     const savePreferenceUiState=(page,id="")=>localStorage.setItem("lightchain-preference-ui",JSON.stringify({page,id}));
@@ -1792,11 +1790,9 @@
     }
     function profileCard(profile){return `<article class="preference-profile-card" tabindex="0" data-profile-id="${profile.id}"><button class="preference-card-more" data-profile-more="${profile.id}" aria-label="更多操作">···</button><h3>${profile.name}</h3><div class="card-meta">已建立 ${profile.modules}/6 个模块</div><div class="card-preview"><i class="preview-swatch"></i><i class="preview-swatch"></i><i class="preview-swatch"></i></div><div class="card-tags">${profile.tags.slice(0,4).map(t=>`<span>${t}</span>`).join("")}</div><div class="card-bottom"><span>资料 ${profile.files} 份</span><span>最近更新 ${profile.updatedAt}</span></div></article>`}
     function renderProfiles(){
-      const keyword=(preferenceSearch?.value||"").trim().toLowerCase();
-      const list=archives.filter(p=>p.name.toLowerCase().includes(keyword));
+      const list=archives;
       profileList.innerHTML=list.length?list.map(profileCard).join(""):`<div class="preference-empty"><h3>还没有业务偏好档案</h3><p>上传已有图片和文档，让每次选品、企划、提案与款式裂变更了解你的产品和偏好。</p><button class="preference-primary" id="empty-new-profile">创建第一个档案</button></div>`;
     }
-    preferenceSearch.addEventListener("input",renderProfiles);
     function openCreateProfile(){
       savePreferenceUiState("create");
       document.querySelector("#profile-page").hidden=true;document.querySelector("#profile-detail-page").hidden=true;document.querySelector("#profile-create-page").hidden=false;
