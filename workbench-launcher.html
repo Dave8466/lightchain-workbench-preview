@@ -915,7 +915,8 @@
     .drawer-form { display: grid; gap: 14px; margin-top: 22px; }
     .drawer-actions { position: sticky; bottom: -22px; display: flex; justify-content: flex-end; gap: 9px; margin: 30px -22px -22px; padding: 14px 22px; border-top: 1px solid #323835; background: #202423; }
     .task-workbench-page { padding: 0; overflow: hidden; background: #171918; }
-    .task-layout { display: grid; grid-template-columns: minmax(520px,1fr) 318px; width: 100%; height: 100vh; margin: 0; }
+    .task-layout { display: grid; grid-template-columns: minmax(520px,1fr); width: 100%; height: 100vh; margin: 0; }
+    .task-layout.panel-visible { grid-template-columns: minmax(520px,1fr) 318px; }
     .task-conversation { min-width: 0; display: grid; grid-template-rows: 64px minmax(0,1fr) auto; border-right: 1px solid #2d3230; background: #171918; }
     .task-context { position: relative; z-index: 50; display: flex; align-items: center; gap: 18px; padding: 0 30px; border-bottom: 1px solid #292e2c; background: rgba(23,25,24,.96); }
     .task-context-title { min-width: 0; display: flex; align-items: center; gap: 10px; }
@@ -971,18 +972,18 @@
     #check-task-boundary { width: 34px; height: 34px; border: 0; border-radius: 9px; color: #10201e; background: var(--accent); font-size: 18px; cursor: pointer; }
     #check-task-boundary:disabled { color: #68716e; background: #303633; cursor: default; }
     .system-message { margin: 10px 0; padding: 10px 12px; border-radius: 8px; color: #cbd4d1; background: #252a28; font-size: 12px; }
-    .task-panel { min-width: 0; overflow-y: auto; padding: 24px 20px; background: #191c1b; }
-    .task-panel-header { height: 40px; display: flex; align-items: flex-start; justify-content: space-between; }
-    body.ui-review-mode .task-panel-header { height: 72px; padding-top: 42px; }
-    .task-panel-header h2 { margin: 0; color: #edf3f0; font-size: 15px; font-weight: 600; }
-    .task-panel-sections { display: grid; gap: 30px; margin-top: 12px; }
-    .task-panel-section h3 { margin: 0 0 10px; color: #88928e; font-size: 11px; font-weight: 500; }
-    .task-panel-list { display: grid; gap: 7px; margin: 0; padding: 0; list-style: none; }
-    .task-panel-item { display: flex; align-items: flex-start; gap: 8px; padding: 9px 10px; border: 1px solid #303633; border-radius: 8px; color: #c7cfcc; background: #202422; font-size: 11px; line-height: 1.45; }
+    .task-panel { min-width: 0; overflow-y: auto; padding: 72px 16px 24px; border-left: 1px solid #292e2c; background: #171918; }
+    .task-panel[hidden] { display: none; }
+    .task-panel-sections { display: grid; gap: 0; padding: 17px; border: 1px solid #383d3b; border-radius: 15px; background: #252826; box-shadow: 0 18px 42px rgba(0,0,0,.18); }
+    .task-panel-section + .task-panel-section { margin-top: 16px; padding-top: 16px; border-top: 1px solid #3a3f3d; }
+    .task-panel-section h3 { margin: 0 0 9px; color: #9ca5a1; font-size: 13px; font-weight: 600; }
+    .task-panel-list { display: grid; gap: 3px; margin: 0; padding: 0; list-style: none; }
+    .task-panel-item { min-width: 0; display: flex; align-items: flex-start; gap: 9px; padding: 7px 8px; border: 0; border-radius: 7px; color: #d0d6d3; background: transparent; font-size: 11px; line-height: 1.45; }
+    .task-panel-item:hover { background: #303431; }
     .task-panel-item .item-state { margin-left: auto; color: #6fd7cd; font-size: 9px; white-space: nowrap; }
     .task-panel-item a { min-width: 0; overflow: hidden; color: #a8c9c4; text-decoration: none; text-overflow: ellipsis; white-space: nowrap; }
     .task-panel-item a:hover { color: #8ce8de; text-decoration: underline; }
-    .task-panel-section.outputs .task-panel-item { min-height: 58px; }
+    .task-panel-section.outputs .task-panel-item { min-height: 0; }
     .task-panel-section.outputs .item-icon { color: #7bd9d0; }
     .task-panel-empty { display: none; }
     .task-step.rerun { color: #f2b36f; }
@@ -990,7 +991,7 @@
     @media (max-width: 980px) {
       .profile-list, .module-grid, .step-two-grid { grid-template-columns: 1fr; }
       .profile-type-options { grid-template-columns: 1fr 1fr; }
-      .task-layout { grid-template-columns: minmax(0,1fr) 272px; }
+      .task-layout.panel-visible { grid-template-columns: minmax(0,1fr) 272px; }
       .task-chat, .task-composer-area { padding-right: 28px; padding-left: 28px; }
     }
     .toast {
@@ -1375,8 +1376,7 @@
             </div>
           </div>
         </section>
-        <aside class="task-panel" id="task-panel" aria-label="任务面板">
-          <div class="task-panel-header"><h2>任务面板</h2></div>
+        <aside class="task-panel" id="task-panel" aria-label="任务相关内容" hidden>
           <div class="task-panel-sections" id="task-panel-sections"></div>
         </aside>
       </div>
@@ -2153,7 +2153,10 @@
       if (taskPanelData.plans.length) groups.push(`<section class="task-panel-section plans"><h3>计划列表</h3><ol class="task-panel-list">${taskPanelData.plans.map((item) => `<li class="task-panel-item"><span>○</span><span>${escapeHtml(item.label || item)}</span>${item.state ? `<span class="item-state">${escapeHtml(item.state)}</span>` : ""}</li>`).join("")}</ol></section>`);
       if (taskPanelData.outputs.length) groups.push(`<section class="task-panel-section outputs"><h3>任务产物</h3><ul class="task-panel-list">${taskPanelData.outputs.map((item) => `<li class="task-panel-item"><span class="item-icon">□</span><span>${escapeHtml(item.label || item)}</span></li>`).join("")}</ul></section>`);
       if (taskPanelData.references.length) groups.push(`<section class="task-panel-section references"><h3>参考信息</h3><ul class="task-panel-list">${taskPanelData.references.map((item) => `<li class="task-panel-item"><span>↗</span><a href="${escapeHtml(item.url || "#")}" target="_blank" rel="noopener">${escapeHtml(item.label || item.url || item)}</a></li>`).join("")}</ul></section>`);
+      const panel=document.querySelector("#task-panel"),hasContent=groups.length>0;
       document.querySelector("#task-panel-sections").innerHTML = groups.join("");
+      panel.hidden=!hasContent;
+      document.querySelector(".task-layout").classList.toggle("panel-visible",hasContent);
     }
     window.updateTaskPanel = renderTaskPanel;
 
