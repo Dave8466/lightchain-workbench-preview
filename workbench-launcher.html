@@ -1,9 +1,13 @@
+Exit code: 0
+Wall time: 0.3 seconds
+Total output lines: 2371
+Output:
 <!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>5.2 功能首页 · Workbench Launcher</title>
+  <title>5.2 鍔熻兘棣栭〉 路 Workbench Launcher</title>
   <style>
     :root {
       --bg: #121212;
@@ -387,8 +391,8 @@
     }
 
     .face { transform: translateY(-1px); font-size: 16px; font-weight: 700; line-height: 1; }
-    .face::before { content: "•  •"; display: block; letter-spacing: 3px; font-size: 14px; }
-    .face::after { content: "⌣"; display: block; margin-top: 2px; font-size: 18px; }
+    .face::before { content: "鈥? 鈥?; display: block; letter-spacing: 3px; font-size: 14px; }
+    .face::after { content: "鈱?; display: block; margin-top: 2px; font-size: 18px; }
 
     h1 {
       margin: 10px 0 0;
@@ -741,1466 +745,64 @@
       background: #202423;
     }
     .create-section h3 { margin: 0; color: #eaf0ee; font-size: 16px; line-height: 24px; }
-    .create-section-desc { margin: 5px 0 16px; color: #a6afab; font-size: 12px; line-height: 18px; }
-    .profile-type-options { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
-    .profile-type-option {
-      min-height: 68px;
-      padding: 11px 13px;
-      border: 1px solid #323835;
-      border-radius: 10px;
-      color: #eaf0ee;
-      background: #252a28;
-      text-align: left;
-    }
-    .profile-type-option strong { display: block; font-size: 13px; font-weight: 500; }
-    .profile-type-option span { display: block; margin-top: 5px; color: #a6afab; font-size: 10px; line-height: 14px; }
-    .profile-type-option.active { color: #90f0e4; border-color: #20d0c4; background: #203634; }
-    .profile-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 36px; }
-    .profile-field { display: grid; gap: 7px; }
-    .profile-field.full { grid-column: 1 / -1; }
-    .profile-field label { color: #a6afab; font-size: 12px; line-height: 18px; }
-    .profile-field input,
-    .profile-field textarea,
-    .profile-field select {
-      width: 100%;
-      min-height: 36px;
-      padding: 8px 11px;
-      border: 1px solid #323835;
-      border-radius: 8px;
-      outline: none;
-      color: #eaf0ee;
-      background: #252a28;
-      font-size: 12px;
-    }
-    .profile-field textarea { min-height: 72px; resize: vertical; }
-    .profile-field textarea {
-      position: static;
-      top: auto;
-      left: auto;
-      height: 72px;
-      line-height: 18px;
-    }
-    .profile-field input:focus,
-    .profile-field textarea:focus,
-    .profile-field select:focus { border-color: #20d0c4; }
-    .profile-upload {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      margin-top: 16px;
-      padding: 12px 14px;
-      border: 1px dashed #3e4844;
-      border-radius: 9px;
-      color: #a6afab;
-      font-size: 12px;
-    }
-    .profile-upload button {
-      height: 32px;
-      padding: 0 13px;
-      border: 1px solid #3d4743;
-      border-radius: 7px;
-      color: #eaf0ee;
-      background: #252a28;
-    }
-    .create-profile-actions { display: flex; justify-content: flex-end; gap: 10px; padding-bottom: 28px; }
-    .create-profile-actions button {
-      height: 36px;
-      padding: 0 18px;
-      border: 1px solid #323835;
-      border-radius: 8px;
-      color: #eaf0ee;
-      background: #252a28;
-      font-size: 13px;
-    }
-    .create-profile-actions .primary { border-color: #20d0c4; color: #111312; background: #20d0c4; font-weight: 600; }
-    .create-stepper { display: flex; align-items: center; gap: 10px; margin: 22px 0 26px; color: #727b77; font-size: 12px; }
-    .create-stepper span { display: inline-flex; align-items: center; gap: 7px; }
-    .create-stepper i { display: grid; place-items: center; width: 24px; height: 24px; border: 1px solid #3b423f; border-radius: 50%; font-style: normal; }
-    .create-stepper span.active { color: #90f0e4; }
-    .create-stepper span.active i { border-color: #20d0c4; background: #203634; }
-    .create-stepper b { width: 46px; height: 1px; background: #323835; }
-    .create-step[hidden] { display: none; }
-    .type-validation { min-height: 18px; margin: 10px 0 0; color: #e98080; font-size: 12px; }
-    .step-two-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 20px; }
-    .upload-large {
-      display: grid;
-      place-items: center;
-      min-height: 326px;
-      padding: 30px;
-      border: 1px dashed #43504b;
-      border-radius: 12px;
-      color: #a6afab;
-      background: #1d2220;
-      text-align: center;
-    }
-    .upload-large strong { display: block; margin-bottom: 10px; color: #eaf0ee; font-size: 15px; }
-    .upload-large p { max-width: 330px; margin: 5px 0; font-size: 12px; line-height: 20px; }
-    .upload-large button { margin-top: 18px; height: 34px; padding: 0 16px; border: 1px solid #3d4743; border-radius: 8px; color: #eaf0ee; background: #252a28; }
-    .required-mark { color: #e98080; }
-    .tag-input-wrap { min-height: 38px; padding: 5px 7px; border: 1px solid #323835; border-radius: 8px; background: #252a28; }
-    .tag-list { display: inline-flex; flex-wrap: wrap; gap: 5px; vertical-align: middle; }
-    .tag-item { display: inline-flex; align-items: center; gap: 5px; min-height: 25px; padding: 0 8px; border-radius: 13px; color: #c8d0cd; background: #303735; font-size: 11px; }
-    .tag-item button { padding: 0; border: 0; color: #87918d; background: none; }
-    .tag-input-wrap input { display: inline-block; width: 150px; min-height: 26px; padding: 0 5px; border: 0; background: transparent; }
-    .tag-suggestions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 7px; }
-    .tag-suggestions button { padding: 4px 8px; border: 1px solid #39413e; border-radius: 12px; color: #919b97; background: transparent; font-size: 10px; }
-    .price-row { display: grid; grid-template-columns: 1fr 18px 1fr 92px; align-items: center; gap: 7px; }
-    .draft-card { padding: 24px; border: 1px solid #323835; border-radius: 12px; background: #202423; }
-    .draft-card-head { display: flex; align-items: center; gap: 10px; }
-    .draft-card-head h3 { margin: 0; font-size: 19px; }
-    .draft-card dl { display: grid; grid-template-columns: 130px 1fr; gap: 12px; margin: 22px 0; font-size: 13px; }
-    .draft-card dt { color: #8d9793; }
-    .draft-card dd { margin: 0; color: #e0e6e4; }
-    .status-chip { display: inline-flex; align-items: center; min-height: 26px; padding: 0 9px; border: 1px solid #35615d; border-radius: 13px; color: #90f0e4; background: #203634; font-size: 11px; }
-    .profile-card { cursor: pointer; }
-    .profile-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .profile-card { min-height: 112px; align-items: center; }
-    .profile-created-at { margin: 10px 0 0; color: #727b77; font-size: 12px; }
-    .profile-card-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 16px; }
-    .completion { color: #90f0e4; font-size: 11px; }
-    .updated-at { color: #727b77; font-size: 11px; }
-    .profile-more { align-self: flex-start; width: 34px; height: 32px; border: 1px solid #323835; border-radius: 7px; color: #a6afab; background: #252a28; }
-    .profile-menu { position: absolute; z-index: 25; width: 150px; padding: 5px; border: 1px solid #3a413e; border-radius: 8px; background: #272c2a; box-shadow: 0 12px 28px #0008; }
-    .profile-menu button { width: 100%; padding: 8px 10px; border: 0; border-radius: 5px; color: #dce3e0; background: transparent; text-align: left; font-size: 12px; }
-    .profile-menu button:hover { background: #343a37; }
-    .profile-menu button.danger { color: #e98080; }
-    .archive-overlay { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; padding: 24px; background: rgba(0,0,0,.68); }
-    .archive-overlay[hidden] { display: none; }
-    .archive-dialog { width: min(760px, calc(100vw - 48px)); max-height: calc(100vh - 48px); overflow: auto; padding: 22px; border: 1px solid #3a423f; border-radius: 12px; background: #202423; box-shadow: 0 22px 70px #000a; }
-    .archive-dialog.wide { width: min(1040px, calc(100vw - 48px)); }
-    .archive-dialog h2 { margin: 0; font-size: 19px; }
-    .archive-dialog > p { margin: 7px 0 18px; color: #a6afab; font-size: 12px; }
-    .dialog-actions { display: flex; justify-content: flex-end; gap: 9px; margin-top: 20px; }
-    .dialog-actions button { height: 35px; padding: 0 15px; border: 1px solid #3a423f; border-radius: 7px; color: #eaf0ee; background: #272d2a; }
-    .dialog-actions .primary { border-color: #20d0c4; color: #101211; background: #20d0c4; }
-    .dialog-actions .danger { border-color: #844848; color: #f0a0a0; background: #3a2424; }
-    .upload-dropzone { padding: 26px; border: 1px dashed #43504b; border-radius: 10px; text-align: center; }
-    .file-list { display: grid; gap: 8px; margin-top: 14px; }
-    .file-row { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 12px; padding: 10px 12px; border: 1px solid #323835; border-radius: 8px; background: #252a28; font-size: 12px; }
-    .file-status { color: #90f0e4; }
-    .mapping-layout { display: grid; grid-template-columns: 200px 1fr; gap: 18px; }
-    .mapping-nav { display: grid; align-content: start; gap: 5px; }
-    .mapping-nav button { padding: 9px 10px; border: 0; border-radius: 6px; color: #a6afab; background: transparent; text-align: left; }
-    .mapping-nav button.active { color: #90f0e4; background: #203634; }
-    .mapping-list { display: grid; gap: 8px; }
-    .mapping-row { display: grid; grid-template-columns: 24px 120px 1fr 120px 64px; gap: 9px; align-items: center; padding: 10px; border: 1px solid #323835; border-radius: 8px; font-size: 11px; }
-    .conflict { color: #f2b36f; }
-    .profile-detail-page, .task-workbench-page { position: fixed; inset: 0 0 0 246px; z-index: 84; padding: 54px; overflow: auto; background: #151716; }
-    .profile-detail-page[hidden], .task-workbench-page[hidden] { display: none; }
-    body.sidebar-collapsed .profile-detail-page, body.sidebar-collapsed .task-workbench-page { left: 64px; }
-    .detail-wrap { width: min(1080px, 100%); margin: 0 auto; }
-    .detail-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
-    .detail-top h2 { margin: 8px 0; font-size: 24px; }
-    .detail-actions { display: flex; gap: 8px; }
-    .detail-actions button, .back-list { height: 35px; padding: 0 13px; border: 1px solid #3a423f; border-radius: 7px; color: #eaf0ee; background: #252a28; }
-    .module-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 24px; }
-    .module-card { min-height: 174px; padding: 17px; border: 1px solid #323835; border-radius: 11px; background: #202423; }
-    .module-card-head { display: flex; justify-content: space-between; gap: 14px; }
-    .module-card h3 { margin: 0; font-size: 14px; }
-    .module-card p { color: #a6afab; font-size: 12px; line-height: 20px; }
-    .module-edit { border: 0; color: #90f0e4; background: transparent; }
-    .source-link { border: 0; color: #7fd8cf; background: transparent; font-size: 11px; }
-    .drawer-backdrop { position: fixed; inset: 0; z-index: 220; background: rgba(0,0,0,.55); }
-    .drawer-backdrop[hidden] { display: none; }
-    .edit-drawer { position: absolute; inset: 0 0 0 auto; width: min(560px, 44vw); padding: 22px; overflow: auto; border-left: 1px solid #3a423f; background: #202423; }
-    .drawer-head { display: flex; justify-content: space-between; align-items: center; }
-    .drawer-form { display: grid; gap: 14px; margin-top: 22px; }
-    .drawer-actions { position: sticky; bottom: -22px; display: flex; justify-content: flex-end; gap: 9px; margin: 30px -22px -22px; padding: 14px 22px; border-top: 1px solid #323835; background: #202423; }
-    .task-layout { display: grid; grid-template-columns: minmax(0,1fr) 290px; gap: 18px; width: min(1120px,100%); margin: 0 auto; }
-    .task-context { display: flex; justify-content: space-between; padding: 12px 14px; border: 1px solid #323835; border-radius: 9px; background: #202423; }
-    .task-chat { min-height: 560px; margin-top: 12px; padding: 18px; border: 1px solid #323835; border-radius: 10px; background: #1b1e1d; }
-    .system-message { margin: 10px 0; padding: 10px 12px; border-radius: 8px; color: #cbd4d1; background: #252a28; font-size: 12px; }
-    .task-side { padding: 16px; border: 1px solid #323835; border-radius: 10px; background: #202423; }
-    .task-step { padding: 10px 0; border-bottom: 1px solid #303633; color: #a6afab; font-size: 12px; }
-    .task-step.rerun { color: #f2b36f; }
-    .task-step.updated { color: #90f0e4; }
-    @media (max-width: 980px) {
-      .profile-list, .module-grid, .step-two-grid { grid-template-columns: 1fr; }
-      .profile-type-options { grid-template-columns: 1fr 1fr; }
-    }
-    .toast {
-      position: fixed;
-      left: calc(50% + 123px);
-      bottom: 28px;
-      z-index: 20;
-      padding: 9px 14px;
-      border: 1px solid #424242;
-      border-radius: 7px;
-      color: #ddd;
-      background: #292929;
-      font-size: 12px;
-      opacity: 0;
-      pointer-events: none;
-      transform: translate(-50%, 10px);
-      transition: .2s ease;
-    }
-
-    .toast.show { opacity: 1; transform: translate(-50%, 0); }
-    .review-toolbar {
-      position: fixed;
-      z-index: 100;
-      right: 20px;
-      bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 7px;
-      border: 1px solid #484848;
-      border-radius: 10px;
-      background: rgba(35, 35, 35, .94);
-      box-shadow: 0 12px 34px rgba(0, 0, 0, .35);
-      backdrop-filter: blur(12px);
-    }
-    .review-toolbar button {
-      height: 30px;
-      padding: 0 12px;
-      border: 1px solid #4b4b4b;
-      border-radius: 6px;
-      color: #ddd;
-      background: #303030;
-      font-size: 12px;
-      cursor: pointer;
-    }
-    .review-toolbar button.active { border-color: var(--accent); color: #08211f; background: var(--accent); }
-    .review-toolbar output { min-width: 160px; max-width: 300px; color: #aaa; font-size: 12px; }
-    body.inspecting * { cursor: crosshair !important; }
-    .review-selected { outline: 2px solid var(--accent) !important; outline-offset: 3px; }
-    .review-marker-layer {
-      position: fixed;
-      inset: 0;
-      z-index: 110;
-      pointer-events: none;
-    }
-    .review-dot {
-      position: fixed;
-      width: 10px;
-      height: 10px;
-      padding: 0;
-      border: 2px solid #fff;
-      border-radius: 50%;
-      background: #ef3f4d;
-      box-shadow: 0 2px 7px rgba(0, 0, 0, .5);
-      pointer-events: auto;
-      cursor: pointer;
-    }
-    .review-dot:hover {
-      transform: scale(1.35);
-      background: #ff5965;
-    }
-    .interaction-note {
-      position: fixed;
-      z-index: 120;
-      width: min(310px, calc(100vw - 28px));
-      padding: 12px 14px;
-      border: 1px solid #4c4c4c;
-      border-left: 3px solid #ef3f4d;
-      border-radius: 8px;
-      color: #dcdcdc;
-      background: rgba(38, 38, 38, .97);
-      box-shadow: 0 16px 38px rgba(0, 0, 0, .4);
-      font-size: 12px;
-      line-height: 1.65;
-    }
-    .interaction-note strong {
-      display: block;
-      margin-bottom: 3px;
-      color: #fff;
-      font-size: 13px;
-    }
-    .interaction-note .component-type {
-      display: block;
-      margin-bottom: 6px;
-      color: #90f0e4;
-      font-size: 11px;
-    }
-    .interaction-note .state-change {
-      display: block;
-      margin-top: 6px;
-      padding-top: 6px;
-      border-top: 1px solid #424745;
-      color: #b8c0bd;
-    }
-    .interaction-note[hidden] { display: none; }
-    body.ui-review-mode [data-review-active="true"] {
-      outline: 2px solid rgba(239, 63, 77, .9) !important;
-      outline-offset: 2px;
-    }
-    .review-mode-switch {
-      position: fixed;
-      z-index: 130;
-      top: 18px;
-      right: 18px;
-      display: flex;
-      gap: 3px;
-      padding: 3px;
-      border: 1px solid #454545;
-      border-radius: 8px;
-      background: rgba(35, 35, 35, .94);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, .28);
-      backdrop-filter: blur(10px);
-    }
-    .review-mode-switch button {
-      height: 28px;
-      padding: 0 12px;
-      border: 0;
-      border-radius: 5px;
-      color: #8f8f8f;
-      background: transparent;
-      font-size: 12px;
-      cursor: pointer;
-    }
-    .review-mode-switch button.active { color: #151515; background: #e7ecea; font-weight: 600; }
-    body.review-clean .review-marker-layer,
-    body.review-clean .interaction-note { display: none !important; }
-    body.review-clean [data-review-active="true"] { outline: none !important; }
-    body.review-edit .review-marker-layer,
-    body.review-edit .interaction-note { display: none !important; }
-    body.review-edit [data-review-active="true"] { outline: none !important; }
-    body.review-edit { cursor: crosshair; }
-    body.review-edit [data-edit-hover="true"] {
-      outline: 2px solid #f4b942 !important;
-      outline-offset: 2px;
-      cursor: copy !important;
-    }
-    .copy-toast {
-      position: fixed;
-      z-index: 140;
-      left: 50%;
-      bottom: 24px;
-      max-width: min(620px, calc(100vw - 32px));
-      padding: 10px 16px;
-      border: 1px solid #4b4b4b;
-      border-radius: 8px;
-      color: #f1f1f1;
-      background: rgba(39, 39, 39, .96);
-      box-shadow: 0 12px 32px rgba(0, 0, 0, .4);
-      font-size: 13px;
-      text-align: center;
-      opacity: 0;
-      pointer-events: none;
-      transform: translate(-50%, 8px);
-      transition: opacity .18s ease, transform .18s ease;
-    }
-    .copy-toast.show { opacity: 1; transform: translate(-50%, 0); }
-
-    @media (max-width: 900px) {
-      .launcher { width: min(720px, calc(100vw - 96px)); }
-      .toast { left: 50%; }
-    }
-
-    @media (max-width: 720px) {
-      .launcher { top: 108px; width: calc(100vw - 92px); }
-      h1 { font-size: 24px; }
-      .subhead { padding: 0 20px; }
-      .scene-tabs { flex-wrap: wrap; margin-top: 22px; gap: 8px; }
-      .prompt-box, .quick-controls { width: 100%; }
-      .prompt-box { margin-top: 14px; }
-      textarea { width: calc(100% - 36px); }
-      .mode-select { right: 72px; }
-      .send { right: 20px; }
-      .quick-controls { flex-wrap: wrap; }
-      .archive-prompt { width: 100%; grid-template-columns: 40px 1fr; height: auto; padding: 12px 16px; margin-top: 24px; }
-      .create { grid-column: 2; width: 78px; }
-      .archive-copy span { white-space: normal; }
-    }
-  </style>
-</head>
-<body>
-  <div class="app">
-    <aside class="sidebar" aria-label="应用侧边栏">
-      <div class="window-controls" aria-hidden="true"><i></i><i></i><i></i></div>
-      <div class="utilities">
-        <button class="icon-btn" id="search-toggle" title="搜索">⌕</button>
-        <button class="icon-btn" id="sidebar-toggle" title="折叠侧栏">‹</button>
-      </div>
-      <div class="search-panel" id="search-panel">
-        <input id="search-input" maxlength="40" placeholder="搜索历史任务或项目">
-        <div class="search-results" id="search-results"></div>
-      </div>
-      <p class="product-name">Lightchain 灵感决策工作台</p>
-
-      <nav class="nav">
-        <button class="nav-item active" id="new-task-nav" title="新任务"><span class="nav-icon">＋</span><span class="label">新任务</span></button>
-        <button class="nav-item" id="archive-nav" title="企业档案"><span class="nav-icon">▣</span><span class="label">企业档案<span class="sub">长期业务上下文</span></span></button>
-      </nav>
-
-      <div class="space-section">
-        <span>历史</span>
-        <button class="history-toggle" id="history-toggle" title="展开历史">◷</button>
-        <button class="create-project-icon" id="create-project" title="创建项目" aria-label="创建项目">
-          <svg width="17" height="17" viewBox="0 0 17 17" fill="none" aria-hidden="true">
-            <path d="M2.25 4.25h4l1.2 1.5h7.3v7.5a1.5 1.5 0 0 1-1.5 1.5h-9.5a1.5 1.5 0 0 1-1.5-1.5v-9Z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
-            <path d="M8.5 8v4M6.5 10h4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
-          </svg>
-        </button>
-      </div>
-      <div class="history-list" id="history-list" aria-label="历史任务列表"></div>
-      <button class="sidebar-expand" id="sidebar-expand" title="展开侧栏" aria-label="展开侧栏">›</button>
-      <button class="back-saas" title="退出" aria-label="退出">
-        <span class="back-saas-icon">←</span>
-        <span class="back-saas-label">退出</span>
-      </button>
-
-    </aside>
-
-    <main>
-      <section class="launcher" aria-labelledby="headline">
-        <div class="agent-mark" aria-hidden="true"><span class="face"></span></div>
-        <h1 id="headline">今天想从哪里开始？</h1>
-        <p class="subhead">选择一个业务场景，描述你的目标，Agent 会带你完成后续步骤。</p>
-
-        <div class="scene-tabs" role="tablist" aria-label="业务场景">
-          <button class="scene-tab active" data-scene="selection">选品测款</button>
-          <button class="scene-tab" data-scene="planning">新品方向探索</button>
-          <button class="scene-tab" data-scene="proposal">客户提案生成</button>
-          <button class="scene-tab" data-scene="variation">款式裂变生成</button>
-        </div>
-
-        <div class="prompt-box">
-          <textarea id="prompt" aria-label="任务描述" placeholder="描述你想调研的市场、品类或款式方向…"></textarea>
-          <button class="attach" id="attach" title="添加附件">＋</button>
-          <input type="file" id="file-input" multiple>
-          <select class="control archive-select" aria-label="企业档案">
-            <option>企业灵感档案</option>
-            <option>暂不使用档案</option>
-            <option>轻户外女装档案</option>
-          </select>
-          <button class="send" id="send" title="开始任务">↑</button>
-        </div>
-
-        <div class="archive-prompt" id="archive-prompt" hidden>
-          <div class="folder">档</div>
-          <div class="archive-copy">
-            <strong>建立你的企业灵感档案</strong>
-            <span>让 Agent 更了解你的市场、渠道和业务约束</span>
-          </div>
-          <button class="create">立即创建</button>
-        </div>
-      </section>
-    </main>
-    <section class="profile-page" id="profile-page" hidden>
-      <div class="profile-header">
-        <div class="profile-heading">
-          <h2 id="profile-page-title">企业灵感档案</h2>
-          <p id="profile-page-desc">保存长期稳定的市场、品类、风格和经营边界，供任务自动应用。</p>
-        </div>
-        <button class="new-profile" id="new-profile">＋ 新建档案</button>
-      </div>
-      <div class="profile-list" id="profile-list" aria-label="企业档案列表"></div>
-    </section>
-    <section class="profile-create-page" id="profile-create-page" hidden>
-      <div class="create-profile-wrap">
-        <h2>新建企业灵感档案</h2>
-        <p class="create-profile-intro">用最少的必要信息建立基础画像，也可以上传既有资料自动补充。</p>
-        <div class="create-stepper">
-          <span class="active" data-step-indicator="1"><i>1</i>选择类型</span><b></b>
-          <span data-step-indicator="2"><i>2</i>创建基础画像</span><b></b>
-          <span data-step-indicator="3"><i>3</i>确认并保存</span>
-        </div>
-
-        <section class="create-step" data-create-step="1">
-          <section class="create-section">
-          <h3>选择档案类型</h3>
-          <p class="create-section-desc">每个档案只能对应一种类型。保存后不可直接修改类型；如判断错误，可复制为新档案。</p>
-          <div class="profile-type-options" role="radiogroup" aria-label="档案类型">
-            <button class="profile-type-option" type="button" data-profile-type="电商">
-              <strong>电商</strong><span>用于选品、测款、店铺经营与平台商品判断</span>
-            </button>
-            <button class="profile-type-option" type="button" data-profile-type="线下零售">
-              <strong>线下零售</strong><span>用于门店货品规划、上新节奏与售罄复盘</span>
-            </button>
-            <button class="profile-type-option" type="button" data-profile-type="品牌/OBM">
-              <strong>品牌 / OBM</strong><span>用于季节企划、产品线规划与品牌一致性管理</span>
-            </button>
-            <button class="profile-type-option" type="button" data-profile-type="ODM/OEM">
-              <strong>ODM / OEM</strong><span>用于客户提案、能力匹配与开发边界说明</span>
-            </button>
-          </div>
-          <p class="type-validation" id="type-validation"></p>
-          </section>
-          <div class="create-profile-actions">
-            <button id="cancel-create-profile" type="button">取消</button>
-            <button class="primary" id="next-create-profile" type="button">下一步</button>
-          </div>
-        </section>
-
-        <section class="create-step" data-create-step="2" hidden>
-          <div class="step-two-grid">
-            <section class="create-section">
-          <h3>基础信息</h3>
-          <p class="create-section-desc">先完成 4 个必填项，其他信息可在保存后继续补充。</p>
-          <div class="profile-form-grid">
-            <div class="profile-field full">
-              <label for="create-profile-name">档案名称 <span class="required-mark">*</span></label>
-              <input id="create-profile-name" maxlength="40" placeholder="例如：日本通勤女装档案">
-            </div>
-            <div class="profile-field full">
-              <label for="create-profile-market">默认主市场 <span class="required-mark">*</span></label>
-              <select id="create-profile-market">
-                <option value="">请选择</option>
-                <option>中国</option><option>日本</option><option>北美</option><option>欧洲</option>
-              </select>
-            </div>
-            <div class="profile-field full">
-              <label for="create-profile-scope">核心业务 / 品类 <span class="required-mark">*</span></label>
-              <div class="tag-input-wrap" id="category-tag-input">
-                <span class="tag-list" id="category-tags"></span>
-                <input id="create-profile-scope" placeholder="输入后按 Enter">
-              </div>
-              <div class="tag-suggestions">
-                <button type="button" data-suggest-tag="女装">女装</button>
-                <button type="button" data-suggest-tag="针织">针织</button>
-                <button type="button" data-suggest-tag="通勤">通勤</button>
-                <button type="button" data-suggest-tag="轻户外">轻户外</button>
-              </div>
-            </div>
-            <div class="profile-field full">
-              <label for="create-profile-audience">目标人群 <span class="required-mark">*</span></label>
-              <textarea id="create-profile-audience" placeholder="例如：25–35 岁东京都市通勤女性"></textarea>
-            </div>
-            <div class="profile-field full">
-              <label>价格带（选填）</label>
-              <div class="price-row">
-                <input id="price-min" type="number" placeholder="最低价"><span>—</span>
-                <input id="price-max" type="number" placeholder="最高价">
-                <select id="price-currency"><option>¥</option><option>JPY ¥</option><option>$</option><option>€</option></select>
-              </div>
-            </div>
-            <div class="profile-field full">
-              <label for="create-profile-positioning">一句话经营定位（选填）</label>
-              <textarea id="create-profile-positioning" placeholder="例如：中端都市通勤针织女装"></textarea>
-            </div>
-          </div>
-            </section>
-            <section class="upload-large">
-              <div>
-                <strong>上传现有资料，自动补充企业画像</strong>
-                <p>支持 PDF、PPT、Word、Excel、CSV、图片</p>
-                <p>可上传销售复盘、商品企划、品牌手册、客户提案、面料资料、款式图</p>
-                <button id="upload-profile-material" type="button">上传资料</button>
-                <p id="profile-upload-status"></p>
-              </div>
-            </section>
-          </div>
-          <div class="create-profile-actions">
-            <button id="back-create-type" type="button">返回上一步</button>
-            <button class="primary" id="generate-profile-draft" type="button">生成档案草稿</button>
-          </div>
-        </section>
-
-        <section class="create-step" data-create-step="3" hidden>
-          <div class="draft-card">
-            <div class="draft-card-head"><h3 id="draft-name">档案草稿</h3><span class="status-chip" id="draft-type"></span></div>
-            <dl>
-              <dt>默认主市场</dt><dd id="draft-market"></dd>
-              <dt>核心品类</dt><dd id="draft-categories"></dd>
-              <dt>目标人群</dt><dd id="draft-audience"></dd>
-              <dt>价格带</dt><dd id="draft-price"></dd>
-            </dl>
-            <p class="create-section-desc">系统已基于你的输入生成企业画像草稿。保存后可以继续补充各模块信息。</p>
-          </div>
-          <div class="create-profile-actions">
-            <button id="back-create-edit" type="button">返回修改</button>
-            <button class="primary" id="save-profile" type="button">保存档案</button>
-          </div>
-        </section>
-      </div>
-    </section>
-    <section class="profile-detail-page" id="profile-detail-page" hidden>
-      <div class="detail-wrap">
-        <button class="back-list" id="back-profile-list">← 返回企业档案列表</button>
-        <div class="detail-top">
-          <div>
-            <h2 id="detail-name"></h2>
-            <div><span class="status-chip" id="detail-type"></span> <span class="status-chip" id="detail-completion"></span></div>
-            <p class="profile-summary" id="detail-meta"></p>
-          </div>
-          <div class="detail-actions">
-            <button id="detail-upload">从资料补充</button>
-            <button id="detail-more">··· 更多</button>
-          </div>
-        </div>
-        <div class="module-grid" id="module-grid"></div>
-      </div>
-    </section>
-    <section class="task-workbench-page" id="task-workbench-page" hidden>
-      <div class="task-layout">
-        <div>
-          <div class="task-context">
-            <span>当前场景：<b id="task-scene">新品方向探索-企划</b></span>
-            <label>企业档案：
-              <select id="task-profile-select" aria-label="任务企业档案"></select>
-            </label>
-          </div>
-          <div class="task-chat" id="task-chat">
-            <div class="system-message">请选择企业档案。任务开始前可直接切换；任务开始后切换会说明受影响步骤。</div>
-            <button id="simulate-task-start">模拟任务已启动</button>
-          </div>
-        </div>
-        <aside class="task-side">
-          <h3>任务步骤</h3>
-          <div class="task-step">目标人群与市场假设</div>
-          <div class="task-step">品类与价格带判断</div>
-          <div class="task-step">风格与视觉方向</div>
-        </aside>
-      </div>
-    </section>
-    <div class="archive-overlay" id="upload-modal" hidden>
-      <div class="archive-dialog">
-        <h2>从资料补充企业画像</h2>
-        <p>解析后由你确认哪些信息写入档案。</p>
-        <div class="upload-dropzone">
-          <strong>拖拽文件到这里，或点击添加模拟资料</strong><br>
-          <button id="add-mock-files">添加模拟资料</button>
-        </div>
-        <div class="file-list" id="upload-file-list"></div>
-        <div class="dialog-actions">
-          <button id="close-upload-modal">取消</button>
-          <button class="primary" id="start-parse" disabled>开始解析</button>
-        </div>
-      </div>
-    </div>
-    <div class="archive-overlay" id="mapping-modal" hidden>
-      <div class="archive-dialog wide">
-        <h2>确认资料解析结果</h2>
-        <p>选择需要回填的字段；冲突内容默认不勾选。</p>
-        <div class="mapping-layout">
-          <nav class="mapping-nav">
-            <button class="active">已识别业务信息</button><button>风格与视觉偏好</button>
-            <button>类型专属信息</button><button>待确认与冲突项</button>
-          </nav>
-          <div class="mapping-list" id="mapping-list"></div>
-        </div>
-        <div class="dialog-actions">
-          <button id="apply-high-confidence">全部应用</button>
-          <button id="close-mapping-modal">关闭</button>
-          <button class="primary" id="apply-mapping">应用已选字段</button>
-        </div>
-      </div>
-    </div>
-    <div class="archive-overlay" id="source-modal" hidden>
-      <div class="archive-dialog">
-        <h2>资料来源</h2>
-        <p>查看原始资料、解析时间及已引用字段。</p>
-        <div class="file-list" id="source-file-list"></div>
-        <div class="dialog-actions"><button id="close-source-modal">关闭</button></div>
-      </div>
-    </div>
-    <div class="archive-overlay" id="switch-profile-modal" hidden>
-      <div class="archive-dialog">
-        <h2>切换企业档案？</h2>
-        <p id="switch-profile-copy"></p>
-        <ul><li>目标人群与市场假设</li><li>品类与价格带判断</li><li>风格与视觉方向</li></ul>
-        <p>已上传的本任务资料和历史对话将保留。</p>
-        <div class="dialog-actions"><button id="cancel-profile-switch">取消</button><button class="primary" id="confirm-profile-switch">确认切换并更新</button></div>
-      </div>
-    </div>
-    <div class="drawer-backdrop" id="edit-drawer-backdrop" hidden>
-      <aside class="edit-drawer">
-        <div class="drawer-head"><h2 id="drawer-title">编辑模块</h2><button id="close-edit-drawer">×</button></div>
-        <div class="drawer-form">
-          <div class="profile-field"><label for="drawer-summary">模块内容</label><textarea id="drawer-summary"></textarea></div>
-          <button id="drawer-upload">从资料补充</button>
-        </div>
-        <div class="drawer-actions"><button id="cancel-drawer">取消</button><button class="primary" id="save-drawer">保存修改</button></div>
-      </aside>
-    </div>
-    <div class="modal-backdrop" id="project-modal" hidden>
-      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="project-modal-title">
-        <h2 id="project-modal-title">创建项目</h2>
-        <p>项目用于整理历史任务，名称最多 40 个字符。</p>
-        <input id="project-name" maxlength="40" placeholder="项目">
-        <div class="char-count"><span id="project-name-count">0</span>/40</div>
-        <div class="modal-actions">
-          <button id="cancel-project">取消</button>
-          <button class="primary" id="confirm-project">创建</button>
-        </div>
-      </div>
-    </div>
-    <div class="toast" role="status" aria-live="polite"></div>
-  </div>
-
-  <script>
-    const scenes = {
-      selection: "描述你想调研的市场、品类或款式方向…",
-      planning: "描述下一季的市场、人群、品类和经营目标…",
-      proposal: "输入客户需求，或上传 brief、邮件和会议纪要…",
-      variation: "描述要延伸的款式方向，或上传图片和情绪板…"
-    };
-
-    const prompt = document.querySelector("#prompt");
-    const toast = document.querySelector(".toast");
-    let toastTimer;
-
-    function showToast(message) {
-      toast.textContent = message;
-      toast.classList.add("show");
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(() => toast.classList.remove("show"), 1800);
-    }
-
-    document.querySelectorAll(".scene-tab").forEach((tab) => {
-      tab.addEventListener("click", () => {
-        document.querySelector(".scene-tab.active")?.classList.remove("active");
-        tab.classList.add("active");
-        prompt.placeholder = scenes[tab.dataset.scene];
-        prompt.focus();
-      });
-    });
-
-    document.querySelectorAll(".nav-item").forEach((item) => {
-      item.addEventListener("click", () => {
-        document.querySelector(".nav-item.active")?.classList.remove("active");
-        item.classList.add("active");
-        showToast(`${item.querySelector(".label")?.childNodes[0].textContent.trim() || "页面"}：交互待对齐`);
-      });
-    });
-
-    const setSidebarCollapsed = (collapsed) => {
-      document.body.classList.toggle("sidebar-collapsed", collapsed);
-      document.querySelector("#sidebar-toggle").title = collapsed ? "展开侧栏" : "折叠侧栏";
-    };
-
-    document.querySelector("#sidebar-toggle").addEventListener("click", () => setSidebarCollapsed(true));
-    document.querySelector("#history-toggle").addEventListener("click", () => setSidebarCollapsed(false));
-    document.querySelector("#sidebar-expand").addEventListener("click", () => setSidebarCollapsed(false));
-
-    function showHomeInitialState() {
-      setSidebarCollapsed(false);
-      document.querySelector("#profile-page").hidden = true;
-      document.querySelector("#profile-create-page").hidden = true;
-      document.querySelector("#profile-detail-page").hidden = true;
-      document.querySelector("#task-workbench-page").hidden = true;
-      document.querySelector(".nav-item.active")?.classList.remove("active");
-      document.querySelector("#new-task-nav").classList.add("active");
-      document.querySelector(".scene-tab.active")?.classList.remove("active");
-      const defaultScene = document.querySelector('.scene-tab[data-scene="selection"]');
-      defaultScene.classList.add("active");
-      prompt.value = "";
-      prompt.placeholder = scenes.selection;
-      document.querySelector("#file-input").value = "";
-      searchPanel?.classList.remove("open");
-    }
-
-    document.querySelector("#new-task-nav").addEventListener("click", showHomeInitialState);
-    document.querySelector("#archive-nav").addEventListener("click", () => {
-      setSidebarCollapsed(false);
-      document.querySelector("#profile-create-page").hidden = true;
-      document.querySelector("#profile-detail-page").hidden = true;
-      document.querySelector("#task-workbench-page").hidden = true;
-      document.querySelector("#profile-page").hidden = false;
-      renderProfiles();
-    });
-
-    document.querySelector("#attach").addEventListener("click", () => {
-      document.querySelector("#file-input").click();
-    });
-
-    document.querySelector("#file-input").addEventListener("change", (event) => {
-      const count = event.target.files.length;
-      if (count) showToast(`已选择 ${count} 个附件`);
-    });
-
-    document.querySelector("#send").addEventListener("click", () => {
-      if (!prompt.value.trim()) {
-        prompt.focus();
-        showToast("请先描述你的任务目标");
-        return;
-      }
-      const sceneNames = {selection:"选品推荐",planning:"新品方向探索-企划",proposal:"客户提案生成",variation:"款式裂变"};
-      document.querySelector("#task-scene").textContent = sceneNames[document.querySelector(".scene-tab.active").dataset.scene];
-      document.querySelector("#task-workbench-page").hidden = false;
-      document.querySelector("#profile-page").hidden = true;
-      document.querySelector("#profile-create-page").hidden = true;
-      document.querySelector("#profile-detail-page").hidden = true;
-    });
-
-    let archives = [
-      { id:"archive-1", name:"日本通勤女装档案", created:"2026-07-12", type:"电商", market:"日本", categories:["女装","针织","通勤"], completion:72, updated:"2026-07-31", audience:"25–35 岁东京都市通勤女性", price:"JPY ¥8,000 – ¥18,000", positioning:"中端都市通勤针织女装" },
-      { id:"archive-2", name:"华东轻奢女装门店档案", created:"2026-07-16", type:"线下零售", market:"中国", categories:["女装","连衣裙","针织"], completion:58, updated:"2026-07-28", audience:"28–42 岁华东城市女性", price:"¥699 – ¥1,899", positioning:"区域轻奢女装门店货品规划" },
-      { id:"archive-3", name:"北美轻户外品牌档案", created:"2026-07-20", type:"品牌/OBM", market:"北美", categories:["女装","轻户外","功能外套"], completion:86, updated:"2026-07-30", audience:"25–40 岁北美城市户外女性", price:"$80 – $260", positioning:"城市与周末轻户外生活方式品牌" },
-      { id:"archive-4", name:"欧美快反开发档案", created:"2026-07-23", type:"ODM/OEM", market:"欧洲", categories:["女装","梭织","快返开发"], completion:64, updated:"2026-07-26", audience:"欧洲中端女装品牌客户", price:"€18 – €55 FOB", positioning:"小单快反女装开发与交付" }
-    ];
-    const archivePrompt = document.querySelector("#archive-prompt");
-    const archiveSelector = document.querySelector(".archive-select");
-    const profileList = document.querySelector("#profile-list");
-
-    function renderArchiveState() {
-      archivePrompt.hidden = archives.length > 0;
-      archiveSelector.innerHTML = archives.length
-        ? `<option value="">企业灵感档案</option><option value="none">暂不使用档案</option>${archives.map((item) => `<option value="${item.id}">${item.name}</option>`).join("")}`
-        : "<option>暂无企业档案</option>";
-      renderTaskProfileOptions();
-    }
-    renderArchiveState();
-
-    function renderProfiles() {
-      profileList.innerHTML = archives.length
-        ? archives.map((item) => `
-          <article class="profile-card" data-profile-id="${item.id}">
-            <div>
-              <h3>${item.name}</h3>
-              <p class="profile-created-at">创建时间：${item.created || item.updated}</p>
-            </div>
-          </article>
-        `).join("")
-        : `<div class="profile-empty"><strong>还没有企业档案</strong><br>先建立长期业务上下文，让每次任务更贴近你的市场、品类与经营边界。<br><button id="empty-new-profile">新建第一个档案</button></div>`;
-    }
-
-    function resetCreateForm() {
-      selectedProfileType = "";
-      categoryTags = [];
-      document.querySelectorAll(".profile-type-option").forEach((item) => {
-        item.classList.remove("active");
-        item.querySelector("strong").textContent = item.querySelector("strong").textContent.replace(/^✓\s*/, "");
-      });
-      ["#create-profile-name","#create-profile-scope","#create-profile-audience","#price-min","#price-max","#create-profile-positioning"].forEach((selector) => document.querySelector(selector).value = "");
-      document.querySelector("#create-profile-market").value = "";
-      document.querySelector("#type-validation").textContent = "";
-      document.querySelector("#profile-upload-status").textContent = "";
-      renderCategoryTags();
-      showCreateStep(1);
-    }
-
-    function openProfileCreation() {
-      resetCreateForm();
-      document.querySelector("#profile-page").hidden = true;
-      document.querySelector("#profile-detail-page").hidden = true;
-      document.querySelector("#profile-create-page").hidden = false;
-    }
-    document.querySelector("#new-profile").addEventListener("click", openProfileCreation);
-
-    profileList.addEventListener("click", (event) => {
-      const emptyButton = event.target.closest("#empty-new-profile");
-      if (emptyButton) { openProfileCreation(); return; }
-      const card = event.target.closest(".profile-card");
-      if (card) openProfileDetail(card.dataset.profileId);
-    });
-
-    document.querySelector(".create").addEventListener("click", openProfileCreation);
-
-    let selectedProfileType = "";
-    let categoryTags = [];
-    let uploadReturnContext = "create";
-    let currentProfileId = null;
-    let currentModuleTitle = "";
-    let taskStarted = false;
-    let activeTaskProfileId = "";
-    let pendingTaskProfileId = "";
-
-    function showCreateStep(step) {
-      document.querySelectorAll("[data-create-step]").forEach((panel) => panel.hidden = Number(panel.dataset.createStep) !== step);
-      document.querySelectorAll("[data-step-indicator]").forEach((item) => item.classList.toggle("active", Number(item.dataset.stepIndicator) <= step));
-    }
-
-    document.querySelectorAll(".profile-type-option").forEach((option) => {
-      option.addEventListener("click", () => {
-        document.querySelector(".profile-type-option.active")?.classList.remove("active");
-        option.classList.add("active");
-        selectedProfileType = option.dataset.profileType;
-        document.querySelectorAll(".profile-type-option strong").forEach((label) => {
-          label.textContent = label.textContent.replace(/^✓\s*/, "");
-        });
-        option.querySelector("strong").textContent = `✓ ${option.querySelector("strong").textContent}`;
-        document.querySelector("#type-validation").textContent = "";
-      });
-    });
-
-    document.querySelector("#next-create-profile").addEventListener("click", () => {
-      if (!selectedProfileType) {
-        document.querySelector("#type-validation").textContent = "请选择档案类型。";
-        return;
-      }
-      showCreateStep(2);
-    });
-
-    const categoryInput = document.querySelector("#create-profile-scope");
-    function addCategoryTag(value) {
-      const tag = value.trim();
-      if (!tag || categoryTags.includes(tag)) return;
-      categoryTags.push(tag);
-      renderCategoryTags();
-      categoryInput.value = "";
-    }
-    function renderCategoryTags() {
-      document.querySelector("#category-tags").innerHTML = categoryTags.map((tag) => `<span class="tag-item">${tag}<button type="button" data-remove-tag="${tag}">×</button></span>`).join("");
-    }
-    categoryInput.addEventListener("keydown", (event) => {
-      if (event.key === "Enter") { event.preventDefault(); addCategoryTag(categoryInput.value); }
-    });
-    document.querySelector(".tag-suggestions").addEventListener("click", (event) => {
-      const button = event.target.closest("[data-suggest-tag]");
-      if (button) addCategoryTag(button.dataset.suggestTag);
-    });
-    document.querySelector("#category-tags").addEventListener("click", (event) => {
-      const button = event.target.closest("[data-remove-tag]");
-      if (!button) return;
-      categoryTags = categoryTags.filter((tag) => tag !== button.dataset.removeTag);
-      renderCategoryTags();
-    });
-
-    document.querySelector("#upload-profile-material").addEventListener("click", () => openUploadModal("create"));
-    document.querySelector("#cancel-create-profile").addEventListener("click", () => {
-      document.querySelector("#profile-create-page").hidden = true;
-      document.querySelector("#profile-page").hidden = false;
-      renderProfiles();
-    });
-    document.querySelector("#back-create-type").addEventListener("click", () => showCreateStep(1));
-    document.querySelector("#generate-profile-draft").addEventListener("click", () => {
-      const required = [
-        ["#create-profile-name", document.querySelector("#create-profile-name").value.trim()],
-        ["#create-profile-market", document.querySelector("#create-profile-market").value],
-        ["#create-profile-scope", categoryTags.length],
-        ["#create-profile-audience", document.querySelector("#create-profile-audience").value.trim()]
-      ];
-      const missing = required.find(([, value]) => !value);
-      if (missing) {
-        document.querySelector(missing[0]).focus();
-        showToast("请完成档案名称、默认主市场、核心业务/品类和目标人群");
-        return;
-      }
-      const button = event.currentTarget;
-      button.disabled = true;
-      button.textContent = "正在生成…";
-      setTimeout(() => {
-        document.querySelector("#draft-name").textContent = document.querySelector("#create-profile-name").value.trim();
-        document.querySelector("#draft-type").textContent = selectedProfileType;
-        document.querySelector("#draft-market").textContent = document.querySelector("#create-profile-market").value;
-        document.querySelector("#draft-categories").textContent = categoryTags.join(" / ");
-        document.querySelector("#draft-audience").textContent = document.querySelector("#create-profile-audience").value.trim();
-        const min = document.querySelector("#price-min").value, max = document.querySelector("#price-max").value, currency = document.querySelector("#price-currency").value;
-        document.querySelector("#draft-price").textContent = min || max ? `${currency}${min || "—"} – ${currency}${max || "—"}` : "待补充";
-        button.disabled = false;
-        button.textContent = "生成档案草稿";
-        showCreateStep(3);
-      }, 900);
-    });
-    document.querySelector("#back-create-edit").addEventListener("click", () => showCreateStep(2));
-    document.querySelector("#save-profile").addEventListener("click", () => {
-      const min = document.querySelector("#price-min").value, max = document.querySelector("#price-max").value, currency = document.querySelector("#price-currency").value;
-      const item = {
-        id:`archive-${Date.now()}`, name:document.querySelector("#create-profile-name").value.trim(), type:selectedProfileType,
-        market:document.querySelector("#create-profile-market").value, categories:[...categoryTags], completion:46,
-        created:"2026-07-31", updated:"2026-07-31", audience:document.querySelector("#create-profile-audience").value.trim(),
-        price:min || max ? `${currency}${min || "—"} – ${currency}${max || "—"}` : "待补充",
-        positioning:document.querySelector("#create-profile-positioning").value.trim() || "待补充"
-      };
-      archives.unshift(item);
-      renderArchiveState();
-      showToast("企业档案已保存。");
-      openProfileDetail(item.id);
-    });
-
-    function openProfileMenu(button) {
-      document.querySelector(".profile-menu")?.remove();
-      const item = archives.find((entry) => entry.id === button.dataset.profileId);
-      const menu = document.createElement("div");
-      menu.className = "profile-menu";
-      const rect = button.getBoundingClientRect();
-      menu.style.left = `${Math.min(innerWidth - 164, rect.right - 150)}px`;
-      menu.style.top = `${rect.bottom + 5}px`;
-      menu.innerHTML = `<button data-action="rename">重命名</button><button data-action="copy">复制为新档案</button><button class="danger" data-action="delete">删除</button>`;
-      menu.addEventListener("click", (event) => {
-        const action = event.target.dataset.action;
-        if (action === "rename") {
-          const name = window.prompt("输入新的档案名称", item.name);
-          if (name?.trim()) item.name = name.trim().slice(0, 40);
-        }
-        if (action === "copy") archives.unshift({...item, id:`archive-${Date.now()}`, name:`${item.name} 副本`, updated:"2026-07-31"});
-        if (action === "delete" && confirm(`确认删除“${item.name}”吗？`)) archives = archives.filter((entry) => entry.id !== item.id);
-        menu.remove(); renderProfiles(); renderArchiveState();
-      });
-      document.body.appendChild(menu);
-    }
-
-    const typeModuleTitles = {
-      "电商":"店铺经营与商品表现", "线下零售":"门店网络与货品节奏",
-      "品牌/OBM":"产品线与季节开发", "ODM/OEM":"服务能力与交付边界"
-    };
-    function openProfileDetail(id) {
-      currentProfileId = id;
-      const item = archives.find((entry) => entry.id === id);
-      if (!item) return;
-      document.querySelector("#profile-page").hidden = true;
-      document.querySelector("#profile-create-page").hidden = true;
-      document.querySelector("#profile-detail-page").hidden = false;
-      document.querySelector("#detail-name").textContent = item.name;
-      document.querySelector("#detail-type").textContent = item.type;
-      document.querySelector("#detail-completion").textContent = `完整度 ${item.completion}%`;
-      document.querySelector("#detail-meta").textContent = `默认主市场：${item.market} · 最近更新：${item.updated}`;
-      const modules = [
-        ["业务定位与目标人群",`${item.positioning}；${item.audience}；主市场 ${item.market}`],
-        ["商品与价格策略",`核心品类：${item.categories.join("、")}；价格带：${item.price}`],
-        ["风格与视觉偏好","简约、都市感、低饱和色彩；避免过度装饰与不适用气候的方向"],
-        ["渠道与经营节奏","主要渠道和上新节奏待继续补充"],
-        ["能力与约束","设计强项、供应链约束与禁止方向待继续补充"],
-        [typeModuleTitles[item.type], typeSpecificSummary(item.type)],
-        ["资料来源","4 个文件 · 最近解析：2026-07-31 · 已回填 9 个字段"]
-      ];
-      document.querySelector("#module-grid").innerHTML = modules.map(([title,summary], index) => `
-        <article class="module-card" data-module="${title}">
-          <div class="module-card-head"><h3>${title}</h3><span class="completion">${index === 6 ? "4 个文件" : `${Math.max(40,item.completion-index*4)}%`}</span></div>
-          <p>${summary}</p>
-          ${index === 6 ? `<button class="source-link">查看资料来源</button>` : `<button class="module-edit">编辑</button> <button class="source-link">来源：2027SS 商品企划.pdf</button>`}
-        </article>`).join("");
-    }
-    function typeSpecificSummary(type) {
-      return {
-        "电商":"淘宝、抖音电商；平台店与直播；历史爆款针织开衫；快返能力有限",
-        "线下零售":"华东商场店与直营网点；季度波段上新；现货补货与快返混合",
-        "品牌/OBM":"轻户外女装产品线；季度开发；功能面料；MOQ 与交期边界明确",
-        "ODM/OEM":"ODM、共同开发、快速打样；优势品类为女装梭织与快返开发"
-      }[type];
-    }
-    document.querySelector("#back-profile-list").addEventListener("click", () => {
-      document.querySelector("#profile-detail-page").hidden = true;
-      document.querySelector("#profile-page").hidden = false;
-      renderProfiles();
-    });
-    document.querySelector("#detail-upload").addEventListener("click", () => openUploadModal("detail"));
-    document.querySelector("#detail-more").addEventListener("click", (event) => {
-      const fake = event.currentTarget;
-      fake.dataset.profileId = currentProfileId;
-      openProfileMenu(fake);
-    });
-    document.querySelector("#module-grid").addEventListener("click", (event) => {
-      const card = event.target.closest(".module-card");
-      if (!card) return;
-      if (event.target.closest(".source-link") || card.dataset.module === "资料来源") { openSourceModal(); return; }
-      if (event.target.closest(".module-edit")) openEditDrawer(card);
-    });
-
-    function openEditDrawer(card) {
-      currentModuleTitle = card.dataset.module;
-      document.querySelector("#drawer-title").textContent = `编辑${currentModuleTitle}`;
-      document.querySelector("#drawer-summary").value = card.querySelector("p").textContent;
-      document.querySelector("#edit-drawer-backdrop").hidden = false;
-    }
-    function closeEditDrawer() { document.querySelector("#edit-drawer-backdrop").hidden = true; }
-    document.querySelector("#close-edit-drawer").addEventListener("click", closeEditDrawer);
-    document.querySelector("#cancel-drawer").addEventListener("click", closeEditDrawer);
-    document.querySelector("#save-drawer").addEventListener("click", () => {
-      const card = [...document.querySelectorAll(".module-card")].find((item) => item.dataset.module === currentModuleTitle);
-      card.querySelector("p").textContent = document.querySelector("#drawer-summary").value;
-      closeEditDrawer(); showToast("模块已更新。");
-    });
-    document.querySelector("#drawer-upload").addEventListener("click", () => openUploadModal("detail"));
-
-    const mockFiles = [
-      ["2027SS_商品企划.pdf","PDF · 4.8 MB"],["历史销售复盘.xlsx","Excel · 1.9 MB"],
-      ["客户提案参考.pptx","PPT · 6.2 MB"],["针织款式参考.jpg","Image · 2.1 MB"]
-    ];
-    function openUploadModal(context) {
-      uploadReturnContext = context;
-      document.querySelector("#upload-modal").hidden = false;
-      document.querySelector("#upload-file-list").innerHTML = "";
-      document.querySelector("#start-parse").disabled = true;
-      document.querySelector("#start-parse").textContent = "开始解析";
-    }
-    document.querySelector("#add-mock-files").addEventListener("click", () => {
-      document.querySelector("#upload-file-list").innerHTML = mockFiles.slice(0,2).map(([name,meta]) => `<div class="file-row"><span>${name}<small> · ${meta}</small></span><span class="file-status">待解析</span><button class="remove-file">删除</button></div>`).join("");
-      document.querySelector("#start-parse").disabled = false;
-    });
-    document.querySelector("#upload-file-list").addEventListener("click", (event) => {
-      if (event.target.closest(".remove-file")) event.target.closest(".file-row").remove();
-      document.querySelector("#start-parse").disabled = !document.querySelector("#upload-file-list .file-row");
-    });
-    document.querySelector("#close-upload-modal").addEventListener("click", () => document.querySelector("#upload-modal").hidden = true);
-    document.querySelector("#start-parse").addEventListener("click", (event) => {
-      const rows = [...document.querySelectorAll("#upload-file-list .file-status")];
-      const parseButton = event.currentTarget;
-      if (parseButton.textContent === "查看解析结果") {
-        document.querySelector("#upload-modal").hidden = true;
-        openMappingModal(); return;
-      }
-      rows.forEach((status) => status.textContent = "解析中");
-      parseButton.disabled = true;
-      setTimeout(() => {
-        rows.forEach((status) => status.textContent = "已完成");
-        parseButton.disabled = false;
-        parseButton.textContent = "查看解析结果";
-      }, 900);
-    });
-    function openMappingModal() {
-      const rows = [
-        {field:"默认主市场",value:"日本",source:"企划.pdf · P3",confidence:"高",checked:true},
-        {field:"核心品类",value:"女装、针织、通勤",source:"企划.pdf · P5",confidence:"高",checked:true},
-        {field:"目标人群",value:"25–35 岁东京都市通勤女性",source:"企划.pdf · P7",confidence:"高",checked:true},
-        {field:"价格带",value:"JPY ¥8,000–¥18,000",source:"销售复盘 · Sheet2",confidence:"中",checked:false,conflict:true}
-      ];
-      document.querySelector("#mapping-list").innerHTML = rows.map((row,index) => `<div class="mapping-row">
-        <input type="checkbox" data-map-index="${index}" ${row.checked?"checked":""}><b>${row.field}</b>
-        <input class="mapping-value" value="${row.value}"><button class="source-link">${row.source}</button>
-        <span class="${row.conflict?"conflict":""}">${row.conflict?"冲突":row.confidence}</span></div>`).join("");
-      document.querySelector("#mapping-modal").hidden = false;
-    }
-    document.querySelector("#close-mapping-modal").addEventListener("click", () => document.querySelector("#mapping-modal").hidden = true);
-    document.querySelector("#apply-high-confidence").addEventListener("click", () => {
-      document.querySelectorAll("#mapping-list input[type='checkbox']").forEach((box,index) => box.checked = index < 3);
-    });
-    document.querySelector("#apply-mapping").addEventListener("click", () => {
-      const checked = [...document.querySelectorAll("#mapping-list input[type='checkbox']")].map((box,index) => box.checked ? index : -1);
-      if (uploadReturnContext === "create") {
-        if (checked.includes(0)) document.querySelector("#create-profile-market").value = "日本";
-        if (checked.includes(1)) { categoryTags = ["女装","针织","通勤"]; renderCategoryTags(); }
-        if (checked.includes(2)) document.querySelector("#create-profile-audience").value = "25–35 岁东京都市通勤女性";
-        document.querySelector("#profile-upload-status").textContent = "已应用 3 个解析字段";
-      } else {
-        showToast("已将所选字段回填到企业档案。");
-      }
-      document.querySelector("#mapping-modal").hidden = true;
-    });
-    function openSourceModal() {
-      document.querySelector("#source-file-list").innerHTML = mockFiles.map(([name,meta],index) => `<div class="file-row"><span>${name}<small> · 上传于 2026-07-${28+index}</small></span><span>已回填 ${index+2} 个字段</span><button class="source-expand">展开</button></div>`).join("");
-      document.querySelector("#source-modal").hidden = false;
-    }
-    document.querySelector("#close-source-modal").addEventListener("click", () => document.querySelector("#source-modal").hidden = true);
-    document.querySelector("#source-file-list").addEventListener("click", (event) => {
-      const row = event.target.closest(".file-row");
-      if (event.target.closest(".source-expand")) row.insertAdjacentHTML("beforeend", `<div style="grid-column:1/-1;color:#a6afab">已提取：主市场、核心品类、目标人群；来源页码与文本摘录为模拟内容。</div>`);
-    });
-
-    function renderTaskProfileOptions() {
-      const select = document.querySelector("#task-profile-select");
-      if (!select) return;
-      select.innerHTML = `<option value="">请选择</option>${archives.map((item) => `<option value="${item.id}">${item.name} · ${item.type} · ${item.market}</option>`).join("")}<option value="new">＋ 新建企业档案</option>`;
-    }
-    document.querySelector("#task-profile-select").addEventListener("change", (event) => {
-      const nextId = event.target.value;
-      if (nextId === "new") { openProfileCreation(); event.target.value = activeTaskProfileId; return; }
-      if (!nextId) return;
-      if (!taskStarted || !activeTaskProfileId) { applyTaskProfile(nextId,false); return; }
-      pendingTaskProfileId = nextId;
-      const from = archives.find((item) => item.id === activeTaskProfileId), to = archives.find((item) => item.id === nextId);
-      document.querySelector("#switch-profile-copy").textContent = `你正在将“${from.name}”切换为“${to.name}”。以下已完成内容将受影响并重新生成：`;
-      document.querySelector("#switch-profile-modal").hidden = false;
-      event.target.value = activeTaskProfileId;
-    });
-    function applyTaskProfile(id,rerun) {
-      activeTaskProfileId = id;
-      document.querySelector("#task-profile-select").value = id;
-      const item = archives.find((entry) => entry.id === id);
-      document.querySelector("#task-chat").insertAdjacentHTML("beforeend", `<div class="system-message">${rerun?"已切换企业档案，正在更新受影响的分析步骤。":`已应用“${item.name}”。后续分析将参考其市场、品类、风格与经营边界。`}</div>`);
-      if (rerun) {
-        document.querySelectorAll(".task-step").forEach((step) => { step.className="task-step rerun"; step.textContent += " · 待重新运行"; });
-        setTimeout(() => document.querySelectorAll(".task-step").forEach((step) => { step.className="task-step updated"; step.textContent = step.textContent.replace(" · 待重新运行","") + " · 已按新档案更新"; }), 1100);
-      }
-    }
-    document.querySelector("#simulate-task-start").addEventListener("click", (event) => { taskStarted = true; event.currentTarget.textContent = "任务已启动"; event.currentTarget.disabled = true; });
-    document.querySelector("#cancel-profile-switch").addEventListener("click", () => document.querySelector("#switch-profile-modal").hidden = true);
-    document.querySelector("#confirm-profile-switch").addEventListener("click", () => {
-      document.querySelector("#switch-profile-modal").hidden = true;
-      applyTaskProfile(pendingTaskProfileId,true);
-    });
-    renderArchiveState();
-
-    let historyItems = [
-      { id: "p1", type: "project", name: "2027 春夏企划", editedAt: 1785376200000, expanded: true },
-      { id: "t1", type: "task", name: "北美女性瑜伽服企划", parentId: "p1", editedAt: 1785375900000 },
-      { id: "t2", type: "task", name: "日本通勤针织开衫测款", parentId: null, editedAt: 1785286800000 },
-      { id: "t3", type: "task", name: "欧洲轻户外客户提案", parentId: null, editedAt: 1785114000000 }
-    ];
-
-    const historyList = document.querySelector("#history-list");
-    const searchPanel = document.querySelector("#search-panel");
-    const searchInput = document.querySelector("#search-input");
-    const searchResults = document.querySelector("#search-results");
-    let draggedId = null;
-    let holdTimer;
-    let suppressProjectClick = false;
-
-    function orderedItems() {
-      const rows = [];
-      historyItems.filter((item) => !item.parentId).forEach((item) => {
-        rows.push(item);
-        if (item.type === "project" && item.expanded !== false) {
-          rows.push(...historyItems.filter((child) => child.parentId === item.id));
-        }
-      });
-      return rows;
-    }
-
-    function clearDropState() {
-      document.querySelectorAll(".drop-target, .insert-before, .insert-after").forEach((row) => {
-        row.classList.remove("drop-target", "insert-before", "insert-after");
-      });
-    }
-
-    function moveItem(sourceId, targetId, position) {
-      if (sourceId === targetId) return;
-      const source = historyItems.find((item) => item.id === sourceId);
-      const target = historyItems.find((item) => item.id === targetId);
-      if (!source || !target) return;
-
-      if (position === "inside" && target.type === "project" && source.type === "task") {
-        source.parentId = target.id;
-        target.expanded = true;
-        historyItems = historyItems.filter((item) => item.id !== sourceId);
-        const lastChild = historyItems.reduce((last, item, index) => item.parentId === target.id ? index : last, historyItems.indexOf(target));
-        historyItems.splice(lastChild + 1, 0, source);
-      } else {
-        source.parentId = target.parentId || null;
-        historyItems = historyItems.filter((item) => item.id !== sourceId);
-        let targetIndex = historyItems.findIndex((item) => item.id === targetId);
-        if (position === "after") {
-          targetIndex += 1;
-          if (target.type === "project") {
-            while (targetIndex < historyItems.length && historyItems[targetIndex].parentId === target.id) targetIndex += 1;
-          }
-        }
-        historyItems.splice(targetIndex, 0, source);
-      }
-      source.editedAt = Date.now();
-      renderHistory();
-    }
-
-    function makeHistoryRow(item) {
-      const row = document.createElement("div");
-      row.className = `history-row${item.parentId ? " child" : ""}`;
-      row.dataset.id = item.id;
-      row.innerHTML = `<span class="history-icon">${item.type === "project" ? (item.expanded === false ? "▸" : "▾") : "·"}</span><span class="history-name">${item.name}</span>`;
-      if (item.type === "project") {
-        row.setAttribute("aria-expanded", String(item.expanded !== false));
-        row.addEventListener("click", () => {
-          if (suppressProjectClick) return;
-          item.expanded = item.expanded === false;
-          renderHistory();
-        });
-      }
-
-      row.addEventListener("pointerdown", () => {
-        clearTimeout(holdTimer);
-        holdTimer = setTimeout(() => {
-          row.draggable = true;
-          row.classList.add("drag-ready");
-          showToast(`可拖动：${item.name}`);
-        }, 350);
-      });
-      ["pointerup", "pointercancel", "pointerleave"].forEach((eventName) => {
-        row.addEventListener(eventName, () => clearTimeout(holdTimer));
-      });
-      row.addEventListener("dragstart", (event) => {
-        draggedId = item.id;
-        suppressProjectClick = true;
-        row.classList.add("dragging");
-        event.dataTransfer.effectAllowed = "move";
-        event.dataTransfer.setData("text/plain", item.id);
-      });
-      row.addEventListener("dragend", () => {
-        draggedId = null;
-        row.draggable = false;
-        row.classList.remove("dragging", "drag-ready");
-        clearDropState();
-        setTimeout(() => { suppressProjectClick = false; }, 0);
-      });
-      row.addEventListener("dragover", (event) => {
-        event.preventDefault();
-        clearDropState();
-        const rect = row.getBoundingClientRect();
-        const ratio = (event.clientY - rect.top) / rect.height;
-        if (item.type === "project" && ratio > .25 && ratio < .75) row.classList.add("drop-target");
-        else row.classList.add(ratio < .5 ? "insert-before" : "insert-after");
-      });
-      row.addEventListener("drop", (event) => {
-        event.preventDefault();
-        const position = row.classList.contains("drop-target") ? "inside" : row.classList.contains("insert-before") ? "before" : "after";
-        moveItem(draggedId || event.dataTransfer.getData("text/plain"), item.id, position);
-        clearDropState();
-      });
-      return row;
-    }
-
-    function renderHistory() {
-      historyList.replaceChildren(...orderedItems().map(makeHistoryRow));
-      renderSearchResults(searchInput.value);
-    }
-
-    function renderSearchResults(keyword = "") {
-      const query = keyword.trim().toLowerCase();
-      const matches = historyItems
-        .filter((item) => !query || item.name.toLowerCase().includes(query))
-        .sort((a, b) => b.editedAt - a.editedAt);
-      searchResults.innerHTML = matches.length
-        ? matches.map((item) => `<button class="search-result" data-id="${item.id}">${item.name}<small>${item.type === "project" ? "项目" : "任务"} · 最近编辑</small></button>`).join("")
-        : '<div class="search-result">没有匹配结果</div>';
-    }
-
-    document.querySelector("#search-toggle").addEventListener("click", (event) => {
-      event.stopPropagation();
-      searchPanel.classList.toggle("open");
-      if (searchPanel.classList.contains("open")) {
-        renderSearchResults(searchInput.value);
-        searchInput.focus();
-      }
-    });
-    searchPanel.addEventListener("click", (event) => event.stopPropagation());
-    document.addEventListener("click", () => searchPanel.classList.remove("open"));
-    searchInput.addEventListener("input", () => renderSearchResults(searchInput.value));
-
-    const projectModal = document.querySelector("#project-modal");
-    const projectName = document.querySelector("#project-name");
-    document.querySelector("#create-project").addEventListener("click", () => {
-      projectModal.hidden = false;
-      projectName.value = "";
-      document.querySelector("#project-name-count").textContent = "0";
-      projectName.focus();
-    });
-    projectName.addEventListener("input", () => {
-      document.querySelector("#project-name-count").textContent = projectName.value.length;
-    });
-    document.querySelector("#cancel-project").addEventListener("click", () => projectModal.hidden = true);
-    document.querySelector("#confirm-project").addEventListener("click", () => {
-      historyItems.push({
-        id: `p-${Date.now()}`,
-        type: "project",
-        name: projectName.value.trim() || "项目",
-        editedAt: Date.now(),
-        expanded: true
-      });
-      projectModal.hidden = true;
-      renderHistory();
-    });
-    projectModal.addEventListener("click", (event) => {
-      if (event.target === projectModal) projectModal.hidden = true;
-    });
-
-    renderHistory();
-
-    if (new URLSearchParams(location.search).has("collapsed")) {
-      setSidebarCollapsed(true);
-    }
-
-    if (new URLSearchParams(location.search).has("review")) {
-      document.body.classList.add("ui-review-mode");
-
-      const markerLayer = document.createElement("div");
-      markerLayer.className = "review-marker-layer";
-      const note = document.createElement("aside");
-      note.className = "interaction-note";
-      note.hidden = true;
-      const modeSwitch = document.createElement("div");
-      modeSwitch.className = "review-mode-switch";
-      modeSwitch.innerHTML = '<button type="button" data-mode="clean">纯净模式</button><button type="button" data-mode="review" class="active">评审模式</button><button type="button" data-mode="edit">修改模式</button>';
-      const copyToast = document.createElement("div");
-      copyToast.className = "copy-toast";
-      copyToast.setAttribute("role", "status");
-      document.body.append(markerLayer, note, modeSwitch, copyToast);
-      let reviewEnabled = true;
-      let editEnabled = false;
-      let editHover;
-      let copyToastTimer;
-
-      const interactiveSelector = [
-        "button",
-        "select",
-        "textarea",
-        "input:not([type='file'])",
-        ".history-row",
-        ".profile-card",
-        ".module-card"
-      ].join(",");
-
-      const labelOf = (element) => {
-        if (element.classList.contains("history-row")) return element.querySelector(".history-name")?.textContent || "历史项目";
-        return element.labels?.[0]?.textContent.trim()
-          || element.getAttribute("aria-label")
-          || element.getAttribute("title")
-          || element.textContent.trim().replace(/\s+/g, " ").slice(0, 32)
-          || element.getAttribute("placeholder")
-          || "交互组件";
-      };
-
-      const componentTypeOf = (element) => {
-        if (element.matches("input[type='search']")) return "搜索输入框";
-        if (element.matches("input:not([type]), input[type='text']")) return "单行输入框";
-        if (element.matches("textarea")) return "多行输入框";
-        if (element.matches("select")) return element.multiple ? "多选下拉菜单" : "单选下拉菜单";
-        if (element.matches(".profile-type-option")) return "卡片式单选按钮";
-        if (element.matches(".scene-tab")) return "页签式单选按钮";
-        if (element.matches("input[type='checkbox']")) return "复选框";
-        if (element.matches(".tag-suggestions button, [data-remove-tag]")) return "标签操作按钮";
-        if (element.matches(".profile-card")) return "档案信息卡片";
-        if (element.matches(".module-card")) return "画像模块卡片";
-        if (element.matches(".history-row.project")) return "可展开项目行";
-        if (element.matches(".history-row")) return "可拖动任务行";
-        if (element.matches(".search-result")) return "搜索结果按钮";
-        if (element.matches(".delete-profile")) return "危险操作按钮";
-        if (element.matches("button")) return "按钮";
-        return "可交互组件";
-      };
-
-      const stateChangeOf = (element) => {
-        if (element.matches("#search-toggle")) return "状态切换：点击展开搜索框；再次点击收起搜索框。";
-        if (element.matches("#sidebar-toggle")) return "状态切换：点击收起侧栏；收起后顶部显示“展开侧栏”按钮。";
-        if (element.matches("#sidebar-expand, #history-toggle")) return "状态切换：点击展开侧栏；展开后恢复文字导航、搜索与历史列表。";
-        if (element.matches(".history-row.project")) return "状态切换：点击展开子任务；再次点击收起子任务，并保留项目及子任务排序。";
-        if (element.matches(".scene-tab")) return "状态切换：点击后设为选中状态，并取消原场景选中状态。";
-        if (element.matches(".profile-type-option")) return "状态切换：点击后设为选中状态，并更新下方专属字段；再次点击保持选中。";
-        if (element.matches("select")) return "状态切换：点击展开选项；选择一项后收起，并立即应用当前选项。";
-        if (element.matches("#project-modal button, #confirm-project, #cancel-project")) return "状态切换：操作完成后关闭当前弹窗。";
-        if (element.matches("#new-profile")) return "状态切换：点击由档案列表切换至新建档案页。";
-        if (element.matches("#next-create-profile")) return "状态切换：已选类型时进入第二步；未选择时停留当前步骤并显示校验提示。";
-        if (element.matches("#back-create-type")) return "状态切换：返回第一步，保留当前已填写内容。";
-        if (element.matches("#generate-profile-draft")) return "状态切换：完成必填项后进入生成状态，约 1 秒后展示第三步草稿预览。";
-        if (element.matches("#back-create-edit")) return "状态切换：返回第二步修改，并保留全部输入和资料回填内容。";
-        if (element.matches("#save-profile")) return "状态切换：保存档案后进入档案详情页，并显示保存成功提示。";
-        if (element.matches(".profile-card")) return "状态切换：点击卡片主体进入对应档案详情页。";
-        if (element.matches("#detail-more")) return "状态切换：点击打开详情页更多菜单；完成操作后关闭。";
-        if (element.matches(".module-edit")) return "状态切换：点击从右侧打开模块编辑抽屉；保存或取消后关闭。";
-        if (element.matches("#upload-profile-material, #detail-upload, #drawer-upload")) return "状态切换：点击打开上传资料弹窗；解析完成后进入字段映射确认弹窗。";
-        if (element.matches("#start-parse")) return "状态切换：开始解析后显示“解析中”；完成后按钮变为“查看解析结果”。";
-        if (element.matches("#task-profile-select")) return "状态切换：任务未启动时立即应用；任务已启动时先打开受影响步骤确认弹窗。";
-        if (element.matches("#cancel-create-profile")) return "状态切换：点击关闭新建档案页并返回档案列表。";
-        if (element.matches("#archive-nav")) return "状态切换：点击由当前页面切换至企业档案列表，并保持侧栏展开。";
-        if (element.matches("#new-task-nav")) return "状态切换：点击返回功能首页初始状态。";
-        if (element.matches(".delete-profile")) return "状态切换：点击打开二次确认；确认后删除，取消则关闭确认并保留档案。";
-        if (element.matches("input, textarea")) return "状态切换：输入时实时保留当前页面内容；离开输入框后保持已输入值。";
+    .create-secti…27630 tokens truncated…?;
+        if (element.matches("#sidebar-expand, #history-toggle")) return "鐘舵€佸垏鎹細鐐瑰嚮灞曞紑渚ф爮锛涘睍寮€鍚庢仮澶嶆枃瀛楀鑸€佹悳绱笌鍘嗗彶鍒楄〃銆?;
+        if (element.matches(".history-row.project")) return "鐘舵€佸垏鎹細鐐瑰嚮灞曞紑瀛愪换鍔★紱鍐嶆鐐瑰嚮鏀惰捣瀛愪换鍔★紝骞朵繚鐣欓」鐩強瀛愪换鍔℃帓搴忋€?;
+        if (element.matches(".scene-tab")) return "鐘舵€佸垏鎹細鐐瑰嚮鍚庤涓洪€変腑鐘舵€侊紝骞跺彇娑堝師鍦烘櫙閫変腑鐘舵€併€?;
+        if (element.matches(".preference-module-card")) return "鐘舵€佸垏鎹細绌虹姸鎬佹墦寮€涓婁紶寮圭獥锛涜В鏋愪腑涓嶅彲閲嶅涓婁紶锛涘凡濉厖鎵撳紑妯″潡璇︽儏锛涘緟纭浼樺厛鎵撳紑纭寮圭獥銆?;
+        if (element.matches("select")) return "鐘舵€佸垏鎹細鐐瑰嚮灞曞紑閫夐」锛涢€夋嫨涓€椤瑰悗鏀惰捣锛屽苟绔嬪嵆搴旂敤褰撳墠閫夐」銆?;
+        if (element.matches("#project-modal button, #confirm-project, #cancel-project")) return "鐘舵€佸垏鎹細鎿嶄綔瀹屾垚鍚庡叧闂綋鍓嶅脊绐椼€?;
+        if (element.matches("#new-profile")) return "鐘舵€佸垏鎹細鐐瑰嚮鐢辨。妗堝垪琛ㄥ垏鎹㈣嚦鏂板缓妗ｆ椤点€?;
+        if (element.matches("#save-profile")) return "鐘舵€佸垏鎹細淇濆瓨妗ｆ鍚庤繘鍏ユ。妗堣鎯呴〉锛屽苟鏄剧ず淇濆瓨鎴愬姛鎻愮ず銆?;
+        if (element.matches(".preference-profile-card")) return "鐘舵€佸垏鎹細鐐瑰嚮鍗＄墖涓讳綋杩涘叆瀵瑰簲妗ｆ璇︽儏椤碉紱Enter 鎴?Space 绛夊悓鐐瑰嚮銆?;
+        if (element.matches("#detail-more")) return "鐘舵€佸垏鎹細鐐瑰嚮鎵撳紑璇︽儏椤垫洿澶氳彍鍗曪紱瀹屾垚鎿嶄綔鍚庡叧闂€?;
+        if (element.matches("#package-upload, #detail-upload, #choose-files, #module-add-more")) return "鐘舵€佸垏鎹細鐐瑰嚮鎵撳紑鏂囦欢閫夋嫨鎴栦笂浼犲脊绐楋紱寮€濮嬭В鏋愬悗璺ㄦā鍧楀垎閰嶅唴瀹广€?;
+        if (element.matches("#start-parse")) return "鐘舵€佸垏鎹細鐐瑰嚮鍚庡叧闂笂浼犲脊绐楋紝鏄剧ず鍏ㄥ眬瑙ｆ瀽杩涘害锛涘畬鎴愬悗鑷姩鎵撳紑寰呯‘璁や俊鎭€?;
+        if (element.matches("#task-profile-trigger")) return "鐘舵€佸垏鎹細鐐瑰嚮灞曞紑妗ｆ閫夋嫨闈㈡澘锛涘啀娆＄偣鍑绘敹璧枫€?;
+        if (element.matches("#cancel-create-profile")) return "鐘舵€佸垏鎹細鐐瑰嚮鍏抽棴鏂板缓妗ｆ椤靛苟杩斿洖妗ｆ鍒楄〃銆?;
+        if (element.matches("#archive-nav")) return "鐘舵€佸垏鎹細鐐瑰嚮鐢卞綋鍓嶉〉闈㈠垏鎹㈣嚦涓氬姟鍋忓ソ妗ｆ鍒楄〃锛屽苟淇濇寔渚ф爮灞曞紑銆?;
+        if (element.matches("#new-task-nav")) return "鐘舵€佸垏鎹細鐐瑰嚮杩斿洖鍔熻兘棣栭〉鍒濆鐘舵€併€?;
+        if (element.matches(".delete-profile")) return "鐘舵€佸垏鎹細鐐瑰嚮鎵撳紑浜屾纭锛涚‘璁ゅ悗鍒犻櫎锛屽彇娑堝垯鍏抽棴纭骞朵繚鐣欐。妗堛€?;
+        if (element.matches("input, textarea")) return "鐘舵€佸垏鎹細杈撳叆鏃跺疄鏃朵繚鐣欏綋鍓嶉〉闈㈠唴瀹癸紱绂诲紑杈撳叆妗嗗悗淇濇寔宸茶緭鍏ュ€笺€?;
         return "";
       };
 
       const descriptionOf = (element) => {
-        if (element.matches("#sidebar-toggle")) return "点击收起侧边栏。收起后仅保留展开、新任务、企业档案、历史和退出图标。";
-        if (element.matches("#sidebar-expand, #history-toggle")) return "点击重新展开侧边栏，恢复完整导航、搜索和历史任务列表。";
-        if (element.matches("#search-toggle")) return "点击展开搜索输入框；根据关键词实时匹配历史任务和项目，结果按最近编辑时间由近到远排序。";
-        if (element.matches("#search-input")) return "输入任务或项目关键词，搜索结果随输入实时刷新。";
-        if (element.matches(".search-result")) return "点击打开对应的历史任务或项目。具体打开后的页面交互待后续对齐。";
-        if (element.matches("#new-task-nav")) return "点击返回功能首页初始状态：展开侧栏、清空当前输入和附件，并恢复“选品测款”默认场景。";
-        if (element.matches("#archive-nav")) return "点击进入企业档案管理页。左侧栏保持首页结构，右侧展示档案名称搜索、类型/主市场筛选和档案列表。";
-        if (element.matches("#new-profile")) return "点击进入两步式企业档案创建流程，初始不预选档案类型。";
-        if (element.matches(".profile-type-option")) return "选择一种企业档案类型；保存后不可直接修改类型，如判断错误可复制为新档案。";
-        if (element.matches("#next-create-profile")) return "校验档案类型后进入基础画像填写步骤。";
-        if (element.matches("#upload-profile-material, #detail-upload, #drawer-upload")) return "打开模拟资料上传弹窗；支持添加文件、解析、确认字段映射并回填。";
-        if (element.matches("#cancel-create-profile")) return "取消新建并返回企业档案列表，不保存当前填写内容。";
-        if (element.matches("#generate-profile-draft")) return "校验档案名称、默认主市场、核心业务/品类和目标人群，再生成结构化档案草稿。";
-        if (element.matches("#save-profile")) return "保存草稿为企业档案并进入详情页。";
-        if (element.matches(".profile-card")) return "仅展示档案名称和创建时间；点击卡片进入详情页后再进行编辑或删除。";
-        if (element.matches(".module-edit")) return "打开当前画像模块的右侧编辑抽屉。";
-        if (element.matches(".source-link")) return "打开资料来源，查看文件、解析时间及已引用字段。";
-        if (element.matches("#start-parse")) return "模拟解析文件；完成后可查看字段映射、置信度与冲突项。";
-        if (element.matches("#apply-mapping")) return "应用已勾选字段，关闭确认弹窗并直接回填创建页或详情页。";
-        if (element.matches("#task-profile-select")) return "为当前任务选择一个企业档案；一个任务同一时刻只应用一个档案。";
-        if (element.matches("#confirm-profile-switch")) return "确认切换档案，保留历史对话与任务资料，仅模拟重跑受影响步骤。";
-        if (element.matches(".edit-profile")) return "点击进入当前企业档案的详情页。详情页交互将在下一页面继续对齐。";
-        if (element.matches(".delete-profile")) return "点击后二次确认；确认后删除当前档案并刷新列表。";
-        if (element.matches("#create-project")) return "点击打开创建项目弹窗。项目名称最多 40 个字符；未填写时默认命名为“项目”。";
+        if (element.matches("#sidebar-toggle")) return "鐐瑰嚮鏀惰捣渚ц竟鏍忋€傛敹璧峰悗浠呬繚鐣欏睍寮€銆佹柊浠诲姟銆佷笟鍔″亸濂芥。妗堛€佸巻鍙插拰閫€鍑哄浘鏍囥€?;
+        if (element.matches("#sidebar-expand, #history-toggle")) return "鐐瑰嚮閲嶆柊灞曞紑渚ц竟鏍忥紝鎭㈠瀹屾暣瀵艰埅銆佹悳绱㈠拰鍘嗗彶浠诲姟鍒楄〃銆?;
+        if (element.matches("#search-toggle")) return "鐐瑰嚮灞曞紑鎼滅储杈撳叆妗嗭紱鏍规嵁鍏抽敭璇嶅疄鏃跺尮閰嶅巻鍙蹭换鍔″拰椤圭洰锛岀粨鏋滄寜鏈€杩戠紪杈戞椂闂寸敱杩戝埌杩滄帓搴忋€?;
+        if (element.matches("#search-input")) return "杈撳叆浠诲姟鎴栭」鐩叧閿瘝锛屾悳绱㈢粨鏋滈殢杈撳叆瀹炴椂鍒锋柊銆?;
+        if (element.matches(".search-result")) return "鐐瑰嚮鎵撳紑瀵瑰簲鐨勫巻鍙蹭换鍔℃垨椤圭洰銆傚叿浣撴墦寮€鍚庣殑椤甸潰浜や簰寰呭悗缁榻愩€?;
+        if (element.matches("#new-task-nav")) return "鐐瑰嚮杩斿洖鍔熻兘棣栭〉鍒濆鐘舵€侊細灞曞紑渚ф爮銆佹竻绌哄綋鍓嶈緭鍏ュ拰闄勪欢锛屽苟鎭㈠鈥滈€夊搧娴嬫鈥濋粯璁ゅ満鏅€?;
+        if (element.matches("#archive-nav")) return "杩涘叆缁熶竴涓氬姟鍋忓ソ妗ｆ鍒楄〃锛涙墍鏈夌敤鎴风湅鍒扮浉鍚岀殑鍏釜妯″潡锛屼笉鍖哄垎浼佷笟绫诲瀷銆?;
+        if (element.matches("#new-profile")) return "杩涘叆鍒涘缓椤碉紱闄ゆ。妗堝悕绉板锛屼笉瑕佹眰鎵嬪姩濉啓鍏朵粬瀛楁銆?;
+        if (element.matches(".preference-profile-card")) return "灞曠ず妗ｆ妯″潡鏁般€佷唬琛ㄦ€ч瑙堛€佹爣绛俱€佽祫鏂欐暟鍜屾洿鏂版椂闂达紱鐐瑰嚮杩涘叆璇︽儏銆?;
+        if (element.matches(".preference-module-card")) return "妯″潡鍏ュ彛甯姪鐞嗚В鍙笂浼犲唴瀹癸紝浣嗕笉浼氶檺鍒舵枃浠跺疄闄呰В鏋愯寖鍥达紱涓€涓枃浠跺彲濉厖澶氫釜妯″潡銆?;
+        if (element.matches("#package-upload")) return "涓€娆￠€夋嫨澶氱璧勬枡骞惰嚜鍔ㄥ垎閰嶅埌鍏釜鍐呭妯″潡銆?;
+        if (element.matches("#cancel-create-profile")) return "鍙栨秷鏂板缓骞惰繑鍥炰笟鍔″亸濂芥。妗堝垪琛ㄣ€?;
+        if (element.matches("#save-profile")) return "妗ｆ鍚嶇О闈炵┖鏃跺垱寤烘。妗堬紱鍏釜妯″潡涓嶈姹傚叏閮ㄥ缓绔嬨€?;
+        if (element.matches("#start-parse")) return "妯℃嫙璺ㄦā鍧楄В鏋愶紱鍗曚釜鏂囦欢澶辫触涓嶄細闃绘柇鍏朵粬璧勬枡澶勭悊銆?;
+        if (element.matches("#apply-mapping")) return "鍙‘璁ゅ啿绐併€佺枒浼肩‖鎬х害鏉熷拰浣庣疆淇″害閲嶈淇℃伅锛涙櫘閫氫俊鎭嚜鍔ㄤ綔涓洪粯璁ゅ弬鑰冦€?;
+        if (element.matches("#task-profile-trigger")) return "灞曞紑鍙悳绱㈡。妗堥€夋嫨闈㈡澘锛屼负鏈换鍔￠€夋嫨涓€涓笟鍔″亸濂芥。妗堛€?;
+        if (element.matches("#view-applied-info")) return "鎵撳紑鍙充晶鎶藉眽锛屾煡鐪嬫湰浠诲姟鐨勫繀椤婚伒瀹堛€侀粯璁ゅ弬鑰冨拰浠呬綔璇佹嵁淇℃伅銆?;
+        if (element.matches("#create-project")) return "鐐瑰嚮鎵撳紑鍒涘缓椤圭洰寮圭獥銆傞」鐩悕绉版渶澶?40 涓瓧绗︼紱鏈～鍐欐椂榛樿鍛藉悕涓衡€滈」鐩€濄€?;
         if (element.matches(".history-row")) {
           const item = historyItems.find((entry) => entry.id === element.dataset.id);
           return item?.type === "project"
-            ? "点击展开或收起项目。长按约 350ms 后可拖动排序；移动项目时，其全部子任务跟随移动。任务可拖入项目。"
-            : "点击打开历史任务。长按约 350ms 后可拖动到列表任意位置或任意项目中；拖动时展示插入线。";
+            ? "鐐瑰嚮灞曞紑鎴栨敹璧烽」鐩€傞暱鎸夌害 350ms 鍚庡彲鎷栧姩鎺掑簭锛涚Щ鍔ㄩ」鐩椂锛屽叾鍏ㄩ儴瀛愪换鍔¤窡闅忕Щ鍔ㄣ€備换鍔″彲鎷栧叆椤圭洰銆?
+            : "鐐瑰嚮鎵撳紑鍘嗗彶浠诲姟銆傞暱鎸夌害 350ms 鍚庡彲鎷栧姩鍒板垪琛ㄤ换鎰忎綅缃垨浠绘剰椤圭洰涓紱鎷栧姩鏃跺睍绀烘彃鍏ョ嚎銆?;
         }
-        if (element.matches(".back-saas")) return "退出入口。当前仅保留按钮样式，不配置具体退出流程。";
-        if (element.matches(".scene-tab")) return "点击切换业务场景，并同步更新任务输入框的示例提示；不会自动调用外部数据。";
-        if (element.matches("#prompt")) return "输入本次任务目标与条件。不同场景展示不同示例提示，内容随新任务提交。";
-        if (element.matches("#attach")) return "点击选择并上传本任务需要的图片、文档、表格等资料。资料解析在任务内进行。";
-        if (element.matches(".archive-select")) return "为本次任务选择一个企业档案，或选择暂不使用。一个任务仅应用一个档案。";
-        if (element.matches("#send")) return "点击发起新任务。任务描述为空时提示用户补充目标；有内容时进入对应 Agent 的任务流程。";
-        if (element.matches(".create")) return "仅在企业档案为空时展示。点击进入企业档案创建页。";
-        if (element.matches("#project-name")) return "输入项目文件夹名称，最多 40 个字符；不填写则使用默认名称“项目”。";
-        if (element.matches("#confirm-project")) return "创建项目，并将新项目显示在历史列表中。";
-        if (element.matches("#cancel-project")) return "关闭创建项目弹窗，不保存输入内容。";
-        return `点击触发“${labelOf(element)}”操作，详细交互待后续页面对齐。`;
+        if (element.matches(".back-saas")) return "閫€鍑哄叆鍙ｃ€傚綋鍓嶄粎淇濈暀鎸夐挳鏍峰紡锛屼笉閰嶇疆鍏蜂綋閫€鍑烘祦绋嬨€?;
+        if (element.matches(".scene-tab")) return "鐐瑰嚮鍒囨崲涓氬姟鍦烘櫙锛屽苟鍚屾鏇存柊浠诲姟杈撳叆妗嗙殑绀轰緥鎻愮ず锛涗笉浼氳嚜鍔ㄨ皟鐢ㄥ閮ㄦ暟鎹€?;
+        if (element.matches("#prompt")) return "杈撳叆鏈浠诲姟鐩爣涓庢潯浠躲€備笉鍚屽満鏅睍绀轰笉鍚岀ず渚嬫彁绀猴紝鍐呭闅忔柊浠诲姟鎻愪氦銆?;
+        if (element.matches("#attach")) return "鐐瑰嚮閫夋嫨骞朵笂浼犳湰浠诲姟闇€瑕佺殑鍥剧墖銆佹枃妗ｃ€佽〃鏍肩瓑璧勬枡銆傝祫鏂欒В鏋愬湪浠诲姟鍐呰繘琛屻€?;
+        if (element.matches(".archive-select")) return "涓烘湰娆′换鍔￠€夋嫨涓€涓笟鍔″亸濂芥。妗堬紝鎴栭€夋嫨鏆備笉浣跨敤銆?;
+        if (element.matches("#send")) return "鐐瑰嚮鍙戣捣鏂颁换鍔°€備换鍔℃弿杩颁负绌烘椂鎻愮ず鐢ㄦ埛琛ュ厖鐩爣锛涙湁鍐呭鏃惰繘鍏ュ搴?Agent 鐨勪换鍔℃祦绋嬨€?;
+        if (element.matches(".create")) return "浠呭湪涓氬姟鍋忓ソ妗ｆ涓虹┖鏃跺睍绀恒€傜偣鍑昏繘鍏ユ。妗堝垱寤洪〉銆?;
+        if (element.matches("#project-name")) return "杈撳叆椤圭洰鏂囦欢澶瑰悕绉帮紝鏈€澶?40 涓瓧绗︼紱涓嶅～鍐欏垯浣跨敤榛樿鍚嶇О鈥滈」鐩€濄€?;
+        if (element.matches("#confirm-project")) return "鍒涘缓椤圭洰锛屽苟灏嗘柊椤圭洰鏄剧ず鍦ㄥ巻鍙插垪琛ㄤ腑銆?;
+        if (element.matches("#cancel-project")) return "鍏抽棴鍒涘缓椤圭洰寮圭獥锛屼笉淇濆瓨杈撳叆鍐呭銆?;
+        return `鐐瑰嚮瑙﹀彂鈥?{labelOf(element)}鈥濇搷浣滐紝璇︾粏浜や簰寰呭悗缁〉闈㈠榻愩€俙;
       };
 
       let activeElement;
@@ -2216,6 +818,9 @@
         const openModal = [...document.querySelectorAll(".modal-backdrop, .archive-overlay, .drawer-backdrop")]
           .find((modal) => !modal.hidden && visible(modal));
         if (openModal) return openModal.contains(element);
+
+        const openPicker = document.querySelector("#profile-picker");
+        if (openPicker && !openPicker.hidden && visible(openPicker)) return openPicker.contains(element);
 
         const profilePage = document.querySelector("#profile-page");
         if (!profilePage.hidden && visible(profilePage)) {
@@ -2248,7 +853,7 @@
         const stateChange = stateChangeOf(element);
         note.innerHTML = `
           <strong>${labelOf(element)}</strong>
-          <span class="component-type">组件类型：${componentTypeOf(element)}</span>
+          <span class="component-type">缁勪欢绫诲瀷锛?{componentTypeOf(element)}</span>
           <span>${descriptionOf(element)}</span>
           ${stateChange ? `<span class="state-change">${stateChange}</span>` : ""}
         `;
@@ -2266,6 +871,11 @@
       const refreshMarkers = () => {
         cancelAnimationFrame(markerFrame);
         markerFrame = requestAnimationFrame(() => {
+          if (activeElement && (!visible(activeElement) || !belongsToCurrentPage(activeElement))) {
+            activeElement.removeAttribute("data-review-active");
+            activeElement = null;
+            note.hidden = true;
+          }
           markerLayer.replaceChildren();
           if (!reviewEnabled) return;
           document.querySelectorAll(interactiveSelector).forEach((element) => {
@@ -2274,7 +884,7 @@
             const dot = document.createElement("button");
             dot.className = "review-dot";
             dot.type = "button";
-            dot.title = `查看交互说明：${labelOf(element)}`;
+            dot.title = `鏌ョ湅浜や簰璇存槑锛?{labelOf(element)}`;
             dot.style.left = `${Math.min(innerWidth - 13, rect.right - 5)}px`;
             dot.style.top = `${Math.max(3, rect.top - 5)}px`;
             dot.addEventListener("click", (event) => {
@@ -2325,10 +935,10 @@
       const componentTarget = (source) => source.closest([
         "button", "select", "textarea", "input:not([type='file'])",
         ".history-row", ".prompt-box", ".scene-tabs", ".archive-prompt",
-        ".search-panel", ".sidebar", ".launcher", ".profile-page", ".profile-card",
-        ".profile-create-page", ".create-section", ".profile-type-options",
-        ".profile-detail-page", ".module-card", ".task-workbench-page",
-        ".archive-dialog", ".edit-drawer",
+        ".search-panel", ".sidebar", ".launcher", ".profile-page", ".preference-profile-card",
+        ".profile-create-page", ".preference-module-grid", ".preference-module-card",
+        ".profile-detail-page", ".task-workbench-page", ".application-guide",
+        ".archive-dialog", ".application-drawer",
         ".modal", "h1", "main"
       ].join(","));
 
@@ -2342,34 +952,33 @@
 
       const componentNameOf = (element) => {
         const known = [
-          ["#prompt", "任务描述"],
-          [".prompt-box", "任务输入区"],
-          [".scene-tabs", "业务场景选择"],
-          ["#headline", "首页标题"],
-          [".sidebar", "应用侧边栏"],
-          ["#history-list", "历史任务列表"],
-          [".archive-select", "企业档案选择"],
-          ["#profile-list", "企业档案列表"],
-          ["#new-profile", "新建档案"],
-          [".profile-card", "企业档案卡片"],
-          [".profile-create-page", "新建企业档案页面"],
-          [".profile-detail-page", "企业档案详情页面"],
-          [".module-card", "企业画像模块卡片"],
-          [".task-workbench-page", "统一任务工作台"],
-          [".profile-type-options", "档案类型选择"],
-          ["#upload-profile-material", "上传企业资料"],
-          ["#generate-profile-draft", "生成档案草稿"],
-          ["#attach", "添加附件"],
-          ["#send", "发起任务"],
-          ["#sidebar-toggle", "折叠侧栏"],
-          ["#sidebar-expand", "展开侧栏"],
-          ["#search-toggle", "搜索"],
-          ["#create-project", "创建项目"],
-          [".back-saas", "退出"]
+          ["#prompt", "浠诲姟鎻忚堪"],
+          [".prompt-box", "浠诲姟杈撳叆鍖?],
+          [".scene-tabs", "涓氬姟鍦烘櫙閫夋嫨"],
+          ["#headline", "棣栭〉鏍囬"],
+          [".sidebar", "搴旂敤渚ц竟鏍?],
+          ["#history-list", "鍘嗗彶浠诲姟鍒楄〃"],
+          [".archive-select", "涓氬姟鍋忓ソ妗ｆ閫夋嫨"],
+          ["#profile-list", "涓氬姟鍋忓ソ妗ｆ鍒楄〃"],
+          ["#new-profile", "鏂板缓妗ｆ"],
+          [".preference-profile-card", "涓氬姟鍋忓ソ妗ｆ鍗＄墖"],
+          [".profile-create-page", "鍒涘缓涓氬姟鍋忓ソ妗ｆ椤甸潰"],
+          [".profile-detail-page", "涓氬姟鍋忓ソ妗ｆ璇︽儏椤甸潰"],
+          [".preference-module-card", "鍋忓ソ鍐呭妯″潡鍗＄墖"],
+          [".task-workbench-page", "缁熶竴浠诲姟宸ヤ綔鍙?],
+          ["#package-upload", "涓婁紶瀹屾暣璧勬枡鍖?],
+          ["#task-profile-trigger", "浠诲姟妗ｆ閫夋嫨"],
+          ["#attach", "娣诲姞闄勪欢"],
+          ["#send", "鍙戣捣浠诲姟"],
+          ["#sidebar-toggle", "鎶樺彔渚ф爮"],
+          ["#sidebar-expand", "灞曞紑渚ф爮"],
+          ["#search-toggle", "鎼滅储"],
+          ["#create-project", "鍒涘缓椤圭洰"],
+          [".back-saas", "閫€鍑?]
         ];
         const matched = known.find(([selector]) => element.matches(selector));
         const name = matched?.[1] || labelOf(element);
-        return `${name}（${selectorOf(element)}）`;
+        return `${name}锛?{selectorOf(element)}锛塦;
       };
 
       const copyText = async (text) => {
@@ -2385,7 +994,7 @@
           document.execCommand("copy");
           helper.remove();
         }
-        copyToast.textContent = `已复制 ${text}`;
+        copyToast.textContent = `宸插鍒?${text}`;
         copyToast.classList.add("show");
         clearTimeout(copyToastTimer);
         copyToastTimer = setTimeout(() => copyToast.classList.remove("show"), 1800);
@@ -2421,3 +1030,4 @@
   </script>
 </body>
 </html>
+
