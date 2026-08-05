@@ -952,16 +952,28 @@
     .applied-profile-meta { display: flex; flex-wrap: wrap; gap: 5px 12px; margin-top: 9px; color: #87928e; font-size: 10px; line-height: 1.6; }
     .applied-profile-meta span { position: relative; }
     .applied-profile-meta span:not(:last-child)::after { content: ""; position: absolute; top: 7px; right: -7px; width: 2px; height: 2px; border-radius: 50%; background: #53605b; }
-    .agent-thinking { display: grid; grid-template-columns: 30px minmax(0,1fr); gap: 12px; width: min(650px,92%); }
-    .thinking-mark { width: 30px; height: 30px; display: grid; place-items: center; border: 1px solid #35403c; border-radius: 9px; color: #151817; background: var(--accent); font-size: 15px; font-weight: 800; }
-    .thinking-content { padding-top: 2px; }
-    .thinking-title { display: flex; align-items: center; gap: 8px; color: #e5ece9; font-size: 14px; font-weight: 600; }
-    .thinking-dots { display: inline-flex; gap: 3px; }
-    .thinking-dots i { width: 4px; height: 4px; border-radius: 50%; background: #7bd9d0; animation: thinkingPulse 1.2s infinite ease-in-out; }
-    .thinking-dots i:nth-child(2) { animation-delay: .16s; }
-    .thinking-dots i:nth-child(3) { animation-delay: .32s; }
-    .thinking-content p { margin: 8px 0 0; color: #8f9995; font-size: 12px; line-height: 1.7; }
-    @keyframes thinkingPulse { 0%,70%,100% { opacity:.28; transform:translateY(0) } 35% { opacity:1; transform:translateY(-2px) } }
+    .task-message.assistant { justify-content: flex-start; margin-bottom: 24px; }
+    .agent-message { width: 100%; padding: 8px 4px; color: #e3e8e8; }
+    .agent-message-copy { max-width: 660px; font-size: 14px; line-height: 24px; white-space: pre-wrap; }
+    .agent-execution-list { display: grid; gap: 8px; margin-top: 12px; }
+    .execution-item { width: min(660px,100%); }
+    .execution-trigger { width: 100%; height: 32px; display: flex; align-items: center; gap: 4px; padding: 0 6px 0 0; border: 0; border-radius: 8px; color: #aab8b6; background: transparent; font: inherit; text-align: left; cursor: pointer; transition: color .14s ease,background .14s ease; }
+    .execution-trigger:hover { color: #dbe5e3; background: rgba(255,255,255,.035); }
+    .execution-trigger:focus-visible { outline: 1px solid rgba(32,208,196,.7); outline-offset: 2px; }
+    .execution-status { position: relative; width: 20px; height: 20px; flex: 0 0 20px; display: grid; place-items: center; }
+    .execution-status.complete::before { content: "✓"; width: 16px; height: 16px; display: grid; place-items: center; border-radius: 50%; color: #a5b1ae; background: #303634; font-size: 10px; font-weight: 700; }
+    .execution-status.running::before { content: ""; width: 14px; height: 14px; border-radius: 50%; background: conic-gradient(from 25deg,transparent 0 28%,#34d5c8 45% 100%); -webkit-mask: radial-gradient(farthest-side,transparent calc(100% - 2px),#000 0); mask: radial-gradient(farthest-side,transparent calc(100% - 2px),#000 0); animation: executionSpin .9s linear infinite; }
+    .execution-label { min-width: 0; overflow: hidden; font-size: 14px; line-height: 20px; text-overflow: ellipsis; white-space: nowrap; }
+    .execution-chevron { width: 16px; height: 16px; display: grid; flex: 0 0 16px; place-items: center; margin-left: 2px; color: #65716e; font-size: 16px; transform: rotate(0deg); transition: transform .14s ease,color .14s ease; }
+    .execution-item.expanded .execution-chevron { transform: rotate(90deg); }
+    .execution-trigger:hover .execution-chevron { color: #9ca8a5; }
+    .execution-content { display: none; gap: 8px; padding: 4px 0 4px 16px; }
+    .execution-item.expanded .execution-content { display: grid; }
+    .execution-detail-row { display: flex; align-items: flex-start; gap: 5px; min-height: 20px; color: #7b8a88; font-size: 14px; line-height: 20px; }
+    .execution-detail-icon { width: 16px; flex: 0 0 16px; color: #5f6b68; text-align: center; }
+    .execution-detail-row a { color: #20d0c4; text-decoration: underline; text-underline-offset: 2px; }
+    @keyframes executionSpin { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) { .execution-status.running::before { animation: none; } }
     .task-composer-area { padding: 12px clamp(34px,7vw,104px) 22px; background: linear-gradient(180deg,rgba(23,25,24,0),#171918 28%); }
     .task-condition-box { width: min(760px,100%); min-height: 104px; display: grid; grid-template-columns: auto minmax(0,1fr) auto; grid-template-rows: minmax(46px,auto) 34px; gap: 8px; margin: 0 auto; padding: 13px; border: 1px solid #383e3b; border-radius: 15px; background: #222624; box-shadow: 0 14px 36px rgba(0,0,0,.18); }
     .task-condition-box textarea { position: static; grid-column: 1 / -1; width: 100%; height: auto; min-height: 42px; padding: 0; resize: none; border: 0; outline: 0; color: #edf3f0; background: transparent; font: inherit; font-size: 13px; line-height: 1.6; }
@@ -2007,7 +2019,7 @@
     document.querySelector("#edit-profile").onclick=openEditProfile;
     function renderConstraintPicker(){const q=(document.querySelector("#profile-picker-search")?.value||"").toLowerCase();document.querySelector("#profile-picker-list").innerHTML=constraints.filter(p=>p.name.toLowerCase().includes(q)).map(p=>`<button class="picker-option" data-pick-constraint="${p.id}">${p.name}<small>${p.categories.join("、")} · ${p.countries.join("、")} · ${p.priceRange.currency} ${p.priceRange.min}-${p.priceRange.max}</small></button>`).join("")}
     document.querySelector("#task-profile-trigger").onclick=null;document.querySelector("#profile-picker").hidden=true;
-    function sendTaskFollowup(){const input=document.querySelector("#task-condition"),text=input.value.trim();if(!text){input.focus();return}if(constraintState.currentId&&/童装|韩国|25[,，]?000|25000/.test(text)){document.querySelector("#boundary-profile-name").textContent=constraints.find(x=>x.id===constraintState.currentId).name;document.querySelector("#boundary-modal").hidden=false;return}const chat=document.querySelector("#task-chat-inner");chat.insertAdjacentHTML("beforeend",`<div class="task-message user"><div class="user-message-bubble">${escapeHtml(text)}</div></div><div class="task-message agent"><div class="agent-thinking"><span class="thinking-mark">L</span><div class="thinking-content"><div class="thinking-title">正在根据补充条件继续思考<span class="thinking-dots" aria-label="思考中"><i></i><i></i><i></i></span></div><p>将仅更新受新条件影响的判断，并保留本任务已有对话。</p></div></div></div>`);input.value="";document.querySelector("#task-chat").scrollTop=document.querySelector("#task-chat").scrollHeight}
+    function sendTaskFollowup(){const input=document.querySelector("#task-condition"),text=input.value.trim();if(!text){input.focus();return}if(constraintState.currentId&&/童装|韩国|25[,，]?000|25000/.test(text)){document.querySelector("#boundary-profile-name").textContent=constraints.find(x=>x.id===constraintState.currentId).name;document.querySelector("#boundary-modal").hidden=false;return}const chat=document.querySelector("#task-chat-inner");chat.insertAdjacentHTML("beforeend",`<div class="task-message user"><div class="user-message-bubble">${escapeHtml(text)}</div></div>${agentExecutionMessage({copy:"收到，我会根据你补充的条件继续处理。",label:"更新受影响的任务步骤",details:["识别本次新增或修改的条件","仅更新受影响步骤，保留已有对话与已确认范围"]})}`);input.value="";document.querySelector("#task-chat").scrollTop=document.querySelector("#task-chat").scrollHeight}
     document.querySelector("#check-task-boundary").onclick=sendTaskFollowup;
     document.querySelector("#task-condition").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendTaskFollowup()}});
     document.querySelector("#task-attach").onclick=()=>document.querySelector("#file-input").click();
@@ -2145,6 +2157,17 @@
     const taskPanelData = { plans: [], outputs: [], references: [] };
     const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[char]));
 
+    function agentExecutionMessage({ copy, label, details = [], state = "running" }) {
+      const detailRows = details.map((detail) => `<div class="execution-detail-row"><span class="execution-detail-icon" aria-hidden="true">·</span><span>${escapeHtml(detail)}</span></div>`).join("");
+      return `<div class="task-message assistant"><div class="agent-message">
+        <div class="agent-message-copy">${escapeHtml(copy)}</div>
+        <div class="agent-execution-list"><article class="execution-item expanded">
+          <button class="execution-trigger" type="button" aria-expanded="true"><span class="execution-status ${state === "complete" ? "complete" : "running"}" aria-hidden="true"></span><span class="execution-label">${escapeHtml(label)}</span><span class="execution-chevron" aria-hidden="true">›</span></button>
+          <div class="execution-content">${detailRows}</div>
+        </article></div>
+      </div></div>`;
+    }
+
     function renderTaskPanel(next = taskPanelData) {
       taskPanelData.plans = Array.isArray(next.plans) ? next.plans.slice(0, 12) : [];
       taskPanelData.outputs = Array.isArray(next.outputs) ? next.outputs.slice(0, 12) : [];
@@ -2165,11 +2188,16 @@
       document.querySelector("#task-chat-inner").innerHTML = `
         <div class="task-message user"><div class="user-message-bubble">${escapeHtml(userText)}</div></div>
         ${profileContext}
-        <div class="task-message agent"><div class="agent-thinking">
-          <span class="thinking-mark">L</span>
-          <div class="thinking-content"><div class="thinking-title">正在理解你的需求<span class="thinking-dots" aria-label="思考中"><i></i><i></i><i></i></span></div><p>正在梳理市场、品类、目标人群与经营条件，稍后会先与你确认调研范围。</p></div>
-        </div></div>`;
+        ${agentExecutionMessage({copy:"收到，我会先梳理你的需求，再与你确认本次调研范围。",label:"理解任务需求",details:["识别市场、品类、目标人群与经营目标","整理待确认条件，完成后将先与你确认调研范围"]})}`;
     }
+
+    document.querySelector("#task-chat").addEventListener("click", (event) => {
+      const trigger = event.target.closest(".execution-trigger");
+      if (!trigger) return;
+      const item = trigger.closest(".execution-item");
+      const expanded = item.classList.toggle("expanded");
+      trigger.setAttribute("aria-expanded", String(expanded));
+    });
 
     function showTaskPage() {
       document.querySelector("#task-workbench-page").hidden = false;
@@ -2317,6 +2345,7 @@
       };
 
       const componentTypeOf = (element) => {
+        if (element.matches(".execution-trigger")) return "任务执行折叠项";
         if (element.matches("input[type='search']")) return "搜索输入框";
         if (element.matches("input:not([type]), input[type='text']")) return "单行输入框";
         if (element.matches("textarea")) return "多行输入框";
@@ -2335,6 +2364,7 @@
       };
 
       const stateChangeOf = (element) => {
+        if (element.matches(".execution-trigger")) return "状态切换：点击收起任务执行详情；再次点击重新展开详情。运行中与已完成状态分别使用加载图标和完成图标。";
         if (element.matches("#search-toggle")) return "状态切换：点击展开搜索框；再次点击收起搜索框。";
         if (element.matches("#sidebar-toggle")) return "状态切换：点击收起侧栏；收起后顶部显示“展开侧栏”按钮。";
         if (element.matches("#sidebar-expand, #history-toggle")) return "状态切换：点击展开侧栏；展开后恢复文字导航、搜索与历史列表。";
@@ -2360,6 +2390,7 @@
       };
 
       const descriptionOf = (element) => {
+        if (element.matches(".execution-trigger")) return "展示 Agent 当前执行的任务名称与状态；展开后查看该任务包含的具体处理步骤，收起后仅保留任务摘要。";
         if (element.matches("#sidebar-toggle")) return "点击收起侧边栏。收起后仅保留展开、新任务、业务偏好档案、历史和退出图标。";
         if (element.matches("#sidebar-expand, #history-toggle")) return "点击重新展开侧边栏，恢复完整导航、搜索和历史任务列表。";
         if (element.matches("#search-toggle")) return "点击展开搜索输入框；根据关键词实时匹配历史任务和项目，结果按最近编辑时间由近到远排序。";
