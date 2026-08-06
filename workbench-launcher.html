@@ -939,7 +939,7 @@
     .task-profile-detail-list dt { margin-bottom: 3px; color: #6f7a76; font-size: 9px; }
     .task-profile-detail-list dd { margin: 0; overflow-wrap: anywhere; color: #cbd6d2; font-size: 10px; line-height: 1.55; }
     .task-profile-popover-foot { margin-top: 12px; padding-top: 10px; border-top: 1px solid #333a37; color: #68736f; font-size: 9px; }
-    .task-chat { position: relative; z-index: 1; min-height: 0; max-height: 100%; overflow-x: hidden; overflow-y: auto; overscroll-behavior-y: contain; padding: 46px clamp(34px,7vw,104px) 28px; scrollbar-gutter: stable; scroll-behavior: smooth; touch-action: pan-y; -webkit-overflow-scrolling: touch; }
+    .task-chat { position: relative; z-index: 1; min-height: 0; height: 100%; max-height: 100%; overflow-x: hidden; overflow-y: scroll; overscroll-behavior-y: contain; padding: 46px clamp(34px,7vw,104px) 28px; scrollbar-gutter: stable; scroll-behavior: smooth; touch-action: pan-y; -webkit-overflow-scrolling: touch; }
     .task-chat-inner { width: min(760px,100%); margin: 0 auto; }
     .task-message { display: flex; margin-bottom: 34px; }
     .task-message.user { justify-content: flex-end; }
@@ -1038,12 +1038,11 @@
     .selection-card-error { margin-right: auto; color: #ef8d8d; font-size: 11px; }
     .selection-confirm { height: 34px; padding: 0 13px; border: 0; border-radius: 8px; color: #0e1917; background: #55ded3; font-size: 12px; font-weight: 600; cursor: pointer; }
     .selection-confirm:hover { background: #7be8df; }
-    .candidate-overlay, .proposal-preview-overlay { position: fixed; inset: 0; z-index: 260; display: grid; place-items: center; background: rgba(0,0,0,.62); }
-    .candidate-overlay[hidden], .proposal-preview-overlay[hidden] { display: none; }
-    .candidate-dialog { width: min(90vw,1180px); height: min(88vh,780px); display: grid; grid-template-columns: 190px minmax(0,1fr) 220px; overflow: hidden; border: 1px solid #3d4844; border-radius: 16px; background: #1b201e; box-shadow: 0 26px 90px rgba(0,0,0,.55); }
-    .candidate-side, .candidate-tray { min-height: 0; padding: 18px; overflow: auto; background: #202523; }
-    .candidate-main { min-height: 0; display: grid; grid-template-rows: auto auto minmax(0,1fr); padding: 18px; overflow: hidden; border-inline: 1px solid #333c39; }
-    .candidate-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+    .candidate-overlay, .proposal-preview-overlay, .candidate-detail-overlay { position: fixed; inset: 0; z-index: 260; display: grid; place-items: center; background: rgba(0,0,0,.62); }
+    .candidate-overlay[hidden], .proposal-preview-overlay[hidden], .candidate-detail-overlay[hidden] { display: none; }
+    .candidate-dialog { width: min(94vw,1180px); height: min(90vh,800px); display: grid; grid-template-columns: minmax(0,1fr); overflow: hidden; border: 1px solid #3d4844; border-radius: 16px; background: #1b201e; box-shadow: 0 26px 90px rgba(0,0,0,.55); }
+    .candidate-main { min-height: 0; display: grid; grid-template-rows: auto minmax(0,1fr); padding: 18px; overflow: hidden; }
+    .candidate-head { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
     .candidate-head h2, .proposal-preview-dialog h2 { margin: 0; color: #f0f6f4; font-size: 20px; line-height: 28px; }
     .candidate-head p { margin: 5px 0 0; color: #87938f; font-size: 12px; line-height: 20px; }
     .candidate-close, .preview-close { width: 34px; height: 34px; border: 1px solid #3c4743; border-radius: 8px; color: #b8c4c0; background: #252b29; cursor: pointer; }
@@ -1052,31 +1051,62 @@
     .candidate-direction { width: 100%; display: grid; gap: 4px; margin-bottom: 8px; padding: 10px; border: 1px solid transparent; border-radius: 9px; color: #b7c2be; background: transparent; text-align: left; cursor: pointer; }
     .candidate-direction small { color: #6f7a76; }
     .candidate-direction.active, .candidate-direction:hover { border-color: #40504b; background: #2a312e; color: #f1f6f4; }
-    .candidate-filters { display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); gap: 8px; margin: 16px 0 14px; }
-    .candidate-filter { height: 34px; min-width: 0; padding: 0 8px; border: 1px solid #38423f; border-radius: 8px; color: #d7e0dd; background: #252b29; font-size: 11px; }
-    .candidate-grid { min-height: 0; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; overflow: auto; padding-right: 4px; }
+    .candidate-toolbar { display: flex; align-items: center; justify-content: flex-end; gap: 7px; flex-wrap: wrap; }
+    .candidate-source-filter { width: 30px; height: 30px; border: 1px solid #3c4844; border-radius: 8px; color: #aebdb8; background: #242a28; cursor: pointer; }
+    .candidate-source-filter.active, .candidate-source-filter:hover { color: #11201d; border-color: #55ded3; background: #55ded3; }
+    .candidate-selected-count { min-width: 76px; color: #a6b4af; font-size: 11px; text-align: right; }
+    .candidate-grid { min-height: 0; display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); grid-auto-rows: 180px; gap: 10px; overflow: auto; padding: 16px 2px 2px; }
     .candidate-empty { grid-column: 1 / -1; align-self: center; display: grid; gap: 7px; padding: 26px 18px; border: 1px dashed #3a4642; border-radius: 10px; color: #b6c4bf; background: rgba(32,37,35,.72); text-align: center; }
     .candidate-empty span { color: #788680; font-size: 11px; line-height: 17px; }
-    .candidate-card { display: grid; gap: 9px; padding: 10px; border: 1px solid #37413e; border-radius: 11px; background: #222826; }
-    .candidate-card.selected { border-color: #55ded3; box-shadow: 0 0 0 1px rgba(85,222,211,.34) inset; }
+    .candidate-card { position: relative; min-width: 0; overflow: hidden; border: 1px solid #37413e; border-radius: 10px; background: #222826; cursor: pointer; }
+    .candidate-card.selected { border-color: #55ded3; box-shadow: 0 0 0 2px rgba(85,222,211,.36) inset; }
     .candidate-card.excluded { opacity: .42; filter: grayscale(.45); }
-    .fashion-thumb { position: relative; overflow: hidden; border-radius: 9px; background: linear-gradient(135deg,#7a8078,#ded2c2); }
-    .fashion-thumb::after { content: attr(data-code); position: absolute; left: 8px; top: 8px; padding: 3px 6px; border-radius: 6px; color: #121614; background: rgba(255,255,255,.78); font-size: 10px; font-weight: 700; }
-    .candidate-card .fashion-thumb { height: 142px; }
+    .candidate-card .fashion-thumb { width: 100%; height: 100%; border-radius: 0; }
+    .candidate-card .fashion-thumb::after { content: attr(data-code); position: absolute; left: 8px; top: 8px; padding: 3px 6px; border-radius: 6px; color: #121614; background: rgba(255,255,255,.78); font-size: 10px; font-weight: 700; }
+    .candidate-card.selected .fashion-thumb::before { content: "✓"; position: absolute; z-index: 2; right: 9px; top: 8px; width: 20px; height: 20px; display: grid; place-items: center; border-radius: 50%; color: #0d1b19; background: #55ded3; font-weight: 800; }
+    .candidate-media-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: flex-end; gap: 5px; padding: 12px; color: #f0f6f4; background: linear-gradient(180deg,transparent 26%,rgba(11,16,15,.9)); opacity: 0; transition: opacity .16s ease; }
+    .candidate-card:hover .candidate-media-overlay, .candidate-card:focus-within .candidate-media-overlay { opacity: 1; }
+    .candidate-media-overlay strong { font-size: 12px; }
+    .candidate-media-overlay small { color: #c0cfca; font-size: 10px; line-height: 14px; }
+    .candidate-media-actions { display: flex; flex-wrap: wrap; gap: 5px; }
+    .candidate-media-source { align-self: flex-start; height: 24px; padding: 0 7px; border: 1px solid rgba(200,230,223,.45); border-radius: 6px; color: #ecf6f2; background: rgba(0,0,0,.28); font-size: 10px; cursor: pointer; }
+    .candidate-media-source:hover { border-color: #55ded3; background: rgba(85,222,211,.22); }
     .thumb-a { background: linear-gradient(135deg,#b5aa9b 0%,#6c756f 48%,#2c3431 100%); }
     .thumb-b { background: linear-gradient(135deg,#d9d2c4 0%,#8b8f86 52%,#38413d 100%); }
     .thumb-c { background: linear-gradient(135deg,#c3b7a7 0%,#77746b 50%,#26302d 100%); }
     .thumb-d { background: linear-gradient(135deg,#e1d8c8 0%,#9b9d90 45%,#4b5650 100%); }
-    .candidate-meta h4 { margin: 0; color: #edf4f1; font-size: 13px; line-height: 20px; }
-    .candidate-meta p { margin: 3px 0; color: #8d9995; font-size: 11px; line-height: 16px; }
-    .candidate-meta small { display: block; color: #6f7a76; font-size: 10px; line-height: 15px; }
-    .candidate-actions { display: grid; grid-template-columns: repeat(2,1fr); gap: 6px; }
-    .candidate-action { height: 28px; border: 1px solid #3d4945; border-radius: 7px; color: #bfd0cc; background: transparent; font-size: 10px; cursor: pointer; }
-    .candidate-action:hover { color: #0f1a18; border-color: #55ded3; background: #55ded3; }
-    .tray-list { display: grid; gap: 8px; margin-bottom: 14px; }
-    .tray-item { display: flex; justify-content: space-between; gap: 8px; padding: 8px; border: 1px solid #36403d; border-radius: 8px; color: #c9d4d0; background: #252b29; font-size: 11px; }
-    .candidate-confirm { width: 100%; height: 38px; border: 0; border-radius: 9px; color: #0d1917; background: #55ded3; font-size: 13px; font-weight: 600; cursor: pointer; }
+    .candidate-confirm { height: 32px; padding: 0 11px; border: 0; border-radius: 8px; color: #0d1917; background: #55ded3; font-size: 12px; font-weight: 600; cursor: pointer; }
     .candidate-confirm:disabled { color: #68736f; background: #303734; cursor: default; }
+    .candidate-detail-dialog { width: min(92vw,620px); max-height: 84vh; overflow: auto; padding: 18px; border: 1px solid #3d4844; border-radius: 14px; background: #202523; box-shadow: 0 26px 90px rgba(0,0,0,.55); }
+    .candidate-detail-dialog .fashion-thumb { width: 100%; height: 260px; margin-bottom: 14px; }
+    .candidate-detail-dialog h3 { margin: 0 0 8px; color: #eff6f3; font-size: 18px; }
+    .candidate-detail-dialog p, .candidate-detail-dialog li { color: #aebcb7; font-size: 12px; line-height: 20px; }
+    .candidate-detail-actions { display: flex; gap: 8px; margin-top: 16px; }
+    .candidate-detail-actions button { height: 34px; padding: 0 12px; border: 1px solid #3d4945; border-radius: 8px; color: #c7d5d1; background: #252b29; cursor: pointer; }
+    .candidate-detail-actions .primary { border-color: #55ded3; color: #0d1b19; background: #55ded3; }
+    .remix-plan-copy { display: grid; gap: 10px; margin-top: 14px; padding: 0; }
+    .remix-plan-copy section { padding: 12px 0; border-top: 1px solid #303634; }
+    .remix-plan-copy h4 { margin: 0 0 7px; color: #edf4f1; font-size: 12px; }
+    .remix-plan-copy p { margin: 3px 0; color: #aab6b2; font-size: 11px; line-height: 1.65; }
+    .ai-remix-results { margin-top: 16px; padding: 14px; border: 1px solid #343c39; border-radius: 8px; background: #1d211f; }
+    .ai-remix-results-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+    .ai-remix-results-head h3 { margin: 0; color: #edf4f1; font-size: 13px; }
+    .ai-remix-results-head p { margin: 4px 0 0; color: #77837e; font-size: 10px; line-height: 16px; }
+    .ai-remix-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; }
+    .ai-remix-item { position: relative; min-width: 0; overflow: hidden; border: 1px solid #37413e; border-radius: 7px; background: #242a27; }
+    .ai-remix-item.main { border-color: #55ded3; box-shadow: 0 0 0 1px rgba(85,222,211,.25) inset; }
+    .ai-remix-item.backup { border-color: #8b9c96; }
+    .ai-remix-item .fashion-thumb { width: 100%; height: 178px; border-radius: 0; }
+    .ai-remix-meta { display: grid; gap: 5px; padding: 10px; }
+    .ai-remix-meta strong { color: #e5eeeb; font-size: 11px; }
+    .ai-remix-meta small { color: #84918c; font-size: 9px; line-height: 14px; }
+    .ai-remix-actions { display: flex; flex-wrap: wrap; gap: 5px; padding: 0 10px 10px; }
+    .ai-remix-actions button { min-height: 28px; padding: 0 8px; border: 1px solid #3b4642; border-radius: 6px; color: #b9c7c2; background: #202522; font-size: 9px; }
+    .ai-remix-actions button.active { border-color: #55ded3; color: #0e1a18; background: #55ded3; }
+    .ai-remix-footer { display: flex; align-items: center; justify-content: flex-end; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px solid #303735; }
+    .ai-remix-footer button { height: 32px; padding: 0 11px; border: 1px solid #3b4642; border-radius: 7px; color: #d6e0dc; background: #252b29; }
+    .ai-remix-footer .primary { border-color: #55ded3; color: #0d1b19; background: #55ded3; }
+    .ai-remix-footer .primary:disabled { border-color: #343b38; color: #697570; background: #303633; cursor: default; }
     .proposal-preview-dialog { width: min(86vw,980px); max-height: 86vh; display: grid; grid-template-rows: auto minmax(0,1fr); overflow: hidden; border: 1px solid #3d4844; border-radius: 16px; background: #202523; box-shadow: 0 26px 90px rgba(0,0,0,.55); }
     .proposal-preview-head { display: flex; justify-content: space-between; gap: 16px; padding: 18px 22px; border-bottom: 1px solid #34403c; }
     .proposal-preview-body { overflow: auto; padding: 22px; color: #dce5e2; }
@@ -1351,6 +1381,23 @@
       .candidate-filters { grid-template-columns: repeat(2,minmax(0,1fr)); }
       .candidate-card .fashion-thumb { height: 120px; }
     }
+    @media (max-width: 980px) {
+      .candidate-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
+    }
+    @media (max-width: 720px) {
+      .candidate-dialog { width: calc(100vw - 16px); height: calc(100vh - 24px); }
+      .candidate-main { padding: 12px; }
+      .candidate-head { align-items: flex-start; }
+      .candidate-head h2 { font-size: 17px; }
+      .candidate-toolbar { justify-content: flex-start; }
+      .candidate-grid { grid-template-columns: repeat(2,minmax(0,1fr)); grid-auto-rows: 148px; gap: 8px; }
+      .candidate-media-overlay { opacity: 1; padding: 8px; background: linear-gradient(180deg,transparent 20%,rgba(11,16,15,.86)); }
+      .candidate-media-overlay strong { font-size: 10px; }
+      .candidate-media-overlay small { display: none; }
+      .ai-remix-grid { grid-template-columns: 1fr; }
+      .ai-remix-item .fashion-thumb { height: 220px; }
+      .ai-remix-results { padding: 10px; }
+    }
     /* Business constraint profile */
     .constraint-page{position:absolute;inset:0 0 0 var(--sidebar-width);overflow:auto;background:#121514;color:#f4f7f5;z-index:4}
     .constraint-shell{width:min(1080px,calc(100% - 64px));margin:0 auto;padding:64px 0 120px}
@@ -1514,33 +1561,24 @@
     </div>
     <div class="candidate-overlay" id="candidate-overlay" hidden>
       <div class="candidate-dialog" role="dialog" aria-modal="true" aria-labelledby="candidate-title">
-        <aside class="candidate-side">
-          <h3>方向聚类</h3>
-          <div id="candidate-directions"></div>
-        </aside>
         <section class="candidate-main">
           <div class="candidate-head">
             <div>
-              <h2 id="candidate-title">候选池</h2>
-              <p id="candidate-subtitle">演示数据 · 按平台分别展示，不合并为单一销售数字。</p>
+              <h2 id="candidate-title">候选参考池</h2>
+              <p id="candidate-subtitle">仅展示符合已确认方向与需求硬约束的视觉参考 · 演示数据</p>
             </div>
-            <button class="candidate-close" id="candidate-close" aria-label="关闭候选池">×</button>
-          </div>
-          <div class="candidate-filters">
-            <select class="candidate-filter" id="candidate-filter-platform"></select>
-            <select class="candidate-filter" id="candidate-filter-brand"></select>
-            <select class="candidate-filter" id="candidate-filter-price"></select>
-            <select class="candidate-filter" id="candidate-filter-match"></select>
-            <select class="candidate-filter" id="candidate-filter-signal"></select>
-            <select class="candidate-filter" id="candidate-filter-competition"></select>
+            <div class="candidate-toolbar">
+              <button class="candidate-source-filter active" type="button" data-source-filter="全部" title="全部来源">◈</button>
+              <button class="candidate-source-filter" type="button" data-source-filter="电商平台" title="电商平台来源">▦</button>
+              <button class="candidate-source-filter" type="button" data-source-filter="社媒平台" title="社媒平台来源">⌁</button>
+              <button class="candidate-source-filter" type="button" data-source-filter="品牌官网/独立站" title="品牌官网或独立站来源">⌂</button>
+              <span class="candidate-selected-count" id="candidate-selected-count">已选 0</span>
+              <button class="candidate-confirm" id="candidate-confirm" type="button" disabled>确认选择</button>
+              <button class="candidate-close" id="candidate-close" aria-label="关闭候选池">×</button>
+            </div>
           </div>
           <div class="candidate-grid" id="candidate-grid"></div>
         </section>
-        <aside class="candidate-tray">
-          <h3>已选款托盘</h3>
-          <div class="tray-list" id="candidate-tray-list"></div>
-          <button class="candidate-confirm" id="candidate-confirm">确认候选</button>
-        </aside>
       </div>
     </div>
     <div class="proposal-preview-overlay" id="proposal-preview-overlay" hidden>
@@ -1553,6 +1591,11 @@
           <button class="preview-close" id="proposal-preview-close" aria-label="关闭预览">×</button>
         </div>
         <div class="proposal-preview-body" id="proposal-preview-body"></div>
+      </div>
+    </div>
+    <div class="candidate-detail-overlay" id="candidate-detail-overlay" hidden>
+      <div class="candidate-detail-dialog" role="dialog" aria-modal="true" aria-labelledby="candidate-detail-title">
+        <div id="candidate-detail-body"></div>
       </div>
     </div>
     <div class="toast" role="status" aria-live="polite"></div>
@@ -2334,7 +2377,18 @@
       { code: "D02", direction: "soft", title: "法式感泡泡袖上衣", platform: "LINE SHOPPING", brand: "ADAM ET ROPÉ", price: "JPY 11,900", match: 88, signal: "demo", competition: "中", thumb: "thumb-b", note: "演示数据 · 风格表达更柔和", source: "公开网页", gap: "授权状态示意", market: "欧洲", gender: "女装", category: "女装", audience: ["25-34岁", "35-44岁"] },
       { code: "D03", direction: "soft", title: "轻礼服感套装", platform: "Rakuten Fashion", brand: "NANO universe", price: "JPY 16,800", match: 86, signal: "demo", competition: "低中", thumb: "thumb-a", note: "演示数据 · 可用于提案收束", source: "平台字段", gap: "样本量有限", market: "日本", gender: "女装", category: "女装", audience: ["25-34岁", "35-44岁"] }
     ];
-    const proposalArtifactData = { directionPack: null, proposal: null };
+    proposalCandidatePool.forEach((item) => Object.assign(item, {
+      image_url: `prototype://fashion-reference/${item.code.toLowerCase()}`,
+      source_page_url: `#source-${item.code.toLowerCase()}`,
+      source_type: item.source === "社媒信号" ? "社媒平台" : item.source === "公开网页" ? "品牌官网/独立站" : "电商平台",
+      platform_brand_account: `${item.platform} · ${item.brand}`,
+      captured_at: item.market === "欧洲" ? "2026-08-04" : "2026-08-02",
+      authorization_status: "仅用于方向参考",
+      match_reason: `符合${item.category}方向，匹配${item.market}市场与${item.audience.join("、")}人群硬约束`,
+      trend_direction_id: item.direction,
+      evidence_summary: `${item.source} · ${item.note} · 竞争${item.competition} · 缺口：${item.gap}`
+    }));
+    const proposalArtifactData = { trendAnalysis: null, candidatePool: null, directionPack: null, aiRemix: null, proposal: null };
     const proposalFlow = {
       active: false,
       stage: "idle",
@@ -2360,6 +2414,14 @@
       directionPackLanguage: "简体中文",
       proposalLanguage: "简体中文",
       scope: { market: "", platforms: [], otherPlatform: "" },
+      trendDirections: [],
+      selectedTrendDirectionIds: [],
+      trendSelectionConfirmed: false,
+      feedbackClass: "",
+      feedbackText: "",
+      remixPlan: null,
+      promptAudit: null,
+      generatedImagesConfirmed: false,
       referenceCodes: [],
       anchorCodes: [],
       mainPlan: null,
@@ -2369,7 +2431,8 @@
         direction: "urban",
         selected: new Set(),
         excluded: new Set(),
-        filters: { platform: "全部", brand: "全部", price: "全部", match: "全部", signal: "全部", competition: "全部" },
+        similarTo: "",
+        filters: { source: "全部", platform: "全部", brand: "全部", price: "全部", match: "全部", signal: "全部", competition: "全部" },
         gridScrollTop: 0,
         trayScrollTop: 0
       }
@@ -2391,9 +2454,9 @@
     }
     window.updateTaskPanel = renderTaskPanel;
 
-    const proposalSteps = ["需求解析与确认", "调研范围确认", "趋势与参考调研", "方向对齐", "AI改款", "方案确认", "提案交付"];
+    const proposalSteps = ["需求解析与确认", "调研范围确认", "趋势分析与方向确认", "候选参考与客户确认", "改款计划确认", "AI 改款与图片确认", "提案交付"];
     function proposalStageIndex() {
-      const order = { idle: 0, understanding: 0, scope: 1, research: 2, candidate: 2, directionPack: 3, feedback: 4, ai: 4, final: 5, done: 7 };
+      const order = { idle: 0, understanding: 0, scope: 1, trendScan: 2, trendReview: 2, research: 2, candidate: 3, directionPack: 3, feedback: 4, remixPlan: 4, prompt: 5, ai: 5, final: 6, done: 7 };
       return order[proposalFlow.stage] ?? 0;
     }
     function renderProposalPlanPanel() {
@@ -3020,6 +3083,323 @@
       return true;
     }
 
+    const proposalTrendDirectionCatalog = [
+      { id: "urban", name: "都市轻通勤层次", elements: "轻针织、短外套叠穿、低饱和基础色", fit: "适合 25-35 岁城市通勤女性与通勤女装品类", social: "通勤层次与轻薄针织讨论活跃（演示信号）", ecommerce: "轻外套、针织上装供给稳定，竞争中（演示信号）", source: "趋势资料库《城市轻量着装观察》2026 春夏，第 18-21 页；社媒公开帖；电商公开列表字段", thumb: "thumb-a", time: "2026-05 至 2026-08", sample: "趋势资料 1 份 · 社媒 18 条 · 电商列表 24 条（演示）", confidence: "中", gap: "趋势报告授权与平台样本口径待复核", evidence: "代表性公开帖子与商品列表缩略图（演示）" },
+      { id: "light", name: "夏日轻盈透明层次", elements: "薄透外搭、垂感面料、浅色留白与轻量细节", fit: "适合女性夏季女装、连衣裙和轻盈视觉方向", social: "轻盈、透气、度假场景内容被反复讨论（演示信号）", ecommerce: "薄外搭与轻连衣裙上新较集中，竞争中高（演示信号）", source: "趋势资料库《Summer Lightness》2026，第 32-35 页；社媒公开帖；电商公开列表字段", thumb: "thumb-b", time: "2026-05 至 2026-08", sample: "趋势资料 1 份 · 社媒 22 条 · 电商列表 20 条（演示）", confidence: "中高", gap: "互动不等于销量，价格带样本不足", evidence: "公开帖子截图与薄针织/罩衫列表缩略图（演示）" },
+      { id: "active", name: "城市轻户外功能感", elements: "可收纳、轻防晒、功能口袋与柔化工装细节", fit: "适合轻户外女装、城市周末和轻运动场景", social: "轻户外通勤、周末短途场景有持续讨论（演示信号）", ecommerce: "功能外套与防晒上装供给可见，竞争中高（演示信号）", source: "趋势资料库《Urban Outdoor Signals》2026，第 10-14 页；品牌官网公开系列页；社媒公开帖", thumb: "thumb-c", time: "2026-04 至 2026-08", sample: "趋势资料 1 份 · 社媒 16 条 · 品牌系列 8 个（演示）", confidence: "中", gap: "品牌官网样本不代表全市场供给", evidence: "品牌系列页与户外场景公开帖缩略图（演示）" },
+      { id: "soft", name: "柔性优雅与法式松弛", elements: "柔软垂坠、轻褶量感、低对比图案与温和廓形", fit: "适合女性通勤、轻社交及柔和风格提案", social: "法式松弛与柔软垂坠内容存在分散讨论（演示信号）", ecommerce: "垂坠裙装与上衣供给分散，竞争中（演示信号）", source: "趋势资料库《Soft Structure》2026，第 24-27 页；品牌官网公开产品页；社媒公开帖", thumb: "thumb-d", time: "2026-05 至 2026-08", sample: "趋势资料 1 份 · 社媒 14 条 · 品牌产品页 12 个（演示）", confidence: "中", gap: "不同来源对风格标签定义不完全一致", evidence: "公开产品页与社媒内容缩略图（演示）" }
+    ];
+
+    function makeArtifactPayload(id, label, type, summary = "") {
+      return { id, label, type, summary, status: "已生成", generatedAt: "刚刚", viewLabel: "在线查看", downloadLabel: "下载 HTML/PPT/PDF" };
+    }
+
+    function proposalArtifactQuote(artifact, summary, action = "view") {
+      const actionHtml = action === "candidate"
+        ? `<button class="proposal-inline-action" type="button" data-proposal-action="open-candidates">查看详情</button>`
+        : `<button class="proposal-inline-action" type="button" data-artifact-view-inline="${escapeHtml(artifact.id)}">查看详情</button>`;
+      const typeLabel = artifact.type === "trend" ? "趋势分析" : artifact.type === "candidate" ? "视觉参考池" : artifact.type === "direction" ? "客户方向参考包 · V1" : artifact.type === "ai" ? "AI 改款图" : "客户提案 · V1";
+      return `<div class="task-message assistant"><div class="agent-message"><section class="proposal-artifact-quote" data-artifact-quote="${escapeHtml(artifact.id)}"><div class="artifact-quote-icon">□</div><div class="artifact-quote-copy"><strong>${escapeHtml(artifact.label)}</strong><span>${escapeHtml(typeLabel)} · ${escapeHtml(artifact.status || "已生成")}</span><small>${escapeHtml(artifact.generatedAt || "刚刚")} · ${escapeHtml(summary || artifact.summary || "只读产物引用")}</small></div>${actionHtml}</section></div></div>`;
+    }
+
+    function renderTrendDirectionDetails() {
+      const selected = new Set(proposalFlow.selectedTrendDirectionIds || []);
+      return proposalFlow.trendDirections.map((item, index) => `<article class="trend-direction-detail ${selected.has(item.id) ? "selected" : ""}" data-trend-direction-id="${escapeHtml(item.id)}"><button class="trend-direction-select" type="button" data-trend-select="${escapeHtml(item.id)}" aria-pressed="${selected.has(item.id)}"><div class="fashion-thumb ${escapeHtml(item.thumb)}" data-code="${index + 1}"></div><div class="trend-direction-body"><h4>${index + 1}. ${escapeHtml(item.name)}</h4><p><b>关键设计元素</b> ${escapeHtml(item.elements)}</p><p><b>适配理由</b> ${escapeHtml(item.fit)}</p><p><b>社媒信号</b> ${escapeHtml(item.social)}</p><p><b>电商供给/竞争</b> ${escapeHtml(item.ecommerce)}</p><p><b>趋势依据</b> ${escapeHtml(item.source)}</p><small>${escapeHtml(item.evidence)} · 时间 ${escapeHtml(item.time)} · ${escapeHtml(item.sample)} · 证据充分度 ${escapeHtml(item.confidence)} · 缺口：${escapeHtml(item.gap)}</small></div></button></article>`).join("");
+    }
+
+    function startTrendScan() {
+      proposalFlow.stage = "trendScan";
+      proposalFlow.trendDirections = proposalTrendDirectionCatalog.map((item) => ({ ...item }));
+      proposalFlow.selectedTrendDirectionIds = [];
+      renderProposalPlanPanel();
+      appendTaskHtml(agentExecutionMessage({ copy: "范围已确认。我会先做小样本趋势方向扫描，分别整理趋势资料、电商供给/竞争与社媒信号，不直接进入候选池。", label: "趋势方向扫描", details: ["整理趋势资料库中的可授权方向与章节依据", "采集电商、社媒、品牌/独立站公开信号", "按时间范围、样本量、证据充分度和数据缺口整理 3-5 个方向"], state: "complete" }));
+      proposalFlow.references = proposalFlow.trendDirections.slice(0, 4).map((item) => ({ label: `趋势资料：${item.name} · ${item.time} · ${item.confidence} · 缺口：${item.gap}`, url: "#trend-source" }));
+      const artifact = makeArtifactPayload("trendAnalysis", "趋势方向分析", "trend", "4 个待确认趋势方向 · 电商、社媒、趋势资料分开引用");
+      proposalArtifactData.trendAnalysis = artifact;
+      renderProposalPlanPanel();
+      proposalFlow.stage = "trendReview";
+      appendTaskHtml(proposalArtifactQuote(artifact, "4 个方向 · 每个方向含元素、适配理由、来源、样本、证据充分度与缺口"));
+      appendTaskHtml(proposalAgentMessage("趋势方向分析已生成。请点击“查看详情”选择认可方向，也可以直接在输入框说“保留 1 和 3，排除 2”，修改会先停留在趋势确认，不会进入定向候选检索。"));
+      document.querySelector("#task-condition").placeholder = "例如：保留 1 和 3，排除 2；或补充需要的视觉条件…";
+    }
+
+    function confirmTrendDirections(ids = proposalFlow.selectedTrendDirectionIds) {
+      const valid = [...new Set(ids)].filter((id) => proposalFlow.trendDirections.some((item) => item.id === id));
+      if (!valid.length) { showToast("至少选择一个趋势方向"); return; }
+      proposalFlow.selectedTrendDirectionIds = valid;
+      proposalFlow.trendSelectionConfirmed = true;
+      document.querySelector("#proposal-preview-overlay").hidden = true;
+      proposalFlow.stage = "candidate";
+      renderProposalPlanPanel();
+      appendTaskHtml(proposalAgentMessage(`已确认趋势方向：${valid.map((id) => proposalTrendDirectionCatalog.find((item) => item.id === id)?.name).filter(Boolean).join("、")}。现在根据已确认方向、${proposalFlow.requirement.market || "主市场待补充"}、${proposalFlow.requirement.category || "品类待补充"}和参考图特征，生成定向视觉参考检索条件。`));
+      appendTaskHtml(agentExecutionMessage({ copy: "定向视觉参考条件已准备完成，候选池将只保留符合已确认方向与需求硬约束的素材。", label: "定向视觉参考检索", details: ["组合趋势方向、市场、人群、品类与参考图特征", "获取电商商品图、社媒帖子截图、品牌官网/独立站款式图", "去重并保留来源页链接、采集时间和授权状态"], state: "complete" }));
+      const artifact = makeArtifactPayload("candidatePool", "候选参考池", "candidate", "按已确认趋势方向定向检索 · 图片来源覆盖电商、社媒与品牌/独立站");
+      proposalArtifactData.candidatePool = artifact;
+      renderProposalPlanPanel();
+      appendTaskHtml(proposalArtifactQuote(artifact, "候选视觉素材已准备 · 方向、平台、人群和市场硬过滤已执行", "candidate"));
+      appendTaskHtml(proposalAgentMessage("候选参考池已准备。每张图片都会说明符合哪个趋势方向、哪些需求特征以及对应证据；如果都不合适，可以直接说“都不合适”或“重新找”，我会回到趋势方向或重新执行候选检索。"));
+      document.querySelector("#task-condition").placeholder = "可以说“都不合适”“重新找”，或打开候选参考池选择图片…";
+    }
+
+    function renderProposalPreview(type) {
+      const body = document.querySelector("#proposal-preview-body");
+      const titleMap = { trend: "趋势方向分析", candidate: "候选参考池", direction: "客户方向参考包 V1", ai: "AI 改款图", proposal: "客户提案 V1" };
+      if (type === "trend") {
+        body.innerHTML = `<section class="preview-section"><h3>趋势方向分析</h3><p>小样本方向扫描 · 演示数据 · 单一帖子、商品或报告不作为确定趋势或销量机会。</p><div class="trend-direction-list">${renderTrendDirectionDetails()}</div><div class="dialog-actions"><span class="selection-card-error" id="trend-selection-error" hidden></span><button class="primary" id="confirm-trend-directions">确认认可方向</button></div></section>`;
+      } else if (type === "candidate") {
+        const selected = proposalSelectedCandidates();
+        body.innerHTML = `<section class="preview-section"><h3>候选参考池</h3><p>已选 ${selected.length} 张 · 每张素材保留 image_url、source_page_url、source_type、platform/brand/account、captured_at、authorization_status、match_reason、trend_direction_id、evidence_summary。</p><ul>${selected.map((item) => `<li>${escapeHtml(item.code)} · ${escapeHtml(item.match_reason)} · ${escapeHtml(item.evidence_summary)}</li>`).join("") || "<li>尚未选择候选素材</li>"}</ul></section>`;
+      } else {
+        const selectedItems = proposalCandidatePool.filter((item) => proposalFlow.referenceCodes.includes(item.code));
+        const platformRows = [...(proposalFlow.scope.ecommercePlatforms || []), ...(proposalFlow.scope.socialPlatforms || [])].map((platform) => `<tr><td>${escapeHtml(platform)}</td><td>${platform === (proposalFlow.scope.socialPlatforms || []).find((item) => item === platform) ? "社媒信号" : "电商公开字段"}</td><td>2026-07 至 2026-08</td><td>演示样本</td><td>中/低中</td><td>平台口径不合并；互动不等于销量</td></tr>`).join("");
+        const directionList = proposalFlow.selectedTrendDirectionIds.map((id) => proposalTrendDirectionCatalog.find((item) => item.id === id)?.name).filter(Boolean).join("、") || "待确认";
+        const main = proposalFlow.mainPlan || { code: "M01", anchor: proposalFlow.referenceCodes[0] || "A01", keep: "客户认可元素", change: "比例与细节" };
+        const backup = proposalFlow.backupPlan || { code: "M02", anchor: proposalFlow.referenceCodes[1] || "A02", keep: "场景与色彩", change: "袖型与面料感" };
+        body.innerHTML = `<section class="preview-section"><h3>${escapeHtml(titleMap[type] || "只读预览")}</h3><p>只读预览 · 演示数据 · 不含内部设计指导、设计 Brief、BOM、打样、MOQ、成本、交期或供应链计划。</p></section><section class="preview-section"><h3>客户需求</h3><p>${escapeHtml(proposalFlow.firstText || "客户 brief 摘要")}</p></section><section class="preview-section"><h3>已确认趋势方向</h3><p>${escapeHtml(directionList)}</p></section><section class="preview-section"><h3>选中参考来源</h3><ul>${selectedItems.map((item) => `<li>${escapeHtml(item.code)} · ${escapeHtml(item.source_type)} · ${escapeHtml(item.platform_brand_account)} · ${escapeHtml(item.match_reason)}</li>`).join("") || "<li>待确认</li>"}</ul></section><section class="preview-section"><h3>按平台分别展示的市场依据</h3><table class="preview-table"><thead><tr><th>平台/来源</th><th>来源类型</th><th>时间范围</th><th>样本量</th><th>证据充分度</th><th>数据缺口</th></tr></thead><tbody>${platformRows || "<tr><td colspan=6>待确认调研范围</td></tr>"}</tbody></table></section>${type === "ai" || type === "proposal" ? `<section class="preview-section"><h3>确认后的 AI 改款</h3><p>主方案 ${escapeHtml(main.code)} · 锚点 ${escapeHtml(main.anchor)} · 保留 ${escapeHtml(main.keep)} · 修改 ${escapeHtml(main.change)}</p><p>备选方案 ${escapeHtml(backup.code)} · 锚点 ${escapeHtml(backup.anchor)} · 保留 ${escapeHtml(backup.keep)} · 修改 ${escapeHtml(backup.change)}</p></section>` : ""}${type === "proposal" ? `<section class="preview-section"><h3>客户反馈与主备对比</h3><p>${escapeHtml(proposalFlow.feedbackText || "待记录客户反馈")}。主方案偏稳妥，备选方案保留识别点并拉开细节差异；两者均为 AI 概念表达。</p></section>` : ""}`;
+      }
+      document.querySelector("#proposal-preview-title").textContent = titleMap[type] || "只读预览";
+      document.querySelector("#proposal-preview-subtitle").textContent = type === "trend" ? "趋势方向分析 · 可多选确认" : "客户提案工作台产物";
+      document.querySelector("#proposal-preview-overlay").hidden = false;
+    }
+
+    function renderCandidateSourceDetail(code) {
+      const item = proposalCandidatePool.find((candidate) => candidate.code === code);
+      if (!item) return;
+      document.querySelector("#candidate-detail-body").innerHTML = `<div class="fashion-thumb ${escapeHtml(item.thumb)}" data-code="${escapeHtml(item.code)}"></div><h3 id="candidate-detail-title">${escapeHtml(item.code)} · 视觉参考来源</h3><p>${escapeHtml(item.match_reason)}</p><ul><li>来源类型：${escapeHtml(item.source_type)}</li><li>平台/品牌/账号：${escapeHtml(item.platform_brand_account)}</li><li>采集时间：${escapeHtml(item.captured_at)}</li><li>授权状态：${escapeHtml(item.authorization_status)}</li><li>趋势方向：${escapeHtml(item.trend_direction_id)}</li><li>证据摘要：${escapeHtml(item.evidence_summary)}</li><li>来源页：${escapeHtml(item.source_page_url)}</li></ul><div class="candidate-detail-actions"><button type="button" data-candidate-detail-close>关闭</button><button type="button" class="primary" data-candidate-detail-select="${escapeHtml(item.code)}">选择此图</button><button type="button" data-candidate-detail-exclude="${escapeHtml(item.code)}">排除</button><button type="button" data-candidate-detail-similar="${escapeHtml(item.code)}">查找相似</button><button type="button" data-candidate-detail-source="${escapeHtml(item.code)}">查看来源</button></div>`;
+      document.querySelector("#candidate-detail-overlay").hidden = false;
+    }
+
+    function renderCandidatePool() {
+      const filtered = filteredProposalCandidates();
+      document.querySelector("#candidate-grid").innerHTML = filtered.length ? filtered.map((item) => `<article class="candidate-card ${proposalFlow.candidatePool.selected.has(item.code) ? "selected" : ""} ${proposalFlow.candidatePool.excluded.has(item.code) ? "excluded" : ""}" data-candidate-code="${escapeHtml(item.code)}" tabindex="0"><div class="fashion-thumb ${escapeHtml(item.thumb)}" data-code="${escapeHtml(item.code)}"></div><div class="candidate-media-overlay"><strong>${escapeHtml(item.source_type)} · ${escapeHtml(item.platform_brand_account)}</strong><small>${escapeHtml(item.match_reason)}<br>${escapeHtml(item.evidence_summary)}</small><div class="candidate-media-actions"><button class="candidate-media-source" type="button" data-candidate-action="exclude">${proposalFlow.candidatePool.excluded.has(item.code) ? "取消排除" : "排除"}</button><button class="candidate-media-source" type="button" data-candidate-action="similar">查找相似</button><button class="candidate-media-source" type="button" data-candidate-action="source">查看来源</button></div></div></article>`).join("") : `<div class="candidate-empty"><strong>当前范围下暂无符合硬约束的候选视觉素材</strong><span>已按市场、人群、性别、品类和已确认趋势方向过滤；可回到对话调整条件。</span></div>`;
+      document.querySelector("#candidate-selected-count").textContent = `已选 ${proposalSelectedCandidates().length}`;
+      document.querySelector("#candidate-confirm").disabled = proposalSelectedCandidates().length === 0;
+      document.querySelectorAll(".candidate-source-filter").forEach((button) => button.classList.toggle("active", button.dataset.sourceFilter === (proposalFlow.candidatePool.filters.source || "全部")));
+      const grid = document.querySelector("#candidate-grid");
+      requestAnimationFrame(() => { grid.scrollTop = proposalFlow.candidatePool.gridScrollTop || 0; });
+    }
+
+    function filteredProposalCandidates() {
+      const filters = proposalFlow.candidatePool.filters;
+      return proposalCandidatePool.filter((item) => {
+        if (!proposalCandidateMatchesRequirements(item)) return false;
+        if (proposalFlow.selectedTrendDirectionIds.length && !proposalFlow.selectedTrendDirectionIds.includes(item.direction)) return false;
+        if (proposalFlow.candidatePool.similarTo) {
+          const anchor = proposalCandidatePool.find((candidate) => candidate.code === proposalFlow.candidatePool.similarTo);
+          if (anchor && item.direction !== anchor.direction) return false;
+        }
+        if (filters.source !== "全部" && item.source_type !== filters.source) return false;
+        if (filters.platform !== "全部" && item.platform !== filters.platform) return false;
+        if (filters.brand !== "全部" && item.brand !== filters.brand) return false;
+        const priceNumber = Number(item.price.replace(/[^\d]/g, ""));
+        if (filters.price === "JPY 8,000-12,000" && (priceNumber < 8000 || priceNumber > 12000)) return false;
+        if (filters.price === "JPY 12,000+" && priceNumber < 12000) return false;
+        if (filters.match !== "全部" && (filters.match === "90+" ? item.match < 90 : item.match >= 90)) return false;
+        if (filters.competition !== "全部" && item.competition !== filters.competition) return false;
+        return true;
+      });
+    }
+
+    function openCandidatePool() {
+      proposalFlow.stage = "candidate";
+      if (proposalFlow.selectedTrendDirectionIds.length) proposalFlow.candidatePool.direction = proposalFlow.selectedTrendDirectionIds[0];
+      else if (proposalFlow.requirement.category === "轻户外") proposalFlow.candidatePool.direction = "active";
+      renderProposalPlanPanel();
+      renderCandidatePool();
+      document.querySelector("#candidate-overlay").hidden = false;
+    }
+
+    function closeCandidatePool() {
+      proposalFlow.candidatePool.gridScrollTop = document.querySelector("#candidate-grid")?.scrollTop || 0;
+      document.querySelector("#candidate-overlay").hidden = true;
+    }
+
+    function confirmCandidatePool() {
+      const selected = proposalSelectedCandidates();
+      if (!selected.length) return;
+      proposalFlow.referenceCodes = selected.map((item) => item.code);
+      closeCandidatePool();
+      proposalFlow.stage = "directionPack";
+      renderProposalPlanPanel();
+      appendTaskHtml(proposalAgentMessage(`已选择 ${proposalFlow.referenceCodes.join("、")} 作为客户方向参考。每张素材均保留来源页、来源类型、采集时间、授权状态、匹配理由和证据摘要。`));
+      appendTaskHtml(proposalSelectionCard({ id: "direction-pack-language", title: "选择客户方向参考包语言", subtitle: "每份正式文件只允许一种语言；语言只影响文案，不改变市场和数据口径。", summary: "生成客户方向参考包前，需要确认文件语言。", selectionMode: "single", displayType: "text", required: true, autoselectFirst: true, options: [{ value: "简体中文", label: "简体中文", meta: "默认" }, { value: "English", label: "English", meta: "英文客户" }, { value: "日本語", label: "日本語", meta: "日本客户" }], onConfirm: (values) => { proposalFlow.directionPackLanguage = values[0]; collapseSelectionCard("direction-pack-language", `语言：${values[0]}`); const artifact = makeArtifactPayload("directionPack", "客户方向参考包 V1", "direction", "已选参考款与按平台分别展示的市场依据"); proposalArtifactData.directionPack = artifact; saveArtifact("directionPack", artifact); appendTaskHtml(proposalArtifactQuote(artifact, "支持在线查看及 HTML/PPT/PDF 下载")); proposalFlow.stage = "feedback"; renderProposalPlanPanel(); document.querySelector("#task-condition").placeholder = "粘贴客户反馈，例如：部分认可 A02，保留轻盈感，修改领口…"; } }));
+    }
+
+    function confirmProposalScope(values, otherValue) {
+      const market = values.find((value) => value.startsWith("market:"))?.slice(7) || proposalFlow.requirement.market || "";
+      const ecommercePlatforms = values.filter((value) => value.startsWith("ecom:") && value !== "ecom:其他").map((value) => value.slice(5));
+      const socialPlatforms = values.filter((value) => value.startsWith("social:")).map((value) => value.slice(7));
+      if (values.includes("ecom:其他") && otherValue) ecommercePlatforms.push(otherValue);
+      if (!market) { appendTaskHtml(proposalAgentMessage("请先选择一个主市场；一个任务只应用一个主地域。")); return; }
+      if (!ecommercePlatforms.length && !socialPlatforms.length) { appendTaskHtml(proposalAgentMessage("请至少选择一个电商平台或社媒平台。")); return; }
+      proposalFlow.requirement.market = market;
+      proposalFlow.scope = { market, ecommercePlatforms, socialPlatforms, platforms: [...ecommercePlatforms, ...socialPlatforms], otherPlatform: otherValue || "" };
+      collapseSelectionCard("proposal-scope", `主市场：${market} · 电商：${ecommercePlatforms.join("、") || "未选"} · 社媒：${socialPlatforms.join("、") || "未选"}`);
+      proposalFlow.references = [
+        { label: `趋势资料库 · ${market} · 方向与假设 · 时间/页码/授权状态按引用披露`, url: "#trend-source" },
+        ...ecommercePlatforms.map((platform, index) => ({ label: `电商公开信息 · ${platform} · 2026-07 至 2026-08 · 演示样本 ${12 + index * 3} · 证据充分度中 · 平台数据不合并`, url: `#ecommerce-${index}` })),
+        ...socialPlatforms.map((platform, index) => ({ label: `社媒公开信号 · ${platform} · 2026-07 至 2026-08 · 演示样本 ${14 + index * 2} · 证据充分度低中 · 互动不等于销量`, url: `#social-${index}` }))
+      ];
+      appendTaskHtml(proposalAgentMessage(`调研摘要：目标人群 ${proposalFlow.requirement.audience || "待补充"}；品类 ${proposalFlow.requirement.category || "待补充"}；核心视觉词 ${proposalFlow.requirement.designDirection || "待验证"}；排除项 ${proposalFlow.requirement.excludeElements || "待补充"}。趋势资料、社媒信号和电商供给/竞争信息将分别呈现，不把单一来源写成确定趋势或销量机会。`));
+      startTrendScan();
+    }
+
+    function resetToTrendReview(reason) {
+      proposalFlow.stage = "trendReview";
+      proposalFlow.trendSelectionConfirmed = false;
+      proposalFlow.candidatePool.selected.clear();
+      proposalFlow.referenceCodes = [];
+      renderProposalPlanPanel();
+      appendTaskHtml(proposalAgentMessage(`${reason}。请补充需要调整的趋势方向或视觉条件；确认新方向后才会重新执行定向候选检索。`));
+      if (proposalArtifactData.trendAnalysis) appendTaskHtml(proposalArtifactQuote(proposalArtifactData.trendAnalysis, "返回趋势方向确认 · 可查看详情后重新多选"));
+      document.querySelector("#task-condition").placeholder = "例如：排除机能感，保留方向 1 和 4；或补充新的视觉条件…";
+    }
+
+    function classifyProposalFeedback(text) {
+      if (/都不合适|完全否定|全部否定|重新找|全部重来|一个都不要/.test(text)) return "完全否定";
+      if (/部分|保留|修改|调整|但|只认可|有条件/.test(text)) return "部分认可";
+      return "方向认可";
+    }
+
+    function showAnchorReferenceSelection() {
+      appendTaskHtml(proposalAgentMessage("反馈没有明确具体编号。为避免误用参考款，请确认至少一张锚点图；未额外上传时默认从候选池已选款中选择。"));
+      appendTaskHtml(proposalSelectionCard({
+        id: "anchor-reference", title: "选择改款锚点图", subtitle: "仅在客户反馈未明确参考款编号时出现。", summary: "选择客户认可或需要继续修改的参考款。",
+        selectionMode: "multiple", displayType: "image", required: true,
+        options: (proposalFlow.referenceCodes.length ? proposalCandidatePool.filter((item) => proposalFlow.referenceCodes.includes(item.code)) : proposalCandidatePool.filter(proposalCandidateMatchesRequirements).slice(0, 6)).map((item) => ({ value: item.code, code: item.code, label: `${item.code} · ${item.title}`, meta: `${item.source_type} · ${item.platform_brand_account}`, thumb: item.thumb })),
+        onConfirm: (values) => { collapseSelectionCard("anchor-reference", `锚点图：${values.join("、")}`); renderRemixPlan(values, proposalFlow.feedbackText); }
+      }));
+    }
+
+    function remixPlanHtml(plan) {
+      return `<div class="remix-plan-copy">${plan.items.map((item) => `<section><h4>${escapeHtml(item.code)} · 锚点图 ${escapeHtml(item.anchor)}</h4><p>保留元素：${escapeHtml(item.keep)}　修改元素：${escapeHtml(item.change)}　禁止元素：${escapeHtml(item.avoid)}</p><p>廓形：${escapeHtml(item.silhouette)}　领型：${escapeHtml(item.neckline)}　袖型：${escapeHtml(item.sleeve)}　长度：${escapeHtml(item.length)}</p><p>颜色：${escapeHtml(item.color)}　面料感：${escapeHtml(item.fabric)}　图案/工艺：${escapeHtml(item.craft)}</p><p>目标人群：${escapeHtml(item.audience)}　目标市场：${escapeHtml(item.market)}</p></section>`).join("")}<section><h4>生成数量</h4><p>${escapeHtml(String(plan.count))} 款。可继续补充文字或图片；回复“继续”或“确认计划”后，系统将先独立生成专业服装设计提示词，再进入 AI 生图。</p></section></div>`;
+    }
+
+    function renderRemixPlan(anchorCodes, feedbackText) {
+      const count = Math.max(1, Math.min(6, Number(feedbackText.match(/(?:生成|做|改款)\s*(\d+)\s*款/)?.[1] || 3)));
+      proposalFlow.anchorCodes = anchorCodes;
+      proposalFlow.feedbackText = feedbackText;
+      proposalFlow.stage = "remixPlan";
+      proposalFlow.remixPlan = {
+        count,
+        items: Array.from({ length: count }, (_, index) => ({
+          code: `M${String(index + 1).padStart(2, "0")}`, anchor: anchorCodes[index % anchorCodes.length],
+          keep: /保留([^，。；;]+)/.exec(feedbackText)?.[1] || "客户认可的廓形、轻盈感与基础色",
+          change: /(?:修改|调整)([^，。；;]+)/.exec(feedbackText)?.[1] || (index === 0 ? "领口与下摆比例" : index === 1 ? "袖型与分割线" : "轻透层次与细节"),
+          avoid: proposalFlow.requirement.excludeElements || "过强机能感、与锚点无关的装饰",
+          silhouette: index === 1 ? "适度放松的直身廓形" : "保留锚点主廓形并轻量化", neckline: index === 0 ? "柔化小方领" : "简洁圆领/小翻领", sleeve: index === 1 ? "可调节轻量袖型" : "利落短袖或七分袖", length: "沿用锚点比例，控制在目标场景适用范围",
+          color: "业务偏好档案色系与低饱和基础色", fabric: "轻薄、垂感、适合季节的面料表达", craft: index === 2 ? "轻透叠层与克制抽褶" : "低装饰量结构细节", audience: proposalFlow.requirement.audience || "待补充", market: proposalFlow.requirement.market || "待补充"
+        }))
+      };
+      renderProposalPlanPanel();
+      appendTaskHtml(`<div class="task-message assistant"><div class="agent-message"><div class="agent-message-copy">客户反馈分类：${escapeHtml(proposalFlow.feedbackClass)}。以下是本次改款计划，请确认或继续补充。</div>${remixPlanHtml(proposalFlow.remixPlan)}</div></div>`);
+      document.querySelector("#task-condition").placeholder = "补充改款细节、数量或参考图；确认后回复“继续”…";
+    }
+
+    function aiRemixResultsHtml() {
+      const mainCode = proposalFlow.mainPlan?.code || "";
+      const backupCode = proposalFlow.backupPlan?.code || "";
+      const ready = mainCode && backupCode && mainCode !== backupCode;
+      return `<section class="ai-remix-results" id="ai-remix-results"><div class="ai-remix-results-head"><div><h3>AI 改款图 · 待确认</h3><p>AI 概念表达 · 先选主方案和备选方案，再明确确认改款图</p></div></div><div class="ai-remix-grid">${proposalFlow.aiOptions.map((item) => `<article class="ai-remix-item ${item.code === mainCode ? "main" : ""} ${item.code === backupCode ? "backup" : ""}" data-ai-code="${escapeHtml(item.code)}"><button type="button" class="fashion-thumb ${escapeHtml(item.thumb)}" data-ai-preview="${escapeHtml(item.code)}" data-code="${escapeHtml(item.code)}" aria-label="查看 ${escapeHtml(item.code)} 大图"></button><div class="ai-remix-meta"><strong>${escapeHtml(item.code)} · ${escapeHtml(item.label)}</strong><small>锚点 ${escapeHtml(item.anchor)} · 保留 ${escapeHtml(item.keep)} · 修改 ${escapeHtml(item.change)} · ${escapeHtml(item.desc)}</small></div><div class="ai-remix-actions"><button type="button" data-ai-main="${escapeHtml(item.code)}" class="${item.code === mainCode ? "active" : ""}">设为主方案</button><button type="button" data-ai-backup="${escapeHtml(item.code)}" class="${item.code === backupCode ? "active" : ""}">设为备选</button><button type="button" data-ai-regenerate="${escapeHtml(item.code)}">重生成此款</button></div></article>`).join("")}</div><div class="ai-remix-footer"><button type="button" data-proposal-action="confirm-ai-images" class="primary" ${ready ? "" : "disabled"}>确认改款图</button></div></section>`;
+    }
+
+    function refreshAiRemixResults() {
+      const current = document.querySelector("#ai-remix-results");
+      if (current) current.outerHTML = aiRemixResultsHtml();
+    }
+
+    function renderAiImagePreview(code) {
+      const item = proposalFlow.aiOptions.find((option) => option.code === code);
+      if (!item) return;
+      document.querySelector("#candidate-detail-body").innerHTML = `<div class="fashion-thumb ${escapeHtml(item.thumb)}" data-code="${escapeHtml(item.code)}"></div><h3 id="candidate-detail-title">${escapeHtml(item.code)} · ${escapeHtml(item.label)}</h3><p>${escapeHtml(item.meta)}</p><ul><li>锚点图：${escapeHtml(item.anchor)}</li><li>保留元素：${escapeHtml(item.keep)}</li><li>修改元素：${escapeHtml(item.change)}</li><li>表达性质：AI 概念表达，不等同于精确制版或可直接生产文件</li></ul><div class="candidate-detail-actions"><button type="button" data-candidate-detail-close>关闭</button><button type="button" data-ai-regenerate="${escapeHtml(item.code)}">重生成此款</button></div>`;
+      document.querySelector("#candidate-detail-overlay").hidden = false;
+    }
+
+    function generateAiRemixImages() {
+      proposalFlow.stage = "prompt";
+      proposalFlow.promptAudit = { status: "完整性检查通过", positive: "廓形、领型、袖型、长度、色彩、面料感和工艺细节", negative: "禁止元素、错误品类、错误人群、错误市场", anchors: proposalFlow.anchorCodes.slice(), consistency: "系列色彩、模特视角和材质表达一致" };
+      renderProposalPlanPanel();
+      appendTaskHtml(agentExecutionMessage({ copy: "改款计划已确认。原始提示词不作为用户确认项，将保留在执行详情与审计记录中。", label: "正在生成专业服装设计提示词", details: ["生成每款正向提示词与负向提示词", `绑定锚点图：${proposalFlow.anchorCodes.join("、")}`, "写入系列视觉一致性要求", "完成提示词完整性检查"], state: "complete" }));
+      appendTaskHtml(agentExecutionMessage({ copy: "专业提示词完整性检查已通过，开始生成对应的 AI 改款概念图。", label: "生成 AI 改款概念图", details: ["按已确认计划逐款生成", "检查禁止元素与锚点一致性", "整理可供客户确认的图片结果"], state: "complete" }));
+      proposalFlow.aiOptions = proposalAiOptions(proposalFlow.anchorCodes).slice(0, proposalFlow.remixPlan?.count || 3);
+      proposalFlow.mainPlan = null;
+      proposalFlow.backupPlan = null;
+      proposalFlow.generatedImagesConfirmed = false;
+      proposalFlow.stage = "ai";
+      const artifact = makeArtifactPayload("aiRemix", "AI 改款图", "ai", `${proposalFlow.aiOptions.length} 款 AI 概念表达 · 待确认`);
+      artifact.status = "待确认";
+      saveArtifact("aiRemix", artifact);
+      appendTaskHtml(proposalArtifactQuote(artifact, `${proposalFlow.aiOptions.length} 款改款图 · 选择主备方案并确认后才会进入最终提案`));
+      appendTaskHtml(`<div class="task-message assistant"><div class="agent-message">${aiRemixResultsHtml()}</div></div>`);
+      renderProposalPlanPanel();
+      document.querySelector("#task-condition").placeholder = "可补充某款修改意见，或在结果中选择主备方案并确认改款图…";
+    }
+
+    function askFinalProposalLanguage() {
+      proposalFlow.stage = "final";
+      renderProposalPlanPanel();
+      appendTaskHtml(proposalAgentMessage(`改款图已确认。主方案 ${proposalFlow.mainPlan.code}，备选方案 ${proposalFlow.backupPlan.code}。最终提案将汇总市场数据摘要、已确认趋势方向、参考来源、客户反馈、AI 改款图及主备方案对比。`));
+      appendTaskHtml(proposalSelectionCard({ id: "final-proposal-language", title: "选择客户提案语言", subtitle: "默认继承上一份文件语言，但最终提案仍需单独点击确认。", summary: "生成客户提案 V1 前，请确认单一文件语言。", selectionMode: "single", displayType: "text", required: true, autoselectFirst: true, options: [{ value: proposalFlow.directionPackLanguage || "简体中文", label: `${proposalFlow.directionPackLanguage || "简体中文"}（继承）`, meta: "默认" }, { value: "English", label: "English", meta: "英文客户" }, { value: "日本語", label: "日本語", meta: "日本客户" }], onConfirm: (values) => {
+        proposalFlow.proposalLanguage = values[0]; collapseSelectionCard("final-proposal-language", `语言：${values[0]}`);
+        const artifact = makeArtifactPayload("proposal", "客户提案 V1", "proposal", "市场依据、趋势方向、参考来源、客户反馈与已确认 AI 改款图");
+        saveArtifact("proposal", artifact); proposalFlow.stage = "done"; renderProposalPlanPanel();
+        appendTaskHtml(proposalArtifactQuote(artifact, "支持在线查看及 HTML/PPT/PDF 下载"));
+        appendTaskHtml(proposalAgentMessage("客户提案 V1 已生成。右侧产物只保留在线查看和下载；内容修正、语言变更或新版本要求继续从输入框发起。"));
+        document.querySelector("#task-condition").placeholder = "继续输入客户反馈、内容修正或新版本要求…";
+      } }));
+    }
+
+    function handleProposalFollowup(text) {
+      appendTaskHtml(`<div class="task-message user"><div class="user-message-bubble">${escapeHtml(text)}</div></div>`);
+      const codes = [...new Set((text.match(/[A-D]\d{2}/gi) || []).map((code) => code.toUpperCase()))].filter((code) => proposalCandidatePool.some((item) => item.code === code));
+      if (proposalFlow.stage === "understanding") {
+        if (/^(继续|确认|没问题|可以|进入调研)/i.test(text)) {
+          if (proposalFlow.requirement.clarity === "vague" && !proposalFlow.requirement.hypothesis) appendTaskHtml(proposalAgentMessage(`当前仍缺少${proposalFlow.requirement.missing.slice(0, 3).join("、")}。可直接补充，或回复“跳过”后选择待验证方向假设。`));
+          else renderProposalScopeSelection();
+          return true;
+        }
+        if (/^(跳过|暂不补充|先这样)/i.test(text)) {
+          proposalFlow.requirement.missing = proposalFlow.requirement.missing.length ? proposalFlow.requirement.missing : ["主市场", "目标年龄/场景", "优先品类"];
+          appendTaskHtml(proposalAgentMessage("已保留未指定项。下面的选项仅是待验证方向假设，不代表市场机会或优先级。"));
+          appendTaskHtml(proposalSelectionCard({ id: "proposal-hypothesis", title: "选择待验证方向假设", subtitle: "只用于启动本轮调研，后续可继续修正。", summary: "请选择一个待验证起点。", selectionMode: "single", displayType: "text", required: true, options: [{ value: "都市通勤女装", label: "都市通勤女装", meta: "待验证假设" }, { value: "轻户外女装", label: "轻户外女装", meta: "待验证假设" }, { value: "夏季轻盈连衣裙", label: "夏季轻盈连衣裙", meta: "待验证假设" }], onConfirm: (values) => { proposalFlow.requirement.hypothesis = values[0]; collapseSelectionCard("proposal-hypothesis", `待验证方向假设：${values[0]}`); appendTaskHtml(proposalAgentMessage(`已记录“${values[0]}”作为待验证方向假设；未指定项不会被填造。回复“继续”进入调研范围。`)); } }));
+          return true;
+        }
+        proposalFlow.firstText = `${proposalFlow.firstText} ${text}`.trim();
+        proposalFlow.requirement = parseProposalRequirement(proposalFlow.firstText, proposalFlow.profile, proposalFlow.attachments);
+        appendTaskHtml(proposalAgentMessage(`${proposalRequirementText(proposalFlow.requirement)}\n\n${proposalRequirementQuestions(proposalFlow.requirement)}`));
+        return true;
+      }
+      if (proposalFlow.stage === "trendReview") {
+        const indexes = [...new Set((text.match(/[1-4]/g) || []).map(Number))];
+        if (indexes.length && /保留|选择|确认|认可/.test(text)) confirmTrendDirections(indexes.map((index) => proposalFlow.trendDirections[index - 1]?.id).filter(Boolean));
+        else appendTaskHtml(proposalAgentMessage("已记录趋势方向补充。请在趋势方向分析中多选认可方向，或直接回复“保留 1 和 3”。未确认前不会开始候选检索。"));
+        return true;
+      }
+      if (proposalFlow.stage === "candidate" && /都不合适|重新找|全部重来|一个都不要/.test(text)) { resetToTrendReview("当前候选未获得认可"); return true; }
+      if (proposalFlow.stage === "feedback" || proposalFlow.stage === "done") {
+        proposalFlow.feedbackClass = classifyProposalFeedback(text); proposalFlow.feedbackText = text;
+        if (proposalFlow.feedbackClass === "完全否定") { resetToTrendReview("客户反馈已分类为“完全否定”"); return true; }
+        appendTaskHtml(proposalAgentMessage(`客户反馈分类：${proposalFlow.feedbackClass}。已解析为：保留 ${/保留([^，。；;]+)/.exec(text)?.[1] || "客户认可方向"}；修改 ${/(?:修改|调整)([^，。；;]+)/.exec(text)?.[1] || "待在改款计划中确认"}；排除 ${proposalFlow.requirement.excludeElements || "未明确"}；待确认生成数量与具体细节。`));
+        if (codes.length) renderRemixPlan(codes, text); else showAnchorReferenceSelection();
+        return true;
+      }
+      if (proposalFlow.stage === "remixPlan") {
+        if (/^(继续|确认|确认计划|开始生成|可以)/i.test(text)) generateAiRemixImages();
+        else { proposalFlow.feedbackText = `${proposalFlow.feedbackText}；${text}`; renderRemixPlan(proposalFlow.anchorCodes, proposalFlow.feedbackText); }
+        return true;
+      }
+      if (proposalFlow.stage === "ai") {
+        const aiCode = text.match(/M0[1-6]/i)?.[0].toUpperCase();
+        if (aiCode) {
+          appendTaskHtml(agentExecutionMessage({ copy: `已记录 ${aiCode} 的修改意见，仅重新生成受影响款，其他结果与主备选择保持不变。`, label: `重新生成 ${aiCode}`, details: ["读取新增修改意见", "沿用已确认改款计划与锚点图", "替换受影响的 AI 概念图"], state: "complete" }));
+          const option = proposalFlow.aiOptions.find((item) => item.code === aiCode); if (option) option.meta += " · 已按最新意见重生成"; refreshAiRemixResults();
+        } else appendTaskHtml(proposalAgentMessage("请在图片结果中选择不同的主方案与备选方案，并点击“确认改款图”；未确认图片前不会生成最终提案。"));
+        return true;
+      }
+      appendTaskHtml(proposalAgentMessage("已记录这条补充。当前步骤的修改会从对话发起，并只重跑受影响内容。"));
+      return true;
+    }
+
     function toggleSelectionOption(button) {
       const card = button.closest("[data-selection-card]");
       if (!card) return;
@@ -3078,18 +3458,64 @@
       trigger.setAttribute("aria-expanded", String(expanded));
     });
 
+    document.querySelector("#task-chat").addEventListener("click", (event) => {
+      const inlineView = event.target.closest("[data-artifact-view-inline]");
+      if (inlineView) {
+        const artifact = proposalOutputs().find((item) => item.id === inlineView.dataset.artifactViewInline);
+        if (artifact) renderProposalPreview(artifact.type);
+        return;
+      }
+      const aiPreview = event.target.closest("[data-ai-preview]");
+      if (aiPreview) { renderAiImagePreview(aiPreview.dataset.aiPreview); return; }
+      const main = event.target.closest("[data-ai-main]");
+      if (main) {
+        const option = proposalFlow.aiOptions.find((item) => item.code === main.dataset.aiMain);
+        if (proposalFlow.backupPlan?.code === option?.code) proposalFlow.backupPlan = null;
+        proposalFlow.mainPlan = option || null;
+        refreshAiRemixResults();
+        return;
+      }
+      const backup = event.target.closest("[data-ai-backup]");
+      if (backup) {
+        const option = proposalFlow.aiOptions.find((item) => item.code === backup.dataset.aiBackup);
+        if (proposalFlow.mainPlan?.code === option?.code) { showToast("主方案与备选方案不能重复"); return; }
+        proposalFlow.backupPlan = option || null;
+        refreshAiRemixResults();
+        return;
+      }
+      const regenerate = event.target.closest("[data-ai-regenerate]");
+      if (regenerate) {
+        const code = regenerate.dataset.aiRegenerate;
+        appendTaskHtml(agentExecutionMessage({ copy: `仅重新生成 ${code}，其余改款图和已选状态保持不变。`, label: `重新生成 ${code}`, details: ["沿用锚点与已确认改款计划", "应用最新局部修改意见", "替换受影响图片"], state: "complete" }));
+        const option = proposalFlow.aiOptions.find((item) => item.code === code);
+        if (option) option.meta += " · 已重生成";
+        document.querySelector("#candidate-detail-overlay").hidden = true;
+        refreshAiRemixResults();
+        return;
+      }
+      const confirmImages = event.target.closest('[data-proposal-action="confirm-ai-images"]');
+      if (confirmImages) {
+        if (!proposalFlow.mainPlan || !proposalFlow.backupPlan || proposalFlow.mainPlan.code === proposalFlow.backupPlan.code) { showToast("请选择不同的主方案和备选方案"); return; }
+        proposalFlow.generatedImagesConfirmed = true;
+        if (proposalArtifactData.aiRemix) { proposalArtifactData.aiRemix.status = "已确认"; proposalArtifactData.aiRemix.summary = `主方案 ${proposalFlow.mainPlan.code} · 备选 ${proposalFlow.backupPlan.code}`; }
+        document.querySelectorAll('[data-artifact-quote="aiRemix"] .artifact-quote-copy span').forEach((node) => { node.textContent = `AI 改款图 · 已确认`; });
+        renderProposalPlanPanel();
+        askFinalProposalLanguage();
+      }
+    });
+
     document.querySelector("#candidate-close").addEventListener("click", closeCandidatePool);
     document.querySelector("#candidate-overlay").addEventListener("click", (event) => {
       if (event.target.id === "candidate-overlay") closeCandidatePool();
     });
-    document.querySelector("#candidate-directions").addEventListener("click", (event) => {
+    document.querySelector("#candidate-directions")?.addEventListener("click", (event) => {
       const button = event.target.closest("[data-direction]");
       if (!button) return;
       proposalFlow.candidatePool.direction = button.dataset.direction;
       proposalFlow.candidatePool.gridScrollTop = 0;
       renderCandidatePool();
     });
-    document.querySelector(".candidate-filters").addEventListener("change", (event) => {
+    document.querySelector(".candidate-filters")?.addEventListener("change", (event) => {
       const key = event.target.id.replace("candidate-filter-", "");
       const map = { platform: "platform", brand: "brand", price: "price", match: "match", signal: "signal", competition: "competition" };
       if (!map[key]) return;
@@ -3101,7 +3527,7 @@
       proposalFlow.candidatePool.gridScrollTop = event.currentTarget.scrollTop;
     });
     document.querySelector("#candidate-grid").addEventListener("click", (event) => {
-      const action = event.target.closest("[data-candidate-action]");
+      const action = event.target.closest(".candidate-action[data-candidate-action]");
       if (!action) return;
       const card = action.closest("[data-candidate-code]");
       const code = card.dataset.candidateCode;
@@ -3127,13 +3553,108 @@
       }
       renderCandidatePool();
     });
-    document.querySelector("#candidate-tray-list").addEventListener("click", (event) => {
+    document.querySelector("#candidate-tray-list")?.addEventListener("click", (event) => {
       const remove = event.target.closest("[data-tray-remove]");
       if (!remove) return;
       proposalFlow.candidatePool.selected.delete(remove.dataset.trayRemove);
       renderCandidatePool();
     });
     document.querySelector("#candidate-confirm").addEventListener("click", confirmCandidatePool);
+    document.querySelectorAll(".candidate-source-filter").forEach((button) => button.addEventListener("click", () => {
+      proposalFlow.candidatePool.filters.source = button.dataset.sourceFilter;
+      if (button.dataset.sourceFilter === "全部") proposalFlow.candidatePool.similarTo = "";
+      proposalFlow.candidatePool.gridScrollTop = 0;
+      renderCandidatePool();
+    }));
+    document.querySelector("#candidate-grid").addEventListener("click", (event) => {
+      const card = event.target.closest("[data-candidate-code]");
+      if (!card) return;
+      const code = card.dataset.candidateCode;
+      const candidateAction = event.target.closest("[data-candidate-action]")?.dataset.candidateAction;
+      if (event.target.closest('[data-candidate-action="source"]')) {
+        event.stopPropagation();
+        renderCandidateSourceDetail(code);
+        return;
+      }
+      if (candidateAction === "exclude") {
+        proposalFlow.candidatePool.selected.delete(code);
+        if (proposalFlow.candidatePool.excluded.has(code)) proposalFlow.candidatePool.excluded.delete(code);
+        else proposalFlow.candidatePool.excluded.add(code);
+        renderCandidatePool();
+        return;
+      }
+      if (candidateAction === "similar") {
+        proposalFlow.candidatePool.similarTo = code;
+        renderCandidatePool();
+        showToast(`已按 ${code} 的趋势方向查找相似素材`);
+        return;
+      }
+      const mobileInteraction = matchMedia("(hover: none)").matches || innerWidth <= 720;
+      if (mobileInteraction) { renderCandidateSourceDetail(code); return; }
+      proposalFlow.candidatePool.excluded.delete(code);
+      if (proposalFlow.candidatePool.selected.has(code)) proposalFlow.candidatePool.selected.delete(code);
+      else proposalFlow.candidatePool.selected.add(code);
+      renderCandidatePool();
+    });
+    document.querySelector("#candidate-detail-overlay").addEventListener("click", (event) => {
+      if (event.target.id === "candidate-detail-overlay" || event.target.closest("[data-candidate-detail-close]")) {
+        document.querySelector("#candidate-detail-overlay").hidden = true;
+        return;
+      }
+      const select = event.target.closest("[data-candidate-detail-select]");
+      if (select) {
+        const code = select.dataset.candidateDetailSelect;
+        proposalFlow.candidatePool.excluded.delete(code);
+        if (proposalFlow.candidatePool.selected.has(code)) proposalFlow.candidatePool.selected.delete(code);
+        else proposalFlow.candidatePool.selected.add(code);
+        document.querySelector("#candidate-detail-overlay").hidden = true;
+        renderCandidatePool();
+        return;
+      }
+      const source = event.target.closest("[data-candidate-detail-source]");
+      if (source) {
+        const item = proposalCandidatePool.find((candidate) => candidate.code === source.dataset.candidateDetailSource);
+        if (item) showToast(`来源页：${item.source_page_url}（演示链接）`);
+      }
+      const exclude = event.target.closest("[data-candidate-detail-exclude]");
+      if (exclude) {
+        const code = exclude.dataset.candidateDetailExclude;
+        proposalFlow.candidatePool.selected.delete(code);
+        proposalFlow.candidatePool.excluded.add(code);
+        document.querySelector("#candidate-detail-overlay").hidden = true;
+        renderCandidatePool();
+        return;
+      }
+      const similar = event.target.closest("[data-candidate-detail-similar]");
+      if (similar) {
+        proposalFlow.candidatePool.similarTo = similar.dataset.candidateDetailSimilar;
+        document.querySelector("#candidate-detail-overlay").hidden = true;
+        renderCandidatePool();
+        return;
+      }
+      const aiRegenerate = event.target.closest("[data-ai-regenerate]");
+      if (aiRegenerate) {
+        const code = aiRegenerate.dataset.aiRegenerate;
+        const option = proposalFlow.aiOptions.find((item) => item.code === code);
+        if (option) option.meta += " · 已重生成";
+        document.querySelector("#candidate-detail-overlay").hidden = true;
+        refreshAiRemixResults();
+      }
+    });
+    document.querySelector("#proposal-preview-body").addEventListener("click", (event) => {
+      const trend = event.target.closest("[data-trend-select]");
+      if (trend) {
+        const id = trend.dataset.trendSelect;
+        const selected = new Set(proposalFlow.selectedTrendDirectionIds || []);
+        if (selected.has(id)) selected.delete(id); else selected.add(id);
+        proposalFlow.selectedTrendDirectionIds = [...selected];
+        renderProposalPreview("trend");
+        return;
+      }
+      if (event.target.closest("#confirm-trend-directions")) {
+        confirmTrendDirections(proposalFlow.selectedTrendDirectionIds);
+      }
+    });
     document.querySelector("#proposal-preview-close").addEventListener("click", () => document.querySelector("#proposal-preview-overlay").hidden = true);
     document.querySelector("#proposal-preview-overlay").addEventListener("click", (event) => {
       if (event.target.id === "proposal-preview-overlay") document.querySelector("#proposal-preview-overlay").hidden = true;
@@ -3201,15 +3722,23 @@
       proposalFlow.mainPlan = null;
       proposalFlow.backupPlan = null;
       proposalFlow.aiOptions = [];
+      proposalFlow.trendDirections = [];
+      proposalFlow.selectedTrendDirectionIds = [];
+      proposalFlow.trendSelectionConfirmed = false;
+      proposalFlow.feedbackClass = "";
+      proposalFlow.feedbackText = "";
+      proposalFlow.remixPlan = null;
+      proposalFlow.promptAudit = null;
+      proposalFlow.generatedImagesConfirmed = false;
       proposalFlow.references = [];
       proposalFlow.selectionCards = new Map();
       proposalFlow.candidatePool.direction = "urban";
       proposalFlow.candidatePool.selected = new Set();
       proposalFlow.candidatePool.excluded = new Set();
-      proposalFlow.candidatePool.filters = { platform: "全部", brand: "全部", price: "全部", match: "全部", signal: "全部", competition: "全部" };
+      proposalFlow.candidatePool.similarTo = "";
+      proposalFlow.candidatePool.filters = { platform: "全部", brand: "全部", price: "全部", match: "全部", signal: "全部", competition: "全部", source: "全部" };
       proposalFlow.candidatePool.gridScrollTop = 0;
-      proposalArtifactData.directionPack = null;
-      proposalArtifactData.proposal = null;
+      Object.keys(proposalArtifactData).forEach((key) => { proposalArtifactData[key] = null; });
     }
 
     function startTask(userText, scene = "selection") {
@@ -3340,7 +3869,10 @@
         "input:not([type='file'])",
         ".history-row",
         ".preference-profile-card",
-        ".preference-module-card"
+        ".preference-module-card",
+        ".candidate-card",
+        ".proposal-artifact-quote",
+        ".ai-remix-item"
       ].join(",");
 
       const labelOf = (element) => {
@@ -3370,6 +3902,14 @@
         if (element.matches(".history-row")) return "可拖动任务行";
         if (element.matches(".search-result")) return "搜索结果按钮";
         if (element.matches(".delete-profile")) return "危险操作按钮";
+        if (element.matches("[data-trend-select]")) return "趋势方向多选项";
+        if (element.matches(".candidate-source-filter")) return "来源筛选图标按钮";
+        if (element.matches(".candidate-card")) return "候选图片多选项";
+        if (element.matches("[data-ai-main], [data-ai-backup]")) return "主备方案单选按钮";
+        if (element.matches("[data-ai-regenerate]")) return "局部重生成按钮";
+        if (element.matches('[data-proposal-action="confirm-ai-images"]')) return "改款图确认按钮";
+        if (element.matches(".proposal-artifact-quote")) return "产物引用块";
+        if (element.matches(".ai-remix-item")) return "AI 改款图片结果项";
         if (element.matches("button")) return "按钮";
         return "可交互组件";
       };
@@ -3395,7 +3935,20 @@
         if (element.matches("#start-parse")) return "状态切换：点击后关闭上传弹窗，显示全局解析进度；完成后自动打开待确认信息。";
         if (element.matches("#task-scene")) return "状态切换：点击进入任务名称编辑；Enter 或失焦保存，Esc 取消。";
         if (element.matches("#task-profile-trigger")) return "状态切换：悬停临时展示档案卡片；点击固定展开，再次点击或点击外部收起。";
-        if (element.matches(".proposal-inline-action")) return "状态切换：点击打开候选池弹窗；关闭后保留已选款、筛选和滚动位置。";
+        if (element.matches("[data-artifact-view-inline], [data-artifact-view]")) return "状态切换：点击打开与对话引用块、右侧列表同源的只读产物详情；关闭后不改变产物状态。";
+        if (element.matches("[data-trend-select]")) return "状态切换：点击选中趋势方向，再次点击取消；至少确认一个方向后才会进入定向候选检索。";
+        if (element.matches("#confirm-trend-directions")) return "状态切换：点击确认当前多选趋势方向；确认前不获取候选参考图，确认后自动执行定向视觉参考检索。";
+        if (element.matches(".candidate-source-filter")) return "状态切换：点击仅显示对应来源类型的图片；再次选择其他来源即时替换网格，已选图片保持。";
+        if (element.matches(".candidate-card")) return "状态切换：桌面点击选中或取消图片，移动端点击先打开来源详情；选中状态不改变网格尺寸。";
+        if (element.matches('[data-candidate-action="source"], [data-candidate-detail-source]')) return "状态切换：点击查看原始来源详情或演示来源链接，不触发图片选中。";
+        if (element.matches('[data-candidate-action="exclude"], [data-candidate-detail-exclude]')) return "状态切换：点击排除该图片并取消其已选状态；桌面悬停层可再次取消排除。";
+        if (element.matches('[data-candidate-action="similar"], [data-candidate-detail-similar]')) return "状态切换：点击按该图对应的已确认趋势方向收窄图片结果；点击顶部“全部来源”恢复完整候选。";
+        if (element.matches("[data-candidate-detail-select]")) return "状态切换：移动端详情层内点击选择此图，再次从详情进入可取消选择。";
+        if (element.matches("[data-ai-main]")) return "状态切换：点击设为主方案；若该款原为备选则自动清除备选，确保主备不可重复。";
+        if (element.matches("[data-ai-backup]")) return "状态切换：点击设为备选方案；与主方案重复时保持当前状态并提示。";
+        if (element.matches("[data-ai-regenerate]")) return "状态切换：点击仅重新生成受影响款，其他图片和已选主备方案保持不变。";
+        if (element.matches('[data-proposal-action="confirm-ai-images"]')) return "状态切换：仅在主备方案均已选择且不重复时可点击；确认后才进入最终提案语言确认。";
+        if (element.matches(".proposal-inline-action")) return element.dataset.proposalAction === "open-candidates" ? "状态切换：点击打开纯图片候选池；关闭后保留来源筛选、已选图片和滚动位置。" : "状态切换：点击打开对应产物的只读详情。";
         if (element.matches("#candidate-confirm")) return "状态切换：点击确认当前候选池中的已选参考款，并进入语言确认。";
         if (element.matches("#candidate-close")) return "状态切换：点击关闭候选池弹窗；筛选、选择与滚动状态保留。";
         if (element.matches("#proposal-preview-close")) return "状态切换：点击关闭只读预览弹窗，不影响右侧产物列表。";
@@ -3430,8 +3983,20 @@
         if (element.matches("#task-scene")) return "展示用户第一句输入的任务总结，最多 20 个字符；编辑后与左侧历史任务名称同步。";
         if (element.matches("#task-profile-trigger")) return "展示本任务启动时应用的档案名称；悬浮卡查看档案快照，但不支持在任务内切换档案。";
         if (element.matches("#task-condition")) return "需求确认阶段可直接补充或修正，回复“继续”进入调研范围，回复“跳过”保留未指定项；后续补充条件只影响相关步骤。";
-        if (element.matches(".proposal-inline-action")) return "点击打开候选池大弹窗；进入候选池前已按主市场、人群、性别和品类执行硬过滤。";
-        if (element.matches("#candidate-overlay")) return "候选池大弹窗；左侧方向聚类，中间筛选网格，右侧已选托盘。错误市场、人群、性别或品类候选不会进入；关闭后保留筛选与选择状态。";
+        if (element.matches("[data-trend-select]")) return "趋势方向分析详情中的必要多选项；每项分别披露设计元素、适配理由、社媒信号、电商供给/竞争、趋势资料依据、时间、样本、证据充分度和缺口。";
+        if (element.matches("#confirm-trend-directions")) return "确认认可的趋势方向。未确认趋势方向前，不会启动定向候选图获取。";
+        if (element.matches(".candidate-source-filter")) return "候选池顶部来源筛选图标，仅按电商、社媒或品牌官网/独立站切换图片，不引入卡片式筛选区。";
+        if (element.matches(".candidate-card")) return "候选池图片主体。已按市场、人群、性别和品类硬过滤；关键词相似不能覆盖硬约束。";
+        if (element.matches('[data-candidate-action="source"], [data-candidate-detail-source]')) return "查看该图保留的来源页信息；来源动作与图片选择相互分离。";
+        if (element.matches('[data-candidate-action="exclude"], [data-candidate-detail-exclude]')) return "排除当前候选图片；排除操作不会进入已选参考款，也不会改变网格尺寸。";
+        if (element.matches('[data-candidate-action="similar"], [data-candidate-detail-similar]')) return "基于当前图片所属的已确认趋势方向查找相似视觉素材，仍继续执行市场、人群、性别和品类硬过滤。";
+        if (element.matches("[data-ai-main], [data-ai-backup]")) return "在 AI 改款图片结果中确定最终提案的主方案或备选方案，两者不可重复。";
+        if (element.matches("[data-ai-regenerate]")) return "按对话中的最新意见重生成当前受影响款，不自动生成最终提案。";
+        if (element.matches('[data-proposal-action="confirm-ai-images"]')) return "明确确认 AI 改款图。只有完成此确认后，才显示最终提案单语言选择。";
+        if (element.matches(".proposal-artifact-quote")) return "对话流中的文件式产物引用，与右侧任务产物列表引用同一产物 ID、状态和只读详情。";
+        if (element.matches(".ai-remix-item")) return "展示改款编号、锚点、保留元素、修改元素与 AI 概念表达；图片确认前不生成最终提案。";
+        if (element.matches(".proposal-inline-action")) return element.dataset.proposalAction === "open-candidates" ? "打开纯图片候选池；桌面悬停显示来源和匹配理由，移动端点击先进入详情层。" : "打开与右侧任务产物同源的只读详情。";
+        if (element.matches("#candidate-overlay")) return "候选池大弹窗以图片网格为主体，顶部仅保留关闭、来源筛选、已选数量和确认选择；错误市场、人群、性别或品类候选不会进入。";
         if (element.matches("#proposal-preview-overlay")) return "只读预览弹窗，展示客户方向参考包或客户提案内容。";
         if (element.matches("[data-artifact-view]")) return "在线查看对应正式产物的只读预览。";
         if (element.matches("[data-artifact-download]")) return "下载对应正式产物的 HTML 演示文件。";
