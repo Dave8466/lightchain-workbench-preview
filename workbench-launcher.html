@@ -997,14 +997,97 @@
     .task-panel-item a:hover { color: #8ce8de; text-decoration: underline; }
     .task-panel-section.outputs .task-panel-item { min-height: 0; }
     .task-panel-section.outputs .item-icon { color: #7bd9d0; }
+    .task-panel-section.outputs .task-panel-item { align-items: center; }
+    .task-panel-item .artifact-title { min-width: 0; flex: 1; }
+    .artifact-actions { display: inline-flex; flex: 0 0 auto; gap: 6px; margin-left: auto; }
+    .artifact-actions button { height: 24px; padding: 0 7px; border: 1px solid #3e4945; border-radius: 6px; color: #9eddd6; background: #222826; font-size: 10px; cursor: pointer; }
+    .artifact-actions button:hover { color: #10201e; border-color: #55ded3; background: #55ded3; }
     .task-panel-empty { display: none; }
     .task-step.rerun { color: #f2b36f; }
     .task-step.updated { color: #90f0e4; }
+    .proposal-inline-action { display: inline-flex; align-items: center; gap: 6px; height: 32px; margin-top: 12px; padding: 0 12px; border: 1px solid #3b4642; border-radius: 8px; color: #cfe8e4; background: #242a28; font-size: 12px; cursor: pointer; }
+    .proposal-inline-action:hover { border-color: #56dcd0; color: #0d1b19; background: #56dcd0; }
+    .selection-card { width: min(660px,100%); margin-top: 14px; padding: 15px; border: 1px solid #343d3a; border-radius: 12px; background: #202523; box-shadow: 0 12px 30px rgba(0,0,0,.12); }
+    .selection-card.collapsed { padding: 11px 13px; color: #aebbb7; font-size: 12px; }
+    .selection-card-head { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+    .selection-card-head h4 { margin: 0; color: #eef5f2; font-size: 14px; line-height: 22px; }
+    .selection-card-head p { margin: 3px 0 0; color: #87938f; font-size: 12px; line-height: 19px; }
+    .selection-required { color: #55ded3; font-size: 11px; white-space: nowrap; }
+    .selection-options { display: grid; gap: 8px; }
+    .selection-options.text { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    .selection-options.image { grid-template-columns: repeat(3,minmax(0,1fr)); }
+    .selection-option { position: relative; min-height: 40px; display: flex; align-items: center; gap: 9px; padding: 10px; border: 1px solid #38423f; border-radius: 9px; color: #d6dfdc; background: #252b29; text-align: left; cursor: pointer; transition: border-color .14s ease, background .14s ease; }
+    .selection-option:hover { border-color: #53615c; background: #2a312e; }
+    .selection-option.selected { border-color: #55ded3; background: rgba(85,222,211,.11); color: #eefaf8; }
+    .selection-option.selected::after { content: "✓"; position: absolute; top: 8px; right: 9px; color: #55ded3; font-size: 12px; font-weight: 700; }
+    .selection-option.image { display: grid; align-content: start; padding: 8px; }
+    .selection-option.image .fashion-thumb { height: 104px; border-radius: 8px; }
+    .selection-option.image strong { margin-top: 2px; font-size: 12px; line-height: 18px; }
+    .selection-option.image small { color: #8a9692; font-size: 10px; line-height: 15px; }
+    .selection-other-input { width: 100%; height: 38px; margin-top: 9px; padding: 0 10px; border: 1px solid #3b4743; border-radius: 8px; outline: 0; color: #eef5f2; background: #191e1c; }
+    .selection-other-input[hidden] { display: none; }
+    .selection-card-actions { display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin-top: 13px; }
+    .selection-card-error { margin-right: auto; color: #ef8d8d; font-size: 11px; }
+    .selection-confirm { height: 34px; padding: 0 13px; border: 0; border-radius: 8px; color: #0e1917; background: #55ded3; font-size: 12px; font-weight: 600; cursor: pointer; }
+    .selection-confirm:hover { background: #7be8df; }
+    .candidate-overlay, .proposal-preview-overlay { position: fixed; inset: 0; z-index: 260; display: grid; place-items: center; background: rgba(0,0,0,.62); }
+    .candidate-overlay[hidden], .proposal-preview-overlay[hidden] { display: none; }
+    .candidate-dialog { width: min(90vw,1180px); height: min(88vh,780px); display: grid; grid-template-columns: 190px minmax(0,1fr) 220px; overflow: hidden; border: 1px solid #3d4844; border-radius: 16px; background: #1b201e; box-shadow: 0 26px 90px rgba(0,0,0,.55); }
+    .candidate-side, .candidate-tray { min-height: 0; padding: 18px; overflow: auto; background: #202523; }
+    .candidate-main { min-height: 0; display: grid; grid-template-rows: auto auto minmax(0,1fr); padding: 18px; overflow: hidden; border-inline: 1px solid #333c39; }
+    .candidate-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+    .candidate-head h2, .proposal-preview-dialog h2 { margin: 0; color: #f0f6f4; font-size: 20px; line-height: 28px; }
+    .candidate-head p { margin: 5px 0 0; color: #87938f; font-size: 12px; line-height: 20px; }
+    .candidate-close, .preview-close { width: 34px; height: 34px; border: 1px solid #3c4743; border-radius: 8px; color: #b8c4c0; background: #252b29; cursor: pointer; }
+    .candidate-close:hover, .preview-close:hover { color: #fff; background: #303835; }
+    .candidate-side h3, .candidate-tray h3 { margin: 0 0 12px; color: #dce5e2; font-size: 13px; }
+    .candidate-direction { width: 100%; display: grid; gap: 4px; margin-bottom: 8px; padding: 10px; border: 1px solid transparent; border-radius: 9px; color: #b7c2be; background: transparent; text-align: left; cursor: pointer; }
+    .candidate-direction small { color: #6f7a76; }
+    .candidate-direction.active, .candidate-direction:hover { border-color: #40504b; background: #2a312e; color: #f1f6f4; }
+    .candidate-filters { display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); gap: 8px; margin: 16px 0 14px; }
+    .candidate-filter { height: 34px; min-width: 0; padding: 0 8px; border: 1px solid #38423f; border-radius: 8px; color: #d7e0dd; background: #252b29; font-size: 11px; }
+    .candidate-grid { min-height: 0; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; overflow: auto; padding-right: 4px; }
+    .candidate-card { display: grid; gap: 9px; padding: 10px; border: 1px solid #37413e; border-radius: 11px; background: #222826; }
+    .candidate-card.selected { border-color: #55ded3; box-shadow: 0 0 0 1px rgba(85,222,211,.34) inset; }
+    .candidate-card.excluded { opacity: .42; filter: grayscale(.45); }
+    .fashion-thumb { position: relative; overflow: hidden; border-radius: 9px; background: linear-gradient(135deg,#7a8078,#ded2c2); }
+    .fashion-thumb::after { content: attr(data-code); position: absolute; left: 8px; top: 8px; padding: 3px 6px; border-radius: 6px; color: #121614; background: rgba(255,255,255,.78); font-size: 10px; font-weight: 700; }
+    .candidate-card .fashion-thumb { height: 142px; }
+    .thumb-a { background: linear-gradient(135deg,#b5aa9b 0%,#6c756f 48%,#2c3431 100%); }
+    .thumb-b { background: linear-gradient(135deg,#d9d2c4 0%,#8b8f86 52%,#38413d 100%); }
+    .thumb-c { background: linear-gradient(135deg,#c3b7a7 0%,#77746b 50%,#26302d 100%); }
+    .thumb-d { background: linear-gradient(135deg,#e1d8c8 0%,#9b9d90 45%,#4b5650 100%); }
+    .candidate-meta h4 { margin: 0; color: #edf4f1; font-size: 13px; line-height: 20px; }
+    .candidate-meta p { margin: 3px 0; color: #8d9995; font-size: 11px; line-height: 16px; }
+    .candidate-meta small { display: block; color: #6f7a76; font-size: 10px; line-height: 15px; }
+    .candidate-actions { display: grid; grid-template-columns: repeat(2,1fr); gap: 6px; }
+    .candidate-action { height: 28px; border: 1px solid #3d4945; border-radius: 7px; color: #bfd0cc; background: transparent; font-size: 10px; cursor: pointer; }
+    .candidate-action:hover { color: #0f1a18; border-color: #55ded3; background: #55ded3; }
+    .tray-list { display: grid; gap: 8px; margin-bottom: 14px; }
+    .tray-item { display: flex; justify-content: space-between; gap: 8px; padding: 8px; border: 1px solid #36403d; border-radius: 8px; color: #c9d4d0; background: #252b29; font-size: 11px; }
+    .candidate-confirm { width: 100%; height: 38px; border: 0; border-radius: 9px; color: #0d1917; background: #55ded3; font-size: 13px; font-weight: 600; cursor: pointer; }
+    .candidate-confirm:disabled { color: #68736f; background: #303734; cursor: default; }
+    .proposal-preview-dialog { width: min(86vw,980px); max-height: 86vh; display: grid; grid-template-rows: auto minmax(0,1fr); overflow: hidden; border: 1px solid #3d4844; border-radius: 16px; background: #202523; box-shadow: 0 26px 90px rgba(0,0,0,.55); }
+    .proposal-preview-head { display: flex; justify-content: space-between; gap: 16px; padding: 18px 22px; border-bottom: 1px solid #34403c; }
+    .proposal-preview-body { overflow: auto; padding: 22px; color: #dce5e2; }
+    .preview-section { margin-bottom: 18px; padding-bottom: 18px; border-bottom: 1px solid #343d3a; }
+    .preview-section h3 { margin: 0 0 9px; font-size: 15px; }
+    .preview-section p, .preview-section li { color: #aab6b2; font-size: 12px; line-height: 1.8; }
+    .preview-data-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 10px; }
+    .preview-data-card { padding: 12px; border: 1px solid #37423e; border-radius: 10px; background: #252b29; }
+    .preview-data-card strong { display: block; margin-bottom: 6px; font-size: 12px; }
+    .preview-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    .preview-table th, .preview-table td { padding: 9px 10px; border-bottom: 1px solid #333b39; text-align: left; vertical-align: top; }
+    .preview-table th { color: #7e8b87; font-weight: 600; }
     @media (max-width: 980px) {
       .profile-list, .module-grid, .step-two-grid { grid-template-columns: 1fr; }
       .profile-type-options { grid-template-columns: 1fr 1fr; }
       .task-layout.panel-visible { grid-template-columns: minmax(0,1fr) 272px; }
       .task-chat, .task-composer-area { padding-right: 28px; padding-left: 28px; }
+      .selection-options.image, .candidate-grid, .preview-data-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .candidate-dialog { grid-template-columns: 160px minmax(0,1fr); }
+      .candidate-tray { grid-column: 1 / -1; max-height: 160px; border-top: 1px solid #333c39; }
+      .candidate-filters { grid-template-columns: repeat(3,minmax(0,1fr)); }
     }
     .toast {
       position: fixed;
@@ -1088,6 +1171,7 @@
       box-shadow: 0 16px 38px rgba(0, 0, 0, .4);
       font-size: 12px;
       line-height: 1.65;
+      pointer-events: none;
     }
     .interaction-note strong {
       display: block;
@@ -1247,6 +1331,15 @@
       .archive-prompt { width: 100%; grid-template-columns: 40px 1fr; height: auto; padding: 12px 16px; margin-top: 24px; }
       .create { grid-column: 2; width: 78px; }
       .archive-copy span { white-space: normal; }
+      .task-layout.panel-visible { grid-template-columns: minmax(0,1fr); }
+      .task-panel { max-height: 38vh; padding: 12px 16px; border-top: 1px solid #292e2c; border-left: 0; }
+      .task-conversation { grid-template-rows: 58px minmax(0,1fr) auto; }
+      .task-chat, .task-composer-area { padding-right: 18px; padding-left: 18px; }
+      .selection-options.text, .selection-options.image, .candidate-grid, .preview-data-grid { grid-template-columns: 1fr; }
+      .candidate-dialog { width: calc(100vw - 20px); height: calc(100vh - 32px); grid-template-columns: 1fr; }
+      .candidate-side { max-height: 122px; border-bottom: 1px solid #333c39; }
+      .candidate-filters { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .candidate-card .fashion-thumb { height: 120px; }
     }
     /* Business constraint profile */
     .constraint-page{position:absolute;inset:0 0 0 var(--sidebar-width);overflow:auto;background:#121514;color:#f4f7f5;z-index:4}
@@ -1407,6 +1500,49 @@
           <button id="cancel-project">取消</button>
           <button class="primary" id="confirm-project">创建</button>
         </div>
+      </div>
+    </div>
+    <div class="candidate-overlay" id="candidate-overlay" hidden>
+      <div class="candidate-dialog" role="dialog" aria-modal="true" aria-labelledby="candidate-title">
+        <aside class="candidate-side">
+          <h3>方向聚类</h3>
+          <div id="candidate-directions"></div>
+        </aside>
+        <section class="candidate-main">
+          <div class="candidate-head">
+            <div>
+              <h2 id="candidate-title">候选池</h2>
+              <p id="candidate-subtitle">演示数据 · 按平台分别展示，不合并为单一销售数字。</p>
+            </div>
+            <button class="candidate-close" id="candidate-close" aria-label="关闭候选池">×</button>
+          </div>
+          <div class="candidate-filters">
+            <select class="candidate-filter" id="candidate-filter-platform"></select>
+            <select class="candidate-filter" id="candidate-filter-brand"></select>
+            <select class="candidate-filter" id="candidate-filter-price"></select>
+            <select class="candidate-filter" id="candidate-filter-match"></select>
+            <select class="candidate-filter" id="candidate-filter-signal"></select>
+            <select class="candidate-filter" id="candidate-filter-competition"></select>
+          </div>
+          <div class="candidate-grid" id="candidate-grid"></div>
+        </section>
+        <aside class="candidate-tray">
+          <h3>已选款托盘</h3>
+          <div class="tray-list" id="candidate-tray-list"></div>
+          <button class="candidate-confirm" id="candidate-confirm">确认候选</button>
+        </aside>
+      </div>
+    </div>
+    <div class="proposal-preview-overlay" id="proposal-preview-overlay" hidden>
+      <div class="proposal-preview-dialog" role="dialog" aria-modal="true" aria-labelledby="proposal-preview-title">
+        <div class="proposal-preview-head">
+          <div>
+            <h2 id="proposal-preview-title">只读预览</h2>
+            <p id="proposal-preview-subtitle">客户方向参考包 / 客户提案</p>
+          </div>
+          <button class="preview-close" id="proposal-preview-close" aria-label="关闭预览">×</button>
+        </div>
+        <div class="proposal-preview-body" id="proposal-preview-body"></div>
       </div>
     </div>
     <div class="toast" role="status" aria-live="polite"></div>
@@ -2019,7 +2155,7 @@
     document.querySelector("#edit-profile").onclick=openEditProfile;
     function renderConstraintPicker(){const q=(document.querySelector("#profile-picker-search")?.value||"").toLowerCase();document.querySelector("#profile-picker-list").innerHTML=constraints.filter(p=>p.name.toLowerCase().includes(q)).map(p=>`<button class="picker-option" data-pick-constraint="${p.id}">${p.name}<small>${p.categories.join("、")} · ${p.countries.join("、")} · ${p.priceRange.currency} ${p.priceRange.min}-${p.priceRange.max}</small></button>`).join("")}
     document.querySelector("#task-profile-trigger").onclick=null;document.querySelector("#profile-picker").hidden=true;
-    function sendTaskFollowup(){const input=document.querySelector("#task-condition"),text=input.value.trim();if(!text){input.focus();return}if(constraintState.currentId&&/童装|韩国|25[,，]?000|25000/.test(text)){document.querySelector("#boundary-profile-name").textContent=constraints.find(x=>x.id===constraintState.currentId).name;document.querySelector("#boundary-modal").hidden=false;return}const chat=document.querySelector("#task-chat-inner");chat.insertAdjacentHTML("beforeend",`<div class="task-message user"><div class="user-message-bubble">${escapeHtml(text)}</div></div>${agentExecutionMessage({copy:"收到，我会根据你补充的条件继续处理。",label:"更新受影响的任务步骤",details:["识别本次新增或修改的条件","仅更新受影响步骤，保留已有对话与已确认范围"]})}`);input.value="";document.querySelector("#task-chat").scrollTop=document.querySelector("#task-chat").scrollHeight}
+    function sendTaskFollowup(){const input=document.querySelector("#task-condition"),text=input.value.trim();if(!text){input.focus();return}if(constraintState.currentId&&/童装|韩国|25[,，]?000|25000/.test(text)){document.querySelector("#boundary-profile-name").textContent=constraints.find(x=>x.id===constraintState.currentId).name;document.querySelector("#boundary-modal").hidden=false;return}if(proposalFlow?.active&&currentHistoryTask()?.scene==="proposal"){handleProposalFollowup(text);input.value="";document.querySelector("#task-chat").scrollTop=document.querySelector("#task-chat").scrollHeight;return}const chat=document.querySelector("#task-chat-inner");chat.insertAdjacentHTML("beforeend",`<div class="task-message user"><div class="user-message-bubble">${escapeHtml(text)}</div></div>${agentExecutionMessage({copy:"收到，我会根据你补充的条件继续处理。",label:"更新受影响的任务步骤",details:["识别本次新增或修改的条件","仅更新受影响步骤，保留已有对话与已确认范围"]})}`);input.value="";document.querySelector("#task-chat").scrollTop=document.querySelector("#task-chat").scrollHeight}
     document.querySelector("#check-task-boundary").onclick=sendTaskFollowup;
     document.querySelector("#task-condition").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendTaskFollowup()}});
     document.querySelector("#task-attach").onclick=()=>document.querySelector("#file-input").click();
@@ -2168,20 +2304,239 @@
       </div></div>`;
     }
 
+    const proposalDirections = [
+      { id: "urban", name: "都市通勤简约", desc: "更容易被客户直接确认的稳妥方向", signal: "平台讨论稳定", competitive: "中", thumb: "thumb-a" },
+      { id: "light", name: "夏日轻盈感", desc: "强调轻薄、呼吸感和夏季场景", signal: "内容热词活跃", competitive: "中高", thumb: "thumb-b" },
+      { id: "active", name: "机能轻户外", desc: "偏功能、分层与场景感", signal: "人群关注明确", competitive: "中", thumb: "thumb-c" },
+      { id: "soft", name: "柔性优雅", desc: "适合客户想看更温和提案时使用", signal: "风格辨识度高", competitive: "低中", thumb: "thumb-d" }
+    ];
+    const proposalCandidatePool = [
+      { code: "A01", direction: "urban", title: "通勤针织开衫", platform: "ZOZOTOWN", brand: "UNITED ARROWS", price: "JPY 9,900", match: 94, signal: "demo", competition: "中", thumb: "thumb-a", note: "演示数据 · 轻通勤、层次搭配强", source: "平台字段", gap: "样本量偏小" },
+      { code: "A02", direction: "urban", title: "落肩短袖套装", platform: "Rakuten Fashion", brand: "SNIDEL", price: "JPY 13,200", match: 91, signal: "demo", competition: "中高", thumb: "thumb-b", note: "演示数据 · 客户可快速确认的方向", source: "平台字段", gap: "价格带需复核" },
+      { code: "A03", direction: "urban", title: "通勤衬衫连衣裙", platform: "LINE SHOPPING", brand: "GLOBAL WORK", price: "JPY 11,000", match: 89, signal: "demo", competition: "中", thumb: "thumb-c", note: "演示数据 · 视觉同质化一般", source: "公开网页", gap: "评价样本有限" },
+      { code: "B01", direction: "light", title: "轻薄罩衫连衣裙", platform: "TikTok Shop", brand: "COCODEAL", price: "JPY 12,800", match: 96, signal: "demo", competition: "高", thumb: "thumb-b", note: "演示数据 · 夏季表达更强", source: "社媒信号", gap: "互动口径差异" },
+      { code: "B02", direction: "light", title: "垂感飘带上衣", platform: "ZOZOTOWN", brand: "Mila Owen", price: "JPY 8,800", match: 87, signal: "demo", competition: "中高", thumb: "thumb-d", note: "演示数据 · 可延展为更轻盈提案", source: "平台字段", gap: "授权状态仅示意" },
+      { code: "B03", direction: "light", title: "薄针织防晒外搭", platform: "Rakuten Fashion", brand: "BEAMS", price: "JPY 10,450", match: 88, signal: "demo", competition: "中", thumb: "thumb-c", note: "演示数据 · 样式简洁", source: "平台字段", gap: "时间范围待统一" },
+      { code: "C01", direction: "active", title: "轻户外拉链外套", platform: "TikTok Shop", brand: "THE NORTH FACE", price: "JPY 15,900", match: 86, signal: "demo", competition: "高", thumb: "thumb-c", note: "演示数据 · 功能感更明显", source: "社媒信号", gap: "价格离散" },
+      { code: "C02", direction: "active", title: "可收纳防晒衬衫", platform: "ZOZOTOWN", brand: "mystic", price: "JPY 9,800", match: 90, signal: "demo", competition: "中", thumb: "thumb-a", note: "演示数据 · 兼顾场景与日常", source: "平台字段", gap: "样本为演示" },
+      { code: "C03", direction: "active", title: "工装感束腰裙", platform: "Rakuten Fashion", brand: "FREAK'S STORE", price: "JPY 12,100", match: 84, signal: "demo", competition: "中", thumb: "thumb-d", note: "演示数据 · 适合差异化表达", source: "公开网页", gap: "证据充分度中等" },
+      { code: "D01", direction: "soft", title: "柔软垂坠长裙", platform: "ZOZOTOWN", brand: "URBAN RESEARCH", price: "JPY 14,300", match: 92, signal: "demo", competition: "中", thumb: "thumb-d", note: "演示数据 · 客户沟通友好", source: "平台字段", gap: "来源页码示意" },
+      { code: "D02", direction: "soft", title: "法式感泡泡袖上衣", platform: "LINE SHOPPING", brand: "ADAM ET ROPÉ", price: "JPY 11,900", match: 88, signal: "demo", competition: "中", thumb: "thumb-b", note: "演示数据 · 风格表达更柔和", source: "公开网页", gap: "授权状态示意" },
+      { code: "D03", direction: "soft", title: "轻礼服感套装", platform: "Rakuten Fashion", brand: "NANO universe", price: "JPY 16,800", match: 86, signal: "demo", competition: "低中", thumb: "thumb-a", note: "演示数据 · 可用于提案收束", source: "平台字段", gap: "样本量有限" }
+    ];
+    const proposalArtifactData = { directionPack: null, proposal: null };
+    const proposalFlow = {
+      active: false,
+      stage: "idle",
+      profile: null,
+      title: "新任务",
+      firstText: "",
+      language: "简体中文",
+      directionPackLanguage: "简体中文",
+      proposalLanguage: "简体中文",
+      scope: { market: "", platforms: [], otherPlatform: "" },
+      referenceCodes: [],
+      anchorCodes: [],
+      mainPlan: null,
+      backupPlan: null,
+      selectionCards: new Map(),
+      candidatePool: {
+        direction: "urban",
+        selected: new Set(),
+        excluded: new Set(),
+        filters: { platform: "全部", brand: "全部", price: "全部", match: "全部", signal: "全部", competition: "全部" },
+        gridScrollTop: 0,
+        trayScrollTop: 0
+      }
+    };
+
     function renderTaskPanel(next = taskPanelData) {
       taskPanelData.plans = Array.isArray(next.plans) ? next.plans.slice(0, 12) : [];
       taskPanelData.outputs = Array.isArray(next.outputs) ? next.outputs.slice(0, 12) : [];
       taskPanelData.references = Array.isArray(next.references) ? next.references.slice(0, 12) : [];
       const groups = [];
-      if (taskPanelData.plans.length) groups.push(`<section class="task-panel-section plans"><h3>计划列表</h3><ol class="task-panel-list">${taskPanelData.plans.map((item) => `<li class="task-panel-item"><span>○</span><span>${escapeHtml(item.label || item)}</span>${item.state ? `<span class="item-state">${escapeHtml(item.state)}</span>` : ""}</li>`).join("")}</ol></section>`);
-      if (taskPanelData.outputs.length) groups.push(`<section class="task-panel-section outputs"><h3>任务产物</h3><ul class="task-panel-list">${taskPanelData.outputs.map((item) => `<li class="task-panel-item"><span class="item-icon">□</span><span>${escapeHtml(item.label || item)}</span></li>`).join("")}</ul></section>`);
+      if (taskPanelData.plans.length) groups.push(`<section class="task-panel-section plans"><h3>计划列表</h3><ol class="task-panel-list">${taskPanelData.plans.map((item) => `<li class="task-panel-item"><span>○</span><span class="task-step ${escapeHtml(item.className || "")}">${escapeHtml(item.label || item)}</span>${item.state ? `<span class="item-state">${escapeHtml(item.state)}</span>` : ""}</li>`).join("")}</ol></section>`);
+      if (taskPanelData.outputs.length) groups.push(`<section class="task-panel-section outputs"><h3>任务产物</h3><ul class="task-panel-list">${taskPanelData.outputs.map((item) => `<li class="task-panel-item"><span class="item-icon">□</span><span class="artifact-title">${escapeHtml(item.label || item)}</span><span class="artifact-actions">${item.viewLabel ? `<button type="button" data-artifact-view="${escapeHtml(item.id)}">${escapeHtml(item.viewLabel)}</button>` : ""}${item.downloadLabel ? `<button type="button" data-artifact-download="${escapeHtml(item.id)}">${escapeHtml(item.downloadLabel)}</button>` : ""}</span></li>`).join("")}</ul></section>`);
       if (taskPanelData.references.length) groups.push(`<section class="task-panel-section references"><h3>参考信息</h3><ul class="task-panel-list">${taskPanelData.references.map((item) => `<li class="task-panel-item"><span>↗</span><a href="${escapeHtml(item.url || "#")}" target="_blank" rel="noopener">${escapeHtml(item.label || item.url || item)}</a></li>`).join("")}</ul></section>`);
-      const panel=document.querySelector("#task-panel"),hasContent=groups.length>0;
+      const panel = document.querySelector("#task-panel");
+      const hasContent = groups.length > 0;
       document.querySelector("#task-panel-sections").innerHTML = groups.join("");
-      panel.hidden=!hasContent;
-      document.querySelector(".task-layout").classList.toggle("panel-visible",hasContent);
+      panel.hidden = !hasContent;
+      document.querySelector(".task-layout").classList.toggle("panel-visible", hasContent);
     }
     window.updateTaskPanel = renderTaskPanel;
+
+    const proposalSteps = ["需求理解", "调研确认", "参考调研", "方向对齐", "AI改款", "方案确认", "提案交付"];
+    function proposalStageIndex() {
+      const order = { idle: 0, understanding: 0, scope: 1, research: 2, candidate: 3, directionPack: 3, feedback: 4, ai: 4, final: 5, done: 7 };
+      return order[proposalFlow.stage] ?? 0;
+    }
+    function renderProposalPlanPanel() {
+      const current = proposalStageIndex();
+      renderTaskPanel({
+        plans: proposalSteps.map((label, index) => ({
+          label,
+          state: index < current ? "已完成" : index === current ? "进行中" : "待确认",
+          className: index === current ? "updated" : index < current ? "updated" : ""
+        })),
+        outputs: Object.keys(proposalArtifactData).filter((key) => proposalArtifactData[key]).map((key) => proposalArtifactData[key]),
+        references: proposalFlow.references || []
+      });
+    }
+
+    function scrollTaskChatBottom() {
+      const chat = document.querySelector("#task-chat");
+      if (chat) chat.scrollTop = chat.scrollHeight;
+    }
+
+    function appendTaskHtml(html) {
+      document.querySelector("#task-chat-inner").insertAdjacentHTML("beforeend", html);
+      scrollTaskChatBottom();
+    }
+
+    function proposalSelectionCard(config) {
+      const id = config.id || `selection-${Date.now()}`;
+      proposalFlow.selectionCards.set(id, config);
+      const optionHtml = config.options.map((option, index) => {
+        const isImage = config.displayType === "image";
+        const classes = ["selection-option", isImage ? "image" : "text"];
+        if (config.selectionMode === "single" && index === 0 && config.autoselectFirst) classes.push("selected");
+        return `
+          <button type="button" class="${classes.join(" ")}" data-selection-option="${escapeHtml(id)}" data-value="${escapeHtml(option.value)}">
+            ${isImage ? `<div class="fashion-thumb ${escapeHtml(option.thumb || "thumb-a")}" data-code="${escapeHtml(option.code || option.value)}"></div>` : ""}
+            <div>
+              <strong>${escapeHtml(option.label)}</strong>
+              ${option.meta ? `<small>${escapeHtml(option.meta)}</small>` : ""}
+            </div>
+          </button>`;
+      }).join("");
+      return `
+        <div class="task-message assistant">
+          <div class="agent-message">
+            <div class="agent-message-copy">${escapeHtml(config.summary || "")}</div>
+            <section class="selection-card" data-selection-card="${escapeHtml(id)}" data-mode="${escapeHtml(config.selectionMode)}" data-display="${escapeHtml(config.displayType)}">
+              <div class="selection-card-head">
+                <div><h4>${escapeHtml(config.title)}</h4><p>${escapeHtml(config.subtitle || "")}</p></div>
+                <span class="selection-required">${config.required ? "必选" : "可选"} · ${escapeHtml(config.confirmLabel || "确认选择")}</span>
+              </div>
+              <div class="selection-options ${escapeHtml(config.displayType)}">${optionHtml}</div>
+              ${config.allowOther ? `<input class="selection-other-input" type="text" maxlength="32" placeholder="${escapeHtml(config.otherPlaceholder || "输入其他内容")}" hidden>` : ""}
+              <div class="selection-card-actions"><span class="selection-card-error" hidden></span><button class="selection-confirm" type="button">${escapeHtml(config.confirmLabel || "确认选择")}</button></div>
+            </section>
+          </div>
+        </div>`;
+    }
+
+    function collapseSelectionCard(cardId, summaryText) {
+      const card = document.querySelector(`[data-selection-card="${CSS.escape(cardId)}"]`);
+      if (!card) return;
+      card.classList.add("collapsed");
+      card.innerHTML = `<div class="selection-card-head"><div><h4>已确认</h4><p>${escapeHtml(summaryText)}</p></div></div>`;
+    }
+
+    function renderProposalPreview(type) {
+      const body = document.querySelector("#proposal-preview-body");
+      const selectedItems = proposalCandidatePool.filter((item) => proposalFlow.referenceCodes.includes(item.code));
+      const directionRows = selectedItems
+        .map((item) => `<li>${escapeHtml(item.code)} · ${escapeHtml(item.title)} · ${escapeHtml(item.platform)} · ${escapeHtml(item.brand)}</li>`).join("");
+      const platformRows = [
+        ["ZOZOTOWN", "平台字段", "2026-07/08", "12", "中", "授权状态待复核"],
+        ["Rakuten Fashion", "平台字段", "2026-07/08", "9", "中", "样本量偏小"],
+        ["TikTok Shop", "社媒信号", "2026-08", "15", "低中", "互动不等于销量"]
+      ].map((row) => `<tr>${row.map((cell) => `<td>${escapeHtml(cell)}</td>`).join("")}</tr>`).join("");
+      const main = proposalFlow.mainPlan || { code: "M01", title: "稳妥改款", anchor: proposalFlow.referenceCodes[0] || "A01", keep: "核心廓形、客户认可比例、基础色", change: "局部细节与比例节奏", desc: "AI 概念表达" };
+      const backup = proposalFlow.backupPlan || { code: "M02", title: "差异改款", anchor: proposalFlow.referenceCodes[1] || proposalFlow.referenceCodes[0] || "A02", keep: "主廓形与场景", change: "袖型、下摆与面料感", desc: "AI 概念表达" };
+      const outputTitle = type === "direction" ? "客户方向参考包 V1" : "客户提案 V1";
+      body.innerHTML = `
+        <section class="preview-section">
+          <h3>${escapeHtml(outputTitle)}</h3>
+          <p>演示数据 · 只读预览 · 按平台分别展示市场信号，不合并为单一销售数字。</p>
+        </section>
+        <section class="preview-section">
+          <h3>客户需求</h3>
+          <p>${escapeHtml(proposalFlow.firstText || "客户 brief 摘要")}</p>
+        </section>
+        <section class="preview-section">
+          <h3>客户选中参考款</h3>
+          <ul>${directionRows || "<li>待客户在候选池中确认参考款</li>"}</ul>
+        </section>
+        <section class="preview-section">
+          <h3>按平台展示的市场数据</h3>
+          <table class="preview-table">
+            <thead><tr><th>平台</th><th>来源类型</th><th>时间范围</th><th>样本量</th><th>证据充分度</th><th>数据缺口</th></tr></thead>
+            <tbody>${platformRows}</tbody>
+          </table>
+        </section>
+        <section class="preview-section">
+          <h3>证据与缺口</h3>
+          <div class="preview-data-grid">
+            <div class="preview-data-card"><strong>时间范围</strong><p>2026-07 至 2026-08（演示）</p></div>
+            <div class="preview-data-card"><strong>样本量</strong><p>12-36 条（演示）</p></div>
+            <div class="preview-data-card"><strong>证据充分度</strong><p>中 / 中高 / 低中</p></div>
+          </div>
+        </section>
+        ${type === "proposal" ? `
+          <section class="preview-section">
+            <h3>AI 改款思路</h3>
+            <p>从客户认可的锚点款提取可保留元素，再重新组合为有差异的新概念，不直接复刻第三方款式。</p>
+          </section>
+          <section class="preview-section">
+            <h3>主方案</h3>
+            <p>${escapeHtml(main.code)} · 参考锚点 ${escapeHtml(main.anchor)} · 保留：${escapeHtml(main.keep)} · 修改：${escapeHtml(main.change)} · ${escapeHtml(main.desc)}</p>
+          </section>
+          <section class="preview-section">
+            <h3>备选方案</h3>
+            <p>${escapeHtml(backup.code)} · 参考锚点 ${escapeHtml(backup.anchor)} · 保留：${escapeHtml(backup.keep)} · 修改：${escapeHtml(backup.change)} · ${escapeHtml(backup.desc)}</p>
+          </section>
+          <section class="preview-section">
+            <h3>主备方案对比</h3>
+            <ul>
+              <li>主方案偏稳妥，尽量延续客户明确认可的核心特征。</li>
+              <li>备选方案保留识别点，但在细节和比例上更有差异。</li>
+              <li>两者都标记为 AI 概念表达，不作为精确定稿。</li>
+            </ul>
+          </section>
+          <section class="preview-section">
+            <h3>待确认项</h3>
+            <ul>
+              <li>客户是否接受主方案的整体方向。</li>
+              <li>是否需要再收窄或放宽某些细节。</li>
+              <li>最终是否继续推进到正式评审。</li>
+            </ul>
+          </section>
+          <section class="preview-section">
+            <h3>市场依据与来源说明</h3>
+            <ul>
+              <li>来源：平台字段、公开网页、社媒信号、趋势资料。</li>
+              <li>样本、时间范围、证据充分度与数据缺口均为演示数据。</li>
+              <li>不合并不同平台的数据，不输出绝对化判断。</li>
+            </ul>
+          </section>
+        ` : ""}
+      `;
+      document.querySelector("#proposal-preview-title").textContent = outputTitle;
+      document.querySelector("#proposal-preview-subtitle").textContent = type === "direction" ? "客户方向参考包" : "客户提案";
+      document.querySelector("#proposal-preview-overlay").hidden = false;
+    }
+
+    function saveArtifact(type, payload) {
+      proposalArtifactData[type] = payload;
+      renderProposalPlanPanel();
+    }
+
+    function makeArtifactPayload(id, label, type) {
+      return {
+        id,
+        label,
+        viewLabel: "在线查看",
+        downloadLabel: "下载",
+        type
+      };
+    }
+
+    function proposalOutputs() {
+      return Object.values(proposalArtifactData).filter(Boolean);
+    }
 
     function renderInitialConversation(userText, profile = null) {
       const profileContext = profile ? `<div class="task-message profile-context"><div class="applied-profile-card"><div class="applied-profile-head">已应用业务偏好档案：<strong>${escapeHtml(profile.name)}</strong></div><div class="applied-profile-meta"><span>品类：${escapeHtml(profile.categories.join("、"))}</span><span>价格段：${escapeHtml(profile.priceRange.currency)} ${Number(profile.priceRange.min).toLocaleString()}–${Number(profile.priceRange.max).toLocaleString()}</span><span>国家：${escapeHtml(profile.countries.join("、"))}</span><span>年龄段：${escapeHtml(profile.ageRanges.join("、"))}</span></div></div></div>` : "";
@@ -2191,12 +2546,446 @@
         ${agentExecutionMessage({copy:"收到，我会先梳理你的需求，再与你确认本次调研范围。",label:"理解任务需求",details:["识别市场、品类、目标人群与经营目标","整理待确认条件，完成后将先与你确认调研范围"]})}`;
     }
 
+    function proposalAgentMessage(copy, actionHtml = "") {
+      return `<div class="task-message assistant"><div class="agent-message"><div class="agent-message-copy">${escapeHtml(copy)}</div>${actionHtml}</div></div>`;
+    }
+
+    function renderProposalInitialConversation(userText, profile = null) {
+      const profileContext = profile ? `<div class="task-message profile-context"><div class="applied-profile-card"><div class="applied-profile-head">已应用业务偏好档案：<strong>${escapeHtml(profile.name)}</strong></div><div class="applied-profile-meta"><span>品类：${escapeHtml(profile.categories.join("、"))}</span><span>价格段：${escapeHtml(profile.priceRange.currency)} ${Number(profile.priceRange.min).toLocaleString()}–${Number(profile.priceRange.max).toLocaleString()}</span><span>国家：${escapeHtml(profile.countries.join("、"))}</span><span>年龄段：${escapeHtml(profile.ageRanges.join("、"))}</span></div></div></div>` : "";
+      const understanding = [
+        "我先按客户提案生成来理解这次任务：",
+        "",
+        "客户明确需求：需要一版可发给客户确认的方向参考包，并在客户反馈后形成 AI 改款和最终提案。",
+        "系统理解：这不是内部商品企划，也不进入打样、成本、MOQ、交期或供应链计划；重点是方向对齐、参考款筛选和客户可评审的概念提案。",
+        "待确认项：本次调研主市场、覆盖平台，以及正式文件语言。",
+        "本次希望客户最终确认：参考方向、保留/排除元素、主方案和备选方案。"
+      ].join("\n");
+      document.querySelector("#task-chat-inner").innerHTML = `
+        <div class="task-message user"><div class="user-message-bubble">${escapeHtml(userText)}</div></div>
+        ${profileContext}
+        ${proposalAgentMessage(understanding)}
+        ${proposalSelectionCard({
+          id: "proposal-market",
+          title: "选择主市场",
+          subtitle: "一个任务只应用一个主地域。这里不会展示底层工具或采集方式。",
+          summary: "我需要先确认一个主市场，再确认要覆盖的平台。",
+          selectionMode: "single",
+          displayType: "text",
+          required: true,
+          options: [
+            { value: "中国", label: "中国", meta: "淘宝、京东、抖音电商" },
+            { value: "日本", label: "日本", meta: "ZOZOTOWN、Rakuten Fashion 等" },
+            { value: "北美", label: "北美", meta: "Amazon、TikTok Shop、品牌站" },
+            { value: "欧洲", label: "欧洲", meta: "Zalando、Instagram、品牌站" }
+          ],
+          onConfirm: (values) => {
+            proposalFlow.scope.market = values[0];
+            collapseSelectionCard("proposal-market", `主市场：${values[0]}`);
+            appendTaskHtml(proposalSelectionCard({
+              id: "proposal-platforms",
+              title: "选择覆盖平台",
+              subtitle: "可多选平台；选择“其他”后可输入自定义平台名称。",
+              summary: "继续确认本次要覆盖的平台范围。",
+              selectionMode: "multiple",
+              displayType: "text",
+              allowOther: true,
+              otherPlaceholder: "例如：品牌官网、Instagram、小红书",
+              required: true,
+              options: [
+                { value: "ZOZOTOWN", label: "ZOZOTOWN", meta: "电商平台" },
+                { value: "Rakuten Fashion", label: "Rakuten Fashion", meta: "电商平台" },
+                { value: "TikTok Shop", label: "TikTok Shop", meta: "社媒电商" },
+                { value: "LINE SHOPPING", label: "LINE SHOPPING", meta: "渠道参考" },
+                { value: "其他", label: "其他", meta: "自定义平台" }
+              ],
+              onConfirm: confirmProposalScope
+            }));
+          }
+        })}`;
+      proposalFlow.stage = "scope";
+      renderProposalPlanPanel();
+      document.querySelector("#task-condition").placeholder = "可以补充客户预算、指定竞品、需要避开的方向…";
+      scrollTaskChatBottom();
+    }
+
+    function confirmProposalScope(values, otherValue) {
+      const platforms = values.filter((value) => value !== "其他");
+      if (values.includes("其他") && otherValue) platforms.push(otherValue);
+      proposalFlow.scope.platforms = platforms;
+      proposalFlow.scope.otherPlatform = otherValue || "";
+      collapseSelectionCard("proposal-platforms", `平台：${platforms.join("、")}`);
+      proposalFlow.stage = "research";
+      proposalFlow.references = [
+        { label: "来源类型：平台字段 · ZOZOTOWN · 2026-07/08 · 样本 12 · 证据充分度中 · 缺口：授权状态需复核", url: "#" },
+        { label: "来源类型：公开网页 · Rakuten Fashion · 2026-07/08 · 样本 9 · 证据充分度中 · 缺口：评价样本有限", url: "#" },
+        { label: "来源类型：社媒信号 · TikTok Shop · 2026-08 · 样本 15 · 证据充分度低中 · 缺口：互动不等同销量", url: "#" }
+      ];
+      renderProposalPlanPanel();
+      appendTaskHtml(agentExecutionMessage({
+        copy: `调研范围已确认：主市场 ${proposalFlow.scope.market}，平台覆盖 ${platforms.join("、")}。我会按平台分别整理市场信号，并把所有数值标注为演示数据。`,
+        label: "调研参考款与市场依据",
+        details: ["正在调研参考款", "正在核对市场数据字段", "正在整理来源、样本量、证据充分度和数据缺口"],
+        state: "complete"
+      }));
+      appendTaskHtml(proposalAgentMessage("候选池已生成。你可以打开候选池，按方向聚类筛选参考款，并选择准备发给客户确认的款式。", `<button class="proposal-inline-action" type="button" data-proposal-action="open-candidates">打开候选池</button>`));
+      document.querySelector("#task-condition").placeholder = "也可以补充竞品、价格范围或要排除的方向…";
+    }
+
+    function proposalSelectedCandidates() {
+      return proposalCandidatePool.filter((item) => proposalFlow.candidatePool.selected.has(item.code));
+    }
+
+    function filteredProposalCandidates() {
+      const filters = proposalFlow.candidatePool.filters;
+      return proposalCandidatePool.filter((item) => {
+        const priceNumber = Number(item.price.replace(/[^\d]/g, ""));
+        if (item.direction !== proposalFlow.candidatePool.direction) return false;
+        if (filters.platform !== "全部" && item.platform !== filters.platform) return false;
+        if (filters.brand !== "全部" && item.brand !== filters.brand) return false;
+        if (filters.price === "JPY 8,000-12,000" && (priceNumber < 8000 || priceNumber > 12000)) return false;
+        if (filters.price === "JPY 12,000+" && priceNumber < 12000) return false;
+        if (filters.match !== "全部" && (filters.match === "90+" ? item.match < 90 : item.match >= 90)) return false;
+        if (filters.signal !== "全部" && item.signal !== "demo") return false;
+        if (filters.competition !== "全部" && item.competition !== filters.competition) return false;
+        return true;
+      });
+    }
+
+    function renderCandidateFilters() {
+      const optionList = (values, selected) => values.map((value) => `<option ${value === selected ? "selected" : ""}>${escapeHtml(value)}</option>`).join("");
+      document.querySelector("#candidate-filter-platform").innerHTML = optionList(["全部", ...new Set(proposalCandidatePool.map((item) => item.platform))], proposalFlow.candidatePool.filters.platform);
+      document.querySelector("#candidate-filter-brand").innerHTML = optionList(["全部", ...new Set(proposalCandidatePool.map((item) => item.brand))], proposalFlow.candidatePool.filters.brand);
+      document.querySelector("#candidate-filter-price").innerHTML = optionList(["全部", "JPY 8,000-12,000", "JPY 12,000+"], proposalFlow.candidatePool.filters.price);
+      document.querySelector("#candidate-filter-match").innerHTML = optionList(["全部", "90+", "90以下"], proposalFlow.candidatePool.filters.match);
+      document.querySelector("#candidate-filter-signal").innerHTML = optionList(["全部", "演示数据"], proposalFlow.candidatePool.filters.signal);
+      document.querySelector("#candidate-filter-competition").innerHTML = optionList(["全部", "低中", "中", "中高", "高"], proposalFlow.candidatePool.filters.competition);
+    }
+
+    function renderCandidatePool() {
+      document.querySelector("#candidate-directions").innerHTML = proposalDirections.map((direction) => {
+        const count = proposalCandidatePool.filter((item) => item.direction === direction.id).length;
+        return `<button type="button" class="candidate-direction ${direction.id === proposalFlow.candidatePool.direction ? "active" : ""}" data-direction="${escapeHtml(direction.id)}"><strong>${escapeHtml(direction.name)}</strong><small>${escapeHtml(direction.desc)} · ${count} 款</small></button>`;
+      }).join("");
+      renderCandidateFilters();
+      const selected = proposalFlow.candidatePool.selected;
+      const excluded = proposalFlow.candidatePool.excluded;
+      document.querySelector("#candidate-grid").innerHTML = filteredProposalCandidates().map((item) => `
+        <article class="candidate-card ${selected.has(item.code) ? "selected" : ""} ${excluded.has(item.code) ? "excluded" : ""}" data-candidate-code="${escapeHtml(item.code)}">
+          <div class="fashion-thumb ${escapeHtml(item.thumb)}" data-code="${escapeHtml(item.code)}"></div>
+          <div class="candidate-meta">
+            <h4>${escapeHtml(item.title)}</h4>
+            <p>${escapeHtml(item.platform)} · ${escapeHtml(item.brand)} · ${escapeHtml(item.price)}</p>
+            <small>匹配度 ${item.match}% · 竞争 ${escapeHtml(item.competition)} · ${escapeHtml(item.note)}</small>
+            <small class="candidate-detail" hidden>来源：${escapeHtml(item.source)} · 缺口：${escapeHtml(item.gap)} · 授权状态：仅用于方向参考</small>
+          </div>
+          <div class="candidate-actions">
+            <button class="candidate-action" type="button" data-candidate-action="select">${selected.has(item.code) ? "取消" : "选择"}</button>
+            <button class="candidate-action" type="button" data-candidate-action="exclude">${excluded.has(item.code) ? "恢复" : "排除"}</button>
+            <button class="candidate-action" type="button" data-candidate-action="detail">详情</button>
+            <button class="candidate-action" type="button" data-candidate-action="similar">相似</button>
+          </div>
+        </article>`).join("");
+      const trayItems = proposalSelectedCandidates();
+      document.querySelector("#candidate-tray-list").innerHTML = trayItems.length ? trayItems.map((item) => `<div class="tray-item"><span>${escapeHtml(item.code)} · ${escapeHtml(item.title)}</span><button class="candidate-action" type="button" data-tray-remove="${escapeHtml(item.code)}">移除</button></div>`).join("") : `<p style="color:#77817c;font-size:12px;line-height:20px">还没有选择参考款。</p>`;
+      document.querySelector("#candidate-confirm").disabled = trayItems.length === 0;
+      const grid = document.querySelector("#candidate-grid");
+      requestAnimationFrame(() => { grid.scrollTop = proposalFlow.candidatePool.gridScrollTop || 0; });
+    }
+
+    function openCandidatePool() {
+      proposalFlow.stage = "candidate";
+      renderProposalPlanPanel();
+      renderCandidatePool();
+      document.querySelector("#candidate-overlay").hidden = false;
+    }
+
+    function closeCandidatePool() {
+      const grid = document.querySelector("#candidate-grid");
+      proposalFlow.candidatePool.gridScrollTop = grid?.scrollTop || 0;
+      document.querySelector("#candidate-overlay").hidden = true;
+    }
+
+    function confirmCandidatePool() {
+      const selected = proposalSelectedCandidates();
+      if (!selected.length) return;
+      proposalFlow.referenceCodes = selected.map((item) => item.code);
+      closeCandidatePool();
+      proposalFlow.stage = "directionPack";
+      renderProposalPlanPanel();
+      appendTaskHtml(proposalAgentMessage(`已选择 ${proposalFlow.referenceCodes.join("、")} 作为客户方向参考。当前选择覆盖 ${new Set(selected.map((item) => item.direction)).size} 个方向，后续参考包会保留来源类型、平台、时间范围、样本量、证据充分度和数据缺口。`));
+      appendTaskHtml(proposalSelectionCard({
+        id: "direction-pack-language",
+        title: "选择客户方向参考包语言",
+        subtitle: "每份正式文件只允许一种语言；语言只影响文案，不改变市场和数据口径。",
+        summary: "生成客户方向参考包前，需要确认文件语言。",
+        selectionMode: "single",
+        displayType: "text",
+        required: true,
+        autoselectFirst: true,
+        options: [
+          { value: "简体中文", label: "简体中文", meta: "默认" },
+          { value: "English", label: "English", meta: "英文客户" },
+          { value: "日本語", label: "日本語", meta: "日本客户" }
+        ],
+        onConfirm: (values) => {
+          proposalFlow.directionPackLanguage = values[0];
+          collapseSelectionCard("direction-pack-language", `语言：${values[0]}`);
+          saveArtifact("directionPack", makeArtifactPayload("directionPack", "客户方向参考包 V1", "direction"));
+          appendTaskHtml(proposalAgentMessage(`客户方向参考包 V1 已生成。右侧产物只支持在线查看和下载；如需修改内容，请继续在输入框中提出。`));
+          proposalFlow.stage = "feedback";
+          renderProposalPlanPanel();
+          document.querySelector("#task-condition").placeholder = "粘贴客户反馈，例如：客户选择 A02/B01，保留轻盈感，排除厚重机能感…";
+        }
+      }));
+    }
+
+    function proposalAiOptions(anchorCodes) {
+      const anchor = anchorCodes.join("、") || proposalFlow.referenceCodes.join("、") || "A02";
+      return [
+        { value: "M01", code: "M01", label: "稳妥改款", thumb: "thumb-a", meta: `锚点 ${anchor} · 保留轻盈廓形、基础色；修改领口和下摆 · AI概念表达`, anchor, keep: "轻盈廓形、客户认可比例、基础色", change: "领口、下摆和局部层次", desc: "AI 概念表达" },
+        { value: "M02", code: "M02", label: "差异改款", thumb: "thumb-c", meta: `锚点 ${anchor} · 保留通勤感；修改袖型和分割线 · AI概念表达`, anchor, keep: "通勤场景、主廓形", change: "袖型、分割线和面料肌理", desc: "AI 概念表达" },
+        { value: "M03", code: "M03", label: "趋势延展", thumb: "thumb-d", meta: `锚点 ${anchor} · 保留客户认可元素；加入更夏季的透明层次 · AI概念表达`, anchor, keep: "客户认可元素、色彩范围", change: "透明层次、防晒外搭感", desc: "AI 概念表达" }
+      ];
+    }
+
+    function startAiRemix(anchorCodes) {
+      proposalFlow.anchorCodes = anchorCodes;
+      proposalFlow.stage = "ai";
+      renderProposalPlanPanel();
+      const options = proposalAiOptions(anchorCodes);
+      proposalFlow.aiOptions = options;
+      appendTaskHtml(agentExecutionMessage({
+        copy: `我已把客户反馈解析为：保留 ${anchorCodes.join("、")} 中被认可的廓形与轻盈感；修改厚重细节；排除过强机能感；待确认最终语言与主备方案。下面生成 3 个 AI 改款方向。`,
+        label: "生成 AI 改款概念",
+        details: ["提取客户认可元素", "检查排除项和版权风险", "生成稳妥改款、差异改款、趋势延展 3 个方向"],
+        state: "complete"
+      }));
+      appendTaskHtml(proposalSelectionCard({
+        id: "main-remix",
+        title: "选择主方案",
+        subtitle: "先选择进入最终提案的主方案。未选择的改款不会进入最终客户提案。",
+        summary: "请从 3 个 AI 改款中选择主方案。",
+        selectionMode: "single",
+        displayType: "image",
+        required: true,
+        options,
+        onConfirm: (values) => {
+          proposalFlow.mainPlan = options.find((item) => item.value === values[0]);
+          collapseSelectionCard("main-remix", `主方案：${proposalFlow.mainPlan.code} · ${proposalFlow.mainPlan.label}`);
+          appendTaskHtml(proposalSelectionCard({
+            id: "backup-remix",
+            title: "选择备选方案",
+            subtitle: "备选方案只能从剩余改款中选择，不能与主方案重复。",
+            summary: "请选择一个备选方案。",
+            selectionMode: "single",
+            displayType: "image",
+            required: true,
+            options: options.filter((item) => item.value !== proposalFlow.mainPlan.value),
+            onConfirm: (backupValues) => {
+              proposalFlow.backupPlan = options.find((item) => item.value === backupValues[0]);
+              collapseSelectionCard("backup-remix", `备选方案：${proposalFlow.backupPlan.code} · ${proposalFlow.backupPlan.label}`);
+              proposalFlow.stage = "final";
+              renderProposalPlanPanel();
+              appendTaskHtml(proposalAgentMessage(`主备方案已确认：主方案 ${proposalFlow.mainPlan.code}，备选方案 ${proposalFlow.backupPlan.code}。最终提案将包含客户需求、选中参考款、AI改款思路、主备方案对比、待确认项、市场依据和来源说明。`));
+              appendTaskHtml(proposalSelectionCard({
+                id: "final-proposal-language",
+                title: "选择客户提案语言",
+                subtitle: "默认继承上一份文件语言，但最终提案仍需单独确认。",
+                summary: "生成客户提案 V1 前，请再次确认文件语言。",
+                selectionMode: "single",
+                displayType: "text",
+                required: true,
+                autoselectFirst: true,
+                options: [
+                  { value: "__inherit__", label: `${proposalFlow.directionPackLanguage}（继承）`, meta: "默认" },
+                  { value: "English", label: "English", meta: "英文客户" },
+                  { value: "日本語", label: "日本語", meta: "日本客户" }
+                ],
+                onConfirm: (languageValues) => {
+                  proposalFlow.proposalLanguage = languageValues[0] === "__inherit__" ? proposalFlow.directionPackLanguage : languageValues[0];
+                  collapseSelectionCard("final-proposal-language", `语言：${proposalFlow.proposalLanguage}`);
+                  saveArtifact("proposal", makeArtifactPayload("proposal", "客户提案 V1", "proposal"));
+                  proposalFlow.stage = "done";
+                  renderProposalPlanPanel();
+                  appendTaskHtml(proposalAgentMessage("客户提案 V1 已生成。右侧产物只保留在线查看和下载入口；任何内容修改、新版本或语言变更都请从输入框继续发起。"));
+                  document.querySelector("#task-condition").placeholder = "继续输入客户新反馈，或说明客户已确认主方案…";
+                }
+              }));
+            }
+          }));
+        }
+      }));
+    }
+
+    function handleProposalFollowup(text) {
+      appendTaskHtml(`<div class="task-message user"><div class="user-message-bubble">${escapeHtml(text)}</div></div>`);
+      const codes = [...new Set((text.match(/[A-D]\d{2}/gi) || []).map((code) => code.toUpperCase()))].filter((code) => proposalCandidatePool.some((item) => item.code === code));
+      if (proposalFlow.stage === "feedback" || proposalFlow.stage === "done") {
+        if (codes.length) {
+          startAiRemix(codes);
+        } else {
+          appendTaskHtml(proposalAgentMessage("我能理解客户反馈的方向，但还没有明确具体锚点款。为了避免误用参考款，请先选择至少一个客户认可的锚点款。"));
+          appendTaskHtml(proposalSelectionCard({
+            id: "anchor-reference",
+            title: "选择客户锚点参考款",
+            subtitle: "仅在客户反馈未明确编号时出现；确认后再生成 AI 改款。",
+            summary: "请选择客户反馈所指向的锚点款。",
+            selectionMode: "multiple",
+            displayType: "image",
+            required: true,
+            options: (proposalFlow.referenceCodes.length ? proposalCandidatePool.filter((item) => proposalFlow.referenceCodes.includes(item.code)) : proposalCandidatePool.slice(0, 6)).map((item) => ({
+              value: item.code,
+              code: item.code,
+              label: `${item.code} · ${item.title}`,
+              meta: `${item.platform} · ${item.brand}`,
+              thumb: item.thumb
+            })),
+            onConfirm: (values) => {
+              collapseSelectionCard("anchor-reference", `锚点款：${values.join("、")}`);
+              startAiRemix(values);
+            }
+          }));
+        }
+        return true;
+      }
+      appendTaskHtml(proposalAgentMessage("收到，我会把这条补充记录到当前客户提案任务中。若这是客户反馈，请带上参考款编号，例如 A02/B01，我会直接进入 AI 改款。"));
+      return true;
+    }
+
+    function toggleSelectionOption(button) {
+      const card = button.closest("[data-selection-card]");
+      if (!card) return;
+      const mode = card.dataset.mode;
+      if (mode === "single") {
+        card.querySelectorAll(".selection-option.selected").forEach((item) => item.classList.remove("selected"));
+        button.classList.add("selected");
+      } else {
+        button.classList.toggle("selected");
+      }
+      const otherInput = card.querySelector(".selection-other-input");
+      if (otherInput) {
+        const hasOther = [...card.querySelectorAll(".selection-option.selected")].some((item) => item.dataset.value === "其他");
+        otherInput.hidden = !hasOther;
+        if (hasOther) otherInput.focus();
+        else otherInput.value = "";
+      }
+    }
+
+    function confirmSelectionCard(card) {
+      const id = card.dataset.selectionCard;
+      const config = proposalFlow.selectionCards.get(id);
+      if (!config) return;
+      const values = [...card.querySelectorAll(".selection-option.selected")].map((button) => button.dataset.value);
+      const otherValue = card.querySelector(".selection-other-input")?.value.trim() || "";
+      const error = card.querySelector(".selection-card-error");
+      if (config.required && !values.length) {
+        error.textContent = "请至少选择一项";
+        error.hidden = false;
+        return;
+      }
+      if (values.includes("其他") && !otherValue) {
+        error.textContent = "请填写其他平台名称";
+        error.hidden = false;
+        return;
+      }
+      error.hidden = true;
+      config.onConfirm?.(values, otherValue);
+    }
+
     document.querySelector("#task-chat").addEventListener("click", (event) => {
+      const option = event.target.closest(".selection-option");
+      if (option) { toggleSelectionOption(option); return; }
+      const confirm = event.target.closest(".selection-confirm");
+      if (confirm) { confirmSelectionCard(confirm.closest("[data-selection-card]")); return; }
+      const proposalAction = event.target.closest("[data-proposal-action]");
+      if (proposalAction?.dataset.proposalAction === "open-candidates") { openCandidatePool(); return; }
       const trigger = event.target.closest(".execution-trigger");
       if (!trigger) return;
       const item = trigger.closest(".execution-item");
       const expanded = item.classList.toggle("expanded");
       trigger.setAttribute("aria-expanded", String(expanded));
+    });
+
+    document.querySelector("#candidate-close").addEventListener("click", closeCandidatePool);
+    document.querySelector("#candidate-overlay").addEventListener("click", (event) => {
+      if (event.target.id === "candidate-overlay") closeCandidatePool();
+    });
+    document.querySelector("#candidate-directions").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-direction]");
+      if (!button) return;
+      proposalFlow.candidatePool.direction = button.dataset.direction;
+      proposalFlow.candidatePool.gridScrollTop = 0;
+      renderCandidatePool();
+    });
+    document.querySelector(".candidate-filters").addEventListener("change", (event) => {
+      const key = event.target.id.replace("candidate-filter-", "");
+      const map = { platform: "platform", brand: "brand", price: "price", match: "match", signal: "signal", competition: "competition" };
+      if (!map[key]) return;
+      proposalFlow.candidatePool.filters[map[key]] = event.target.value;
+      proposalFlow.candidatePool.gridScrollTop = 0;
+      renderCandidatePool();
+    });
+    document.querySelector("#candidate-grid").addEventListener("scroll", (event) => {
+      proposalFlow.candidatePool.gridScrollTop = event.currentTarget.scrollTop;
+    });
+    document.querySelector("#candidate-grid").addEventListener("click", (event) => {
+      const action = event.target.closest("[data-candidate-action]");
+      if (!action) return;
+      const card = action.closest("[data-candidate-code]");
+      const code = card.dataset.candidateCode;
+      if (action.dataset.candidateAction === "select") {
+        proposalFlow.candidatePool.excluded.delete(code);
+        if (proposalFlow.candidatePool.selected.has(code)) proposalFlow.candidatePool.selected.delete(code);
+        else proposalFlow.candidatePool.selected.add(code);
+      }
+      if (action.dataset.candidateAction === "exclude") {
+        proposalFlow.candidatePool.selected.delete(code);
+        if (proposalFlow.candidatePool.excluded.has(code)) proposalFlow.candidatePool.excluded.delete(code);
+        else proposalFlow.candidatePool.excluded.add(code);
+      }
+      if (action.dataset.candidateAction === "detail") {
+        const detail = card.querySelector(".candidate-detail");
+        detail.hidden = !detail.hidden;
+        return;
+      }
+      if (action.dataset.candidateAction === "similar") {
+        const source = proposalCandidatePool.find((item) => item.code === code);
+        proposalFlow.candidatePool.direction = source.direction;
+        showToast(`已聚焦 ${code} 所在方向的相似款`);
+      }
+      renderCandidatePool();
+    });
+    document.querySelector("#candidate-tray-list").addEventListener("click", (event) => {
+      const remove = event.target.closest("[data-tray-remove]");
+      if (!remove) return;
+      proposalFlow.candidatePool.selected.delete(remove.dataset.trayRemove);
+      renderCandidatePool();
+    });
+    document.querySelector("#candidate-confirm").addEventListener("click", confirmCandidatePool);
+    document.querySelector("#proposal-preview-close").addEventListener("click", () => document.querySelector("#proposal-preview-overlay").hidden = true);
+    document.querySelector("#proposal-preview-overlay").addEventListener("click", (event) => {
+      if (event.target.id === "proposal-preview-overlay") document.querySelector("#proposal-preview-overlay").hidden = true;
+    });
+    document.querySelector("#task-panel-sections").addEventListener("click", (event) => {
+      const view = event.target.closest("[data-artifact-view]");
+      if (view) {
+        const artifact = proposalOutputs().find((item) => item.id === view.dataset.artifactView);
+        if (artifact) renderProposalPreview(artifact.type);
+        return;
+      }
+      const download = event.target.closest("[data-artifact-download]");
+      if (download) {
+        const artifact = proposalOutputs().find((item) => item.id === download.dataset.artifactDownload);
+        if (!artifact) return;
+        const html = `<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>${artifact.label}</title><body><h1>${artifact.label}</h1><p>演示下载文件。平台数据按平台分别展示，不合并为单一销售数字。</p><p>来源类型、时间范围、样本量、证据充分度与数据缺口均为演示数据。</p></body></html>`;
+        const url = URL.createObjectURL(new Blob([html], { type: "text/html" }));
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `${artifact.label}.html`;
+        link.click();
+        URL.revokeObjectURL(url);
+        showToast(`已下载 ${artifact.label}`);
+      }
     });
 
     function showTaskPage() {
@@ -2222,6 +3011,32 @@
     document.querySelector("#task-profile-trigger").onclick=event=>{event.stopPropagation();const wrap=document.querySelector("#task-profile-wrap"),pinned=wrap.classList.toggle("pinned");event.currentTarget.setAttribute("aria-expanded",String(pinned))};
     document.addEventListener("click",event=>{const wrap=document.querySelector("#task-profile-wrap");if(!wrap.contains(event.target)){wrap.classList.remove("pinned");document.querySelector("#task-profile-trigger").setAttribute("aria-expanded","false")}});
 
+    function resetProposalFlow() {
+      proposalFlow.active = false;
+      proposalFlow.stage = "idle";
+      proposalFlow.profile = null;
+      proposalFlow.title = "新任务";
+      proposalFlow.firstText = "";
+      proposalFlow.language = "简体中文";
+      proposalFlow.directionPackLanguage = "简体中文";
+      proposalFlow.proposalLanguage = "简体中文";
+      proposalFlow.scope = { market: "", platforms: [], otherPlatform: "" };
+      proposalFlow.referenceCodes = [];
+      proposalFlow.anchorCodes = [];
+      proposalFlow.mainPlan = null;
+      proposalFlow.backupPlan = null;
+      proposalFlow.aiOptions = [];
+      proposalFlow.references = [];
+      proposalFlow.selectionCards = new Map();
+      proposalFlow.candidatePool.direction = "urban";
+      proposalFlow.candidatePool.selected = new Set();
+      proposalFlow.candidatePool.excluded = new Set();
+      proposalFlow.candidatePool.filters = { platform: "全部", brand: "全部", price: "全部", match: "全部", signal: "全部", competition: "全部" };
+      proposalFlow.candidatePool.gridScrollTop = 0;
+      proposalArtifactData.directionPack = null;
+      proposalArtifactData.proposal = null;
+    }
+
     function startTask(userText, scene = "selection") {
       const now = Date.now();
       const selectedProfile=constraints.find(profile=>profile.id===homepageArchiveSelector.value)||null;
@@ -2233,8 +3048,17 @@
       constraintState.currentId=selectedProfile?.id||null;
       setTaskProfile(profileSnapshot);
       document.querySelector("#task-condition").value = "";
-      renderInitialConversation(userText,profileSnapshot);
-      renderTaskPanel({plans:[], outputs:[], references:[]});
+      resetProposalFlow();
+      if(scene==="proposal"){
+        proposalFlow.active=true;
+        proposalFlow.profile=profileSnapshot;
+        proposalFlow.title=task.name;
+        proposalFlow.firstText=userText;
+        renderProposalInitialConversation(userText,profileSnapshot);
+      }else{
+        renderInitialConversation(userText,profileSnapshot);
+        renderTaskPanel({plans:[], outputs:[], references:[]});
+      }
       showTaskPage();
     }
 
@@ -2244,8 +3068,17 @@
       setTaskTitle(item.name);
       constraintState.currentId=item.profile?.id||null;
       setTaskProfile(item.profile||null);
-      renderInitialConversation(text,item.profile||null);
-      renderTaskPanel({plans:[], outputs:[], references:[]});
+      resetProposalFlow();
+      if(item.scene==="proposal"){
+        proposalFlow.active=true;
+        proposalFlow.profile=item.profile||null;
+        proposalFlow.title=item.name;
+        proposalFlow.firstText=text;
+        renderProposalInitialConversation(text,item.profile||null);
+      }else{
+        renderInitialConversation(text,item.profile||null);
+        renderTaskPanel({plans:[], outputs:[], references:[]});
+      }
       showTaskPage();
     }
 
@@ -2381,6 +3214,10 @@
         if (element.matches("#start-parse")) return "状态切换：点击后关闭上传弹窗，显示全局解析进度；完成后自动打开待确认信息。";
         if (element.matches("#task-scene")) return "状态切换：点击进入任务名称编辑；Enter 或失焦保存，Esc 取消。";
         if (element.matches("#task-profile-trigger")) return "状态切换：悬停临时展示档案卡片；点击固定展开，再次点击或点击外部收起。";
+        if (element.matches(".proposal-inline-action")) return "状态切换：点击打开候选池弹窗；关闭后保留已选款、筛选和滚动位置。";
+        if (element.matches("#candidate-confirm")) return "状态切换：点击确认当前候选池中的已选参考款，并进入语言确认。";
+        if (element.matches("#candidate-close")) return "状态切换：点击关闭候选池弹窗；筛选、选择与滚动状态保留。";
+        if (element.matches("#proposal-preview-close")) return "状态切换：点击关闭只读预览弹窗，不影响右侧产物列表。";
         if (element.matches("#cancel-create-profile")) return "状态切换：点击关闭新建档案页并返回档案列表。";
         if (element.matches("#archive-nav")) return "状态切换：点击由当前页面切换至业务偏好档案列表，并保持侧栏展开。";
         if (element.matches("#new-task-nav")) return "状态切换：点击返回功能首页初始状态。";
@@ -2408,6 +3245,11 @@
         if (element.matches("#apply-mapping")) return "只确认冲突、疑似硬性约束和低置信度重要信息；普通信息自动作为默认参考。";
         if (element.matches("#task-scene")) return "展示用户第一句输入的任务总结，最多 20 个字符；编辑后与左侧历史任务名称同步。";
         if (element.matches("#task-profile-trigger")) return "展示本任务启动时应用的档案名称；悬浮卡查看档案快照，但不支持在任务内切换档案。";
+        if (element.matches(".proposal-inline-action")) return "点击打开候选池大弹窗，在方向聚类、筛选和已选托盘之间完成参考款确认。";
+        if (element.matches("#candidate-overlay")) return "候选池大弹窗；左侧方向聚类，中间筛选网格，右侧已选托盘。关闭后保留筛选与选择状态。";
+        if (element.matches("#proposal-preview-overlay")) return "只读预览弹窗，展示客户方向参考包或客户提案内容。";
+        if (element.matches("[data-artifact-view]")) return "在线查看对应正式产物的只读预览。";
+        if (element.matches("[data-artifact-download]")) return "下载对应正式产物的 HTML 演示文件。";
         if (element.matches("#view-applied-info")) return "打开右侧抽屉，查看本任务的必须遵守、默认参考和仅作证据信息。";
         if (element.matches("#create-project")) return "点击打开创建项目弹窗。项目名称最多 40 个字符；未填写时默认命名为“项目”。";
         if (element.matches(".history-row")) {
@@ -2439,7 +3281,7 @@
       };
 
       const belongsToCurrentPage = (element) => {
-        const openModal = [...document.querySelectorAll(".modal-backdrop, .archive-overlay, .drawer-backdrop")]
+        const openModal = [...document.querySelectorAll(".modal-backdrop, .archive-overlay, .drawer-backdrop, .candidate-overlay, .proposal-preview-overlay")]
           .find((modal) => !modal.hidden && visible(modal));
         if (openModal) return openModal.contains(element);
 
@@ -2565,7 +3407,7 @@
         ".search-panel", ".sidebar", ".launcher", ".profile-page", ".preference-profile-card",
         ".profile-create-page", ".preference-module-grid", ".preference-module-card",
         ".profile-detail-page", ".task-workbench-page", ".application-guide",
-        ".archive-dialog", ".application-drawer",
+        ".archive-dialog", ".application-drawer", ".candidate-dialog", ".proposal-preview-dialog",
         ".modal", "h1", "main"
       ].join(","));
 
@@ -2593,6 +3435,11 @@
           [".profile-detail-page", "业务偏好档案详情页面"],
           [".preference-module-card", "偏好内容模块卡片"],
           [".task-workbench-page", "统一任务工作台"],
+          [".proposal-inline-action", "候选池入口"],
+          ["#candidate-overlay", "候选池弹窗"],
+          ["#proposal-preview-overlay", "只读预览弹窗"],
+          ["[data-artifact-view]", "在线查看按钮"],
+          ["[data-artifact-download]", "下载按钮"],
           ["#package-upload", "上传完整资料包"],
           ["#task-scene", "任务标题"],
           ["#task-profile-trigger", "已应用档案标签"],
