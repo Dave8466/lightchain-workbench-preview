@@ -1003,14 +1003,19 @@
     .task-panel-section.outputs .item-icon { color: #7bd9d0; }
     .task-panel-section.outputs .task-panel-item { align-items: center; }
     .task-panel-item .artifact-title { min-width: 0; flex: 1; }
-    .artifact-actions { display: inline-flex; flex: 0 0 auto; gap: 6px; margin-left: auto; }
-    .artifact-actions button { height: 24px; padding: 0 7px; border: 1px solid #3e4945; border-radius: 6px; color: #9eddd6; background: #222826; font-size: 10px; cursor: pointer; }
-    .artifact-actions button:hover { color: #10201e; border-color: #55ded3; background: #55ded3; }
+    .artifact-list-open { width: 100%; min-width: 0; display: flex; align-items: center; gap: 9px; padding: 0; border: 0; color: inherit; background: transparent; text-align: left; cursor: pointer; }
+    .artifact-list-open:hover .artifact-title { color: #8ce8de; }
+    .artifact-list-chevron { margin-left: auto; color: #74837d; font-size: 17px; line-height: 1; }
     .task-panel-empty { display: none; }
     .task-step.rerun { color: #f2b36f; }
     .task-step.updated { color: #90f0e4; }
     .proposal-inline-action { display: inline-flex; align-items: center; gap: 6px; height: 32px; margin-top: 12px; padding: 0 12px; border: 1px solid #3b4642; border-radius: 8px; color: #cfe8e4; background: #242a28; font-size: 12px; cursor: pointer; }
     .proposal-inline-action:hover { border-color: #56dcd0; color: #0d1b19; background: #56dcd0; }
+    .proposal-artifact-actions { position: relative; display: inline-flex; align-items: center; }
+    .proposal-artifact-menu { position: absolute; z-index: 20; top: calc(100% + 6px); right: 0; width: 158px; padding: 5px; border: 1px solid #3d4844; border-radius: 8px; background: #282e2c; box-shadow: 0 14px 32px rgba(0,0,0,.34); }
+    .proposal-artifact-menu[hidden] { display: none; }
+    .proposal-artifact-menu button { width: 100%; height: 32px; padding: 0 9px; border: 0; border-radius: 6px; color: #cbd6d2; background: transparent; font-size: 11px; text-align: left; cursor: pointer; }
+    .proposal-artifact-menu button:hover { color: #10201e; background: #55ded3; }
     .proposal-artifact-quote { width: min(660px,100%); display: grid; grid-template-columns: 42px minmax(0,1fr) auto; align-items: center; gap: 12px; padding: 13px 14px; border: 1px solid #39433f; border-radius: 8px; background: #202523; box-shadow: 0 10px 26px rgba(0,0,0,.13); transition: border-color .14s ease,background .14s ease; }
     .proposal-artifact-quote:hover { border-color: #4a5954; background: #232a27; }
     .artifact-quote-icon { position: relative; width: 42px; height: 42px; display: grid; place-items: center; border: 1px solid #3f514b; border-radius: 7px; color: #72ddd3; background: rgba(85,222,211,.07); font-size: 0; }
@@ -1421,6 +1426,7 @@
       .proposal-artifact-quote { grid-template-columns: 38px minmax(0,1fr); gap: 10px; padding: 11px; }
       .artifact-quote-icon { width: 38px; height: 38px; }
       .proposal-artifact-quote .proposal-inline-action { grid-column: 2; justify-self: start; }
+      .proposal-artifact-actions { grid-column: 2; justify-self: start; }
       .artifact-quote-copy { grid-template-columns: 1fr; gap: 2px; }
       .artifact-quote-copy span { justify-self: start; }
       .artifact-quote-copy small { grid-column: 1; white-space: normal; }
@@ -2496,7 +2502,7 @@
       taskPanelData.references = Array.isArray(next.references) ? next.references.slice(0, 12) : [];
       const groups = [];
       if (taskPanelData.plans.length) groups.push(`<section class="task-panel-section plans"><h3>计划列表</h3><ol class="task-panel-list">${taskPanelData.plans.map((item) => `<li class="task-panel-item"><span>○</span><span class="task-step ${escapeHtml(item.className || "")}">${escapeHtml(item.label || item)}</span>${item.state ? `<span class="item-state">${escapeHtml(item.state)}</span>` : ""}</li>`).join("")}</ol></section>`);
-      if (taskPanelData.outputs.length) groups.push(`<section class="task-panel-section outputs"><h3>任务产物</h3><ul class="task-panel-list">${taskPanelData.outputs.map((item) => `<li class="task-panel-item"><span class="item-icon">□</span><span class="artifact-title">${escapeHtml(item.label || item)}</span><span class="artifact-actions">${item.viewLabel ? `<button type="button" data-artifact-view="${escapeHtml(item.id)}">${escapeHtml(item.viewLabel)}</button>` : ""}${item.downloadLabel ? `<button type="button" data-artifact-download="${escapeHtml(item.id)}">${escapeHtml(item.downloadLabel)}</button>` : ""}</span></li>`).join("")}</ul></section>`);
+      if (taskPanelData.outputs.length) groups.push(`<section class="task-panel-section outputs"><h3>任务产物</h3><ul class="task-panel-list">${taskPanelData.outputs.map((item) => `<li class="task-panel-item"><button class="artifact-list-open" type="button" data-artifact-view="${escapeHtml(item.id)}"><span class="item-icon">□</span><span class="artifact-title">${escapeHtml(item.label || item)}</span><span class="artifact-list-chevron">›</span></button></li>`).join("")}</ul></section>`);
       if (taskPanelData.references.length) groups.push(`<section class="task-panel-section references"><h3>参考信息</h3><ul class="task-panel-list">${taskPanelData.references.map((item) => `<li class="task-panel-item"><span>↗</span><a href="${escapeHtml(item.url || "#")}" target="_blank" rel="noopener">${escapeHtml(item.label || item.url || item)}</a></li>`).join("")}</ul></section>`);
       const panel = document.querySelector("#task-panel");
       const hasContent = groups.length > 0;
@@ -3149,7 +3155,7 @@
     function proposalArtifactQuote(artifact, summary, action = "view") {
       const actionHtml = action === "candidate"
         ? `<button class="proposal-inline-action" type="button" data-proposal-action="open-candidates">查看详情</button>`
-        : `<button class="proposal-inline-action" type="button" data-artifact-view-inline="${escapeHtml(artifact.id)}">查看详情</button>`;
+        : `<div class="proposal-artifact-actions"><button class="proposal-inline-action" type="button" data-artifact-menu="${escapeHtml(artifact.id)}" aria-expanded="false">打开方式⌄</button><div class="proposal-artifact-menu" hidden><button type="button" data-artifact-view-inline="${escapeHtml(artifact.id)}">在线查看</button><button type="button" data-artifact-download-inline="${escapeHtml(artifact.id)}">下载 HTML/PPT/PDF</button></div></div>`;
       const typeLabel = artifact.type === "trend" ? "趋势分析" : artifact.type === "candidate" ? "视觉参考池" : artifact.type === "direction" ? "客户方向参考包 · V1" : artifact.type === "ai" ? "AI 改款图" : "客户提案 · V1";
       return `<div class="task-message assistant"><div class="agent-message"><section class="proposal-artifact-quote" data-artifact-quote="${escapeHtml(artifact.id)}"><div class="artifact-quote-icon">□</div><div class="artifact-quote-copy"><strong>${escapeHtml(artifact.label)}</strong><span>${escapeHtml(typeLabel)} · ${escapeHtml(artifact.status || "已生成")}</span><small>${escapeHtml(artifact.generatedAt || "刚刚")} · ${escapeHtml(summary || artifact.summary || "只读产物引用")}</small></div>${actionHtml}</section></div></div>`;
     }
@@ -3496,6 +3502,18 @@
       config.onConfirm?.(values, otherValue);
     }
 
+    function downloadArtifactFile(artifact) {
+      if (!artifact) return;
+      const html = `<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>${artifact.label}</title><body><h1>${artifact.label}</h1><p>演示下载文件。平台数据按平台分别展示，不合并为单一销售数字。</p><p>来源类型、时间范围、样本量、证据充分度与数据缺口均为演示数据。</p></body></html>`;
+      const url = URL.createObjectURL(new Blob([html], { type: "text/html" }));
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `${artifact.label}.html`;
+      link.click();
+      URL.revokeObjectURL(url);
+      showToast(`已下载 ${artifact.label}`);
+    }
+
     document.querySelector("#task-chat").addEventListener("click", (event) => {
       const option = event.target.closest(".selection-option");
       if (option) { toggleSelectionOption(option); return; }
@@ -3511,10 +3529,31 @@
     });
 
     document.querySelector("#task-chat").addEventListener("click", (event) => {
+      const menuTrigger = event.target.closest("[data-artifact-menu]");
+      if (menuTrigger) {
+        const menu = menuTrigger.parentElement.querySelector(".proposal-artifact-menu");
+        const willOpen = menu.hidden;
+        document.querySelectorAll(".proposal-artifact-menu").forEach((item) => item.hidden = true);
+        document.querySelectorAll("[data-artifact-menu]").forEach((item) => item.setAttribute("aria-expanded", "false"));
+        menu.hidden = !willOpen;
+        menuTrigger.setAttribute("aria-expanded", String(willOpen));
+        return;
+      }
+      if (!event.target.closest(".proposal-artifact-actions")) {
+        document.querySelectorAll(".proposal-artifact-menu").forEach((item) => item.hidden = true);
+        document.querySelectorAll("[data-artifact-menu]").forEach((item) => item.setAttribute("aria-expanded", "false"));
+      }
       const inlineView = event.target.closest("[data-artifact-view-inline]");
       if (inlineView) {
+        inlineView.closest(".proposal-artifact-menu").hidden = true;
         const artifact = proposalOutputs().find((item) => item.id === inlineView.dataset.artifactViewInline);
         if (artifact) renderProposalPreview(artifact.type);
+        return;
+      }
+      const inlineDownload = event.target.closest("[data-artifact-download-inline]");
+      if (inlineDownload) {
+        inlineDownload.closest(".proposal-artifact-menu").hidden = true;
+        downloadArtifactFile(proposalOutputs().find((item) => item.id === inlineDownload.dataset.artifactDownloadInline));
         return;
       }
       const aiPreview = event.target.closest("[data-ai-preview]");
@@ -3693,6 +3732,11 @@
         refreshAiRemixResults();
       }
     });
+    document.addEventListener("click", (event) => {
+      if (event.target.closest(".proposal-artifact-actions")) return;
+      document.querySelectorAll(".proposal-artifact-menu").forEach((item) => item.hidden = true);
+      document.querySelectorAll("[data-artifact-menu]").forEach((item) => item.setAttribute("aria-expanded", "false"));
+    });
     document.querySelector("#proposal-preview-body").addEventListener("click", (event) => {
       const trend = event.target.closest("[data-trend-select]");
       if (trend) {
@@ -3721,19 +3765,6 @@
         const artifact = proposalOutputs().find((item) => item.id === view.dataset.artifactView);
         if (artifact) renderProposalPreview(artifact.type);
         return;
-      }
-      const download = event.target.closest("[data-artifact-download]");
-      if (download) {
-        const artifact = proposalOutputs().find((item) => item.id === download.dataset.artifactDownload);
-        if (!artifact) return;
-        const html = `<!doctype html><html lang="zh-CN"><meta charset="utf-8"><title>${artifact.label}</title><body><h1>${artifact.label}</h1><p>演示下载文件。平台数据按平台分别展示，不合并为单一销售数字。</p><p>来源类型、时间范围、样本量、证据充分度与数据缺口均为演示数据。</p></body></html>`;
-        const url = URL.createObjectURL(new Blob([html], { type: "text/html" }));
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = `${artifact.label}.html`;
-        link.click();
-        URL.revokeObjectURL(url);
-        showToast(`已下载 ${artifact.label}`);
       }
     });
 
@@ -3991,6 +4022,7 @@
         if (element.matches("#start-parse")) return "状态切换：点击后关闭上传弹窗，显示全局解析进度；完成后自动打开待确认信息。";
         if (element.matches("#task-scene")) return "状态切换：点击进入任务名称编辑；Enter 或失焦保存，Esc 取消。";
         if (element.matches("#task-profile-trigger")) return "状态切换：悬停临时展示档案卡片；点击固定展开，再次点击或点击外部收起。";
+        if (element.matches("[data-artifact-menu]")) return "状态切换：点击展开打开方式菜单，再次点击收起；菜单提供在线查看与下载 HTML/PPT/PDF。";
         if (element.matches("[data-artifact-view-inline], [data-artifact-view]")) return "状态切换：点击打开与对话引用块、右侧列表同源的只读产物详情；关闭后不改变产物状态。";
         if (element.matches("[data-trend-select]")) return "状态切换：点击选中趋势方向，再次点击取消；至少确认一个方向后才会进入定向候选检索。";
         if (element.matches("#confirm-trend-directions")) return "状态切换：点击确认当前多选趋势方向；确认前不获取候选参考图，确认后自动执行定向视觉参考检索。";
@@ -4051,11 +4083,12 @@
         if (element.matches('[data-proposal-action="confirm-ai-images"]')) return "明确确认 AI 改款图。只有完成此确认后，才显示最终提案单语言选择。";
         if (element.matches(".proposal-artifact-quote")) return "对话流中的文件式产物引用，与右侧任务产物列表引用同一产物 ID、状态和只读详情。";
         if (element.matches(".ai-remix-item")) return "展示改款编号、锚点、保留元素、修改元素与 AI 概念表达；图片确认前不生成最终提案。";
+        if (element.matches("[data-artifact-menu]")) return "对话结果矩形的打开方式菜单；下载操作只在这里提供，不在右侧任务产物列表重复展示。";
         if (element.matches(".proposal-inline-action")) return element.dataset.proposalAction === "open-candidates" ? "打开纯图片候选池；桌面悬停显示来源和匹配理由，移动端点击先进入详情层。" : "打开与右侧任务产物同源的只读详情。";
         if (element.matches("#candidate-overlay")) return "候选池大弹窗以图片网格为主体，顶部仅保留关闭、来源筛选、已选数量和确认选择；错误市场、人群、性别或品类候选不会进入。";
         if (element.matches("#proposal-preview-overlay")) return "只读预览弹窗，展示客户方向参考包或客户提案内容。";
         if (element.matches("[data-artifact-view]")) return "在线查看对应正式产物的只读预览。";
-        if (element.matches("[data-artifact-download]")) return "下载对应正式产物的 HTML 演示文件。";
+        if (element.matches("[data-artifact-download-inline]")) return "从对话中的结果矩形下载对应正式产物的 HTML 演示文件。";
         if (element.matches("#view-applied-info")) return "打开右侧抽屉，查看本任务的必须遵守、默认参考和仅作证据信息。";
         if (element.matches("#create-project")) return "点击打开创建项目弹窗。项目名称最多 40 个字符；未填写时默认命名为“项目”。";
         if (element.matches(".history-row")) {
@@ -4241,11 +4274,12 @@
           [".profile-detail-page", "业务偏好档案详情页面"],
           [".preference-module-card", "偏好内容模块卡片"],
           [".task-workbench-page", "统一任务工作台"],
+          ["[data-artifact-menu]", "结果打开方式菜单"],
           [".proposal-inline-action", "候选池入口"],
           ["#candidate-overlay", "候选池弹窗"],
           ["#proposal-preview-overlay", "只读预览弹窗"],
           ["[data-artifact-view]", "在线查看按钮"],
-          ["[data-artifact-download]", "下载按钮"],
+          ["[data-artifact-download-inline]", "对话结果下载按钮"],
           ["#package-upload", "上传完整资料包"],
           ["#task-scene", "任务标题"],
           ["#task-profile-trigger", "已应用档案标签"],
