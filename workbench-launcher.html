@@ -944,6 +944,10 @@
     .task-message { display: flex; margin-bottom: 34px; }
     .task-message.user { justify-content: flex-end; }
     .user-message-bubble { max-width: min(620px,88%); padding: 13px 16px; border: 1px solid #343936; border-radius: 14px 14px 4px 14px; color: #eef3f1; background: #252927; font-size: 14px; line-height: 1.65; white-space: pre-wrap; }
+    .user-attachment-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 9px; }
+    .user-attachment { display: inline-flex; align-items: center; gap: 6px; max-width: 240px; padding: 6px 8px; border: 1px solid #39433f; border-radius: 7px; color: #b9cbc6; background: #1d2220; font-size: 10px; line-height: 15px; }
+    .user-attachment::before { content: "↳"; color: #6eddd3; font-size: 12px; }
+    .user-attachment span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
     .task-message.profile-context { justify-content: flex-end; margin-top: -24px; margin-bottom: 34px; }
     .applied-profile-card { width: min(540px,82%); padding: 12px 14px; border: 1px solid #30413c; border-radius: 10px 4px 10px 10px; background: rgba(32,208,196,.055); }
     .applied-profile-head { display: flex; align-items: center; gap: 7px; color: #dbe8e4; font-size: 11px; }
@@ -1012,12 +1016,16 @@
     .selection-card-head { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
     .selection-card-head h4 { margin: 0; color: #eef5f2; font-size: 14px; line-height: 22px; }
     .selection-card-head p { margin: 3px 0 0; color: #87938f; font-size: 12px; line-height: 19px; }
+    .selection-card-note { margin: -4px 0 12px; color: #6f7d78; font-size: 11px; line-height: 17px; }
     .selection-required { color: #55ded3; font-size: 11px; white-space: nowrap; }
     .selection-options { display: grid; gap: 8px; }
+    .selection-section + .selection-section { margin-top: 14px; padding-top: 13px; border-top: 1px solid #343d3a; }
+    .selection-section-title { margin: 0 0 8px; color: #aebbb7; font-size: 11px; font-weight: 600; }
     .selection-options.text { grid-template-columns: repeat(2,minmax(0,1fr)); }
     .selection-options.image { grid-template-columns: repeat(3,minmax(0,1fr)); }
     .selection-option { position: relative; min-height: 40px; display: flex; align-items: center; gap: 9px; padding: 10px; border: 1px solid #38423f; border-radius: 9px; color: #d6dfdc; background: #252b29; text-align: left; cursor: pointer; transition: border-color .14s ease, background .14s ease; }
     .selection-option:hover { border-color: #53615c; background: #2a312e; }
+    .selection-option:disabled { color: #6f7975; border-style: dashed; background: #202523; cursor: default; }
     .selection-option.selected { border-color: #55ded3; background: rgba(85,222,211,.11); color: #eefaf8; }
     .selection-option.selected::after { content: "✓"; position: absolute; top: 8px; right: 9px; color: #55ded3; font-size: 12px; font-weight: 700; }
     .selection-option.image { display: grid; align-content: start; padding: 8px; }
@@ -1047,6 +1055,8 @@
     .candidate-filters { display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); gap: 8px; margin: 16px 0 14px; }
     .candidate-filter { height: 34px; min-width: 0; padding: 0 8px; border: 1px solid #38423f; border-radius: 8px; color: #d7e0dd; background: #252b29; font-size: 11px; }
     .candidate-grid { min-height: 0; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; overflow: auto; padding-right: 4px; }
+    .candidate-empty { grid-column: 1 / -1; align-self: center; display: grid; gap: 7px; padding: 26px 18px; border: 1px dashed #3a4642; border-radius: 10px; color: #b6c4bf; background: rgba(32,37,35,.72); text-align: center; }
+    .candidate-empty span { color: #788680; font-size: 11px; line-height: 17px; }
     .candidate-card { display: grid; gap: 9px; padding: 10px; border: 1px solid #37413e; border-radius: 11px; background: #222826; }
     .candidate-card.selected { border-color: #55ded3; box-shadow: 0 0 0 1px rgba(85,222,211,.34) inset; }
     .candidate-card.excluded { opacity: .42; filter: grayscale(.45); }
@@ -2311,18 +2321,18 @@
       { id: "soft", name: "柔性优雅", desc: "适合客户想看更温和提案时使用", signal: "风格辨识度高", competitive: "低中", thumb: "thumb-d" }
     ];
     const proposalCandidatePool = [
-      { code: "A01", direction: "urban", title: "通勤针织开衫", platform: "ZOZOTOWN", brand: "UNITED ARROWS", price: "JPY 9,900", match: 94, signal: "demo", competition: "中", thumb: "thumb-a", note: "演示数据 · 轻通勤、层次搭配强", source: "平台字段", gap: "样本量偏小" },
-      { code: "A02", direction: "urban", title: "落肩短袖套装", platform: "Rakuten Fashion", brand: "SNIDEL", price: "JPY 13,200", match: 91, signal: "demo", competition: "中高", thumb: "thumb-b", note: "演示数据 · 客户可快速确认的方向", source: "平台字段", gap: "价格带需复核" },
-      { code: "A03", direction: "urban", title: "通勤衬衫连衣裙", platform: "LINE SHOPPING", brand: "GLOBAL WORK", price: "JPY 11,000", match: 89, signal: "demo", competition: "中", thumb: "thumb-c", note: "演示数据 · 视觉同质化一般", source: "公开网页", gap: "评价样本有限" },
-      { code: "B01", direction: "light", title: "轻薄罩衫连衣裙", platform: "TikTok Shop", brand: "COCODEAL", price: "JPY 12,800", match: 96, signal: "demo", competition: "高", thumb: "thumb-b", note: "演示数据 · 夏季表达更强", source: "社媒信号", gap: "互动口径差异" },
-      { code: "B02", direction: "light", title: "垂感飘带上衣", platform: "ZOZOTOWN", brand: "Mila Owen", price: "JPY 8,800", match: 87, signal: "demo", competition: "中高", thumb: "thumb-d", note: "演示数据 · 可延展为更轻盈提案", source: "平台字段", gap: "授权状态仅示意" },
-      { code: "B03", direction: "light", title: "薄针织防晒外搭", platform: "Rakuten Fashion", brand: "BEAMS", price: "JPY 10,450", match: 88, signal: "demo", competition: "中", thumb: "thumb-c", note: "演示数据 · 样式简洁", source: "平台字段", gap: "时间范围待统一" },
-      { code: "C01", direction: "active", title: "轻户外拉链外套", platform: "TikTok Shop", brand: "THE NORTH FACE", price: "JPY 15,900", match: 86, signal: "demo", competition: "高", thumb: "thumb-c", note: "演示数据 · 功能感更明显", source: "社媒信号", gap: "价格离散" },
-      { code: "C02", direction: "active", title: "可收纳防晒衬衫", platform: "ZOZOTOWN", brand: "mystic", price: "JPY 9,800", match: 90, signal: "demo", competition: "中", thumb: "thumb-a", note: "演示数据 · 兼顾场景与日常", source: "平台字段", gap: "样本为演示" },
-      { code: "C03", direction: "active", title: "工装感束腰裙", platform: "Rakuten Fashion", brand: "FREAK'S STORE", price: "JPY 12,100", match: 84, signal: "demo", competition: "中", thumb: "thumb-d", note: "演示数据 · 适合差异化表达", source: "公开网页", gap: "证据充分度中等" },
-      { code: "D01", direction: "soft", title: "柔软垂坠长裙", platform: "ZOZOTOWN", brand: "URBAN RESEARCH", price: "JPY 14,300", match: 92, signal: "demo", competition: "中", thumb: "thumb-d", note: "演示数据 · 客户沟通友好", source: "平台字段", gap: "来源页码示意" },
-      { code: "D02", direction: "soft", title: "法式感泡泡袖上衣", platform: "LINE SHOPPING", brand: "ADAM ET ROPÉ", price: "JPY 11,900", match: 88, signal: "demo", competition: "中", thumb: "thumb-b", note: "演示数据 · 风格表达更柔和", source: "公开网页", gap: "授权状态示意" },
-      { code: "D03", direction: "soft", title: "轻礼服感套装", platform: "Rakuten Fashion", brand: "NANO universe", price: "JPY 16,800", match: 86, signal: "demo", competition: "低中", thumb: "thumb-a", note: "演示数据 · 可用于提案收束", source: "平台字段", gap: "样本量有限" }
+      { code: "A01", direction: "urban", title: "通勤针织开衫", platform: "ZOZOTOWN", brand: "UNITED ARROWS", price: "JPY 9,900", match: 94, signal: "demo", competition: "中", thumb: "thumb-a", note: "演示数据 · 轻通勤、层次搭配强", source: "平台字段", gap: "样本量偏小", market: "日本", gender: "女装", category: "通勤", audience: ["25-34岁", "35-44岁"] },
+      { code: "A02", direction: "urban", title: "落肩短袖套装", platform: "Rakuten Fashion", brand: "SNIDEL", price: "JPY 13,200", match: 91, signal: "demo", competition: "中高", thumb: "thumb-b", note: "演示数据 · 客户可快速确认的方向", source: "平台字段", gap: "价格带需复核", market: "日本", gender: "女装", category: "通勤", audience: ["25-34岁", "35-44岁"] },
+      { code: "A03", direction: "urban", title: "通勤衬衫连衣裙", platform: "LINE SHOPPING", brand: "GLOBAL WORK", price: "JPY 11,000", match: 89, signal: "demo", competition: "中", thumb: "thumb-c", note: "演示数据 · 视觉同质化一般", source: "公开网页", gap: "评价样本有限", market: "日本", gender: "女装", category: "连衣裙", audience: ["25-34岁", "35-44岁"] },
+      { code: "B01", direction: "light", title: "轻薄罩衫连衣裙", platform: "TikTok Shop", brand: "COCODEAL", price: "JPY 12,800", match: 96, signal: "demo", competition: "高", thumb: "thumb-b", note: "演示数据 · 夏季表达更强", source: "社媒信号", gap: "互动口径差异", market: "日本", gender: "女装", category: "夏季女装", audience: ["25-34岁", "35-44岁"] },
+      { code: "B02", direction: "light", title: "垂感飘带上衣", platform: "ZOZOTOWN", brand: "Mila Owen", price: "JPY 8,800", match: 87, signal: "demo", competition: "中高", thumb: "thumb-d", note: "演示数据 · 可延展为更轻盈提案", source: "平台字段", gap: "授权状态仅示意", market: "日本", gender: "女装", category: "上衣", audience: ["25-34岁", "35-44岁"] },
+      { code: "B03", direction: "light", title: "薄针织防晒外搭", platform: "Rakuten Fashion", brand: "BEAMS", price: "JPY 10,450", match: 88, signal: "demo", competition: "中", thumb: "thumb-c", note: "演示数据 · 样式简洁", source: "平台字段", gap: "时间范围待统一", market: "日本", gender: "女装", category: "夏季女装", audience: ["25-34岁", "35-44岁"] },
+      { code: "C01", direction: "active", title: "轻户外拉链外套", platform: "TikTok Shop", brand: "THE NORTH FACE", price: "JPY 15,900", match: 86, signal: "demo", competition: "高", thumb: "thumb-c", note: "演示数据 · 功能感更明显", source: "社媒信号", gap: "价格离散", market: "北美", gender: "女装", category: "轻户外", audience: ["25-34岁", "35-44岁"] },
+      { code: "C02", direction: "active", title: "可收纳防晒衬衫", platform: "ZOZOTOWN", brand: "mystic", price: "JPY 9,800", match: 90, signal: "demo", competition: "中", thumb: "thumb-a", note: "演示数据 · 兼顾场景与日常", source: "平台字段", gap: "样本为演示", market: "日本", gender: "女装", category: "轻户外", audience: ["25-34岁", "35-44岁"] },
+      { code: "C03", direction: "active", title: "工装感束腰裙", platform: "Rakuten Fashion", brand: "FREAK'S STORE", price: "JPY 12,100", match: 84, signal: "demo", competition: "中", thumb: "thumb-d", note: "演示数据 · 适合差异化表达", source: "公开网页", gap: "证据充分度中等", market: "欧洲", gender: "女装", category: "轻户外", audience: ["25-34岁", "35-44岁"] },
+      { code: "D01", direction: "soft", title: "柔软垂坠长裙", platform: "ZOZOTOWN", brand: "URBAN RESEARCH", price: "JPY 14,300", match: 92, signal: "demo", competition: "中", thumb: "thumb-d", note: "演示数据 · 客户沟通友好", source: "平台字段", gap: "来源页码示意", market: "欧洲", gender: "女装", category: "女装", audience: ["25-34岁", "35-44岁"] },
+      { code: "D02", direction: "soft", title: "法式感泡泡袖上衣", platform: "LINE SHOPPING", brand: "ADAM ET ROPÉ", price: "JPY 11,900", match: 88, signal: "demo", competition: "中", thumb: "thumb-b", note: "演示数据 · 风格表达更柔和", source: "公开网页", gap: "授权状态示意", market: "欧洲", gender: "女装", category: "女装", audience: ["25-34岁", "35-44岁"] },
+      { code: "D03", direction: "soft", title: "轻礼服感套装", platform: "Rakuten Fashion", brand: "NANO universe", price: "JPY 16,800", match: 86, signal: "demo", competition: "低中", thumb: "thumb-a", note: "演示数据 · 可用于提案收束", source: "平台字段", gap: "样本量有限", market: "日本", gender: "女装", category: "女装", audience: ["25-34岁", "35-44岁"] }
     ];
     const proposalArtifactData = { directionPack: null, proposal: null };
     const proposalFlow = {
@@ -2331,6 +2341,21 @@
       profile: null,
       title: "新任务",
       firstText: "",
+      attachments: [],
+      requirement: {
+        market: "",
+        audience: "",
+        category: "",
+        season: "",
+        price: "",
+        designDirection: "",
+        referenceFeatures: "",
+        keepElements: "",
+        excludeElements: "",
+        missing: [],
+        clarity: "clear",
+        hypothesis: ""
+      },
       language: "简体中文",
       directionPackLanguage: "简体中文",
       proposalLanguage: "简体中文",
@@ -2366,9 +2391,9 @@
     }
     window.updateTaskPanel = renderTaskPanel;
 
-    const proposalSteps = ["需求理解", "调研确认", "参考调研", "方向对齐", "AI改款", "方案确认", "提案交付"];
+    const proposalSteps = ["需求解析与确认", "调研范围确认", "趋势与参考调研", "方向对齐", "AI改款", "方案确认", "提案交付"];
     function proposalStageIndex() {
-      const order = { idle: 0, understanding: 0, scope: 1, research: 2, candidate: 3, directionPack: 3, feedback: 4, ai: 4, final: 5, done: 7 };
+      const order = { idle: 0, understanding: 0, scope: 1, research: 2, candidate: 2, directionPack: 3, feedback: 4, ai: 4, final: 5, done: 7 };
       return order[proposalFlow.stage] ?? 0;
     }
     function renderProposalPlanPanel() {
@@ -2376,7 +2401,7 @@
       renderTaskPanel({
         plans: proposalSteps.map((label, index) => ({
           label,
-          state: index < current ? "已完成" : index === current ? "进行中" : "待确认",
+          state: index < current ? "已完成" : index === current ? "进行中" : "待开始",
           className: index === current ? "updated" : index < current ? "updated" : ""
         })),
         outputs: Object.keys(proposalArtifactData).filter((key) => proposalArtifactData[key]).map((key) => proposalArtifactData[key]),
@@ -2397,19 +2422,23 @@
     function proposalSelectionCard(config) {
       const id = config.id || `selection-${Date.now()}`;
       proposalFlow.selectionCards.set(id, config);
-      const optionHtml = config.options.map((option, index) => {
+      const selectedValues = new Set(config.selectedValues || []);
+      const renderOption = (option, index) => {
         const isImage = config.displayType === "image";
         const classes = ["selection-option", isImage ? "image" : "text"];
-        if (config.selectionMode === "single" && index === 0 && config.autoselectFirst) classes.push("selected");
+        if (selectedValues.has(option.value) || (config.selectionMode === "single" && !selectedValues.size && index === 0 && config.autoselectFirst)) classes.push("selected");
         return `
-          <button type="button" class="${classes.join(" ")}" data-selection-option="${escapeHtml(id)}" data-value="${escapeHtml(option.value)}">
+          <button type="button" class="${classes.join(" ")}" data-selection-option="${escapeHtml(id)}" data-value="${escapeHtml(option.value)}" ${option.disabled ? "disabled" : ""}>
             ${isImage ? `<div class="fashion-thumb ${escapeHtml(option.thumb || "thumb-a")}" data-code="${escapeHtml(option.code || option.value)}"></div>` : ""}
             <div>
               <strong>${escapeHtml(option.label)}</strong>
               ${option.meta ? `<small>${escapeHtml(option.meta)}</small>` : ""}
             </div>
           </button>`;
-      }).join("");
+      };
+      const optionHtml = config.sections?.length
+        ? config.sections.map((section) => `<div class="selection-section"><h5 class="selection-section-title">${escapeHtml(section.title)}</h5><div class="selection-options ${escapeHtml(config.displayType)}">${section.options.map(renderOption).join("")}</div></div>`).join("")
+        : `<div class="selection-options ${escapeHtml(config.displayType)}">${(config.options || []).map(renderOption).join("")}</div>`;
       return `
         <div class="task-message assistant">
           <div class="agent-message">
@@ -2419,7 +2448,8 @@
                 <div><h4>${escapeHtml(config.title)}</h4><p>${escapeHtml(config.subtitle || "")}</p></div>
                 <span class="selection-required">${config.required ? "必选" : "可选"} · ${escapeHtml(config.confirmLabel || "确认选择")}</span>
               </div>
-              <div class="selection-options ${escapeHtml(config.displayType)}">${optionHtml}</div>
+              ${config.note ? `<p class="selection-card-note">${escapeHtml(config.note)}</p>` : ""}
+              ${optionHtml}
               ${config.allowOther ? `<input class="selection-other-input" type="text" maxlength="32" placeholder="${escapeHtml(config.otherPlaceholder || "输入其他内容")}" hidden>` : ""}
               <div class="selection-card-actions"><span class="selection-card-error" hidden></span><button class="selection-confirm" type="button">${escapeHtml(config.confirmLabel || "确认选择")}</button></div>
             </section>
@@ -2439,11 +2469,11 @@
       const selectedItems = proposalCandidatePool.filter((item) => proposalFlow.referenceCodes.includes(item.code));
       const directionRows = selectedItems
         .map((item) => `<li>${escapeHtml(item.code)} · ${escapeHtml(item.title)} · ${escapeHtml(item.platform)} · ${escapeHtml(item.brand)}</li>`).join("");
-      const platformRows = [
-        ["ZOZOTOWN", "平台字段", "2026-07/08", "12", "中", "授权状态待复核"],
-        ["Rakuten Fashion", "平台字段", "2026-07/08", "9", "中", "样本量偏小"],
-        ["TikTok Shop", "社媒信号", "2026-08", "15", "低中", "互动不等于销量"]
-      ].map((row) => `<tr>${row.map((cell) => `<td>${escapeHtml(cell)}</td>`).join("")}</tr>`).join("");
+      const platformData = [
+        ...(proposalFlow.scope.ecommercePlatforms || []).map((platform, index) => [platform, "电商供给/竞争", "2026-07/08", `${12 - Math.min(index, 2) * 3}（演示）`, "中", "不同平台口径不合并"]),
+        ...(proposalFlow.scope.socialPlatforms || []).map((platform, index) => [platform, "社媒信号", "2026-08", `${15 - Math.min(index, 2) * 2}（演示）`, "低中", "互动不等于销量"])
+      ];
+      const platformRows = (platformData.length ? platformData : [["待确认平台", "范围未确认", "未指定", "0（演示）", "不足", "尚未确认调研范围"]]).map((row) => `<tr>${row.map((cell) => `<td>${escapeHtml(cell)}</td>`).join("")}</tr>`).join("");
       const main = proposalFlow.mainPlan || { code: "M01", title: "稳妥改款", anchor: proposalFlow.referenceCodes[0] || "A01", keep: "核心廓形、客户认可比例、基础色", change: "局部细节与比例节奏", desc: "AI 概念表达" };
       const backup = proposalFlow.backupPlan || { code: "M02", title: "差异改款", anchor: proposalFlow.referenceCodes[1] || proposalFlow.referenceCodes[0] || "A02", keep: "主廓形与场景", change: "袖型、下摆与面料感", desc: "AI 概念表达" };
       const outputTitle = type === "direction" ? "客户方向参考包 V1" : "客户提案 V1";
@@ -2550,84 +2580,163 @@
       return `<div class="task-message assistant"><div class="agent-message"><div class="agent-message-copy">${escapeHtml(copy)}</div>${actionHtml}</div></div>`;
     }
 
-    function renderProposalInitialConversation(userText, profile = null) {
-      const profileContext = profile ? `<div class="task-message profile-context"><div class="applied-profile-card"><div class="applied-profile-head">已应用业务偏好档案：<strong>${escapeHtml(profile.name)}</strong></div><div class="applied-profile-meta"><span>品类：${escapeHtml(profile.categories.join("、"))}</span><span>价格段：${escapeHtml(profile.priceRange.currency)} ${Number(profile.priceRange.min).toLocaleString()}–${Number(profile.priceRange.max).toLocaleString()}</span><span>国家：${escapeHtml(profile.countries.join("、"))}</span><span>年龄段：${escapeHtml(profile.ageRanges.join("、"))}</span></div></div></div>` : "";
-      const understanding = [
-        "我先按客户提案生成来理解这次任务：",
-        "",
-        "客户明确需求：需要一版可发给客户确认的方向参考包，并在客户反馈后形成 AI 改款和最终提案。",
-        "系统理解：这不是内部商品企划，也不进入打样、成本、MOQ、交期或供应链计划；重点是方向对齐、参考款筛选和客户可评审的概念提案。",
-        "待确认项：本次调研主市场、覆盖平台，以及正式文件语言。",
-        "本次希望客户最终确认：参考方向、保留/排除元素、主方案和备选方案。"
+    function proposalAttachmentHtml(attachments = []) {
+      if (!attachments.length) return "";
+      return `<div class="user-attachment-list">${attachments.map((file) => `<div class="user-attachment" title="${escapeHtml(file.name)}"><span>${escapeHtml(file.name)}</span></div>`).join("")}</div>`;
+    }
+
+    function parseProposalRequirement(text, profile = null, attachments = []) {
+      const source = String(text || "");
+      const market = ["中国", "日本", "北美", "欧洲"].find((value) => source.includes(value)) || profile?.countries?.[0] || "";
+      const ageMatch = source.match(/(1[8-9]|2\d|3\d|4\d)[-至到](\d{2})\s*(?:岁)?/);
+      const audience = source.includes("童装") || source.includes("儿童") ? "儿童" : source.includes("男装") ? "男性消费者" : ageMatch ? `${ageMatch[1]}-${ageMatch[2]}岁` : (source.includes("女装") ? "女性消费者" : (profile?.ageRanges?.[0] || ""));
+      const category = ["轻户外", "瑜伽服", "连衣裙", "针织", "通勤", "女装", "男装", "童装"].find((value) => source.includes(value)) || profile?.categories?.[0] || "";
+      const season = source.match(/20\d{2}\s*(春夏|秋冬|春季|夏季|秋季|冬季|春|夏|秋|冬|SS|AW)/i)?.[0] || (["春夏", "秋冬", "夏季", "春季"].find((value) => source.includes(value)) || "");
+      const price = source.match(/(?:预算|价格带|价格范围)[^，。；;]*[¥$€￥]?\s*[\d,]+(?:\s*[-至到]\s*[¥$€￥]?\s*[\d,]+)?[^，。；;]*/)?.[0] || (source.includes("中等") ? "中等价格带" : (profile?.priceRange ? `${profile.priceRange.currency} ${Number(profile.priceRange.min).toLocaleString()}-${Number(profile.priceRange.max).toLocaleString()}` : ""));
+      const directionTerms = ["轻盈", "极简", "法式", "功能", "机能", "舒适", "稳妥", "差异化", "夏季", "通勤"].filter((value) => source.includes(value));
+      const designDirection = directionTerms.join("、");
+      const keepMatch = source.match(/保留[^，。；;]*/)?.[0]?.replace(/^保留\s*/, "") || "";
+      const excludeMatch = source.match(/(?:排除|避免|不要)[^，。；;]*/)?.[0]?.replace(/^(排除|避免|不要)\s*/, "") || "";
+      const referenceFeatures = attachments.length ? "已上传参考图；待确认廓形、色彩、面料感与细节（演示解析维度）" : "";
+      const missing = [];
+      if (!market) missing.push("主市场");
+      if (!audience) missing.push("目标年龄/场景");
+      if (!category) missing.push("优先品类");
+      if (!season) missing.push("季节");
+      return {
+        market,
+        audience,
+        category,
+        season,
+        price,
+        designDirection,
+        referenceFeatures,
+        keepElements: keepMatch,
+        excludeElements: excludeMatch,
+        missing,
+        clarity: missing.slice(0, 3).length >= 2 ? "vague" : "clear",
+        hypothesis: ""
+      };
+    }
+
+    function proposalRequirementText(requirement) {
+      const value = (text, fallback = "待补充") => text || fallback;
+      return [
+        "本次需求理解",
+        `目标：${value(proposalFlow.firstText.includes("提案") ? "形成一版可与客户沟通的方向提案，并在反馈后继续推进改款" : "根据当前描述形成客户可评审的方向方案")}`,
+        `市场：${value(requirement.market)}　人群：${value(requirement.audience)}`,
+        `品类：${value(requirement.category)}　季节：${value(requirement.season)}`,
+        `价格：${value(requirement.price)}　设计方向：${value(requirement.designDirection)}`,
+        `参考图特征：${value(requirement.referenceFeatures, "未上传，待补充")}`,
+        `保留元素：${value(requirement.keepElements)}　排除元素：${value(requirement.excludeElements)}`,
+        requirement.missing.length ? `待补充：${requirement.missing.slice(0, 3).join("、")}` : "当前已具备进入调研范围确认的基础信息。"
       ].join("\n");
-      document.querySelector("#task-chat-inner").innerHTML = `
-        <div class="task-message user"><div class="user-message-bubble">${escapeHtml(userText)}</div></div>
-        ${profileContext}
-        ${proposalAgentMessage(understanding)}
-        ${proposalSelectionCard({
-          id: "proposal-market",
-          title: "选择主市场",
-          subtitle: "一个任务只应用一个主地域。这里不会展示底层工具或采集方式。",
-          summary: "我需要先确认一个主市场，再确认要覆盖的平台。",
-          selectionMode: "single",
-          displayType: "text",
-          required: true,
-          options: [
-            { value: "中国", label: "中国", meta: "淘宝、京东、抖音电商" },
-            { value: "日本", label: "日本", meta: "ZOZOTOWN、Rakuten Fashion 等" },
-            { value: "北美", label: "北美", meta: "Amazon、TikTok Shop、品牌站" },
-            { value: "欧洲", label: "欧洲", meta: "Zalando、Instagram、品牌站" }
-          ],
-          onConfirm: (values) => {
-            proposalFlow.scope.market = values[0];
-            collapseSelectionCard("proposal-market", `主市场：${values[0]}`);
-            appendTaskHtml(proposalSelectionCard({
-              id: "proposal-platforms",
-              title: "选择覆盖平台",
-              subtitle: "可多选平台；选择“其他”后可输入自定义平台名称。",
-              summary: "继续确认本次要覆盖的平台范围。",
-              selectionMode: "multiple",
-              displayType: "text",
-              allowOther: true,
-              otherPlaceholder: "例如：品牌官网、Instagram、小红书",
-              required: true,
-              options: [
-                { value: "ZOZOTOWN", label: "ZOZOTOWN", meta: "电商平台" },
-                { value: "Rakuten Fashion", label: "Rakuten Fashion", meta: "电商平台" },
-                { value: "TikTok Shop", label: "TikTok Shop", meta: "社媒电商" },
-                { value: "LINE SHOPPING", label: "LINE SHOPPING", meta: "渠道参考" },
-                { value: "其他", label: "其他", meta: "自定义平台" }
-              ],
-              onConfirm: confirmProposalScope
-            }));
-          }
-        })}`;
+    }
+
+    function proposalRequirementQuestions(requirement) {
+      if (requirement.clarity === "vague") return "请先补充 1-3 项：主市场、目标年龄/场景、优先品类。可以直接补充，也可以回复“跳过”；跳过后我会列出待验证方向假设。";
+      if (requirement.missing.length) return `请确认${requirement.missing.slice(0, 3).join("、")}；可以直接补充，也可以回复“跳过”保留未指定状态。确认后回复“继续”进入调研范围。`;
+      return "如果以上理解无误，请回复“继续”进入调研范围；也可以直接补充或修正条件。";
+    }
+
+    const proposalMarketPlatforms = {
+      中国: { ecommerce: [["淘宝", "淘宝", "电商平台"], ["京东", "京东", "电商平台"], ["抖音电商", "抖音电商", "电商平台"]], social: [["小红书", "小红书", "社媒信号"], ["微博", "微博", "社媒信号"], ["抖音", "抖音", "社媒信号"]] },
+      日本: { ecommerce: [["ZOZOTOWN", "ZOZOTOWN", "电商平台"], ["Rakuten Fashion", "Rakuten Fashion", "电商平台"], ["LINE SHOPPING", "LINE SHOPPING", "电商平台"]], social: [["Instagram", "Instagram", "社媒信号"], ["TikTok", "TikTok", "社媒信号"], ["X", "X", "社媒信号"]] },
+      北美: { ecommerce: [["Amazon", "Amazon", "电商平台"], ["TikTok Shop", "TikTok Shop", "电商平台"], ["品牌官网", "品牌官网", "独立站"]], social: [["Instagram", "Instagram", "社媒信号"], ["Pinterest", "Pinterest", "社媒信号"], ["TikTok", "TikTok", "社媒信号"]] },
+      欧洲: { ecommerce: [["Zalando", "Zalando", "电商平台"], ["Amazon", "Amazon", "电商平台"], ["品牌官网", "品牌官网", "独立站"]], social: [["Instagram", "Instagram", "社媒信号"], ["Pinterest", "Pinterest", "社媒信号"], ["TikTok", "TikTok", "社媒信号"]] }
+    };
+
+    function updateProposalScopePlatformSections(card, market) {
+      const config = proposalMarketPlatforms[market] || proposalMarketPlatforms.日本;
+      const sections = card.querySelectorAll(".selection-section");
+      const optionButton = (prefix, value, label, meta) => `<button type="button" class="selection-option text" data-selection-option="proposal-scope" data-value="${escapeHtml(`${prefix}:${value}`)}"><div><strong>${escapeHtml(label)}</strong><small>${escapeHtml(meta)}</small></div></button>`;
+      sections[1].querySelector(".selection-options").innerHTML = `${config.ecommerce.map(([value, label, meta]) => optionButton("ecom", value, label, meta)).join("")}${optionButton("ecom", "其他", "其他", "输入自定义平台")}`;
+      sections[2].querySelector(".selection-options").innerHTML = config.social.map(([value, label, meta]) => optionButton("social", value, label, meta)).join("");
+      const otherInput = card.querySelector(".selection-other-input");
+      otherInput.hidden = true;
+      otherInput.value = "";
+    }
+
+    function renderProposalScopeSelection() {
+      const market = proposalFlow.requirement.market || proposalFlow.scope.market || "";
+      const platformConfig = market ? proposalMarketPlatforms[market] : null;
       proposalFlow.stage = "scope";
+      proposalFlow.scope.market = market;
       renderProposalPlanPanel();
-      document.querySelector("#task-condition").placeholder = "可以补充客户预算、指定竞品、需要避开的方向…";
+      appendTaskHtml(proposalAgentMessage(`需求理解已确认。接下来只确认调研范围：一个主市场，以及该市场下的电商平台和社媒平台。趋势资料库会默认纳入，不需要选择具体报告，也不会单独确认检索词。`));
+      appendTaskHtml(proposalSelectionCard({
+        id: "proposal-scope",
+        title: "确认调研范围",
+        subtitle: "一个任务只应用一个主市场；平台按市场动态提供，可多选。",
+        note: "趋势资料库默认纳入，用于支撑方向假设；品牌或独立站仅沿用你在对话中指定的对象。",
+        summary: "请选择主市场、电商平台和社媒平台。",
+        selectionMode: "multiple",
+        displayType: "text",
+        singleValuePrefixes: ["market:"],
+        allowOther: true,
+        otherPlaceholder: "其他电商平台或独立站名称",
+        required: true,
+        sections: [
+          { title: "主市场（单选）", options: ["中国", "日本", "北美", "欧洲"].map((value) => ({ value: `market:${value}`, label: value, meta: value === market ? "已按需求预选，可修改" : "主地域" })) },
+          { title: "电商平台（多选）", options: platformConfig ? [...platformConfig.ecommerce.map(([value, label, meta]) => ({ value: `ecom:${value}`, label, meta })), { value: "ecom:其他", label: "其他", meta: "输入自定义平台" }] : [{ value: "pending:ecommerce", label: "先选择主市场", meta: "选择后显示对应电商平台", disabled: true }] },
+          { title: "社媒平台（多选）", options: platformConfig ? platformConfig.social.map(([value, label, meta]) => ({ value: `social:${value}`, label, meta })) : [{ value: "pending:social", label: "先选择主市场", meta: "选择后显示对应社媒平台", disabled: true }] }
+        ],
+        selectedValues: market ? [`market:${market}`] : [],
+        onConfirm: confirmProposalScope
+      }));
+      document.querySelector("#task-condition").placeholder = "补充品牌、独立站、要排除的方向或其他调研条件…";
+    }
+
+    function renderProposalInitialConversation(userText, profile = null, attachments = []) {
+      proposalFlow.requirement = parseProposalRequirement(userText, profile, attachments);
+      proposalFlow.attachments = attachments;
+      proposalFlow.stage = "understanding";
+      const profileContext = profile ? `<div class="task-message profile-context"><div class="applied-profile-card"><div class="applied-profile-head">已应用业务偏好档案：<strong>${escapeHtml(profile.name)}</strong></div><div class="applied-profile-meta"><span>品类：${escapeHtml(profile.categories.join("、"))}</span><span>价格段：${escapeHtml(profile.priceRange.currency)} ${Number(profile.priceRange.min).toLocaleString()}–${Number(profile.priceRange.max).toLocaleString()}</span><span>国家：${escapeHtml(profile.countries.join("、"))}</span><span>年龄段：${escapeHtml(profile.ageRanges.join("、"))}</span></div></div></div>` : "";
+      document.querySelector("#task-chat-inner").innerHTML = `
+        <div class="task-message user"><div class="user-message-bubble">${escapeHtml(userText)}${proposalAttachmentHtml(attachments)}</div></div>
+        ${profileContext}
+        ${agentExecutionMessage({copy:"已完成本次需求解析，下面给出本次需求理解。",label:"需求解析任务",details:["读取业务偏好档案（如已应用）","解析客户资料与首轮描述","识别参考图特征","检查缺失信息"],state:"complete"})}
+        ${proposalAgentMessage(`${proposalRequirementText(proposalFlow.requirement)}\n\n${proposalRequirementQuestions(proposalFlow.requirement)}`)}`;
+      renderProposalPlanPanel();
+      document.querySelector("#task-condition").placeholder = "补充或修正需求；确认后回复“继续”，也可以回复“跳过”…";
       scrollTaskChatBottom();
     }
 
     function confirmProposalScope(values, otherValue) {
-      const platforms = values.filter((value) => value !== "其他");
-      if (values.includes("其他") && otherValue) platforms.push(otherValue);
+      const market = values.find((value) => value.startsWith("market:"))?.slice(7) || proposalFlow.requirement.market || "";
+      const ecommercePlatforms = values.filter((value) => value.startsWith("ecom:") && value !== "ecom:其他").map((value) => value.slice(5));
+      const socialPlatforms = values.filter((value) => value.startsWith("social:")).map((value) => value.slice(7));
+      if (values.includes("ecom:其他") && otherValue) ecommercePlatforms.push(otherValue);
+      if (!market) {
+        appendTaskHtml(proposalAgentMessage("请先选择一个主市场；一个任务只应用一个主地域。"));
+        return;
+      }
+      if (!ecommercePlatforms.length && !socialPlatforms.length) {
+        appendTaskHtml(proposalAgentMessage("请至少选择一个电商平台或社媒平台；主市场可以保持当前预选。"));
+        return;
+      }
+      const platforms = [...ecommercePlatforms, ...socialPlatforms];
+      proposalFlow.requirement.market = market;
+      proposalFlow.scope.market = market;
+      proposalFlow.scope.ecommercePlatforms = ecommercePlatforms;
+      proposalFlow.scope.socialPlatforms = socialPlatforms;
       proposalFlow.scope.platforms = platforms;
       proposalFlow.scope.otherPlatform = otherValue || "";
-      collapseSelectionCard("proposal-platforms", `平台：${platforms.join("、")}`);
+      collapseSelectionCard("proposal-scope", `主市场：${market} · 电商：${ecommercePlatforms.join("、") || "未选"} · 社媒：${socialPlatforms.join("、") || "未选"}`);
       proposalFlow.stage = "research";
       proposalFlow.references = [
-        { label: "来源类型：平台字段 · ZOZOTOWN · 2026-07/08 · 样本 12 · 证据充分度中 · 缺口：授权状态需复核", url: "#" },
-        { label: "来源类型：公开网页 · Rakuten Fashion · 2026-07/08 · 样本 9 · 证据充分度中 · 缺口：评价样本有限", url: "#" },
-        { label: "来源类型：社媒信号 · TikTok Shop · 2026-08 · 样本 15 · 证据充分度低中 · 缺口：互动不等同销量", url: "#" }
+        { label: `来源类型：趋势资料 · ${market} · 2026 春夏 · 方向假设 · 缺口：报告页码与授权状态待复核`, url: "#" },
+        ...ecommercePlatforms.slice(0, 2).map((platform, index) => ({ label: `来源类型：电商供给/竞争 · ${platform} · 2026-07/08 · 演示样本 ${12 - index * 3} · 证据充分度中 · 缺口：平台口径不合并`, url: "#" })),
+        ...socialPlatforms.slice(0, 2).map((platform, index) => ({ label: `来源类型：社媒信号 · ${platform} · 2026-08 · 演示样本 ${15 - index * 2} · 证据充分度低中 · 缺口：互动不等于销量`, url: "#" }))
       ];
       renderProposalPlanPanel();
       appendTaskHtml(agentExecutionMessage({
-        copy: `调研范围已确认：主市场 ${proposalFlow.scope.market}，平台覆盖 ${platforms.join("、")}。我会按平台分别整理市场信号，并把所有数值标注为演示数据。`,
-        label: "调研参考款与市场依据",
-        details: ["正在调研参考款", "正在核对市场数据字段", "正在整理来源、样本量、证据充分度和数据缺口"],
+        copy: `调研范围已确认：${market}；电商平台 ${ecommercePlatforms.join("、") || "未选"}；社媒平台 ${socialPlatforms.join("、") || "未选"}。趋势资料库默认纳入，以下来源会分开呈现，所有数值均标注为演示数据。`,
+        label: "趋势与参考调研",
+        details: ["整理趋势资料中的方向假设", "核对电商供给与竞争信息", "整理社媒信号、来源、样本量、证据充分度和数据缺口"],
         state: "complete"
       }));
-      appendTaskHtml(proposalAgentMessage("候选池已生成。你可以打开候选池，按方向聚类筛选参考款，并选择准备发给客户确认的款式。", `<button class="proposal-inline-action" type="button" data-proposal-action="open-candidates">打开候选池</button>`));
+      appendTaskHtml(proposalAgentMessage(`调研摘要：目标人群 ${proposalFlow.requirement.audience || "待补充"}；品类 ${proposalFlow.requirement.category || "待补充"}；核心视觉词 ${proposalFlow.requirement.designDirection || "待从趋势资料与社媒信号中验证"}；排除项 ${proposalFlow.requirement.excludeElements || "待补充"}。趋势资料只支撑方向假设，社媒信号与电商供给/竞争信息分别展示，不单独证明销量或市场机会。`, `<button class="proposal-inline-action" type="button" data-proposal-action="open-candidates">打开候选池</button>`));
       document.querySelector("#task-condition").placeholder = "也可以补充竞品、价格范围或要排除的方向…";
     }
 
@@ -2635,10 +2744,20 @@
       return proposalCandidatePool.filter((item) => proposalFlow.candidatePool.selected.has(item.code));
     }
 
+    function proposalCandidateMatchesRequirements(item) {
+      const requirement = proposalFlow.requirement || {};
+      if (requirement.market && item.market !== requirement.market) return false;
+      if (requirement.category === "男装" || requirement.category === "童装" || requirement.audience === "男性消费者" || requirement.audience === "儿童") return false;
+      if (requirement.category && requirement.category !== "女装" && item.category !== requirement.category) return false;
+      if (requirement.audience && /\d{2}-\d{2}岁/.test(requirement.audience) && !item.audience.includes(requirement.audience)) return false;
+      return item.gender === "女装";
+    }
+
     function filteredProposalCandidates() {
       const filters = proposalFlow.candidatePool.filters;
       return proposalCandidatePool.filter((item) => {
         const priceNumber = Number(item.price.replace(/[^\d]/g, ""));
+        if (!proposalCandidateMatchesRequirements(item)) return false;
         if (item.direction !== proposalFlow.candidatePool.direction) return false;
         if (filters.platform !== "全部" && item.platform !== filters.platform) return false;
         if (filters.brand !== "全部" && item.brand !== filters.brand) return false;
@@ -2653,8 +2772,9 @@
 
     function renderCandidateFilters() {
       const optionList = (values, selected) => values.map((value) => `<option ${value === selected ? "selected" : ""}>${escapeHtml(value)}</option>`).join("");
-      document.querySelector("#candidate-filter-platform").innerHTML = optionList(["全部", ...new Set(proposalCandidatePool.map((item) => item.platform))], proposalFlow.candidatePool.filters.platform);
-      document.querySelector("#candidate-filter-brand").innerHTML = optionList(["全部", ...new Set(proposalCandidatePool.map((item) => item.brand))], proposalFlow.candidatePool.filters.brand);
+      const eligible = proposalCandidatePool.filter(proposalCandidateMatchesRequirements);
+      document.querySelector("#candidate-filter-platform").innerHTML = optionList(["全部", ...new Set(eligible.map((item) => item.platform))], proposalFlow.candidatePool.filters.platform);
+      document.querySelector("#candidate-filter-brand").innerHTML = optionList(["全部", ...new Set(eligible.map((item) => item.brand))], proposalFlow.candidatePool.filters.brand);
       document.querySelector("#candidate-filter-price").innerHTML = optionList(["全部", "JPY 8,000-12,000", "JPY 12,000+"], proposalFlow.candidatePool.filters.price);
       document.querySelector("#candidate-filter-match").innerHTML = optionList(["全部", "90+", "90以下"], proposalFlow.candidatePool.filters.match);
       document.querySelector("#candidate-filter-signal").innerHTML = optionList(["全部", "演示数据"], proposalFlow.candidatePool.filters.signal);
@@ -2663,18 +2783,20 @@
 
     function renderCandidatePool() {
       document.querySelector("#candidate-directions").innerHTML = proposalDirections.map((direction) => {
-        const count = proposalCandidatePool.filter((item) => item.direction === direction.id).length;
+        const count = proposalCandidatePool.filter((item) => item.direction === direction.id && proposalCandidateMatchesRequirements(item)).length;
         return `<button type="button" class="candidate-direction ${direction.id === proposalFlow.candidatePool.direction ? "active" : ""}" data-direction="${escapeHtml(direction.id)}"><strong>${escapeHtml(direction.name)}</strong><small>${escapeHtml(direction.desc)} · ${count} 款</small></button>`;
       }).join("");
       renderCandidateFilters();
       const selected = proposalFlow.candidatePool.selected;
       const excluded = proposalFlow.candidatePool.excluded;
-      document.querySelector("#candidate-grid").innerHTML = filteredProposalCandidates().map((item) => `
+      const filtered = filteredProposalCandidates();
+      document.querySelector("#candidate-grid").innerHTML = filtered.length ? filtered.map((item) => `
         <article class="candidate-card ${selected.has(item.code) ? "selected" : ""} ${excluded.has(item.code) ? "excluded" : ""}" data-candidate-code="${escapeHtml(item.code)}">
           <div class="fashion-thumb ${escapeHtml(item.thumb)}" data-code="${escapeHtml(item.code)}"></div>
           <div class="candidate-meta">
             <h4>${escapeHtml(item.title)}</h4>
             <p>${escapeHtml(item.platform)} · ${escapeHtml(item.brand)} · ${escapeHtml(item.price)}</p>
+            <small>适配：${escapeHtml(item.market)} · ${escapeHtml(item.category)} · ${escapeHtml(item.gender)}</small>
             <small>匹配度 ${item.match}% · 竞争 ${escapeHtml(item.competition)} · ${escapeHtml(item.note)}</small>
             <small class="candidate-detail" hidden>来源：${escapeHtml(item.source)} · 缺口：${escapeHtml(item.gap)} · 授权状态：仅用于方向参考</small>
           </div>
@@ -2684,7 +2806,7 @@
             <button class="candidate-action" type="button" data-candidate-action="detail">详情</button>
             <button class="candidate-action" type="button" data-candidate-action="similar">相似</button>
           </div>
-        </article>`).join("");
+        </article>`).join("") : `<div class="candidate-empty"><strong>当前范围下暂无符合硬约束的候选款</strong><span>已按主市场、人群、性别和品类过滤；可回到对话补充或修正条件。</span></div>`;
       const trayItems = proposalSelectedCandidates();
       document.querySelector("#candidate-tray-list").innerHTML = trayItems.length ? trayItems.map((item) => `<div class="tray-item"><span>${escapeHtml(item.code)} · ${escapeHtml(item.title)}</span><button class="candidate-action" type="button" data-tray-remove="${escapeHtml(item.code)}">移除</button></div>`).join("") : `<p style="color:#77817c;font-size:12px;line-height:20px">还没有选择参考款。</p>`;
       document.querySelector("#candidate-confirm").disabled = trayItems.length === 0;
@@ -2694,6 +2816,9 @@
 
     function openCandidatePool() {
       proposalFlow.stage = "candidate";
+      if (proposalFlow.requirement.category === "轻户外") proposalFlow.candidatePool.direction = "active";
+      else if (proposalFlow.requirement.category === "夏季女装") proposalFlow.candidatePool.direction = "light";
+      else if (proposalFlow.requirement.category === "通勤") proposalFlow.candidatePool.direction = "urban";
       renderProposalPlanPanel();
       renderCandidatePool();
       document.querySelector("#candidate-overlay").hidden = false;
@@ -2820,6 +2945,49 @@
     function handleProposalFollowup(text) {
       appendTaskHtml(`<div class="task-message user"><div class="user-message-bubble">${escapeHtml(text)}</div></div>`);
       const codes = [...new Set((text.match(/[A-D]\d{2}/gi) || []).map((code) => code.toUpperCase()))].filter((code) => proposalCandidatePool.some((item) => item.code === code));
+      if (proposalFlow.stage === "understanding") {
+        if (/^(继续|确认|没问题|可以|进入调研)/i.test(text)) {
+          if (proposalFlow.requirement.clarity === "vague" && !proposalFlow.requirement.hypothesis) {
+            appendTaskHtml(proposalAgentMessage(`当前仍缺少${proposalFlow.requirement.missing.slice(0, 3).join("、")}。你可以直接补充，也可以回复“跳过”；跳过后我会列出待验证方向假设。`));
+            return true;
+          }
+          renderProposalScopeSelection();
+          return true;
+        }
+        if (/^(跳过|暂不补充|先这样)/i.test(text)) {
+          proposalFlow.requirement.missing = proposalFlow.requirement.missing.length ? proposalFlow.requirement.missing : ["主市场", "目标年龄/场景", "优先品类"];
+          if (proposalFlow.requirement.clarity === "vague" && !proposalFlow.requirement.hypothesis) {
+            appendTaskHtml(proposalAgentMessage("已保留未指定项。以下内容只是待验证方向假设，不代表市场机会或优先级；请选择一个作为本轮调研起点。"));
+            appendTaskHtml(proposalSelectionCard({
+              id: "proposal-hypothesis",
+              title: "选择待验证方向假设",
+              subtitle: "只用于启动本轮调研，后续可在对话中修正。",
+              summary: "请从待验证方向假设中选择一个起点。",
+              selectionMode: "single",
+              displayType: "text",
+              required: true,
+              options: [
+                { value: "urban-commute", label: "都市通勤女装", meta: "待验证假设 · 25-35 岁城市通勤场景" },
+                { value: "light-outdoor", label: "轻户外女装", meta: "待验证假设 · 城市周末与轻运动场景" },
+                { value: "summer-dress", label: "夏季轻盈连衣裙", meta: "待验证假设 · 夏季日常与度假场景" }
+              ],
+              onConfirm: (values) => {
+                const option = ["都市通勤女装", "轻户外女装", "夏季轻盈连衣裙"][ ["urban-commute", "light-outdoor", "summer-dress"].indexOf(values[0]) ] || values[0];
+                proposalFlow.requirement.hypothesis = option;
+                collapseSelectionCard("proposal-hypothesis", `待验证方向假设：${option}`);
+                appendTaskHtml(proposalAgentMessage(`已记录“${option}”作为待验证方向假设。主市场、目标年龄/场景和优先品类仍保留为未指定状态；确认后回复“继续”进入调研范围。`));
+              }
+            }));
+          } else {
+            appendTaskHtml(proposalAgentMessage(`已保留未指定状态：${proposalFlow.requirement.missing.slice(0, 3).join("、")}。确认后回复“继续”进入调研范围。`));
+          }
+          return true;
+        }
+        proposalFlow.firstText = `${proposalFlow.firstText} ${text}`.trim();
+        proposalFlow.requirement = parseProposalRequirement(proposalFlow.firstText, proposalFlow.profile, proposalFlow.attachments);
+        appendTaskHtml(proposalAgentMessage(`${proposalRequirementText(proposalFlow.requirement)}\n\n${proposalRequirementQuestions(proposalFlow.requirement)}`));
+        return true;
+      }
       if (proposalFlow.stage === "feedback" || proposalFlow.stage === "done") {
         if (codes.length) {
           startAiRemix(codes);
@@ -2856,15 +3024,19 @@
       const card = button.closest("[data-selection-card]");
       if (!card) return;
       const mode = card.dataset.mode;
+      const config = proposalFlow.selectionCards.get(card.dataset.selectionCard);
       if (mode === "single") {
         card.querySelectorAll(".selection-option.selected").forEach((item) => item.classList.remove("selected"));
         button.classList.add("selected");
       } else {
+        const prefix = (config?.singleValuePrefixes || []).find((value) => button.dataset.value.startsWith(value));
+        if (prefix) card.querySelectorAll(`.selection-option.selected[data-value^="${CSS.escape(prefix)}"]`).forEach((item) => item.classList.remove("selected"));
         button.classList.toggle("selected");
       }
+      if (card.dataset.selectionCard === "proposal-scope" && button.dataset.value.startsWith("market:") && button.classList.contains("selected")) updateProposalScopePlatformSections(card, button.dataset.value.slice(7));
       const otherInput = card.querySelector(".selection-other-input");
       if (otherInput) {
-        const hasOther = [...card.querySelectorAll(".selection-option.selected")].some((item) => item.dataset.value === "其他");
+        const hasOther = [...card.querySelectorAll(".selection-option.selected")].some((item) => item.dataset.value === "其他" || item.dataset.value.endsWith(":其他"));
         otherInput.hidden = !hasOther;
         if (hasOther) otherInput.focus();
         else otherInput.value = "";
@@ -2883,7 +3055,7 @@
         error.hidden = false;
         return;
       }
-      if (values.includes("其他") && !otherValue) {
+      if (values.some((value) => value === "其他" || value.endsWith(":其他")) && !otherValue) {
         error.textContent = "请填写其他平台名称";
         error.hidden = false;
         return;
@@ -2989,6 +3161,7 @@
     });
 
     function showTaskPage() {
+      if (innerWidth <= 720) setSidebarCollapsed(true);
       document.querySelector("#task-workbench-page").hidden = false;
       document.querySelector("#profile-page").hidden = true;
       document.querySelector("#profile-create-page").hidden = true;
@@ -3017,10 +3190,12 @@
       proposalFlow.profile = null;
       proposalFlow.title = "新任务";
       proposalFlow.firstText = "";
+      proposalFlow.attachments = [];
+      proposalFlow.requirement = { market: "", audience: "", category: "", season: "", price: "", designDirection: "", referenceFeatures: "", keepElements: "", excludeElements: "", missing: [], clarity: "clear", hypothesis: "" };
       proposalFlow.language = "简体中文";
       proposalFlow.directionPackLanguage = "简体中文";
       proposalFlow.proposalLanguage = "简体中文";
-      proposalFlow.scope = { market: "", platforms: [], otherPlatform: "" };
+      proposalFlow.scope = { market: "", platforms: [], ecommercePlatforms: [], socialPlatforms: [], otherPlatform: "" };
       proposalFlow.referenceCodes = [];
       proposalFlow.anchorCodes = [];
       proposalFlow.mainPlan = null;
@@ -3039,9 +3214,10 @@
 
     function startTask(userText, scene = "selection") {
       const now = Date.now();
+      const attachments=[...document.querySelector("#file-input").files].map(file=>({name:file.name,type:file.type,size:file.size}));
       const selectedProfile=constraints.find(profile=>profile.id===homepageArchiveSelector.value)||null;
       const profileSnapshot=selectedProfile?JSON.parse(JSON.stringify(selectedProfile)):null;
-      const task = { id:`task-${now}`, type:"task", name:summarizeTaskTitle(userText), parentId:null, editedAt:now, prompt:userText, scene, profile:profileSnapshot };
+      const task = { id:`task-${now}`, type:"task", name:summarizeTaskTitle(userText), parentId:null, editedAt:now, prompt:userText, scene, profile:profileSnapshot, attachments };
       historyItems.unshift(task);
       activeHistoryTaskId = task.id;
       setTaskTitle(task.name);
@@ -3054,7 +3230,7 @@
         proposalFlow.profile=profileSnapshot;
         proposalFlow.title=task.name;
         proposalFlow.firstText=userText;
-        renderProposalInitialConversation(userText,profileSnapshot);
+        renderProposalInitialConversation(userText,profileSnapshot,attachments);
       }else{
         renderInitialConversation(userText,profileSnapshot);
         renderTaskPanel({plans:[], outputs:[], references:[]});
@@ -3074,7 +3250,7 @@
         proposalFlow.profile=item.profile||null;
         proposalFlow.title=item.name;
         proposalFlow.firstText=text;
-        renderProposalInitialConversation(text,item.profile||null);
+        renderProposalInitialConversation(text,item.profile||null,item.attachments||[]);
       }else{
         renderInitialConversation(text,item.profile||null);
         renderTaskPanel({plans:[], outputs:[], references:[]});
@@ -3179,6 +3355,8 @@
 
       const componentTypeOf = (element) => {
         if (element.matches(".execution-trigger")) return "任务执行折叠项";
+        if (element.matches(".selection-option")) return element.dataset.value?.startsWith("market:") || element.closest("[data-mode='single']") ? "单选按钮" : "多选按钮";
+        if (element.matches(".selection-confirm")) return "选择确认按钮";
         if (element.matches("input[type='search']")) return "搜索输入框";
         if (element.matches("input:not([type]), input[type='text']")) return "单行输入框";
         if (element.matches("textarea")) return "多行输入框";
@@ -3198,6 +3376,9 @@
 
       const stateChangeOf = (element) => {
         if (element.matches(".execution-trigger")) return "状态切换：点击收起任务执行详情；再次点击重新展开详情。运行中与已完成状态分别使用加载图标和完成图标。";
+        if (element.matches(".selection-option[data-value^='market:']")) return "状态切换：点击选中一个主市场，并取消此前选中的主市场；已由需求明确的市场会预选，仍可修改。";
+        if (element.matches(".selection-option")) return element.dataset.value?.endsWith("其他") ? "状态切换：点击选中后展开自定义单行输入框；再次点击取消并收起输入框。" : "状态切换：点击选中；再次点击取消。单选卡会同时取消其他选项，多选卡保留其他已选项。";
+        if (element.matches(".selection-confirm")) return "状态切换：校验必选项后确认当前选择，并将选择卡收起为简洁摘要；缺少必选项时停留当前状态并提示。";
         if (element.matches("#search-toggle")) return "状态切换：点击展开搜索框；再次点击收起搜索框。";
         if (element.matches("#sidebar-toggle")) return "状态切换：点击收起侧栏；收起后顶部显示“展开侧栏”按钮。";
         if (element.matches("#sidebar-expand, #history-toggle")) return "状态切换：点击展开侧栏；展开后恢复文字导航、搜索与历史列表。";
@@ -3228,6 +3409,9 @@
 
       const descriptionOf = (element) => {
         if (element.matches(".execution-trigger")) return "展示 Agent 当前执行的任务名称与状态；展开后查看该任务包含的具体处理步骤，收起后仅保留任务摘要。";
+        if (element.matches("[data-selection-option='proposal-scope']")) return element.dataset.value.startsWith("market:") ? "调研范围卡中的主市场单选项；一个任务只应用一个主市场。" : element.dataset.value.startsWith("ecom:") ? "调研范围卡中的电商平台多选项；平台随主市场提供，品牌或独立站沿用对话中指定对象。" : "调研范围卡中的社媒平台多选项；社媒信号与电商供给、趋势资料分别呈现。";
+        if (element.matches("[data-selection-option='proposal-hypothesis']")) return "模糊需求选择跳过补充后出现的待验证方向假设；该选项仅作为调研起点，不代表市场机会或优先级。";
+        if (element.matches(".selection-confirm") && element.closest("[data-selection-card='proposal-scope']")) return "确认主市场、电商平台和社媒平台后，卡片收起并自动进入趋势与参考调研；趋势资料库默认纳入，不再确认检索词。";
         if (element.matches("#sidebar-toggle")) return "点击收起侧边栏。收起后仅保留展开、新任务、业务偏好档案、历史和退出图标。";
         if (element.matches("#sidebar-expand, #history-toggle")) return "点击重新展开侧边栏，恢复完整导航、搜索和历史任务列表。";
         if (element.matches("#search-toggle")) return "点击展开搜索输入框；根据关键词实时匹配历史任务和项目，结果按最近编辑时间由近到远排序。";
@@ -3245,8 +3429,9 @@
         if (element.matches("#apply-mapping")) return "只确认冲突、疑似硬性约束和低置信度重要信息；普通信息自动作为默认参考。";
         if (element.matches("#task-scene")) return "展示用户第一句输入的任务总结，最多 20 个字符；编辑后与左侧历史任务名称同步。";
         if (element.matches("#task-profile-trigger")) return "展示本任务启动时应用的档案名称；悬浮卡查看档案快照，但不支持在任务内切换档案。";
-        if (element.matches(".proposal-inline-action")) return "点击打开候选池大弹窗，在方向聚类、筛选和已选托盘之间完成参考款确认。";
-        if (element.matches("#candidate-overlay")) return "候选池大弹窗；左侧方向聚类，中间筛选网格，右侧已选托盘。关闭后保留筛选与选择状态。";
+        if (element.matches("#task-condition")) return "需求确认阶段可直接补充或修正，回复“继续”进入调研范围，回复“跳过”保留未指定项；后续补充条件只影响相关步骤。";
+        if (element.matches(".proposal-inline-action")) return "点击打开候选池大弹窗；进入候选池前已按主市场、人群、性别和品类执行硬过滤。";
+        if (element.matches("#candidate-overlay")) return "候选池大弹窗；左侧方向聚类，中间筛选网格，右侧已选托盘。错误市场、人群、性别或品类候选不会进入；关闭后保留筛选与选择状态。";
         if (element.matches("#proposal-preview-overlay")) return "只读预览弹窗，展示客户方向参考包或客户提案内容。";
         if (element.matches("[data-artifact-view]")) return "在线查看对应正式产物的只读预览。";
         if (element.matches("[data-artifact-download]")) return "下载对应正式产物的 HTML 演示文件。";
