@@ -1193,6 +1193,100 @@
     .proposal-preview-dialog { width: min(86vw,980px); max-height: 86vh; display: grid; grid-template-rows: auto minmax(0,1fr); overflow: hidden; border: 1px solid #3d4844; border-radius: 16px; background: #202523; box-shadow: 0 26px 90px rgba(0,0,0,.55); }
     .proposal-preview-head { display: flex; justify-content: space-between; gap: 16px; padding: 18px 22px; border-bottom: 1px solid #34403c; }
     .proposal-preview-body { overflow: auto; padding: 22px; color: #dce5e2; }
+    .proposal-preview-dialog.report-viewer { width: min(96vw,1380px); height: min(92vh,900px); max-height: none; grid-template-rows: auto minmax(0,1fr); border-radius: 14px; background: #151a18; }
+    .proposal-preview-dialog.report-viewer .proposal-preview-head { padding: 13px 18px; align-items: center; }
+    .proposal-preview-dialog.report-viewer .proposal-preview-head h2 { font-size: 16px; line-height: 22px; }
+    .proposal-preview-dialog.report-viewer .proposal-preview-head p { margin: 2px 0 0; color: #81908a; font-size: 10px; }
+    .proposal-preview-body.report-body { min-height: 0; overflow: hidden; padding: 0; }
+    .report-viewer-shell { min-height: 0; height: 100%; display: grid; grid-template-columns: 190px minmax(0,1fr); background: #151a18; }
+    .report-toc { min-height: 0; display: flex; flex-direction: column; gap: 6px; overflow: auto; padding: 14px 10px; border-right: 1px solid #303a36; background: #1a201e; }
+    .report-toc-label { margin: 0 5px 5px; color: #788781; font-size: 9px; letter-spacing: .08em; text-transform: uppercase; }
+    .report-toc-item { display: grid; grid-template-columns: 23px minmax(0,1fr); gap: 7px; align-items: center; min-height: 40px; padding: 5px; border: 1px solid transparent; border-radius: 7px; color: #94a19c; background: transparent; text-align: left; cursor: pointer; }
+    .report-toc-item:hover { border-color: #3d4b46; background: #222a27; color: #e7efec; }
+    .report-toc-item.active { border-color: #55ded3; color: #0e1b19; background: #55ded3; }
+    .report-toc-num { display: grid; place-items: center; width: 23px; height: 23px; border-radius: 5px; color: #94a8a2; background: #2b3531; font-size: 9px; font-weight: 700; }
+    .report-toc-item.active .report-toc-num { color: #0e1b19; background: rgba(255,255,255,.6); }
+    .report-toc-title { overflow: hidden; font-size: 10px; line-height: 13px; text-overflow: ellipsis; white-space: nowrap; }
+    .report-stage { min-width: 0; min-height: 0; display: grid; grid-template-rows: minmax(0,1fr) auto; padding: 16px 18px 12px; }
+    .report-slide-frame { min-width: 0; min-height: 0; display: grid; place-items: center; overflow: hidden; }
+    .report-slide { position: relative; width: min(100%,1180px); aspect-ratio: 16 / 9; overflow: hidden; padding: 30px 38px 28px; border: 1px solid #3b4843; border-radius: 8px; color: #eaf1ee; background: #202825; box-shadow: 0 20px 50px rgba(0,0,0,.28); }
+    .report-slide::before { content: attr(data-slide-index); position: absolute; top: 18px; right: 22px; color: #82938c; font-size: 9px; letter-spacing: .12em; }
+    .report-slide-kicker { margin: 0 0 7px; color: #6fd8cf; font-size: 9px; letter-spacing: .14em; text-transform: uppercase; }
+    .report-slide h3 { margin: 0 0 7px; color: #f3f7f5; font-size: clamp(18px,2.4vw,30px); line-height: 1.15; letter-spacing: 0; }
+    .report-slide h4 { margin: 0 0 5px; color: #eef5f2; font-size: 12px; line-height: 16px; }
+    .report-slide p,.report-slide li { margin: 0; color: #aebbb6; font-size: clamp(9px,1vw,12px); line-height: 1.55; }
+    .report-slide ul { display: grid; gap: 5px; margin: 7px 0 0; padding-left: 16px; }
+    .report-slide-grid { min-height: 0; height: calc(100% - 42px); display: grid; gap: 14px; }
+    .report-slide-grid.two { grid-template-columns: 1fr 1fr; }
+    .report-slide-grid.split { grid-template-columns: 42% minmax(0,1fr); }
+    .report-slide-copy { min-width: 0; display: flex; flex-direction: column; justify-content: center; gap: 9px; }
+    .report-slide-copy .report-note { padding: 8px 10px; border-left: 2px solid #55ded3; color: #a7b9b2; background: rgba(85,222,211,.07); font-size: 10px; line-height: 15px; }
+    .report-image-grid { min-height: 0; display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); grid-template-rows: repeat(2,minmax(0,1fr)); gap: 7px; }
+    .report-image-card { position: relative; min-width: 0; min-height: 0; overflow: hidden; margin: 0; border: 1px solid #3b4843; border-radius: 6px; background: #29332f; }
+    .report-image-card img { width: 100%; height: 100%; display: block; object-fit: cover; }
+    .report-image-card.large { grid-column: span 2; grid-row: span 2; }
+    .report-image-card figcaption { position: absolute; inset: auto 0 0; padding: 25px 8px 7px; color: #f0f6f3; background: linear-gradient(180deg,transparent,rgba(8,12,11,.88)); font-size: 9px; line-height: 13px; }
+    .report-image-card figcaption b { color: #8fe5dc; font-weight: 600; }
+    .report-source-chip { position: absolute; top: 7px; left: 7px; z-index: 2; padding: 3px 5px; border: 1px solid rgba(255,255,255,.25); border-radius: 4px; color: #eaf3ef; background: rgba(10,15,13,.58); font-size: 8px; line-height: 11px; }
+    .report-source-chip.ai { color: #f3d29d; }
+    .report-click-source { cursor: pointer; }
+    .report-click-source:hover { border-color: #55ded3; }
+    .report-stat-row { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 7px; margin-top: 9px; }
+    .report-stat { padding: 8px; border: 1px solid #394641; border-radius: 5px; background: #252e2a; }
+    .report-stat strong { display: block; color: #f1f6f3; font-size: 14px; line-height: 17px; }
+    .report-stat span { color: #81908a; font-size: 8px; line-height: 12px; }
+    .report-direction-list { min-height: 0; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 7px; overflow: hidden; }
+    .report-direction { min-width: 0; padding: 9px; border: 1px solid #394641; border-radius: 6px; background: #252e2a; }
+    .report-direction p { font-size: 9px; line-height: 13px; }
+    .report-direction small { display: block; margin-top: 5px; color: #74847d; font-size: 8px; line-height: 12px; }
+    .report-swatches { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 7px; align-items: end; }
+    .report-swatch { min-width: 0; display: grid; gap: 5px; }
+    .report-swatch i { display: block; aspect-ratio: 1; border: 1px solid rgba(255,255,255,.25); border-radius: 5px; }
+    .report-swatch span { overflow: hidden; color: #9eaca6; font-size: 8px; text-overflow: ellipsis; white-space: nowrap; }
+    .report-table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 9px; }
+    .report-table th,.report-table td { padding: 6px 7px; border-bottom: 1px solid #36423d; color: #aab8b2; text-align: left; vertical-align: top; }
+    .report-table th { color: #77d6cd; font-weight: 600; }
+    .report-controls { display: flex; align-items: center; justify-content: center; gap: 9px; padding-top: 11px; }
+    .report-control { min-width: 34px; height: 30px; padding: 0 9px; border: 1px solid #3a4843; border-radius: 6px; color: #b9c8c2; background: #242d29; font-size: 11px; cursor: pointer; }
+    .report-control:hover:not(:disabled) { border-color: #55ded3; color: #55ded3; }
+    .report-control:disabled { opacity: .35; cursor: default; }
+    .report-page-count { min-width: 62px; color: #8c9a94; font-size: 10px; text-align: center; }
+    .report-image-detail { width: min(92vw,620px); max-height: 84vh; }
+    @media (max-width: 720px) {
+      .proposal-preview-dialog.report-viewer { width: calc(100vw - 14px); height: calc(100vh - 14px); border-radius: 10px; }
+      .proposal-preview-dialog.report-viewer .proposal-preview-head { padding: 10px 12px; }
+      .report-viewer-shell { grid-template-columns: 1fr; grid-template-rows: 53px minmax(0,1fr); }
+      .report-toc { flex-direction: row; align-items: center; overflow-x: auto; overflow-y: hidden; padding: 7px 8px; border-right: 0; border-bottom: 1px solid #303a36; }
+      .report-toc-label { display: none; }
+      .report-toc-item { flex: 0 0 auto; grid-template-columns: 21px auto; min-height: 34px; padding: 4px 6px; }
+      .report-toc-num { width: 21px; height: 21px; }
+      .report-toc-title { max-width: 82px; }
+      .report-stage { padding: 8px 7px 9px; }
+      .report-slide { width: 100%; padding: 15px 16px 14px; border-radius: 6px; }
+      .report-slide h3 { font-size: 16px; }
+      .report-slide p,.report-slide li { font-size: 8px; line-height: 1.45; }
+      .report-slide-grid { gap: 7px; height: calc(100% - 48px); }
+      .report-slide-grid.two,.report-slide-grid.split { grid-template-columns: 42% minmax(0,58%); }
+      .report-slide-copy { gap: 5px; }
+      .report-slide-copy .report-note { padding: 5px 6px; font-size: 8px; line-height: 11px; }
+      .report-image-grid { grid-template-columns: repeat(2,minmax(0,1fr)); grid-template-rows: repeat(2,minmax(0,1fr)); gap: 4px; }
+      .report-image-card.large { grid-column: span 1; grid-row: span 2; }
+      .report-image-card:nth-child(n+4) { display: none; }
+      .report-image-card figcaption { display: none; }
+      .report-source-chip { top: 4px; left: 4px; max-width: calc(100% - 8px); overflow: hidden; font-size: 6px; line-height: 8px; text-overflow: ellipsis; white-space: nowrap; }
+      .report-stat-row { gap: 4px; margin-top: 5px; }
+      .report-stat { padding: 5px; }
+      .report-stat strong { font-size: 10px; line-height: 12px; }
+      .report-stat span { font-size: 6px; line-height: 8px; }
+      .report-direction-list { gap: 4px; }
+      .report-direction { padding: 5px; }
+      .report-direction h4 { margin-bottom: 2px; font-size: 8px; line-height: 10px; }
+      .report-direction p,.report-direction small { font-size: 6px; line-height: 8px; }
+      .report-table { margin-top: 4px; font-size: 6px; }
+      .report-table th,.report-table td { padding: 3px 4px; }
+      .report-controls { padding-top: 6px; }
+      .report-control { height: 27px; min-width: 30px; font-size: 9px; }
+    }
     .preview-section { margin-bottom: 18px; padding-bottom: 18px; border-bottom: 1px solid #343d3a; }
     .preview-section h3 { margin: 0 0 9px; font-size: 15px; }
     .preview-section p, .preview-section li { color: #aab6b2; font-size: 12px; line-height: 1.8; }
@@ -3926,9 +4020,14 @@
         confirmTrendDirections(proposalFlow.selectedTrendDirectionIds);
       }
     });
-    document.querySelector("#proposal-preview-close").addEventListener("click", () => document.querySelector("#proposal-preview-overlay").hidden = true);
+    function closeArtifactPreview() {
+      document.querySelector("#proposal-preview-overlay").hidden = true;
+      document.querySelector(".proposal-preview-dialog").classList.remove("report-viewer");
+      document.querySelector("#proposal-preview-body").classList.remove("report-body");
+    }
+    document.querySelector("#proposal-preview-close").addEventListener("click", closeArtifactPreview);
     document.querySelector("#proposal-preview-overlay").addEventListener("click", (event) => {
-      if (event.target.id === "proposal-preview-overlay") document.querySelector("#proposal-preview-overlay").hidden = true;
+      if (event.target.id === "proposal-preview-overlay") closeArtifactPreview();
     });
     document.querySelector("#task-panel-sections").addEventListener("click", (event) => {
       const view = event.target.closest("[data-artifact-view]");
@@ -4239,15 +4338,80 @@
       return `<section class="preview-section"><h3>新品企划案 V1</h3><p>${escapeHtml(planningFlow.language)} · HTML主版本 · 在线只读 · 演示数据</p></section><section class="preview-section"><h3>企划背景与范围</h3><p>美国市场；Amazon US与TikTok Shop US分为两条产品线；2026年8月与2027年2月两个波段；零售价USD 10-20。</p></section><section class="preview-section"><h3>渠道客群差异</h3><ul><li>Amazon US：30岁以上，日常休闲/轻商务，宽松。</li><li>TikTok Shop US：20-35岁初入职场，日常休闲/轻商务，紧身与oversize。</li></ul></section><section class="preview-section"><h3>已确认趋势方向</h3><p>${escapeHtml(directionNames)}</p><p>电商、社媒、趋势资料与Kohl's公开页面分别引用；不合并平台销量、销售额或热度。</p></section>${renderPlanningTabs(structureContent)}${landingContent()}<section class="preview-section"><h3>内部设计Brief（随企划包生成）</h3><table class="preview-table"><tbody><tr><th>目标人群/场景</th><td>按Amazon与TikTok Shop产品线分别执行</td></tr><tr><th>方向/品类</th><td>${escapeHtml(directionNames)}；连衣裙、裤装、上衣、套装、卫衣</td></tr><tr><th>廓形/色彩</th><td>宽松与紧身/oversize分渠道；夏末暖色与早春清透冷色</td></tr><tr><th>面料/工艺</th><td>轻薄垂感、易护理、低装饰量；全部待真实供应链验证</td></tr><tr><th>禁用项</th><td>${escapeHtml(planningFlow.requirement.exclusions)}</td></tr><tr><th>待验证项</th><td>真实报价、MOQ、克重、色牢度、缩水率、历史销售与OTB</td></tr></tbody></table></section><section class="preview-section"><h3>证据质量与缺口</h3><p>所有市场数值均为演示数据；平台分别展示。时间范围、样本量、置信度、授权状态和数据缺口保留在各阶段产物与来源列表中。</p></section>`;
     }
 
+    function planningReportItems() {
+      const selected = planningMaterialData.filter(item => planningFlow.selectedMaterials.has(item.code));
+      const matched = planningMaterialData.filter(item => planningFlow.selectedTrendIds.includes(item.direction) && !planningFlow.selectedMaterials.has(item.code));
+      const pool = [...selected, ...matched];
+      return pool.length ? pool : planningMaterialData.slice(0, 6);
+    }
+
+    function planningReportImage(item, className = "", label = "真实参考", ai = false) {
+      const badge = ai ? "AI方向示意" : label;
+      const sourceAttr = ai ? "" : `data-report-source="${escapeHtml(item.code)}"`;
+      return `<figure class="report-image-card ${className} ${ai ? "report-ai-card" : "report-click-source"}" ${sourceAttr} tabindex="${ai ? "-1" : "0"}" aria-label="${escapeHtml(item.code)} ${escapeHtml(badge)}">${planningImageMarkup(item,`${item.category}企划参考 ${item.code}`)}<span class="report-source-chip ${ai ? "ai" : ""}">${escapeHtml(badge)}</span><figcaption><b>${escapeHtml(item.code)}</b> · ${escapeHtml(item.category)} · ${escapeHtml(item.source)}${ai ? " · 不作为市场证据" : " · 点击查看来源"}</figcaption></figure>`;
+    }
+
+    function planningReportSlides() {
+      const items = planningReportItems();
+      const lineItems = planningProductLines.map(line => items.find(item => item.line === line.id) || items[0]).filter(Boolean);
+      const directionNames = planningFlow.selectedTrendIds.map(id => planningTrendDirections.find(item => item.id === id)?.name).filter(Boolean);
+      const directionCards = planningFlow.selectedTrendIds.map(id => planningTrendDirections.find(item => item.id === id)).filter(Boolean);
+      const coverImages = items.slice(0, 3);
+      const imageGrid = (list, cls = "") => list.map((item, index) => planningReportImage(item, `${index === 0 ? "large " : ""}${cls}`, index === 0 ? "真实参考" : item.source)).join("");
+      const slide = (index, kicker, title, content) => `<article class="report-slide" data-report-slide="${index}" data-slide-index="${String(index).padStart(2, "0")}" ${index ? "hidden" : ""}><div class="report-slide-kicker">${escapeHtml(kicker)}</div><h3>${escapeHtml(title)}</h3>${content}</article>`;
+      const slides = [];
+      slides.push(slide(0, "LIGHTCHAIN · NEW PRODUCT DIRECTION", "新品企划案 V1", `<div class="report-slide-grid split"><div class="report-slide-copy"><p class="report-note">美国女装 · Amazon US / TikTok Shop US · 2026年8月 / 2027年2月</p><p>以真实来源、方向性证据与企业约束为基础，形成可讨论、可调整的商品企划。</p><div class="report-stat-row"><div class="report-stat"><strong>5</strong><span>品类方向</span></div><div class="report-stat"><strong>4</strong><span>产品线标签</span></div><div class="report-stat"><strong>USD 10-20</strong><span>零售价带</span></div><div class="report-stat"><strong>演示</strong><span>数据属性</span></div></div></div><div class="report-image-grid">${coverImages.map((item, index) => planningReportImage(item, index === 0 ? "large" : "", index === 0 ? "真实参考" : item.source)).join("")}</div></div>`));
+      slides.push(slide(1, "01 · SCOPE", "企划范围与渠道客群", `<div class="report-slide-grid two"><div class="report-slide-copy"><p>主市场：美国。Amazon US 与 TikTok Shop US 拆成两条产品线，平台数据分别展示，不合并销量、销售额或热度。</p><div class="report-stat-row"><div class="report-stat"><strong>2026.08</strong><span>夏末波段</span></div><div class="report-stat"><strong>2027.02</strong><span>早春波段</span></div><div class="report-stat"><strong>5类</strong><span>连衣裙 / 裤装 / 上衣 / 套装 / 卫衣</span></div><div class="report-stat"><strong>CNY 35</strong><span>目标成本 · 待询价</span></div></div><ul><li>Amazon：30岁以上，日常休闲 / 轻商务，宽松。</li><li>TikTok Shop：20-35岁初入职场，日常休闲 / 轻商务，紧身与 oversize。</li></ul><p class="report-note">无历史销售、旧企划、OTB 与供应商报价；商品结构比例均为系统建议 / 待确认假设。</p></div><div class="report-image-grid">${lineItems.slice(0, 2).map((item, index) => planningReportImage(item, index === 0 ? "large" : "", "真实参考")).join("")}</div></div>`));
+      slides.push(slide(2, "02 · EVIDENCE", "趋势证据与已确认方向", `<div class="report-slide-grid split"><div class="report-slide-copy"><p>小样本扫描按“美国女装共同趋势 → 渠道差异 → 波段与品类落位”组织。单一帖子、商品或报告不作为确定趋势或销量机会。</p><div class="report-direction-list">${directionCards.slice(0, 4).map(item => `<section class="report-direction"><h4>${escapeHtml(item.name)}</h4><p>${escapeHtml(item.elements)}</p><small>${escapeHtml(item.platforms)} · ${escapeHtml(item.waves)} · ${escapeHtml(item.sample)} · ${escapeHtml(item.confidence)}</small></section>`).join("")}</div></div><div class="report-image-grid">${imageGrid(items.slice(0, 5))}</div></div>`));
+      slides.push(slide(3, "03 · REFERENCES", "灵感来源图集", `<div class="report-slide-grid"><p>已确认素材来自电商、社媒、品牌 / 零售站、趋势资料和用户资料；点击图片查看来源摘要、采集时间、授权状态和数据缺口。</p><div class="report-image-grid">${imageGrid(items.slice(0, 6))}</div></div>`));
+      slides.push(slide(4, "04 · MOODBOARD", "主题情绪板", `<div class="report-slide-grid split"><div class="report-slide-copy"><p class="report-note">轻量松弛通勤 × 柔性精致感 × 克制实用细节</p><h4>视觉关键词</h4><p>软结构、垂感、低饱和中性色、轻褶、隐形口袋、可调节腰部、成套表达。</p><h4>适配逻辑</h4><p>Amazon 强调场景、尺码与易搭配；TikTok Shop 强调比例对比与成套穿搭。避免 SHEIN 式过度年轻 / 辣妹风。</p></div><div class="report-image-grid">${imageGrid(items.slice(2, 8))}</div></div>`));
+      slides.push(slide(5, "05 · CHANNEL × WAVE", "渠道 × 波段视觉方向", `<div class="report-slide-grid"><p>真实参考优先；素材不足时才生成明确标记的 AI 补充图，不将 AI 图作为市场证据。</p><div class="report-image-grid">${lineItems.map((item, index) => planningReportImage(item, index === 0 ? "large" : "", "真实参考")).join("")}<figure class="report-image-card report-ai-card"><div class="fashion-thumb thumb-c" style="width:100%;height:100%"></div><span class="report-source-chip ai">AI方向示意</span><figcaption><b>AI-补充</b> · 仅用于验证系列视觉连贯性 · 不作为市场证据</figcaption></figure></div></div>`));
+      slides.push(slide(6, "06 · COLOR SYSTEM", "色彩系统", `<div class="report-slide-grid split"><div class="report-slide-copy"><p>夏末波段以陶土粉、灰绿、奶油白等低饱和暖色建立轻松感；早春波段切换雾蓝、深海军蓝和清透冷色。</p><div class="report-swatches"><div class="report-swatch"><i style="background:#bf8c78"></i><span>陶土粉</span></div><div class="report-swatch"><i style="background:#849b8d"></i><span>灰绿</span></div><div class="report-swatch"><i style="background:#e7dfcd"></i><span>奶油白</span></div><div class="report-swatch"><i style="background:#8ca8bd"></i><span>雾蓝</span></div><div class="report-swatch"><i style="background:#263c50"></i><span>深海军蓝</span></div></div><p class="report-note">真实色卡、染色 MOQ、色差与供应商报价待验证。</p></div><div class="report-image-grid">${imageGrid(items.slice(1, 5))}</div></div>`));
+      slides.push(slide(7, "07 · SILHOUETTE", "关键廓形与造型", `<div class="report-slide-grid split"><div class="report-slide-copy"><h4>Amazon US</h4><p>宽松直筒、易搭配长度、轻抽绳与隐形口袋，作为基础稳定款和主力机会款。</p><h4>TikTok Shop US</h4><p>紧身与 oversize 比例对比，成套表达和高识别上衣作为趋势测试款。</p><p class="report-note">不延伸为瑜伽、牛仔、外套、皮衣、皮草或棉服方向。</p></div><div class="report-image-grid">${imageGrid(items.slice(0, 6))}</div></div>`));
+      slides.push(slide(8, "08 · MATERIAL & DETAIL", "面料方向与细节工艺", `<div class="report-slide-grid split"><div class="report-slide-copy"><p>轻薄垂感、易护理、低装饰量；通过低复杂度剪裁表达柔性精致和克制实用。</p><table class="report-table"><thead><tr><th>方向</th><th>面料 / 手感</th><th>工艺提示</th></tr></thead><tbody><tr><td>日常轻商务</td><td>轻薄、垂感、易护理</td><td>简化抽绳 / 隐形口袋</td></tr><tr><td>柔性精致</td><td>柔和光泽、细密纹理</td><td>控制褶量与辅料</td></tr></tbody></table><p class="report-note">克重、色牢度、缩水率、MOQ、工费均需真实供应链验证。</p></div><div class="report-image-grid">${imageGrid(items.slice(3, 9))}</div></div>`));
+      slides.push(slide(9, "09 · MERCHANDISE", "商品结构与价格梯度", `<div class="report-slide-grid split"><div class="report-slide-copy"><p>四个产品线分别形成商品结构，不套固定 10 / 70 / 20 比例；在无历史销售与 OTB 时，款数范围均标注为系统建议 / 待确认假设。</p><table class="report-table"><thead><tr><th>产品线</th><th>建议款数</th><th>价格梯度</th></tr></thead><tbody>${planningProductLines.map(line => { const data=planningStructureByLine[line.id]; return `<tr><td>${escapeHtml(line.label)}</td><td>${escapeHtml(data.range)}</td><td>${escapeHtml(data.price)}</td></tr>`; }).join("")}</tbody></table></div><div class="report-image-grid">${lineItems.slice(0, 4).map((item, index) => planningReportImage(item, index === 0 ? "large" : "", "真实参考")).join("")}</div></div>`));
+      slides.push(slide(10, "10 · LAUNCH & APPENDIX", "波段策略、风险与来源缺口", `<div class="report-slide-grid split"><div class="report-slide-copy"><h4>上新与渠道表达</h4><ul><li>2026年8月：基础稳定款首发，主力机会款跟进，TikTok Shop 先做高识别测试款。</li><li>2027年2月：早春色彩与柔性精致方向主推，Amazon 与 TikTok Shop 分开表达。</li><li>季中监测由用户人工上传新销售 / 库存资料后发起，不做自动持续监控。</li></ul><h4>证据与数据缺口</h4><p>趋势资料、电商供给 / 竞争、社媒信号与 Kohl's 公开页面分别引用；样本、时间、置信度、授权状态和缺口保留在阶段产物中。</p><p class="report-note">附录保留内部设计 Brief；真实报价、MOQ、交期、产能、历史销售与 OTB 不在本次企划案中被虚构。</p></div><div class="report-image-grid">${imageGrid(items.slice(0, 3))}</div></div>`));
+      return slides;
+    }
+
+    function updatePlanningReportPage(index) {
+      const slides = [...document.querySelectorAll("[data-report-slide]")];
+      const max = Math.max(0, slides.length - 1);
+      planningFlow.reportPage = Math.min(Math.max(Number(index) || 0, 0), max);
+      slides.forEach((slide, i) => { slide.hidden = i !== planningFlow.reportPage; });
+      document.querySelectorAll("[data-report-index]").forEach(item => item.classList.toggle("active", Number(item.dataset.reportIndex) === planningFlow.reportPage));
+      const current = planningFlow.reportPage + 1;
+      document.querySelector("#report-page-count").textContent = `${current} / ${slides.length}`;
+      document.querySelector("#report-prev").disabled = planningFlow.reportPage === 0;
+      document.querySelector("#report-next").disabled = planningFlow.reportPage === max;
+      hydratePlanningImages(document.querySelector("#proposal-preview-body"));
+    }
+
+    function renderPlanningReportViewer() {
+      const dialog = document.querySelector(".proposal-preview-dialog");
+      const body = document.querySelector("#proposal-preview-body");
+      dialog.classList.add("report-viewer");
+      body.classList.add("report-body");
+      const titles = ["封面","企划范围与客群","趋势证据与方向","灵感来源图集","主题情绪板","渠道×波段方向","色彩系统","关键廓形造型","面料与细节","商品结构与价格","上新策略与附录"];
+      body.innerHTML = `<div class="report-viewer-shell"><nav class="report-toc" aria-label="企划案目录"><span class="report-toc-label">Contents</span>${titles.map((title, index) => `<button type="button" class="report-toc-item ${index === 0 ? "active" : ""}" data-report-index="${index}"><span class="report-toc-num">${String(index + 1).padStart(2, "0")}</span><span class="report-toc-title">${escapeHtml(title)}</span></button>`).join("")}</nav><div class="report-stage"><div class="report-slide-frame">${planningReportSlides().join("")}</div><footer class="report-controls"><button type="button" class="report-control" id="report-prev" aria-label="上一页">←</button><span class="report-page-count" id="report-page-count">1 / ${titles.length}</span><button type="button" class="report-control" id="report-next" aria-label="下一页">→</button></footer></div></div>`;
+      document.querySelector("#proposal-preview-title").textContent = "新品企划案 V1 · 视觉企划报告";
+      document.querySelector("#proposal-preview-subtitle").textContent = `${planningFlow.language} · 16:9 翻页式只读查看 · 演示数据`;
+      document.querySelector("#proposal-preview-overlay").hidden = false;
+      planningFlow.reportPage = 0;
+      updatePlanningReportPage(0);
+    }
+
     function renderPlanningPreview(type) {
       if(type==="planningTrend"){renderPlanningTrendPreview();return;}
       if(type==="planningMaterial"){openPlanningMaterialPool();return;}
+      if(type==="planningFinal"){renderPlanningReportViewer();return;}
       let title="只读预览",subtitle="新品企划工作台阶段产物",html="";
       if(type==="planningVisual"){title="企划视觉方向板";subtitle="4个渠道×波段标签页 · 真实图与AI图分区";html=renderPlanningTabs(visualBoardContent,"planning-visual-confirm");}
       if(type==="planningStructure"){title="商品结构规划草案";subtitle="系统建议/待确认假设 · 通过对话调整";html=renderPlanningTabs(structureContent,"planning-structure-confirm");}
       if(type==="planningLanding"){title="企划落地规划";subtitle="目标成本仅作风险判断 · 无真实报价不输出确定成本";html=`${landingContent()}<div class="dialog-actions"><button class="primary" id="planning-landing-confirm" type="button">确认企划落地规划</button></div>`;}
-      if(type==="planningFinal"){title="新品企划案 V1";subtitle=`${planningFlow.language} · HTML主版本 · 含内部设计Brief`;html=finalPlanningContent();}
       document.querySelector("#proposal-preview-body").innerHTML=html;
+      document.querySelector(".proposal-preview-dialog").classList.remove("report-viewer");
+      document.querySelector("#proposal-preview-body").classList.remove("report-body");
       document.querySelector("#proposal-preview-title").textContent=title;
       document.querySelector("#proposal-preview-subtitle").textContent=subtitle;
       document.querySelector("#proposal-preview-overlay").hidden=false;
@@ -4310,6 +4474,10 @@
       if(event.target.closest("[data-planning-detail-source]")){showToast("已打开并保留原始来源页信息（演示）");}
     });
     document.querySelector("#proposal-preview-body").addEventListener("click",event=>{
+      const reportIndex=event.target.closest("[data-report-index]");if(reportIndex){updatePlanningReportPage(reportIndex.dataset.reportIndex);return;}
+      if(event.target.closest("#report-prev")){updatePlanningReportPage(planningFlow.reportPage-1);return;}
+      if(event.target.closest("#report-next")){updatePlanningReportPage(planningFlow.reportPage+1);return;}
+      const reportSource=event.target.closest("[data-report-source]");if(reportSource){renderPlanningMaterialDetail(reportSource.dataset.reportSource);return;}
       const trend=event.target.closest("[data-planning-trend]");if(trend){const id=trend.dataset.planningTrend;if(planningFlow.selectedTrendIds.includes(id))planningFlow.selectedTrendIds=planningFlow.selectedTrendIds.filter(x=>x!==id);else planningFlow.selectedTrendIds.push(id);trend.classList.toggle("selected",planningFlow.selectedTrendIds.includes(id));trend.setAttribute("aria-pressed",String(planningFlow.selectedTrendIds.includes(id)));const count=document.querySelector("#planning-trend-count");if(count)count.textContent=planningFlow.selectedTrendIds.length;return;}
       if(event.target.closest("#planning-trend-confirm")){confirmPlanningTrends();return;}
       const tab=event.target.closest("[data-planning-tab]");if(tab){planningFlow.activeTab=tab.dataset.planningTab;const title=document.querySelector("#proposal-preview-title").textContent;if(title.includes("视觉方向板"))document.querySelector("#proposal-preview-body").innerHTML=renderPlanningTabs(visualBoardContent,"planning-visual-confirm");else if(title.includes("商品结构"))document.querySelector("#proposal-preview-body").innerHTML=renderPlanningTabs(structureContent,"planning-structure-confirm");else if(title.includes("新品企划案"))document.querySelector("#proposal-preview-body").innerHTML=finalPlanningContent();hydratePlanningImages(document.querySelector("#proposal-preview-body"));return;}
@@ -4317,6 +4485,7 @@
       if(event.target.closest("#planning-structure-confirm")){document.querySelector("#proposal-preview-overlay").hidden=true;generatePlanningLanding();return;}
       if(event.target.closest("#planning-landing-confirm")){document.querySelector("#proposal-preview-overlay").hidden=true;renderPlanningLanguageSelection();return;}
     });
+    document.addEventListener("keydown",event=>{if(document.querySelector("#proposal-preview-overlay").hidden||!document.querySelector(".proposal-preview-dialog").classList.contains("report-viewer"))return;if(event.key==="ArrowLeft")updatePlanningReportPage(planningFlow.reportPage-1);if(event.key==="ArrowRight")updatePlanningReportPage(planningFlow.reportPage+1);if(event.key==="Escape")closeArtifactPreview();});
 
     function showTaskPage() {
       if (innerWidth <= 720) setSidebarCollapsed(true);
@@ -4521,6 +4690,7 @@
         ".planning-material-item",
         ".planning-tab",
         ".planning-trend-card",
+        ".report-click-source",
         ".proposal-artifact-quote",
         ".ai-remix-item"
       ].join(",");
@@ -4556,6 +4726,9 @@
         if (element.matches(".planning-trend-card")) return "新品企划趋势方向多选项";
         if (element.matches(".planning-material-item")) return "方向参考图片多选项";
         if (element.matches(".planning-tab")) return "产品线标签页";
+        if (element.matches(".report-click-source")) return "报告来源图片";
+        if (element.matches(".report-toc-item")) return "报告目录项";
+        if (element.matches("#report-prev, #report-next")) return "报告翻页按钮";
         if (element.matches("#task-pause")) return "任务暂停/继续按钮";
         if (element.matches("[data-planning-action='open-material-pool']")) return "方向参考素材池入口";
         if (element.matches("#planning-material-confirm")) return "视觉素材确认按钮";
@@ -4600,6 +4773,10 @@
         if (element.matches(".planning-trend-card")) return "状态切换：点击选中或取消趋势方向；至少保留一个并点击确认后，才进入定向视觉素材获取。";
         if (element.matches(".planning-material-item")) return "状态切换：桌面点击选择或取消；移动端点击先打开来源详情层，再在详情内选择。已选状态不改变图片网格尺寸。";
         if (element.matches(".planning-tab")) return "状态切换：点击切换四个产品线标签页；每页保持独立的人群、波段、素材与商品结构内容。";
+        if (element.matches(".report-toc-item")) return "状态切换：点击跳转到对应的16:9报告页面，并同步更新当前目录高亮、页码和上一页/下一页按钮状态。";
+        if (element.matches("#report-prev")) return "状态切换：点击进入上一页；封面页不可用。键盘左方向键执行相同操作。";
+        if (element.matches("#report-next")) return "状态切换：点击进入下一页；最后一页不可用。键盘右方向键执行相同操作。";
+        if (element.matches(".report-click-source")) return "状态切换：点击打开该图片的来源摘要层；关闭来源层后回到当前报告页，不改变页码。";
         if (element.matches("#task-pause")) return "状态切换：点击暂停任务并保留当前步骤、选择和产物；再次点击继续，只重跑受补充条件影响的步骤。";
         if (element.matches("[data-planning-action='open-material-pool']")) return "状态切换：点击打开纯图片素材池；关闭后保留筛选和已选状态。";
         if (element.matches("#planning-material-confirm")) return "状态切换：四个产品线均至少选择一张素材后可用；确认后关闭素材池，并生成四标签页视觉方向板。";
@@ -4661,6 +4838,9 @@
         if (element.matches(".planning-trend-card")) return "新品企划趋势方向详情。按美国女装共同趋势、渠道差异、波段和品类落位展示，电商、社媒与趋势资料证据分开说明。";
         if (element.matches(".planning-material-item")) return "方向参考素材池的图片主体。只展示符合美国市场、目标人群、品类和禁用项硬约束的素材；悬停查看来源与匹配理由。";
         if (element.matches(".planning-tab")) return "在 Amazon US / TikTok Shop US 与 2026年8月 / 2027年2月组成的四条产品线之间切换。";
+        if (element.matches(".report-toc-item")) return "新品企划案V1的缩略目录入口；共11页，覆盖业务企划、视觉企划、落地策略和内部附录。";
+        if (element.matches("#report-prev, #report-next")) return "在新品企划案的16:9单页画布间翻页；对话产物与右侧产物仍引用同一份新品企划案V1。";
+        if (element.matches(".report-click-source")) return "报告中的真实参考或趋势资料图片。悬停显示来源类型，点击查看来源、时间、授权状态、匹配理由和数据缺口。";
         if (element.matches("#task-pause")) return "暂停当前新品企划任务。暂停期间可补充文字、图片或文件，恢复后仅重跑受影响步骤。";
         if (element.matches("[data-planning-action='open-material-pool']")) return "打开方向参考素材池；顶部用趋势、平台、波段、品类和来源类型进行轻量筛选。";
         if (element.matches("#planning-material-confirm")) return "确认已选真实来源素材并映射到四个产品线；素材不足时不会自动混入AI图。";
@@ -4717,7 +4897,7 @@
       };
 
       const belongsToCurrentPage = (element) => {
-        const openModal = [...document.querySelectorAll(".modal-backdrop, .archive-overlay, .drawer-backdrop, .candidate-overlay, .candidate-detail-overlay, .planning-material-overlay, .proposal-preview-overlay")]
+        const openModal = [...document.querySelectorAll(".modal-backdrop, .archive-overlay, .drawer-backdrop, .candidate-overlay, .candidate-detail-overlay, .planning-material-overlay, .proposal-preview-overlay")].reverse()
           .find((modal) => !modal.hidden && visible(modal));
         if (openModal) return openModal.contains(element);
 
