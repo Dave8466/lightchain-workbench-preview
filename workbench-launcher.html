@@ -1006,6 +1006,42 @@
     .artifact-list-open { width: 100%; min-width: 0; display: flex; align-items: center; gap: 9px; padding: 0; border: 0; color: inherit; background: transparent; text-align: left; cursor: pointer; }
     .artifact-list-open:hover .artifact-title { color: #8ce8de; }
     .artifact-list-chevron { margin-left: auto; color: #74837d; font-size: 17px; line-height: 1; }
+    .evidence-group-open { width: 100%; min-width: 0; display: grid; grid-template-columns: 28px minmax(0,1fr) auto; align-items: center; gap: 8px; padding: 0; border: 0; color: inherit; background: transparent; text-align: left; cursor: pointer; }
+    .evidence-group-icon { width: 26px; height: 26px; display: grid; place-items: center; border: 1px solid #3b4944; border-radius: 6px; color: #78d8cf; background: rgba(85,222,211,.06); font-size: 11px; }
+    .evidence-group-copy { min-width: 0; display: grid; gap: 2px; }
+    .evidence-group-copy strong { overflow: hidden; color: #cfd9d5; font-size: 10px; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+    .evidence-group-copy small { overflow: hidden; color: #71807a; font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }
+    .evidence-group-count { color: #88d9d1; font-size: 9px; white-space: nowrap; }
+    .evidence-group-open:hover .evidence-group-copy strong { color: #8ce8de; }
+    .evidence-citations { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .evidence-citation { height: 25px; padding: 0 8px; border: 1px solid #384640; border-radius: 5px; color: #8fcfc8; background: #202624; font-size: 9px; cursor: pointer; }
+    .evidence-citation:hover { border-color: #55ded3; color: #dff8f4; }
+    .evidence-detail-overlay { position: fixed; z-index: 310; inset: 0; display: grid; place-items: center; padding: 28px; background: rgba(5,8,7,.78); backdrop-filter: blur(8px); }
+    .evidence-detail-overlay[hidden] { display: none; }
+    .evidence-detail-dialog { width: min(980px,94vw); max-height: min(820px,92vh); display: grid; grid-template-rows: auto minmax(0,1fr); overflow: hidden; border: 1px solid #3c4944; border-radius: 10px; background: #1a1f1d; box-shadow: 0 28px 80px rgba(0,0,0,.48); }
+    .evidence-detail-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; padding: 20px 22px; border-bottom: 1px solid #303a36; }
+    .evidence-detail-head h2 { margin: 0; color: #f0f6f3; font-size: 17px; }
+    .evidence-detail-head p { margin: 5px 0 0; color: #75827d; font-size: 10px; }
+    .evidence-detail-close { width: 34px; height: 34px; flex: 0 0 34px; border: 1px solid #3b4742; border-radius: 7px; color: #9eaaa5; background: #252b29; font-size: 18px; cursor: pointer; }
+    .evidence-detail-body { min-height: 0; overflow: auto; padding: 20px 22px 28px; }
+    .evidence-summary-grid { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 8px; margin-bottom: 16px; }
+    .evidence-summary-grid div { min-width: 0; padding: 10px; border: 1px solid #34403b; border-radius: 7px; background: #222825; }
+    .evidence-summary-grid dt { color: #68766f; font-size: 9px; }
+    .evidence-summary-grid dd { margin: 4px 0 0; overflow-wrap: anywhere; color: #d2dcd8; font-size: 11px; line-height: 16px; }
+    .evidence-contract { margin: 0 0 16px; padding: 11px 12px; border-left: 2px solid #55ded3; color: #92a09a; background: rgba(85,222,211,.045); font-size: 10px; line-height: 17px; }
+    .evidence-item-list { display: grid; gap: 9px; }
+    .evidence-item { display: grid; grid-template-columns: 54px minmax(0,1fr) minmax(170px,.75fr); gap: 12px; padding: 12px; border: 1px solid #343f3b; border-radius: 8px; background: #202523; }
+    .evidence-thumb { width: 54px; height: 66px; display: grid; place-items: center; overflow: hidden; border-radius: 6px; color: #9fd9d3; background: linear-gradient(145deg,#29423d,#202927); font-size: 10px; font-weight: 700; }
+    .evidence-item-main { min-width: 0; }
+    .evidence-item-main h4 { margin: 0 0 4px; color: #dfe7e4; font-size: 11px; }
+    .evidence-item-main p { margin: 0 0 7px; color: #7f8d87; font-size: 9px; line-height: 15px; }
+    .evidence-item-main a { color: #75dcd3; font-size: 9px; text-decoration: none; }
+    .evidence-item-main a:hover { text-decoration: underline; }
+    .evidence-item-fields { display: grid; gap: 4px; margin: 0; }
+    .evidence-item-fields div { display: grid; grid-template-columns: minmax(86px,.8fr) minmax(0,1fr); gap: 7px; }
+    .evidence-item-fields dt { color: #68756f; font-size: 8px; }
+    .evidence-item-fields dd { margin: 0; overflow-wrap: anywhere; color: #aebbb6; font-size: 8px; }
+    .evidence-limit { margin: 14px 0 0; color: #7d8a84; font-size: 10px; line-height: 17px; }
     .task-panel-empty { display: none; }
     .task-step.rerun { color: #f2b36f; }
     .task-step.updated { color: #90f0e4; }
@@ -1628,6 +1664,13 @@
       .planning-material-head { position: relative; padding-right: 54px; }
       .planning-board-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
       .planning-board-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .evidence-detail-overlay { padding: 8px; }
+      .evidence-detail-dialog { width: 100%; max-height: calc(100vh - 16px); }
+      .evidence-detail-head,.evidence-detail-body { padding-right: 14px; padding-left: 14px; }
+      .evidence-summary-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .evidence-item { grid-template-columns: 46px minmax(0,1fr); }
+      .evidence-thumb { width: 46px; height: 58px; }
+      .evidence-item-fields { grid-column: 1 / -1; padding-top: 8px; border-top: 1px solid #303a36; }
       .candidate-side { max-height: 122px; border-bottom: 1px solid #333c39; }
       .candidate-filters { grid-template-columns: repeat(2,minmax(0,1fr)); }
       .candidate-card .fashion-thumb { height: 120px; }
@@ -1709,13 +1752,12 @@
         <p class="subhead">选择一个业务场景，描述你的目标，Agent 会带你完成后续步骤。</p>
 
         <div class="scene-tabs" role="tablist" aria-label="业务场景">
-          <button class="scene-tab active" data-scene="selection">选品测款</button>
-          <button class="scene-tab" data-scene="planning">新品方向探索</button>
+          <button class="scene-tab active" data-scene="planning">新品方向探索-企划</button>
           <button class="scene-tab" data-scene="proposal">客户提案生成</button>
         </div>
 
         <div class="prompt-box">
-          <textarea id="prompt" aria-label="任务描述" placeholder="描述你想调研的市场、品类或款式方向…"></textarea>
+          <textarea id="prompt" aria-label="任务描述" placeholder="例如：为美国 Amazon US 与 TikTok Shop US 规划两个波段的女装新品…"></textarea>
           <button class="attach" id="attach" title="添加附件">＋</button>
           <input type="file" id="file-input" multiple>
           <select class="control archive-select" aria-label="业务偏好档案">
@@ -1867,12 +1909,20 @@
         <div id="candidate-detail-body"></div>
       </div>
     </div>
+    <div class="evidence-detail-overlay" id="evidence-detail-overlay" hidden>
+      <div class="evidence-detail-dialog" role="dialog" aria-modal="true" aria-labelledby="evidence-detail-title">
+        <header class="evidence-detail-head">
+          <div><h2 id="evidence-detail-title">参考信息详情</h2><p id="evidence-detail-subtitle">本任务实际使用的业务证据 · 演示数据</p></div>
+          <button class="evidence-detail-close" id="evidence-detail-close" type="button" aria-label="关闭参考信息详情">×</button>
+        </header>
+        <div class="evidence-detail-body" id="evidence-detail-body"></div>
+      </div>
+    </div>
     <div class="toast" role="status" aria-live="polite"></div>
   </div>
 
   <script>
     const scenes = {
-      selection: "描述你想调研的市场、品类或款式方向…",
       planning: "例如：为美国 Amazon US 与 TikTok Shop US 规划 2026年8月、2027年2月女装新品…",
       proposal: "输入客户需求，或上传 brief、邮件和会议纪要…"
     };
@@ -1925,10 +1975,10 @@
       document.querySelector(".nav-item.active")?.classList.remove("active");
       document.querySelector("#new-task-nav").classList.add("active");
       document.querySelector(".scene-tab.active")?.classList.remove("active");
-      const defaultScene = document.querySelector('.scene-tab[data-scene="selection"]');
+      const defaultScene = document.querySelector('.scene-tab[data-scene="planning"]');
       defaultScene.classList.add("active");
       prompt.value = "";
-      prompt.placeholder = scenes.selection;
+      prompt.placeholder = scenes.planning;
       document.querySelector("#file-input").value = "";
       searchPanel?.classList.remove("open");
       if (updateRoute && location.hash) history.pushState(null, "", location.pathname + location.search);
@@ -2381,7 +2431,7 @@
     function profileCard(profile){return `<article class="preference-profile-card" tabindex="0" data-profile-id="${profile.id}"><button class="preference-card-more" data-profile-more="${profile.id}" aria-label="更多操作">···</button><h3>${profile.name}</h3><div class="card-meta">已建立 ${profile.modules}/6 个模块</div><div class="card-preview"><i class="preview-swatch"></i><i class="preview-swatch"></i><i class="preview-swatch"></i></div><div class="card-tags">${profile.tags.slice(0,4).map(t=>`<span>${t}</span>`).join("")}</div><div class="card-bottom"><span>资料 ${profile.files} 份</span><span>最近更新 ${profile.updatedAt}</span></div></article>`}
     function renderProfiles(){
       const list=archives;
-      profileList.innerHTML=list.length?list.map(profileCard).join(""):`<div class="preference-empty"><h3>还没有业务偏好档案</h3><p>上传已有图片和文档，让每次选品、企划、提案与款式裂变更了解你的产品和偏好。</p><button class="preference-primary" id="empty-new-profile">创建第一个档案</button></div>`;
+      profileList.innerHTML=list.length?list.map(profileCard).join(""):`<div class="preference-empty"><h3>还没有业务偏好档案</h3><p>上传已有图片和文档，让新品企划与客户提案更了解你的产品和偏好。</p><button class="preference-primary" id="empty-new-profile">创建第一个档案</button></div>`;
     }
     function openCreateProfile(){
       savePreferenceUiState("create");
@@ -2613,6 +2663,73 @@
     }
 
     const taskPanelData = { plans: [], outputs: [], references: [] };
+    const evidenceCatalog = {
+      planning: [
+        { id:"EVG-PLAN-AMZ", platform:"Amazon US", sourceType:"电商商品/列表", title:"Amazon US 女装商品样本", sampleCount:36, dataTime:"2026-06-01 至 2026-08-05", traceableCount:34, status:"演示数据 · 部分字段缺失", gap:"平台未返回统一销量与转化字段；不与其他平台合并", scope:"美国女装；连衣裙、裤装、上衣、套装、卫衣；USD 10-20", usedBy:"趋势分析、方向参考素材池、新品企划案", items:[
+          {evidence_id:"EV-PLAN-AMZ-001",source_platform:"Amazon US",source_type:"商品页",title_summary:"宽松轻商务连衣裙公开商品页",source_url_status:"可溯源 · 演示链接",source_url:"https://www.amazon.com/",captured_at:"2026-08-06",data_time:"页面状态 2026-08-05",used_by:"趋势方向 T01；企划报告 P03",data_gap:"销量、转化率平台未返回",metrics:{price:"USD 16.99",rating:"4.4 / 5",review_count:"1,284",sales:"平台未返回"}},
+          {evidence_id:"EV-PLAN-AMZ-002",source_platform:"Amazon US",source_type:"商品列表",title_summary:"女装轻商务关键词列表样本",source_url_status:"可溯源 · 演示链接",source_url:"https://www.amazon.com/s?k=womens+business+casual",captured_at:"2026-08-06",data_time:"2026-06-01 至 2026-08-05",used_by:"供给密度与价格带判断",data_gap:"排名口径随页面变化",metrics:{price:"中位数 USD 16.40",ranking:"列表页相对顺序",rating:"4.1-4.6"}}
+        ]},
+        { id:"EVG-PLAN-TTS", platform:"TikTok Shop US", sourceType:"电商商品/橱窗", title:"TikTok Shop US 女装样本", sampleCount:24, dataTime:"2026-07-01 至 2026-08-05", traceableCount:21, status:"演示数据 · 可溯源率 87.5%", gap:"售出量仅按页面可见字段记录；缺失条目不补零", scope:"美国女装；20-35岁初入职场；紧身与 oversize", usedBy:"渠道差异、视觉方向板、新品企划案", items:[
+          {evidence_id:"EV-PLAN-TTS-001",source_platform:"TikTok Shop US",source_type:"商品橱窗",title_summary:"比例对比套装公开橱窗",source_url_status:"可溯源 · 演示链接",source_url:"https://www.tiktok.com/shop",captured_at:"2026-08-06",data_time:"页面状态 2026-08-04",used_by:"趋势方向 T03；TikTok 产品线",data_gap:"评价结构与退货原因未返回",metrics:{price:"USD 14.80",sales:"页面显示 2.3K+ sold",rating:"平台未返回",review_count:"平台未返回"}},
+          {evidence_id:"EV-PLAN-TTS-002",source_platform:"TikTok Shop US",source_type:"商品列表",title_summary:"轻商务女装供给样本",source_url_status:"可溯源 · 演示链接",source_url:"https://www.tiktok.com/shop",captured_at:"2026-08-06",data_time:"2026-07-01 至 2026-08-05",used_by:"供给与竞争信息",data_gap:"搜索排序机制不透明",metrics:{price:"USD 10.00-19.99",ranking:"平台未返回"}}
+        ]},
+        { id:"EVG-PLAN-SOC", platform:"TikTok / Instagram / Pinterest", sourceType:"社媒帖子", title:"美国轻通勤内容信号", sampleCount:86, dataTime:"2026-06-15 至 2026-08-05", traceableCount:82, status:"演示数据 · 仅代表内容信号", gap:"互动不等于购买意愿；不同平台指标不合并", scope:"轻商务、通勤、比例对比、色彩与穿搭表达", usedBy:"趋势方向验证、视觉关键词、报告证据页", items:[
+          {evidence_id:"EV-PLAN-SOC-001",source_platform:"TikTok",source_type:"公开帖子",title_summary:"初入职场轻商务穿搭内容",source_url_status:"可溯源 · 演示链接",source_url:"https://www.tiktok.com/",captured_at:"2026-08-06",data_time:"发布于 2026-07-28",used_by:"趋势方向 T03",data_gap:"受众年龄为内容语境推断",metrics:{views:"18,600",likes:"1,240",comments:"74",shares:"平台未返回",saves:"平台未返回"}},
+          {evidence_id:"EV-PLAN-SOC-002",source_platform:"Pinterest",source_type:"公开 Pin",title_summary:"早春柔性色彩与通勤情绪板",source_url_status:"可溯源 · 演示链接",source_url:"https://www.pinterest.com/",captured_at:"2026-08-06",data_time:"采集于 2026-08-05",used_by:"趋势方向 T02/T05；色彩系统",data_gap:"浏览与分享字段未返回",metrics:{views:"平台未返回",likes:"平台未返回",comments:"平台未返回",saves:"760"}}
+        ]},
+        { id:"EVG-PLAN-TRD", platform:"趋势资料库", sourceType:"授权报告章节", title:"美国女装趋势资料", sampleCount:2, dataTime:"2025-09 至 2026-05", traceableCount:2, status:"演示引用 · 授权状态待复核", gap:"报告只支持方向假设，不证明销量机会", scope:"美国女装 2026/27；轮廓、色彩、材质章节", usedBy:"趋势方向分析、新品企划案证据页", items:[
+          {evidence_id:"EV-PLAN-TRD-001",source_platform:"趋势资料库",source_type:"报告章节",title_summary:"Everyday Ease / Silhouette",source_url_status:"内部授权预览",source_url:"#trend-report-everyday-ease",captured_at:"2026-08-06",data_time:"报告发布 2026-03",used_by:"趋势方向 T01/T04",data_gap:"授权状态待复核",metrics:{report_name:"Everyday Ease",institution:"演示趋势机构",page_section:"p.18-24 / Silhouette",market:"United States",authorization:"待复核"}},
+          {evidence_id:"EV-PLAN-TRD-002",source_platform:"趋势资料库",source_type:"报告章节",title_summary:"Soft Polish / Color & Detail",source_url_status:"内部授权预览",source_url:"#trend-report-soft-polish",captured_at:"2026-08-06",data_time:"报告发布 2026-05",used_by:"趋势方向 T02/T05",data_gap:"部分图片不可对外导出",metrics:{report_name:"Soft Polish",institution:"演示趋势机构",page_section:"p.34-39 / Color & Detail",market:"North America",authorization:"限内部评审"}}
+        ]}
+      ],
+      proposal: [
+        { id:"EVG-PROP-FILE", platform:"用户资料", sourceType:"客户文件", title:"客户 brief 与参考图", sampleCount:3, dataTime:"用户上传时间 2026-08-06", traceableCount:3, status:"演示数据 · 任务内使用", gap:"客户数量、预算、认证与样衣要求待确认", scope:"客户需求、参考图、会议纪要", usedBy:"需求理解、方向参考包、客户提案", items:[
+          {evidence_id:"EV-PROP-FILE-001",source_platform:"用户资料",source_type:"客户 brief",title_summary:"Europe_light_outdoor_brief.pdf",source_url_status:"任务内文件预览",source_url:"#user-file-brief",captured_at:"2026-08-06",data_time:"文件日期 2026-08-02",used_by:"需求解析；最终提案客户需求",data_gap:"预算与认证字段未填写",metrics:{file_name:"Europe_light_outdoor_brief.pdf",file_page:"p.1-6"}},
+          {evidence_id:"EV-PROP-FILE-002",source_platform:"用户资料",source_type:"参考图片",title_summary:"客户上传视觉参考图 2 张",source_url_status:"任务内文件预览",source_url:"#user-file-reference",captured_at:"2026-08-06",data_time:"上传于 2026-08-06",used_by:"参考图特征解析；AI改款锚点",data_gap:"原始品牌与拍摄时间未知",metrics:{file_name:"reference_board.jpg",file_page:"整图"}}
+        ]},
+        { id:"EVG-PROP-ECOM", platform:"目标市场电商平台", sourceType:"商品/列表页", title:"目标市场女装参考样本", sampleCount:28, dataTime:"2026-07-01 至 2026-08-05", traceableCount:25, status:"演示数据 · 分平台展示", gap:"无统一销量口径，不合并平台数值", scope:"按客户市场、人群、品类与价格带硬过滤", usedBy:"趋势方向、候选参考池、方向参考包", items:[
+          {evidence_id:"EV-PROP-ECOM-001",source_platform:"目标电商平台",source_type:"商品页",title_summary:"轻户外女装候选参考 A02",source_url_status:"可溯源 · 演示链接",source_url:"https://example.com/product/a02",captured_at:"2026-08-06",data_time:"页面状态 2026-08-03",used_by:"候选池 A02；方向参考包",data_gap:"销量与排名平台未返回",metrics:{price:"EUR 64.00",rating:"4.5 / 5",review_count:"386",sales:"平台未返回",ranking:"平台未返回"}}
+        ]},
+        { id:"EVG-PROP-SOC", platform:"TikTok / Instagram / Pinterest", sourceType:"社媒帖子", title:"客户目标方向社媒信号", sampleCount:42, dataTime:"2026-06-20 至 2026-08-05", traceableCount:39, status:"演示数据 · 内容层信号", gap:"互动指标不等于销售或市场机会", scope:"客户指定场景、设计语言与排除项", usedBy:"趋势方向、候选参考池、提案市场依据", items:[
+          {evidence_id:"EV-PROP-SOC-001",source_platform:"Instagram",source_type:"公开帖子",title_summary:"轻户外通勤系列公开内容",source_url_status:"可溯源 · 演示链接",source_url:"https://www.instagram.com/",captured_at:"2026-08-06",data_time:"发布于 2026-07-30",used_by:"趋势方向 D02；候选 B01",data_gap:"收藏字段未返回",metrics:{views:"平台未返回",likes:"2,180",comments:"96",shares:"41",saves:"平台未返回"}}
+        ]},
+        { id:"EVG-PROP-TRD", platform:"趋势资料库", sourceType:"授权报告章节", title:"客户目标市场趋势章节", sampleCount:2, dataTime:"2025-10 至 2026-05", traceableCount:2, status:"演示引用 · 授权状态待复核", gap:"趋势资料只支持方向，不单独证明销量", scope:"目标市场、季节、品类与视觉主题", usedBy:"趋势方向分析、方向参考包、最终提案", items:[
+          {evidence_id:"EV-PROP-TRD-001",source_platform:"趋势资料库",source_type:"报告章节",title_summary:"Urban Outdoor / Womenswear",source_url_status:"内部授权预览",source_url:"#proposal-trend-report",captured_at:"2026-08-06",data_time:"报告发布 2026-04",used_by:"趋势方向 D01/D02；最终提案",data_gap:"部分图表无外部授权",metrics:{report_name:"Urban Outdoor",institution:"演示趋势机构",page_section:"p.12-19 / Womenswear",market:"Europe",authorization:"限内部评审"}}
+        ]}
+      ]
+    };
+
+    function evidenceGroupsFor(scene, stage) {
+      const active = scene === "planning" ? !["idle","understanding","scope"].includes(stage) : !["idle","understanding","scope"].includes(stage);
+      return active ? evidenceCatalog[scene] : [];
+    }
+
+    function evidenceCitation(ids) {
+      return `<div class="evidence-citations">${ids.map(id=>`<button type="button" class="evidence-citation" data-evidence-citation="${escapeHtml(id)}">证据 ${escapeHtml(id)}</button>`).join("")}</div>`;
+    }
+
+    function evidenceGroupMarkup(group) {
+      return `<li class="task-panel-item"><button class="evidence-group-open" type="button" data-evidence-group="${escapeHtml(group.id)}"><span class="evidence-group-icon">证</span><span class="evidence-group-copy"><strong>${escapeHtml(group.title)}</strong><small>${escapeHtml(group.platform)} · ${escapeHtml(group.sourceType)} · ${escapeHtml(group.dataTime)}</small></span><span class="evidence-group-count">${escapeHtml(String(group.sampleCount))} 条</span></button></li>`;
+    }
+
+    function findEvidenceGroup(id) {
+      return [...evidenceCatalog.planning,...evidenceCatalog.proposal].find(group=>group.id===id || group.items.some(item=>item.evidence_id===id));
+    }
+
+    function renderEvidenceDetail(id) {
+      const group=findEvidenceGroup(id); if(!group)return;
+      const fixedLabels={evidence_id:"证据ID · evidence_id",source_platform:"来源平台 · source_platform",source_type:"来源类型 · source_type",title_summary:"标题/摘要 · title_or_summary",source_url_status:"来源URL状态 · source_url_status",captured_at:"采集时间 · captured_at",data_time:"数据时间 · data_time",used_by:"使用位置 · used_by",data_gap:"数据缺口 · data_gap"};
+      const metricLabels={price:"价格 · price",sales:"销量/售出量 · sales",rating:"评分 · rating",review_count:"评价数 · review_count",ranking:"排名 · ranking",views:"浏览/播放 · views",likes:"点赞 · likes",comments:"评论 · comments",shares:"分享 · shares",saves:"收藏 · saves",report_name:"报告名 · report_name",institution:"机构 · institution",page_section:"页码/章节 · page_section",market:"适用市场 · market",authorization:"授权 · authorization",file_name:"文件名 · file_name",file_page:"引用页码 · file_page"};
+      const items=group.items.map(item=>{
+        const fixed={evidence_id:item.evidence_id,source_platform:item.source_platform,source_type:item.source_type,title_summary:item.title_summary,source_url_status:item.source_url_status,captured_at:item.captured_at,data_time:item.data_time,used_by:item.used_by,data_gap:item.data_gap};
+        const rows=[...Object.entries(fixed),...Object.entries(item.metrics||{})].map(([key,value])=>`<div data-evidence-field="${key}"><dt>${escapeHtml(fixedLabels[key]||metricLabels[key]||key)}</dt><dd>${escapeHtml(String(value))}</dd></div>`).join("");
+        return `<article class="evidence-item"><div class="evidence-thumb">${escapeHtml(item.evidence_id.split("-").slice(-1)[0])}</div><div class="evidence-item-main"><h4>${escapeHtml(item.title_summary)}</h4><p>${escapeHtml(item.used_by)}<br>匹配原因：符合当前任务的市场、人群、品类或已确认方向约束。</p><a href="${escapeHtml(item.source_url)}" target="_blank" rel="noopener">打开原始来源</a></div><dl class="evidence-item-fields">${rows}</dl></article>`;
+      }).join("");
+      document.querySelector("#evidence-detail-title").textContent=group.title;
+      document.querySelector("#evidence-detail-subtitle").textContent=`${group.platform} · ${group.sourceType} · 演示数据`;
+      document.querySelector("#evidence-detail-body").innerHTML=`<dl class="evidence-summary-grid"><div><dt>样本数</dt><dd>${group.sampleCount} 条</dd></div><div><dt>时间范围</dt><dd>${escapeHtml(group.dataTime)}</dd></div><div><dt>可溯源</dt><dd>${group.traceableCount} / ${group.sampleCount}</dd></div><div><dt>数据状态</dt><dd>${escapeHtml(group.status)}</dd></div><div><dt>调研范围</dt><dd>${escapeHtml(group.scope)}</dd></div></dl><p class="evidence-contract">固定字段始终按 Agent 字段 key 输出；按需字段根据来源类型和平台实际返回结果展示。字段未返回时显示“平台未返回”或不渲染，不使用 0 或其他平台数据补齐。前端以 evidence_id 关联对话引用、报告引用和右侧证据目录。</p><div class="evidence-item-list">${items}</div><p class="evidence-limit"><b>数据限制：</b>${escapeHtml(group.gap)}。本弹窗内容均为明确标注的演示数据，不代表已连接真实平台。</p>`;
+      document.querySelector("#evidence-detail-overlay").hidden=false;
+    }
     const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[char]));
 
     function agentExecutionMessage({ copy, label, details = [], state = "running" }) {
@@ -2792,7 +2909,7 @@
       const groups = [];
       if (taskPanelData.plans.length) groups.push(`<section class="task-panel-section plans"><h3>计划列表</h3><ol class="task-panel-list">${taskPanelData.plans.map((item) => `<li class="task-panel-item"><span>○</span><span class="task-step ${escapeHtml(item.className || "")}">${escapeHtml(item.label || item)}</span>${item.state ? `<span class="item-state">${escapeHtml(item.state)}</span>` : ""}</li>`).join("")}</ol></section>`);
       if (taskPanelData.outputs.length) groups.push(`<section class="task-panel-section outputs"><h3>任务产物</h3><ul class="task-panel-list">${taskPanelData.outputs.map((item) => `<li class="task-panel-item"><button class="artifact-list-open" type="button" data-artifact-view="${escapeHtml(item.id)}"><span class="item-icon">□</span><span class="artifact-title">${escapeHtml(item.label || item)}</span><span class="artifact-list-chevron">›</span></button></li>`).join("")}</ul></section>`);
-      if (taskPanelData.references.length) groups.push(`<section class="task-panel-section references"><h3>参考信息</h3><ul class="task-panel-list">${taskPanelData.references.map((item) => `<li class="task-panel-item"><span>↗</span><a href="${escapeHtml(item.url || "#")}" target="_blank" rel="noopener">${escapeHtml(item.label || item.url || item)}</a></li>`).join("")}</ul></section>`);
+      if (taskPanelData.references.length) groups.push(`<section class="task-panel-section references"><h3>参考信息</h3><ul class="task-panel-list">${taskPanelData.references.map(evidenceGroupMarkup).join("")}</ul></section>`);
       const panel = document.querySelector("#task-panel");
       const hasContent = groups.length > 0;
       document.querySelector("#task-panel-sections").innerHTML = groups.join("");
@@ -2815,7 +2932,7 @@
           className: index === current ? "updated" : index < current ? "updated" : ""
         })),
         outputs: Object.keys(proposalArtifactData).filter((key) => proposalArtifactData[key]).map((key) => proposalArtifactData[key]),
-        references: proposalFlow.references || []
+        references: evidenceGroupsFor("proposal",proposalFlow.stage)
       });
     }
 
@@ -3146,7 +3263,7 @@
         details: ["整理趋势资料中的方向假设", "核对电商供给与竞争信息", "整理社媒信号、来源、样本量、证据充分度和数据缺口"],
         state: "complete"
       }));
-      appendTaskHtml(proposalAgentMessage(`调研摘要：目标人群 ${proposalFlow.requirement.audience || "待补充"}；品类 ${proposalFlow.requirement.category || "待补充"}；核心视觉词 ${proposalFlow.requirement.designDirection || "待从趋势资料与社媒信号中验证"}；排除项 ${proposalFlow.requirement.excludeElements || "待补充"}。趋势资料只支撑方向假设，社媒信号与电商供给/竞争信息分别展示，不单独证明销量或市场机会。`, `<button class="proposal-inline-action" type="button" data-proposal-action="open-candidates">打开候选池</button>`));
+      appendTaskHtml(proposalAgentMessage(`调研摘要：目标人群 ${proposalFlow.requirement.audience || "待补充"}；品类 ${proposalFlow.requirement.category || "待补充"}；核心视觉词 ${proposalFlow.requirement.designDirection || "待从趋势资料与社媒信号中验证"}；排除项 ${proposalFlow.requirement.excludeElements || "待补充"}。趋势资料只支撑方向假设，社媒信号与电商供给/竞争信息分别展示，不单独证明销量或市场机会。`, `${evidenceCitation(["EV-PROP-FILE-001","EV-PROP-ECOM-001","EV-PROP-SOC-001","EV-PROP-TRD-001"])}<button class="proposal-inline-action" type="button" data-proposal-action="open-candidates">打开候选池</button>`));
       document.querySelector("#task-condition").placeholder = "也可以补充竞品、价格范围或要排除的方向…";
     }
 
@@ -3469,6 +3586,7 @@
       renderProposalPlanPanel();
       proposalFlow.stage = "trendReview";
       appendTaskHtml(proposalArtifactQuote(artifact, "4 个方向 · 每个方向含元素、适配理由、来源、样本、证据充分度与缺口"));
+      appendTaskHtml(proposalAgentMessage("本次趋势扫描引用以下业务证据；这些 evidence_id 与右侧参考信息聚合行及详情弹窗保持同源。",evidenceCitation(["EV-PROP-FILE-001","EV-PROP-ECOM-001","EV-PROP-SOC-001","EV-PROP-TRD-001"])));
       appendTaskHtml(proposalAgentMessage("趋势方向分析已生成。请点击“查看详情”选择认可方向，也可以直接在输入框说“保留 1 和 3，排除 2”，修改会先停留在趋势确认，不会进入定向候选检索。"));
       document.querySelector("#task-condition").placeholder = "例如：保留 1 和 3，排除 2；或补充需要的视觉条件…";
     }
@@ -3807,6 +3925,8 @@
     }
 
     document.querySelector("#task-chat").addEventListener("click", (event) => {
+      const evidence = event.target.closest("[data-evidence-citation]");
+      if (evidence) { renderEvidenceDetail(evidence.dataset.evidenceCitation); return; }
       const option = event.target.closest(".selection-option");
       if (option) { toggleSelectionOption(option); return; }
       const confirm = event.target.closest(".selection-confirm");
@@ -4054,9 +4174,13 @@
     }
     document.querySelector("#proposal-preview-close").addEventListener("click", closeArtifactPreview);
     document.querySelector("#proposal-preview-overlay").addEventListener("click", (event) => {
+      const evidence=event.target.closest("[data-evidence-citation]");
+      if(evidence){renderEvidenceDetail(evidence.dataset.evidenceCitation);return;}
       if (event.target.id === "proposal-preview-overlay") closeArtifactPreview();
     });
     document.querySelector("#task-panel-sections").addEventListener("click", (event) => {
+      const evidence = event.target.closest("[data-evidence-group]");
+      if (evidence) { renderEvidenceDetail(evidence.dataset.evidenceGroup); return; }
       const view = event.target.closest("[data-artifact-view]");
       if (view) {
         const artifact = currentTaskArtifacts().find((item) => item.id === view.dataset.artifactView);
@@ -4064,6 +4188,8 @@
         return;
       }
     });
+    document.querySelector("#evidence-detail-close").addEventListener("click",()=>document.querySelector("#evidence-detail-overlay").hidden=true);
+    document.querySelector("#evidence-detail-overlay").addEventListener("click",event=>{if(event.target.id==="evidence-detail-overlay")event.currentTarget.hidden=true;});
 
     function resetPlanningFlow() {
       planningFlow.active = false;
@@ -4104,7 +4230,7 @@
       renderTaskPanel({
         plans: planningSteps.map((label,index) => ({ label, state:index < current ? "已完成" : index === current ? (planningFlow.paused ? "已暂停" : "进行中") : "待处理", className:index <= current ? "updated" : "" })),
         outputs: planningOutputs(),
-        references: planningFlow.references
+        references: evidenceGroupsFor("planning",planningFlow.stage)
       });
     }
 
@@ -4205,6 +4331,7 @@
       const artifact = makeArtifactPayload("planningTrend","趋势与市场方向分析","planningTrend","5个方向 · 共同趋势→渠道差异→波段与品类落位");
       savePlanningArtifact("trend",artifact);
       appendTaskHtml(proposalArtifactQuote(artifact,"小样本扫描 · 5个待确认方向 · 电商、社媒与趋势依据分别展示"));
+      appendTaskHtml(proposalAgentMessage("本次趋势判断引用以下任务证据。点击证据 ID 可打开与右侧参考信息相同的来源对象。",evidenceCitation(["EV-PLAN-AMZ-001","EV-PLAN-TTS-001","EV-PLAN-SOC-001","EV-PLAN-TRD-001"])));
       appendTaskHtml(proposalAgentMessage("趋势方向分析已生成。请打开详情确认、排除、合并或收窄方向；也可以在输入框直接说“保留1、3、4，排除2”。未确认前不会获取方向参考图片。"));
       document.querySelector("#task-condition").placeholder = "例如：保留1、3、4，排除2；或合并某两个方向…";
       renderPlanningPanel();
@@ -4445,6 +4572,7 @@
       body.classList.add("report-body");
       const titles = ["封面","企划范围与客群","趋势证据与方向","灵感来源图集","主题情绪板","渠道×波段方向","色彩系统","关键廓形造型","面料与细节","商品结构与价格","上新策略与附录"];
       body.innerHTML = `<div class="report-viewer-shell"><nav class="report-toc" aria-label="企划案目录"><span class="report-toc-label">Contents</span>${titles.map((title, index) => `<button type="button" class="report-toc-item ${index === 0 ? "active" : ""}" data-report-index="${index}"><span class="report-toc-num">${String(index + 1).padStart(2, "0")}</span><span class="report-toc-title">${escapeHtml(title)}</span></button>`).join("")}</nav><div class="report-stage"><div class="report-slide-frame">${planningReportSlides().join("")}</div><footer class="report-controls"><button type="button" class="report-control" id="report-prev" aria-label="上一页">←</button><span class="report-page-count" id="report-page-count">1 / ${titles.length}</span><button type="button" class="report-control" id="report-next" aria-label="下一页">→</button></footer></div></div>`;
+      body.querySelector('[data-report-slide="2"] .report-slide-copy')?.insertAdjacentHTML("beforeend",evidenceCitation(["EV-PLAN-AMZ-001","EV-PLAN-TTS-001","EV-PLAN-SOC-001","EV-PLAN-TRD-001"]));
       document.querySelector("#proposal-preview-title").textContent = "新品企划案 V1 · 视觉企划报告";
       document.querySelector("#proposal-preview-subtitle").textContent = `${planningFlow.language} · 16:9 翻页式只读查看 · 演示数据`;
       document.querySelector("#proposal-preview-overlay").hidden = false;
@@ -4788,6 +4916,9 @@
         if (element.matches("[data-ai-regenerate]")) return "局部重生成按钮";
         if (element.matches('[data-proposal-action="confirm-ai-images"]')) return "改款图确认按钮";
         if (element.matches(".proposal-artifact-quote")) return "产物引用块";
+        if (element.matches(".evidence-group-open")) return "聚合证据目录行";
+        if (element.matches(".evidence-citation")) return "证据ID引用按钮";
+        if (element.matches("#evidence-detail-close")) return "证据详情关闭按钮";
         if (element.matches(".ai-remix-item")) return "AI 改款图片结果项";
         if (element.matches("button")) return "按钮";
         return "可交互组件";
@@ -4816,6 +4947,8 @@
         if (element.matches("#task-profile-trigger")) return "状态切换：悬停临时展示档案卡片；点击固定展开，再次点击或点击外部收起。";
         if (element.matches("[data-artifact-menu]")) return "状态切换：点击展开打开方式菜单，再次点击收起；菜单提供在线查看与下载 HTML/PPT/PDF。";
         if (element.matches("[data-artifact-view-inline], [data-artifact-view]")) return "状态切换：点击打开与对话引用块、右侧列表同源的只读产物详情；关闭后不改变产物状态。";
+        if (element.matches(".evidence-group-open, .evidence-citation")) return "状态切换：点击打开对应 evidence_id 的参考信息详情弹窗；关闭后保留任务步骤、产物和对话状态。右侧聚合行与对话/报告引用指向同一证据对象。";
+        if (element.matches("#evidence-detail-close")) return "状态切换：点击关闭参考信息详情并返回原任务位置，不触发重新调研或任务重跑。";
         if (element.matches("[data-trend-select]")) return "状态切换：点击选中趋势方向，再次点击取消；至少确认一个方向后才会进入定向候选检索。";
         if (element.matches(".planning-trend-card")) return "状态切换：点击选中或取消趋势方向；至少保留一个并点击确认后，才进入定向视觉素材获取。";
         if (element.matches(".planning-material-item")) return "状态切换：桌面点击选择或取消；移动端点击先打开来源详情层，再在详情内选择。已选状态不改变图片网格尺寸。";
@@ -4868,7 +5001,7 @@
         if (element.matches("#search-toggle")) return "点击展开搜索输入框；根据关键词实时匹配历史任务和项目，结果按最近编辑时间由近到远排序。";
         if (element.matches("#search-input")) return "输入任务或项目关键词，搜索结果随输入实时刷新。";
         if (element.matches(".search-result")) return "点击打开对应的历史任务或项目。具体打开后的页面交互待后续对齐。";
-        if (element.matches("#new-task-nav")) return "点击返回功能首页初始状态：展开侧栏、清空当前输入和附件，并恢复“选品测款”默认场景。";
+        if (element.matches("#new-task-nav")) return "点击返回功能首页初始状态：展开侧栏、清空当前输入和附件，并恢复“新品方向探索-企划”默认场景；当前版本仅开放新品企划与客户提案两个 Agent。";
         if (element.matches("#archive-nav")) return "进入统一业务偏好档案列表；所有用户看到相同的六个模块，不区分企业类型。";
         if (element.matches("#new-profile")) return "进入创建页；除档案名称外，不要求手动填写其他字段。";
         if (element.matches(".preference-profile-card")) return "展示档案模块数、代表性预览、标签、资料数和更新时间；点击进入详情。";
@@ -4906,6 +5039,9 @@
         if (element.matches("[data-ai-regenerate]")) return "按对话中的最新意见重生成当前受影响款，不自动生成最终提案。";
         if (element.matches('[data-proposal-action="confirm-ai-images"]')) return "明确确认 AI 改款图。只有完成此确认后，才显示最终提案单语言选择。";
         if (element.matches(".proposal-artifact-quote")) return "对话流中的文件式产物引用，与右侧任务产物列表引用同一产物 ID、状态和只读详情。";
+        if (element.matches(".evidence-group-open")) return "右侧参考信息按“平台 + 来源类型”聚合的证据目录行，展示样本数、时间范围与数据状态。点击查看调研范围、条目缩略列表、匹配原因、原始来源和数据限制；不展示底层采集工具名。";
+        if (element.matches(".evidence-citation")) return "对话或报告中的证据引用。按钮值为 evidence_id，与右侧参考信息详情中的 Agent 输出字段完全一致。固定字段为 evidence_id、source_platform、source_type、title_or_summary、source_url_status、captured_at、data_time、used_by、data_gap；价格、销量、互动、报告页码和用户文件页码按来源返回情况展示。";
+        if (element.matches("#evidence-detail-close")) return "关闭证据详情弹窗。固定字段始终展示；按需字段未返回时显示“平台未返回”或不展示，不使用 0 或其他平台数据补齐。";
         if (element.matches(".ai-remix-item")) return "展示改款编号、锚点、保留元素、修改元素与 AI 概念表达；图片确认前不生成最终提案。";
         if (element.matches("[data-artifact-menu]")) return "对话结果矩形的打开方式菜单；下载操作只在这里提供，不在右侧任务产物列表重复展示。";
         if (element.matches(".proposal-inline-action")) return element.dataset.proposalAction === "open-candidates" ? "打开纯图片候选池；桌面悬停显示来源和匹配理由，移动端点击先进入详情层。" : "打开与右侧任务产物同源的只读详情。";
@@ -5102,6 +5238,10 @@
           [".proposal-inline-action", "候选池入口"],
           ["#candidate-overlay", "候选池弹窗"],
           ["#proposal-preview-overlay", "只读预览弹窗"],
+          [".evidence-group-open", "参考信息聚合来源行"],
+          [".evidence-citation", "证据ID引用"],
+          ["#evidence-detail-overlay", "参考信息详情弹窗"],
+          ["#evidence-detail-close", "关闭参考信息详情"],
           ["[data-artifact-view]", "在线查看按钮"],
           ["[data-artifact-download-inline]", "对话结果下载按钮"],
           ["#package-upload", "上传完整资料包"],
