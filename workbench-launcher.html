@@ -1752,8 +1752,8 @@
         <p class="subhead">选择一个业务场景，描述你的目标，Agent 会带你完成后续步骤。</p>
 
         <div class="scene-tabs" role="tablist" aria-label="业务场景">
-          <button class="scene-tab active" data-scene="planning">新品方向探索-企划</button>
-          <button class="scene-tab" data-scene="proposal">客户提案生成</button>
+          <button class="scene-tab active" data-scene="planning">新品企划</button>
+          <button class="scene-tab" data-scene="proposal">客户提案</button>
         </div>
 
         <div class="prompt-box">
@@ -5001,7 +5001,7 @@
         if (element.matches("#search-toggle")) return "点击展开搜索输入框；根据关键词实时匹配历史任务和项目，结果按最近编辑时间由近到远排序。";
         if (element.matches("#search-input")) return "输入任务或项目关键词，搜索结果随输入实时刷新。";
         if (element.matches(".search-result")) return "点击打开对应的历史任务或项目。具体打开后的页面交互待后续对齐。";
-        if (element.matches("#new-task-nav")) return "点击返回功能首页初始状态：展开侧栏、清空当前输入和附件，并恢复“新品方向探索-企划”默认场景；当前版本仅开放新品企划与客户提案两个 Agent。";
+        if (element.matches("#new-task-nav")) return "点击返回功能首页初始状态：展开侧栏、清空当前输入和附件，并恢复“新品企划”默认场景；当前版本仅开放新品企划与客户提案两个 Agent。";
         if (element.matches("#archive-nav")) return "进入统一业务偏好档案列表；所有用户看到相同的六个模块，不区分企业类型。";
         if (element.matches("#new-profile")) return "进入创建页；除档案名称外，不要求手动填写其他字段。";
         if (element.matches(".preference-profile-card")) return "展示档案模块数、代表性预览、标签、资料数和更新时间；点击进入详情。";
