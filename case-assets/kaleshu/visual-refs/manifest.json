@@ -1,0 +1,198 @@
+{
+  "title": "卡乐鼠阶段 4 真实视觉参考清单",
+  "updated_at": "2026-08-07",
+  "ai_generated_count": 0,
+  "note": "全部为真实市场商品图；仅用于趋势与设计参考，不代表卡乐鼠最终款式。",
+  "items": [
+    {
+      "file": "amz_a1_blouse.webp",
+      "line": "Amazon US",
+      "direction": "A1 柔性轻商务上衣",
+      "evidence_id": "EC-AMZ-PROD-002",
+      "source_name": "Amazon US",
+      "title": "Blooming Jelly Dressy Casual Blouse",
+      "url": "https://www.amazon.com/dp/B0DX26H5GX?language=en",
+      "asset_type": "真实市场商品图"
+    },
+    {
+      "file": "amz_a1_tunic.webp",
+      "line": "Amazon US",
+      "direction": "A1 柔性轻商务上衣",
+      "evidence_id": "EC-AMZ-PROD-002",
+      "source_name": "Amazon US",
+      "title": "Zeagoo Loose Fit Tunic",
+      "url": "https://www.amazon.com/dp/B0G13J9CFZ?language=en",
+      "asset_type": "真实市场商品图"
+    },
+    {
+      "file": "amz_a2_dress.webp",
+      "line": "Amazon US",
+      "direction": "A2 易穿过渡季连衣裙",
+      "evidence_id": "EC-AMZ-PROD-002",
+      "source_name": "Amazon US",
+      "title": "lionstill Swing Dress with Pockets",
+      "url": "https://www.amazon.com/dp/B08TBG1BPD?language=en",
+      "asset_type": "真实市场商品图"
+    },
+    {
+      "file": "amz_a3_pullon.webp",
+      "line": "Amazon US",
+      "direction": "A3 非牛仔易穿裤",
+      "evidence_id": "EC-AMZ-PROD-002",
+      "source_name": "Amazon US",
+      "title": "AB-Eleven Pull-on Dress Pants",
+      "url": "https://www.amazon.com/dp/B0GJZBZX2T?language=en",
+      "asset_type": "真实市场商品图"
+    },
+    {
+      "file": "amz_a3_wideleg.webp",
+      "line": "Amazon US",
+      "direction": "A3 非牛仔易穿裤",
+      "evidence_id": "EC-AMZ-PROD-002",
+      "source_name": "Amazon US",
+      "title": "LILLUSORY Wide Leg Work Pants",
+      "url": "https://www.amazon.com/dp/B0GDFK7X6M?language=en",
+      "asset_type": "真实市场商品图"
+    },
+    {
+      "file": "amz_set_stripe.webp",
+      "line": "跨平台套装参照",
+      "direction": "T2 日常协调套装",
+      "evidence_id": "EC-AMZ-PROD-002",
+      "source_name": "Amazon US",
+      "title": "MARZXIN Vertical Stripe Short Set",
+      "url": "https://www.amazon.com/dp/B0D5HLFB2D?language=en",
+      "asset_type": "真实市场商品图"
+    },
+    {
+      "file": "kohls_dress_floral.webp",
+      "line": "Amazon 熟龄参照",
+      "direction": "A2 易穿过渡季连衣裙",
+      "evidence_id": "REF-KOHLS-001",
+      "source_name": "Kohl's",
+      "title": "Croft & Barrow Smocked Midi Dress",
+      "url": "https://www.kohls.com/product/prd-3567056/womens-croft-barrow-print-challis-midi-dress.jsp",
+      "asset_type": "真实市场商品图"
+    },
+    {
+      "file": "kohls_dress_shift.webp",
+      "line": "Amazon 熟龄参照",
+      "direction": "A2 易穿过渡季连衣裙",
+      "evidence_id": "REF-KOHLS-001",
+      "source_name": "Kohl's",
+      "title": "Sonoma Everyday Shift Dress",
+      "url": "https://www.kohls.com/product/prd-7863438/womens-sonoma-goods-for-life-everyday-shift-dress.jsp",
+      "asset_type": "真实市场商品图"
+    },
+    {
+      "file": "kohls_blouse_tulip.webp",
+      "line": "Amazon 熟龄参照",
+      "direction": "A1 柔性轻商务上衣",
+      "evidence_id": "REF-KOHLS-001",
+      "source_name": "Kohl's",
+      "title": "Nine West Tulip Sleeve Blouse",
+      "url": "https://www.kohls.com/product/prd-6867329/womens-nine-west-gathered-crewneck-tulip-sleeve-blouse.jsp",
+      "asset_type": "真实市场商品图"
+    },
+    {
+      "file": "kohls_camp_shirt.webp",
+      "line": "Amazon 熟龄参照",
+      "direction": "A1 柔性轻商务上衣",
+      "evidence_id": "REF-KOHLS-001",
+      "source_name": "Kohl's",
+      "title": "Croft & Barrow Camp Shirt",
+      "url": "https://www.kohls.com/product/prd-5949460/womens-croft-barrow-camp-shirt.jsp",
+      "asset_type": "真实市场商品图"
+    },
+    {
+      "file": "tts_wideleg_55414.webp",
+      "line": "TikTok Shop US",
+      "direction": "T1 宽腿通勤比例裤",
+      "evidence_id": "EC-TTS-SHOP-002",
+      "source_name": "TikTok Shop US",
+      "title": "Casual Loose-Fit Wide Leg Pants",
+      "url": "https://shop.tiktok.com/us/pdp/womens-casual-loose-fit-wide-leg-pants-adjustable-waist-long-hem/1731899640523821919",
+      "asset_type": "真实市场商品图"
+    },
+    {
+      "file": "tts_wideleg_8197.webp",
+      "line": "TikTok Shop US",
+      "direction": "T1 宽腿通勤比例裤",
+      "evidence_id": "EC-TTS-SHOP-002",
+      "source_name": "TikTok Shop US",
+      "title": "High Waist Wide Leg Pants",
+      "url": "https://shop.tiktok.com/us/pdp/womens-high-waist-wide-leg-pants-elastic-waist-versatile/1732402613314949516",
+      "asset_type": "真实市场商品图"
+    },
+    {
+      "file": "tts_wideleg_6237.webp",
+      "line": "TikTok Shop US",
+      "direction": "T1 宽腿通勤比例裤",
+      "evidence_id": "EC-TTS-SHOP-002",
+      "source_name": "TikTok Shop US",
+      "title": "Drawstring Wide Leg Pants",
+      "url": "https://shop.tiktok.com/us/pdp/womens-casual-drawstring-wide-leg-pants-comfort-style/1732347687843500874",
+      "asset_type": "真实市场商品图"
+    },
+    {
+      "file": "tts_set_nondenim.webp",
+      "line": "TikTok Shop US",
+      "direction": "T2 日常协调套装",
+      "evidence_id": "EC-TTS-SHOP-002",
+      "source_name": "TikTok Shop US",
+      "title": "Spring Summer Two Piece Outfit",
+      "url": "https://shop.tiktok.com/us/pdp/womens-spring-summer-comfort-casual-stylish-two-piece-outfit/1729507430514005755",
+      "asset_type": "真实市场商品图"
+    },
+    {
+      "file": "tts_sweat_graphic.webp",
+      "line": "TikTok Shop US",
+      "direction": "T3 oversize 卫衣",
+      "evidence_id": "EC-TTS-SHOP-002",
+      "source_name": "TikTok Shop US",
+      "title": "Always Freezing Oversized Hoodie",
+      "url": "https://shop.tiktok.com/us/pdp/womens-oversized-hoodie-with-unique-print-drawstring-cozy-fit/1732284329526399409",
+      "asset_type": "真实市场商品图"
+    },
+    {
+      "file": "tts_sweat_quarterzip.webp",
+      "line": "TikTok Shop US",
+      "direction": "T3 oversize 卫衣",
+      "evidence_id": "EC-TTS-SHOP-002",
+      "source_name": "TikTok Shop US",
+      "title": "Oversized Quarter Zip Sweatshirt",
+      "url": "https://shop.tiktok.com/us/pdp/oversized-quarter-zip-sweatshirt-by-edikted-in-polyester-cotton-blend/1729441177213505698",
+      "asset_type": "真实市场商品图"
+    },
+    {
+      "file": "tts_fitted_basic.webp",
+      "line": "TikTok Shop US",
+      "direction": "T3 合体基础上衣",
+      "evidence_id": "EC-TTS-SHOP-002",
+      "source_name": "TikTok Shop US",
+      "title": "高开叉连体式合体上衣：负面边界样本",
+      "url": "https://shop.tiktok.com/us/pdp/womens-slim-fit-long-sleeve-top-for-autumn-winter-wear/1731697747732172950",
+      "asset_type": "真实市场商品图（负面边界）"
+    },
+    {
+      "file": "tts_fitted_lace.webp",
+      "line": "TikTok Shop US",
+      "direction": "T3 合体基础上衣",
+      "evidence_id": "EC-TTS-SHOP-002",
+      "source_name": "TikTok Shop US",
+      "title": "Floral Lace Trim V-Neck Top",
+      "url": "https://shop.tiktok.com/us/pdp/womens-floral-embroidered-lace-trim-v-neck-top-summer-casual-wear/1729505892393719272",
+      "asset_type": "真实市场商品图"
+    },
+    {
+      "file": "soc_fitted_top.webp",
+      "line": "TikTok 内容",
+      "direction": "T3 合体基础上衣",
+      "evidence_id": "SOC-TIKTOK-001",
+      "source_name": "TikTok",
+      "title": "常规衣长方领合体上衣内容画面",
+      "url": "https://www.tiktok.com/@jessie..anne/video/7586360430117899550",
+      "asset_type": "真实社媒内容封面"
+    }
+  ]
+}
