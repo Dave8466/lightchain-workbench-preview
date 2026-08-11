@@ -2,6 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
+  <link rel="icon" href="data:,">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>5.2 功能首页 · Workbench Launcher</title>
   <style>
@@ -1301,6 +1302,50 @@
     .report-control:disabled { opacity: .35; cursor: default; }
     .report-page-count { min-width: 62px; color: #8c9a94; font-size: 10px; text-align: center; }
     .report-image-detail { width: min(92vw,620px); max-height: 84vh; }
+    /* Customer proposal: conversation-first seven-step flow (desktop review target) */
+    .proposal-v2-selector { width: min(700px,100%); overflow: hidden; border: 1px solid #39433f; border-radius: 8px; background: #202523; box-shadow: 0 10px 26px rgba(0,0,0,.13); }
+    .proposal-v2-direction-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; padding: 10px; }
+    .proposal-v2-direction { position: relative; min-width: 0; display: grid; grid-template-columns: 86px minmax(0,1fr); gap: 10px; padding: 8px; overflow: hidden; border: 1px solid #35403b; border-radius: 7px; color: #cbd5d1; background: #242a28; text-align: left; cursor: pointer; }
+    .proposal-v2-direction:hover { border-color: #52605b; }
+    .proposal-v2-direction.selected { border-color: #55ded3; box-shadow: 0 0 0 1px rgba(85,222,211,.28) inset; }
+    .proposal-v2-direction.selected::after { content: "✓"; position: absolute; top: 7px; right: 7px; width: 19px; height: 19px; display: grid; place-items: center; border-radius: 50%; color: #10201e; background: #55ded3; font-size: 10px; font-weight: 800; }
+    .proposal-v2-direction img { width: 86px; height: 104px; display: block; border-radius: 5px; object-fit: cover; background: #2a312e; }
+    .proposal-v2-direction-copy { min-width: 0; padding-right: 18px; }
+    .proposal-v2-direction-copy strong { display: block; color: #edf4f1; font-size: 11px; line-height: 17px; }
+    .proposal-v2-direction-copy p { margin: 5px 0; color: #8e9a95; font-size: 9px; line-height: 15px; }
+    .proposal-v2-direction-copy small { display: block; color: #6fd8cf; font-size: 8px; line-height: 13px; }
+    .proposal-v2-candidate-tabs { display: flex; gap: 5px; overflow-x: auto; padding: 10px 10px 0; scrollbar-width: thin; }
+    .proposal-v2-candidate-tab { flex: 0 0 auto; height: 29px; padding: 0 10px; border: 1px solid #39433f; border-radius: 6px; color: #899690; background: #242a28; font-size: 9px; cursor: pointer; }
+    .proposal-v2-candidate-tab.active { border-color: #55ded3; color: #dff9f5; background: rgba(85,222,211,.09); }
+    .proposal-v2-candidate-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 7px; min-height: 410px; padding: 10px; }
+    .proposal-v2-candidate { position: relative; min-width: 0; aspect-ratio: .78; overflow: hidden; border: 1px solid #38423e; border-radius: 7px; background: #252b29; }
+    .proposal-v2-candidate.selected { border-color: #55ded3; box-shadow: 0 0 0 2px rgba(85,222,211,.42) inset; }
+    .proposal-v2-candidate img { width: 100%; height: 100%; display: block; object-fit: cover; }
+    .proposal-v2-candidate-select { position: absolute; z-index: 2; inset: 0; border: 0; background: transparent; cursor: pointer; }
+    .proposal-v2-candidate-check { position: absolute; z-index: 5; top: 7px; right: 7px; width: 23px; height: 23px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.68); border-radius: 50%; color: transparent; background: rgba(15,20,18,.62); font-size: 10px; pointer-events: none; }
+    .proposal-v2-candidate.selected .proposal-v2-candidate-check { color: #10201e; border-color: #55ded3; background: #55ded3; }
+    .proposal-v2-candidate-overlay { position: absolute; z-index: 3; inset: auto 0 0; display: grid; gap: 3px; padding: 38px 8px 8px; color: #e7f0ed; background: linear-gradient(180deg,transparent,rgba(8,12,11,.94)); opacity: 0; pointer-events: none; transition: opacity .14s ease; }
+    .proposal-v2-candidate:hover .proposal-v2-candidate-overlay { opacity: 1; }
+    .proposal-v2-candidate-overlay strong { font-size: 9px; line-height: 13px; }
+    .proposal-v2-candidate-overlay small { color: #a6b2ae; font-size: 8px; line-height: 12px; }
+    .proposal-v2-candidate-preview { position: absolute; z-index: 6; right: 7px; bottom: 7px; width: 25px; height: 25px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.42); border-radius: 6px; color: #eef6f3; background: rgba(14,19,17,.78); font-size: 12px; cursor: zoom-in; opacity: 0; transition: opacity .14s ease; }
+    .proposal-v2-candidate:hover .proposal-v2-candidate-preview { opacity: 1; }
+    .proposal-v2-pagination { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 0 10px 10px; }
+    .proposal-v2-pagination button { width: 30px; height: 28px; border: 1px solid #39433f; border-radius: 6px; color: #b8c5c0; background: #252b29; cursor: pointer; }
+    .proposal-v2-pagination button:disabled { opacity: .35; cursor: default; }
+    .proposal-v2-pagination span { min-width: 64px; color: #7f8b87; font-size: 9px; text-align: center; }
+    .proposal-v2-ai-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 7px; padding: 10px; }
+    .proposal-v2-ai-groups { display: grid; gap: 2px; padding-top: 4px; }
+    .proposal-v2-ai-group > h5 { margin: 8px 10px 0; color: #91a09a; font-size: 9px; font-weight: 600; }
+    .proposal-v2-feedback-note { margin-top: 10px; padding-left: 11px; border-left: 2px solid #55ded3; color: #98a59f; font-size: 10px; line-height: 17px; }
+    .proposal-v2-report-visuals { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 8px; }
+    .proposal-v2-report-visuals figure { min-width: 0; margin: 0; overflow: hidden; border: 1px solid #36413d; border-radius: 7px; background: #222826; }
+    .proposal-v2-report-visuals img { width: 100%; aspect-ratio: .78; display: block; object-fit: cover; }
+    .proposal-v2-report-visuals figcaption { padding: 7px; color: #8f9c97; font-size: 8px; line-height: 13px; }
+    .proposal-v2-report-table { width: 100%; border-collapse: collapse; font-size: 9px; }
+    .proposal-v2-report-table th,.proposal-v2-report-table td { padding: 8px; border-bottom: 1px solid #35403b; color: #95a29d; text-align: left; vertical-align: top; }
+    .proposal-v2-report-table th { color: #dce8e4; background: #242a28; }
+
     @media (max-width: 720px) {
       .proposal-preview-dialog.report-viewer { width: calc(100vw - 14px); height: calc(100vh - 14px); border-radius: 10px; }
       .proposal-preview-dialog.report-viewer .proposal-preview-head { padding: 10px 12px; }
@@ -1705,6 +1750,100 @@
     .boundary-warning{padding:18px;border:1px solid #f5a742;border-radius:12px;background:rgba(245,167,66,.09)}.boundary-warning p{color:#f4c480}.parse-result-list p{color:#45c98b}.parse-result-list fieldset{display:grid;gap:10px;margin-top:18px;border:1px solid #353c39;border-radius:10px;padding:15px}.parse-result-list label{display:block}
     @media(max-width:900px){.constraint-profile-grid,.constraint-form-card,.constraint-detail-grid{grid-template-columns:1fr}.constraint-form-card .full{grid-column:auto}.constraint-shell{width:calc(100% - 32px);padding-top:36px}.constraint-list-toolbar input{width:100%}.constraint-bottom-bar{padding-right:16px}.price-row{grid-template-columns:1fr 16px 1fr}.price-row select{grid-column:1/-1}.constraint-page .preference-header{gap:18px;align-items:flex-start}}
     @media(max-width:640px){.constraint-page{left:0}.constraint-bottom-bar{left:0}.constraint-shell{padding-top:72px}.constraint-profile-grid{grid-template-columns:1fr}}
+    /* New product planning: six-step conversation-first flow */
+    .planning-quick-actions { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+    .planning-quick-action { height: 32px; padding: 0 12px; border: 1px solid #3b4642; border-radius: 7px; color: #c7d3cf; background: #242a28; font-size: 11px; cursor: pointer; }
+    .planning-quick-action:hover { border-color: #55ded3; color: #e8fbf8; }
+    .planning-quick-action.primary { border-color: #55ded3; color: #10201e; background: #55ded3; }
+    .planning-scope-card,.planning-direction-selector,.planning-ai-selector { width: min(700px,100%); overflow: hidden; border: 1px solid #39433f; border-radius: 8px; background: #202523; box-shadow: 0 10px 26px rgba(0,0,0,.13); }
+    .planning-component-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; padding: 14px 15px; border-bottom: 1px solid #343d39; }
+    .planning-component-head h4 { margin: 0; color: #edf4f1; font-size: 13px; line-height: 20px; }
+    .planning-component-head p { margin: 4px 0 0; color: #7f8c87; font-size: 10px; line-height: 16px; }
+    .planning-component-state { flex: 0 0 auto; padding: 3px 7px; border-radius: 5px; color: #80d8d0; background: rgba(85,222,211,.08); font-size: 9px; line-height: 16px; }
+    .planning-scope-body { display: grid; gap: 15px; padding: 14px 15px; }
+    .planning-scope-section { display: grid; gap: 8px; }
+    .planning-scope-title { display: flex; align-items: center; justify-content: space-between; gap: 8px; color: #aebbb6; font-size: 10px; font-weight: 600; }
+    .planning-profile-source { color: #69d8cf; font-size: 9px; font-weight: 500; }
+    .planning-chip-list { display: flex; flex-wrap: wrap; gap: 6px; }
+    .planning-scope-chip { min-height: 30px; display: inline-flex; align-items: center; gap: 6px; padding: 5px 9px; border: 1px solid #3b4541; border-radius: 6px; color: #aeb9b5; background: #252b29; font-size: 10px; cursor: pointer; }
+    .planning-scope-chip.selected { border-color: #55ded3; color: #dff9f5; background: rgba(85,222,211,.09); }
+    .planning-scope-chip .remove { color: #77847f; font-size: 14px; line-height: 1; }
+    .planning-scope-chip.fixed { cursor: default; }
+    .planning-scope-chip.fixed::after { content: "已启用"; margin-left: 4px; color: #6edcd2; font-size: 8px; }
+    .planning-source-groups { display: grid; gap: 10px; }
+    .planning-source-group { display: grid; grid-template-columns: 110px minmax(0,1fr); gap: 8px; align-items: start; }
+    .planning-source-group > span { padding-top: 7px; color: #77847f; font-size: 9px; }
+    .planning-source-add { display: grid; grid-template-columns: 120px minmax(0,1fr) auto; gap: 7px; }
+    .planning-source-add select,.planning-source-add input { height: 32px; min-width: 0; padding: 0 9px; border: 1px solid #3b4541; border-radius: 6px; outline: none; color: #cbd5d1; background: #252b29; font-size: 10px; }
+    .planning-source-add input:focus,.planning-source-add select:focus { border-color: #55ded3; }
+    .planning-source-add button,.planning-component-actions button { height: 32px; padding: 0 12px; border: 1px solid #3b4642; border-radius: 7px; color: #cbd6d2; background: #262c2a; font-size: 10px; cursor: pointer; }
+    .planning-component-actions { display: flex; align-items: center; justify-content: flex-end; gap: 8px; padding: 12px 15px; border-top: 1px solid #343d39; }
+    .planning-component-actions .primary { border-color: #55ded3; color: #10201e; background: #55ded3; }
+    .planning-component-actions button:disabled { color: #68716e; border-color: #343a37; background: #303633; cursor: default; }
+    .planning-component-error { margin-right: auto; color: #f0a874; font-size: 9px; }
+    .planning-direction-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; padding: 10px; }
+    .planning-direction-option { position: relative; min-width: 0; display: grid; grid-template-columns: 86px minmax(0,1fr); gap: 10px; overflow: hidden; padding: 8px; border: 1px solid #35403b; border-radius: 7px; color: #cbd5d1; background: #242a28; text-align: left; cursor: pointer; }
+    .planning-direction-option:hover { border-color: #53615c; }
+    .planning-direction-option.selected { border-color: #55ded3; box-shadow: 0 0 0 1px rgba(85,222,211,.28) inset; }
+    .planning-direction-option.selected::after { content: "✓"; position: absolute; top: 7px; right: 7px; width: 19px; height: 19px; display: grid; place-items: center; border-radius: 50%; color: #10201e; background: #55ded3; font-size: 10px; font-weight: 800; }
+    .planning-direction-option img { width: 86px; height: 104px; display: block; border-radius: 5px; object-fit: cover; background: #2a312e; }
+    .planning-direction-copy { min-width: 0; padding-right: 18px; }
+    .planning-direction-copy strong { display: block; color: #edf4f1; font-size: 11px; line-height: 17px; }
+    .planning-direction-copy p { margin: 5px 0; color: #8e9a95; font-size: 9px; line-height: 15px; }
+    .planning-direction-level { display: inline-flex; padding: 2px 5px; border-radius: 4px; color: #83d8d1; background: rgba(85,222,211,.08); font-size: 8px; }
+    .planning-artifact-direct { height: 30px; display: inline-flex; align-items: center; padding: 0 10px; border: 1px solid #3b4642; border-radius: 7px; color: #cfe8e4; background: #242a28; font-size: 11px; text-decoration: none; white-space: nowrap; }
+    .planning-artifact-direct:hover { border-color: #55ded3; color: #10201e; background: #55ded3; }
+    .proposal-artifact-menu a { height: 32px; display: flex; align-items: center; padding: 0 9px; border-radius: 6px; color: #cbd6d2; font-size: 11px; text-decoration: none; }
+    .proposal-artifact-menu a:hover { color: #10201e; background: #55ded3; }
+    .planning-ai-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 7px; padding: 10px; }
+    .planning-ai-item { position: relative; min-width: 0; aspect-ratio: .74; overflow: hidden; border: 1px solid #38423e; border-radius: 7px; background: #252b29; }
+    .planning-ai-item.selected { border-color: #55ded3; box-shadow: 0 0 0 2px rgba(85,222,211,.38) inset; }
+    .planning-ai-item img { width: 100%; height: 100%; display: block; object-fit: cover; }
+    .planning-ai-select { position: absolute; z-index: 3; top: 7px; right: 7px; width: 24px; height: 24px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.52); border-radius: 50%; color: #fff; background: rgba(18,24,22,.72); font-size: 11px; cursor: pointer; }
+    .planning-ai-item.selected .planning-ai-select { color: #10201e; border-color: #55ded3; background: #55ded3; }
+    .planning-ai-preview { position: absolute; z-index: 2; inset: 0; border: 0; background: transparent; cursor: zoom-in; }
+    .planning-ai-caption { position: absolute; z-index: 2; inset: auto 0 0; padding: 28px 8px 8px; pointer-events: none; color: #eaf2ef; background: linear-gradient(180deg,transparent,rgba(10,14,13,.9)); font-size: 9px; line-height: 14px; }
+    .planning-ai-caption small { display: block; color: #a3b0ab; font-size: 8px; }
+    .planning-ai-regenerated { color: #f2bd7f; }
+    .planning-selection-summary { margin-right: auto; color: #7f8c87; font-size: 9px; }
+    .planning-html-report { display: grid; gap: 14px; }
+    .planning-report-hero { display: grid; grid-template-columns: minmax(0,1.1fr) minmax(260px,.9fr); gap: 12px; padding: 18px; border: 1px solid #39433f; border-radius: 8px; background: #202523; }
+    .planning-report-hero h3 { margin: 0 0 8px; color: #eef5f2; font-size: 20px; }
+    .planning-report-hero p { margin: 0; color: #8f9b97; font-size: 11px; line-height: 18px; }
+    .planning-report-metrics { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 7px; }
+    .planning-report-metrics div { padding: 10px; border: 1px solid #35403b; border-radius: 6px; background: #242a28; }
+    .planning-report-metrics strong,.planning-report-metrics span { display: block; }
+    .planning-report-metrics strong { color: #6fddd3; font-size: 14px; }
+    .planning-report-metrics span { margin-top: 3px; color: #77847f; font-size: 8px; }
+    .planning-report-direction { display: grid; grid-template-columns: 132px minmax(0,1fr); gap: 12px; padding: 12px; border: 1px solid #37413d; border-radius: 8px; background: #222826; }
+    .planning-report-direction img { width: 132px; height: 166px; border-radius: 6px; object-fit: cover; }
+    .planning-report-product { min-width: 0; }
+    .planning-report-product a { display: block; margin-top: 7px; overflow: hidden; color: #72dcd2; font-size: 8px; line-height: 13px; text-decoration: none; text-overflow: ellipsis; white-space: nowrap; }
+    .planning-report-product a:hover { text-decoration: underline; }
+    .planning-report-direction h4 { margin: 0 0 5px; color: #edf4f1; font-size: 13px; }
+    .planning-report-direction p { margin: 0 0 8px; color: #94a19c; font-size: 10px; line-height: 16px; }
+    .planning-report-evidence { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 6px; }
+    .planning-report-evidence div { padding: 8px; border-radius: 6px; background: #1b211f; }
+    .planning-report-evidence b { display: block; margin-bottom: 3px; color: #6ddbd1; font-size: 8px; }
+    .planning-report-evidence span { color: #88958f; font-size: 8px; line-height: 13px; }
+    .planning-image-preview { display: grid; gap: 12px; }
+    .planning-image-preview img { width: 100%; max-height: min(650px,72vh); border-radius: 8px; object-fit: contain; background: #111513; }
+    .planning-image-preview h3 { margin: 0; color: #eef5f2; font-size: 15px; }
+    .planning-image-preview p { margin: 0; color: #899690; font-size: 10px; line-height: 16px; }
+    @media (max-width: 720px) {
+      .planning-source-group { grid-template-columns: 1fr; gap: 5px; }
+      .planning-source-group > span { padding-top: 0; }
+      .planning-source-add { grid-template-columns: 1fr; }
+      .planning-direction-grid { grid-template-columns: 1fr; }
+      .planning-direction-option { grid-template-columns: 78px minmax(0,1fr); }
+      .planning-direction-option img { width: 78px; height: 98px; }
+      .planning-ai-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .planning-report-hero,.planning-report-direction { grid-template-columns: 1fr; }
+      .planning-report-direction img { width: 100%; height: 230px; }
+      .planning-report-evidence { grid-template-columns: 1fr; }
+      .proposal-artifact-quote { grid-template-columns: 38px minmax(0,1fr); }
+      .proposal-artifact-quote > :last-child { grid-column: 2; justify-self: start; }
+    }
   </style>
 </head>
 <body>
@@ -2824,7 +2963,7 @@
       }
     };
 
-    const planningSteps = ["需求解析与确认", "调研范围确认", "趋势分析与方向确认", "参考素材与视觉方向确认", "商品结构规划", "新品企划案交付"];
+    const planningSteps = ["需求解析与确认", "调研范围确认", "调研与视觉方向确认", "商品结构规划", "AI 改款确认", "新品企划案交付"];
     const planningProductLines = [
       { id: "amazon-aug", label: "Amazon · 2026年8月", platform: "Amazon US", wave: "2026年8月", audience: "30岁以上；日常休闲/轻商务；宽松" },
       { id: "amazon-feb", label: "Amazon · 2027年2月", platform: "Amazon US", wave: "2027年2月", audience: "30岁以上；日常休闲/轻商务；宽松" },
@@ -2885,7 +3024,8 @@
 
     function planningImageMarkup(item, alt, className = "") {
       const fallback=planningFallbackImage(item);
-      return `<img class="${className}" src="${fallback}" ${item.is_ai?"":"data-remote-src=\""+item.image_url+"\""} data-preview-fallback="true" alt="${escapeHtml(alt)}">`;
+      const asset = item.assetUrl || "";
+      return `<img class="${className}" src="${asset || fallback}" ${asset || item.is_ai ? "" : "data-remote-src=\""+item.image_url+"\""} data-preview-fallback="true" alt="${escapeHtml(alt)}">`;
     }
 
     function hydratePlanningImages(root = document) {
@@ -2903,11 +3043,10 @@
     const planningFlow = { active:false, stage:"idle", paused:false, profile:null, title:"新任务", firstText:"", attachments:[], requirement:{}, scope:{}, selectedTrendIds:[], selectedMaterials:new Set(), activeTab:"amazon-aug", structureNote:"", language:"简体中文", references:[], selectionCards:new Map() };
 
     function renderTaskPanel(next = taskPanelData) {
-      taskPanelData.plans = Array.isArray(next.plans) ? next.plans.slice(0, 12) : [];
+      taskPanelData.plans = [];
       taskPanelData.outputs = Array.isArray(next.outputs) ? next.outputs.slice(0, 12) : [];
       taskPanelData.references = Array.isArray(next.references) ? next.references.slice(0, 12) : [];
       const groups = [];
-      if (taskPanelData.plans.length) groups.push(`<section class="task-panel-section plans"><h3>计划列表</h3><ol class="task-panel-list">${taskPanelData.plans.map((item) => `<li class="task-panel-item"><span>○</span><span class="task-step ${escapeHtml(item.className || "")}">${escapeHtml(item.label || item)}</span>${item.state ? `<span class="item-state">${escapeHtml(item.state)}</span>` : ""}</li>`).join("")}</ol></section>`);
       if (taskPanelData.outputs.length) groups.push(`<section class="task-panel-section outputs"><h3>任务产物</h3><ul class="task-panel-list">${taskPanelData.outputs.map((item) => `<li class="task-panel-item"><button class="artifact-list-open" type="button" data-artifact-view="${escapeHtml(item.id)}"><span class="item-icon">□</span><span class="artifact-title">${escapeHtml(item.label || item)}</span><span class="artifact-list-chevron">›</span></button></li>`).join("")}</ul></section>`);
       if (taskPanelData.references.length) groups.push(`<section class="task-panel-section references"><h3>参考信息</h3><ul class="task-panel-list">${taskPanelData.references.map(evidenceGroupMarkup).join("")}</ul></section>`);
       const panel = document.querySelector("#task-panel");
@@ -3563,8 +3702,10 @@
         ? `<button class="proposal-inline-action" type="button" data-proposal-action="open-candidates">查看详情</button>`
         : action === "planning-pool"
           ? `<button class="proposal-inline-action" type="button" data-planning-action="open-material-pool">查看素材池</button>`
-          : `<div class="proposal-artifact-actions"><button class="proposal-inline-action" type="button" data-artifact-menu="${escapeHtml(artifact.id)}" aria-expanded="false">打开方式⌄</button><div class="proposal-artifact-menu" hidden><button type="button" data-artifact-view-inline="${escapeHtml(artifact.id)}">在线查看</button><button type="button" data-artifact-download-inline="${escapeHtml(artifact.id)}">下载 HTML/PPT/PDF</button></div></div>`;
-      const planningTypeLabels = { planningTrend:"趋势与市场方向分析", planningMaterial:"方向参考素材池", planningVisual:"企划视觉方向板", planningStructure:"商品结构规划草案", planningLanding:"企划落地规划", planningFinal:"新品企划案 · V1" };
+          : action === "planning-xlsx"
+            ? `<a class="planning-artifact-direct" href="case-assets/planning-v2/视觉方向参考商品.xlsx" download="视觉方向参考商品.xlsx">下载 XLSX</a>`
+            : `<div class="proposal-artifact-actions"><button class="proposal-inline-action" type="button" data-artifact-menu="${escapeHtml(artifact.id)}" aria-expanded="false">打开方式⌄</button><div class="proposal-artifact-menu" hidden><button type="button" data-artifact-view-inline="${escapeHtml(artifact.id)}">在线查看</button>${(artifact.downloads || []).map(file => `<a href="${escapeHtml(file.href)}" download="${escapeHtml(file.name)}">下载 ${escapeHtml(file.label)}</a>`).join("") || `<button type="button" data-artifact-download-inline="${escapeHtml(artifact.id)}">下载 HTML</button>`}</div></div>`;
+      const planningTypeLabels = { planningResearch:"调研与视觉方向报告", planningSheet:"视觉方向参考商品", planningTrend:"趋势与市场方向分析", planningMaterial:"方向参考素材池", planningVisual:"企划视觉方向板", planningStructure:"商品结构规划", planningAi:"AI 改款结果", planningLanding:"企划落地规划", planningFinal:"新品企划案", proposalV2Research:"客户需求调研与视觉方向", proposalV2Sheet:"视觉方向参考素材", proposalV2DirectionPack:"客户方向参考包", proposalV2Ai:"AI 改款结果", proposalV2Final:"正式客户提案" };
       const typeLabel = planningTypeLabels[artifact.type] || (artifact.type === "trend" ? "趋势分析" : artifact.type === "candidate" ? "视觉参考池" : artifact.type === "direction" ? "客户方向参考包 · V1" : artifact.type === "ai" ? "AI 改款图" : "客户提案 · V1");
       return `<div class="task-message assistant"><div class="agent-message"><section class="proposal-artifact-quote" data-artifact-quote="${escapeHtml(artifact.id)}"><div class="artifact-quote-icon">□</div><div class="artifact-quote-copy"><strong>${escapeHtml(artifact.label)}</strong><span>${escapeHtml(typeLabel)} · ${escapeHtml(artifact.status || "已生成")}</span><small>${escapeHtml(artifact.generatedAt || "刚刚")} · ${escapeHtml(summary || artifact.summary || "只读产物引用")}</small></div>${actionHtml}</section></div></div>`;
     }
@@ -4534,6 +4675,7 @@
       const lineItems = planningProductLines.map(line => items.find(item => item.line === line.id) || items[0]).filter(Boolean);
       const directionNames = planningFlow.selectedTrendIds.map(id => planningTrendDirections.find(item => item.id === id)?.name).filter(Boolean);
       const directionCards = planningFlow.selectedTrendIds.map(id => planningTrendDirections.find(item => item.id === id)).filter(Boolean);
+      const confirmedAiItems = (typeof planningV2AiOptions === "undefined" ? [] : planningV2AiOptions).filter(item => planningFlow.selectedAiImages?.has(item.code));
       const coverImages = items.slice(0, 3);
       const imageGrid = (list, cls = "") => list.map((item, index) => planningReportImage(item, `${index === 0 ? "large " : ""}${cls}`, index === 0 ? "真实参考" : item.source)).join("");
       const slide = (index, kicker, title, content) => `<article class="report-slide" data-report-slide="${index}" data-slide-index="${String(index).padStart(2, "0")}" ${index ? "hidden" : ""}><div class="report-slide-kicker">${escapeHtml(kicker)}</div><h3>${escapeHtml(title)}</h3>${content}</article>`;
@@ -4543,7 +4685,7 @@
       slides.push(slide(2, "02 · EVIDENCE", "趋势证据与已确认方向", `<div class="report-slide-grid split"><div class="report-slide-copy"><p>小样本扫描按“美国女装共同趋势 → 渠道差异 → 波段与品类落位”组织。单一帖子、商品或报告不作为确定趋势或销量机会。</p><div class="report-direction-list">${directionCards.slice(0, 4).map(item => `<section class="report-direction"><h4>${escapeHtml(item.name)}</h4><p>${escapeHtml(item.elements)}</p><small>${escapeHtml(item.ecommerce)}</small><small>${escapeHtml(item.social)}</small><small>${escapeHtml(item.sample)} · 置信度${escapeHtml(item.confidence)} · ${escapeHtml(item.source)}</small></section>`).join("")}</div><div class="report-evidence-strip">${directionCards.slice(0,4).map((item,index)=>`<div class="report-evidence-line"><span>${String(index+1).padStart(2,"0")} · ${escapeHtml(item.name)}</span><i style="width:${item.confidence==="中高"?"88%":item.confidence==="中"?"68%":"52%"}"></i><em>${escapeHtml(item.confidence)}</em></div>`).join("")}</div></div><div class="report-image-grid">${imageGrid(items.slice(0, 5))}</div></div>`));
       slides.push(slide(3, "03 · REFERENCES", "灵感来源图集", `<div class="report-slide-grid"><p>已确认素材来自电商、社媒、品牌 / 零售站、趋势资料和用户资料；点击图片查看来源摘要、采集时间、授权状态和数据缺口。</p><div class="report-image-grid">${imageGrid(items.slice(0, 6))}</div></div>`));
       slides.push(slide(4, "04 · MOODBOARD", "主题情绪板", `<div class="report-slide-grid split"><div class="report-slide-copy"><p class="report-note">轻量松弛通勤 × 柔性精致感 × 克制实用细节</p><h4>视觉关键词</h4><p>软结构、垂感、低饱和中性色、轻褶、隐形口袋、可调节腰部、成套表达。</p><h4>适配逻辑</h4><p>Amazon 强调场景、尺码与易搭配；TikTok Shop 强调比例对比与成套穿搭。避免 SHEIN 式过度年轻 / 辣妹风。</p></div><div class="report-image-grid">${imageGrid(items.slice(2, 8))}</div></div>`));
-      slides.push(slide(5, "05 · CHANNEL × WAVE", "渠道 × 波段视觉方向", `<div class="report-slide-grid"><p>真实参考优先；素材不足时才生成明确标记的 AI 补充图，不将 AI 图作为市场证据。</p><div class="report-image-grid">${lineItems.map((item, index) => planningReportImage(item, index === 0 ? "large" : "", "真实参考")).join("")}<figure class="report-image-card report-ai-card"><div class="fashion-thumb thumb-c" style="width:100%;height:100%"></div><span class="report-source-chip ai">AI方向示意</span><figcaption><b>AI-补充</b> · 仅用于验证系列视觉连贯性 · 不作为市场证据</figcaption></figure></div></div>`));
+      slides.push(slide(5, "05 · CHANNEL × WAVE", "渠道 × 波段视觉方向", `<div class="report-slide-grid"><p>真实参考作为市场依据；以下已确认 AI 改款图仅用于产品方向表达，不作为市场证据。</p><div class="report-image-grid">${lineItems.slice(0,2).map((item, index) => planningReportImage(item, index === 0 ? "large" : "", "真实参考")).join("")}${confirmedAiItems.slice(0,6).map(item => planningReportImage(item,"","AI方向示意",true)).join("")}</div></div>`));
       slides.push(slide(6, "06 · COLOR SYSTEM", "色彩系统", `<div class="report-slide-grid split"><div class="report-slide-copy"><p>夏末波段以陶土粉、灰绿、奶油白等低饱和暖色建立轻松感；早春波段切换雾蓝、深海军蓝和清透冷色。</p><div class="report-swatches"><div class="report-swatch"><i style="background:#bf8c78"></i><span>陶土粉</span></div><div class="report-swatch"><i style="background:#849b8d"></i><span>灰绿</span></div><div class="report-swatch"><i style="background:#e7dfcd"></i><span>奶油白</span></div><div class="report-swatch"><i style="background:#8ca8bd"></i><span>雾蓝</span></div><div class="report-swatch"><i style="background:#263c50"></i><span>深海军蓝</span></div></div><p class="report-note">真实色卡、染色 MOQ、色差与供应商报价待验证。</p></div><div class="report-image-grid">${imageGrid(items.slice(1, 5))}</div></div>`));
       slides.push(slide(7, "07 · SILHOUETTE", "关键廓形与造型", `<div class="report-slide-grid split"><div class="report-slide-copy"><h4>Amazon US</h4><p>宽松直筒、易搭配长度、轻抽绳与隐形口袋，作为基础稳定款和主力机会款。</p><h4>TikTok Shop US</h4><p>紧身与 oversize 比例对比，成套表达和高识别上衣作为趋势测试款。</p><p class="report-note">不延伸为瑜伽、牛仔、外套、皮衣、皮草或棉服方向。</p></div><div class="report-image-grid">${imageGrid(items.slice(0, 6))}</div></div>`));
       slides.push(slide(8, "08 · MATERIAL & DETAIL", "面料方向与细节工艺", `<div class="report-slide-grid split"><div class="report-slide-copy"><p>轻薄垂感、易护理、低装饰量；通过低复杂度剪裁表达柔性精致和克制实用。</p><table class="report-table"><thead><tr><th>方向</th><th>面料 / 手感</th><th>工艺提示</th></tr></thead><tbody><tr><td>日常轻商务</td><td>轻薄、垂感、易护理</td><td>简化抽绳 / 隐形口袋</td></tr><tr><td>柔性精致</td><td>柔和光泽、细密纹理</td><td>控制褶量与辅料</td></tr></tbody></table><p class="report-note">克重、色牢度、缩水率、MOQ、工费均需真实供应链验证。</p></div><div class="report-image-grid">${imageGrid(items.slice(3, 9))}</div></div>`));
@@ -4661,6 +4803,463 @@
       if(event.target.closest("#planning-landing-confirm")){document.querySelector("#proposal-preview-overlay").hidden=true;renderPlanningLanguageSelection();return;}
     });
     document.addEventListener("keydown",event=>{if(document.querySelector("#proposal-preview-overlay").hidden||!document.querySelector(".proposal-preview-dialog").classList.contains("report-viewer"))return;if(event.key==="ArrowLeft")updatePlanningReportPage(planningFlow.reportPage-1);if(event.key==="ArrowRight")updatePlanningReportPage(planningFlow.reportPage+1);if(event.key==="Escape")closeArtifactPreview();});
+
+    const planningV2DirectionImages = {
+      ease:"case-assets/kaleshu/visual-refs/amz_a1_blouse.webp",
+      polished:"case-assets/kaleshu/visual-refs/kohls_dress_shift.webp",
+      contrast:"case-assets/kaleshu/visual-refs/tts_fitted_basic.webp",
+      utility:"case-assets/kaleshu/visual-refs/amz_a3_pullon.webp",
+      color:"case-assets/kaleshu/visual-refs/kohls_blouse_tulip.webp"
+    };
+    const planningV2ReferenceProducts = {
+      ease:{title:"Soft drape blouse",platform:"Amazon US",url:"https://www.amazon.com/",evidence:"EV-PLAN-AMZ-001"},
+      contrast:{title:"Fitted everyday top",platform:"TikTok Shop US",url:"https://shop.tiktok.com/",evidence:"EV-PLAN-TTS-001"},
+      utility:{title:"Pull-on utility trouser",platform:"Amazon US",url:"https://www.amazon.com/",evidence:"EV-PLAN-AMZ-001"},
+      color:{title:"Tulip sleeve blouse",platform:"Kohl's",url:"https://www.kohls.com/",evidence:"EV-PLAN-TRD-001"}
+    };
+    const planningV2AiOptions = [
+      ["NP-01","上衣","Amazon · 2026年8月","case-assets/kaleshu/ai-styles/KS-AMZ-2608-01.jpg"],
+      ["NP-02","上衣","Amazon · 2026年8月","case-assets/kaleshu/ai-styles/KS-AMZ-2608-03.jpg"],
+      ["NP-03","上衣","Amazon · 2027年2月","case-assets/kaleshu/ai-styles/KS-AMZ-2702-03.jpg"],
+      ["NP-04","连衣裙","Amazon · 2027年2月","case-assets/kaleshu/ai-styles/KS-AMZ-2702-06.jpg"],
+      ["NP-05","裤装","TikTok Shop · 2026年8月","case-assets/kaleshu/ai-styles/KS-TTS-2608-01.jpg"],
+      ["NP-06","上衣","TikTok Shop · 2026年8月","case-assets/kaleshu/ai-styles/KS-TTS-2608-04.jpg"],
+      ["NP-07","裤装","TikTok Shop · 2027年2月","case-assets/kaleshu/ai-styles/KS-TTS-2702-03.jpg"],
+      ["NP-08","上衣","TikTok Shop · 2027年2月","case-assets/kaleshu/ai-styles/KS-TTS-2702-07.jpg"]
+    ].map(([code,category,line,assetUrl])=>({code,category,line,assetUrl,is_ai:true,source:"AI概念表达",direction:"ease",revision:1}));
+    const planningV2SourceCatalog = {
+      中国:{ecommerce:["淘宝","京东","抖音电商"],social:["小红书","抖音","微博"],brand:["品牌官网"],other:["行业公开网站"]},
+      日本:{ecommerce:["ZOZOTOWN","Rakuten Fashion","Amazon Japan"],social:["Instagram","TikTok","X"],brand:["品牌官网/独立站"],other:["日本零售公开网站"]},
+      北美:{ecommerce:["Amazon US","TikTok Shop US"],social:["TikTok","Instagram","Pinterest"],brand:["Kohl's","品牌官网/独立站"],other:["美国零售公开网站"]},
+      欧洲:{ecommerce:["Zalando","Amazon Europe"],social:["Instagram","TikTok","Pinterest"],brand:["品牌官网/独立站"],other:["欧洲零售公开网站"]}
+    };
+
+    function planningV2QuickActions(actions) {
+      return `<div class="planning-quick-actions">${actions.map(item=>`<button type="button" class="planning-quick-action ${item.primary?"primary":""}" data-planning-quick="${escapeHtml(item.action)}">${escapeHtml(item.label)}</button>`).join("")}</div>`;
+    }
+
+    function resetPlanningFlow() {
+      planningFlow.active=false;
+      planningFlow.stage="idle";
+      planningFlow.paused=false;
+      planningFlow.profile=null;
+      planningFlow.title="新任务";
+      planningFlow.firstText="";
+      planningFlow.attachments=[];
+      planningFlow.requirement={};
+      planningFlow.scope={regions:[],sources:{ecommerce:[],social:[],brand:[],other:[]},customSources:[],profileMapped:false,trendLibrary:true};
+      planningFlow.selectedTrendIds=[];
+      planningFlow.selectedMaterials=new Set();
+      planningFlow.selectedAiImages=new Set();
+      planningFlow.structureNote="";
+      planningFlow.language="简体中文";
+      planningFlow.references=[];
+      planningFlow.selectionCards=new Map();
+      planningV2AiOptions.forEach(item=>item.revision=1);
+      Object.keys(planningArtifactData).forEach(key=>delete planningArtifactData[key]);
+      document.querySelector("#planning-material-overlay").hidden=true;
+      const pause=document.querySelector("#task-pause");
+      pause.hidden=true;pause.classList.remove("active");pause.textContent="Ⅱ";pause.title="暂停任务";
+    }
+
+    function planningStageIndex() {
+      const order={idle:0,understanding:0,scope:1,research:2,directionReview:2,structure:3,aiGenerating:4,aiReview:4,delivery:5,done:6};
+      return order[planningFlow.stage]??0;
+    }
+
+    function renderPlanningPanel() {
+      const current=planningStageIndex();
+      renderTaskPanel({
+        plans:planningSteps.map((label,index)=>({label,state:index<current?"已完成":index===current?(planningFlow.paused?"已暂停":"进行中"):"待开始",className:index<=current?"updated":""})),
+        outputs:planningOutputs(),
+        references:evidenceGroupsFor("planning",planningFlow.stage)
+      });
+    }
+
+    function planningV2RequirementSummary() {
+      const r=planningFlow.requirement;
+      return [
+        "我已整理本次新品企划需求：",
+        `品类：${r.categories.join("、")}；目标人群：Amazon ${r.amazonAudience}，TikTok Shop ${r.tiktokAudience}`,
+        `价格段：${r.retailPrice}；市场与渠道：${r.market}，${r.platforms.join("、")}`,
+        `波段：${r.waves.join("、")}；计划款数：未指定，后续在商品结构中给出待确认建议`,
+        `设计要求：参考 ${r.reference} 的成熟零售表达，兼顾日常休闲与轻商务；目标成本 ${r.targetCost} 仅作后续风险提示`,
+        `排除条件：${r.exclusions}`,
+        `资料缺口：${r.dataGap}；文件语言：简体中文。缺失内容会保持未指定，不会补造。`
+      ].join("\n");
+    }
+
+    function renderPlanningInitialConversation(userText,profile=null,attachments=[]) {
+      planningFlow.active=true;
+      planningFlow.stage="understanding";
+      planningFlow.profile=profile;
+      planningFlow.firstText=userText;
+      planningFlow.attachments=attachments;
+      planningFlow.requirement=planningRequirementDefaults();
+      if(/日本/.test(userText)) planningFlow.requirement.market="日本";
+      if(/中国/.test(userText)) planningFlow.requirement.market="中国";
+      if(/欧洲/.test(userText)) planningFlow.requirement.market="欧洲";
+      const profileContext=profile?`<div class="task-message profile-context"><div class="applied-profile-card"><div class="applied-profile-head">已应用业务偏好档案：<strong>${escapeHtml(profile.name)}</strong></div><div class="applied-profile-meta"><span>品类：${escapeHtml(profile.categories.join("、"))}</span><span>价格段：${escapeHtml(profile.priceRange.currency)} ${Number(profile.priceRange.min).toLocaleString()}–${Number(profile.priceRange.max).toLocaleString()}</span><span>国家：${escapeHtml(profile.countries.join("、"))}</span></div></div></div>`:"";
+      document.querySelector("#task-chat-inner").innerHTML=`<div class="task-message user"><div class="user-message-bubble">${escapeHtml(userText)}${proposalAttachmentHtml(attachments)}</div></div>${profileContext}${agentExecutionMessage({copy:"正在读取需求资料并整理企划边界。",label:"解析新品企划需求",details:["读取本次文字、图片和文档","读取已应用的业务偏好档案","识别品类、人群、价格、渠道、波段与排除条件","记录缺失信息，不补造未提供内容"],state:"complete"})}${proposalAgentMessage(planningV2RequirementSummary(),planningV2QuickActions([{action:"requirement-continue",label:"继续",primary:true},{action:"requirement-skip",label:"跳过未指定项"}]))}`;
+      document.querySelector("#task-pause").hidden=false;
+      document.querySelector("#task-condition").placeholder="补充或修正品类、人群、价格、波段、款数、设计要求或文件语言…";
+      renderPlanningPanel();scrollTaskChatBottom();
+    }
+
+    function planningV2MapRegion(value) {
+      const source=String(value||"");
+      if(/美国|加拿大|北美/.test(source)) return "北美";
+      if(/日本/.test(source)) return "日本";
+      if(/欧洲|英国|法国|德国|意大利|西班牙/.test(source)) return "欧洲";
+      if(/中国/.test(source)) return "中国";
+      return "";
+    }
+
+    function planningV2SuggestedSources(regions) {
+      const result={ecommerce:[],social:[],brand:[],other:[]};
+      regions.forEach(region=>Object.keys(result).forEach(group=>{result[group].push(...(planningV2SourceCatalog[region]?.[group]||[]));}));
+      Object.keys(result).forEach(group=>result[group]=[...new Set(result[group])]);
+      return result;
+    }
+
+    function planningV2EnsureScope() {
+      const profileRegions=(planningFlow.profile?.countries||[]).map(planningV2MapRegion).filter(Boolean);
+      const requirementRegion=planningV2MapRegion(planningFlow.requirement.market);
+      const regions=[...new Set(profileRegions.length?profileRegions:(requirementRegion?[requirementRegion]:["北美"]))];
+      const suggested=planningV2SuggestedSources(regions);
+      planningFlow.scope={regions,sources:suggested,customSources:[],profileMapped:profileRegions.length>0,trendLibrary:true};
+    }
+
+    function planningV2ScopeCardMarkup() {
+      const scope=planningFlow.scope;
+      const labels={ecommerce:"电商平台",social:"社媒平台",brand:"品牌 / 独立站",other:"其他网站"};
+      const suggested=planningV2SuggestedSources(scope.regions);
+      const groups=Object.keys(labels).map(group=>{
+        const all=[...new Set([...(suggested[group]||[]),...(scope.customSources.filter(item=>item.group===group).map(item=>item.label))])];
+        return `<div class="planning-source-group"><span>${labels[group]}</span><div class="planning-chip-list">${all.map(label=>{const selected=scope.sources[group].includes(label);return `<button type="button" class="planning-scope-chip ${selected?"selected":""}" data-planning-source-group="${group}" data-planning-source-label="${escapeHtml(label)}">${escapeHtml(label)}<span class="remove">${selected?"×":"+"}</span></button>`;}).join("")}</div></div>`;
+      }).join("");
+      return `<section class="planning-scope-card" id="planning-scope-v2-card" data-planning-component="research-scope"><div class="planning-component-head"><div><h4>确认本次调研范围</h4><p>地区可多选；平台和网站随地区推荐，也可删除或补充。</p></div><span class="planning-component-state">待确认</span></div><div class="planning-scope-body"><div class="planning-scope-section"><div class="planning-scope-title"><span>地区（多选）</span>${scope.profileMapped?'<span class="planning-profile-source">已从企业档案带入，可修改</span>':'<span class="planning-profile-source">已从本次需求带入，可修改</span>'}</div><div class="planning-chip-list">${["中国","日本","北美","欧洲"].map(region=>`<button type="button" class="planning-scope-chip ${scope.regions.includes(region)?"selected":""}" data-planning-region="${region}">${region}</button>`).join("")}</div></div><div class="planning-scope-section"><div class="planning-scope-title"><span>平台和网站</span><span>点击已选项可删除</span></div><div class="planning-source-groups">${groups}</div><div class="planning-source-add"><select id="planning-source-add-group"><option value="ecommerce">电商平台</option><option value="social">社媒平台</option><option value="brand">品牌 / 独立站</option><option value="other">其他网站</option></select><input id="planning-source-add-input" type="text" maxlength="40" placeholder="补充平台或网站名称"><button type="button" data-planning-scope-add>添加</button></div></div><div class="planning-scope-section"><div class="planning-scope-title"><span>系统固定研究来源</span></div><div class="planning-chip-list"><span class="planning-scope-chip fixed">趋势资料库</span></div></div></div><div class="planning-component-actions"><span class="planning-component-error" id="planning-scope-v2-error"></span><button type="button" class="primary" data-planning-scope-confirm>确认并开始调研</button></div></section>`;
+    }
+
+    function planningV2RefreshScopeCard() {
+      const card=document.querySelector("#planning-scope-v2-card");
+      if(card) card.outerHTML=planningV2ScopeCardMarkup();
+    }
+
+    function renderPlanningScopeSelection() {
+      planningFlow.stage="scope";
+      planningV2EnsureScope();
+      appendTaskHtml(proposalAgentMessage("需求摘要已确认。请在下方确认地区，以及本次实际需要研究的平台和网站。趋势资料库固定启用；不同平台的数据会分别保留，不合并成单一销量、销售额或热度。"));
+      appendTaskHtml(`<div class="task-message assistant"><div class="agent-message">${planningV2ScopeCardMarkup()}</div></div>`);
+      document.querySelector("#task-condition").placeholder="也可以直接补充品牌、独立站、时间范围或排除条件…";
+      renderPlanningPanel();
+    }
+
+    function confirmPlanningScope() {
+      const scope=planningFlow.scope;
+      const sourceCount=Object.values(scope.sources).reduce((sum,list)=>sum+list.length,0);
+      if(!scope.regions.length||!sourceCount){const error=document.querySelector("#planning-scope-v2-error");if(error)error.textContent=!scope.regions.length?"请至少选择一个地区":"请至少保留一个平台或网站";return;}
+      const card=document.querySelector("#planning-scope-v2-card");
+      if(card) card.innerHTML=`<div class="planning-component-head"><div><h4>调研范围已确认</h4><p>${escapeHtml(scope.regions.join("、"))} · ${escapeHtml(Object.values(scope.sources).flat().join("、"))} · 趋势资料库已启用</p></div><span class="planning-component-state">已确认</span></div>`;
+      planningFlow.references=[{label:`${scope.regions.join("、")} · 已确认调研范围`,url:"#planning-scope"}];
+      startPlanningV2Research();
+    }
+
+    function planningV2DirectionMarkup() {
+      const selected=new Set(planningFlow.selectedTrendIds);
+      const directions=planningTrendDirections.filter(item=>["ease","contrast","utility","color"].includes(item.id));
+      return `<section class="planning-direction-selector" id="planning-direction-v2" data-planning-component="visual-direction-selection"><div class="planning-component-head"><div><h4>选择本次企划采用的视觉方向</h4><p>可多选；方向确认后才进入商品结构和 AI 改款。</p></div><span class="planning-component-state">已选 ${selected.size}</span></div><div class="planning-direction-grid">${directions.map(item=>`<button type="button" class="planning-direction-option ${selected.has(item.id)?"selected":""}" data-planning-direction="${item.id}" aria-pressed="${selected.has(item.id)}"><img src="${planningV2DirectionImages[item.id]}" alt="${escapeHtml(item.name)}代表图"><div class="planning-direction-copy"><strong>${escapeHtml(item.name)}</strong><p>${escapeHtml(item.summary)}</p><span class="planning-direction-level">${item.confidence==="中高"?"建议作为核心方向":"建议小规模测试"}</span></div></button>`).join("")}</div><div class="planning-component-actions"><span class="planning-component-error" id="planning-direction-v2-error">${selected.size?`已选择 ${selected.size} 个方向`:"请至少选择一个方向"}</span><button type="button" class="primary" data-planning-direction-confirm ${selected.size?"":"disabled"}>确认所选方向</button></div></section>`;
+    }
+
+    function planningV2RefreshDirectionSelector() {
+      const card=document.querySelector("#planning-direction-v2");
+      if(card) card.outerHTML=planningV2DirectionMarkup();
+    }
+
+    function startPlanningV2Research() {
+      planningFlow.stage="research";renderPlanningPanel();
+      appendTaskHtml(agentExecutionMessage({copy:"调研范围已确认，正在自动完成多来源调研与视觉方向整理。",label:"调研与证据整理",details:["解析范围并生成本地语言关键词与排除词","采集电商、社媒、品牌/独立站和趋势资料","标准化证据并过滤错误市场、人群和品类","验证趋势、竞争与企业适配，整理参考商品素材"],state:"complete"}));
+      planningFlow.selectedTrendIds=["ease","utility","color"];
+      const report=makeArtifactPayload("planningResearch","调研与视觉方向报告.html","planningResearch","多来源证据、视觉方向与参考商品");
+      const sheet=makeArtifactPayload("planningReferenceSheet","视觉方向参考商品.xlsx","planningSheet","4个视觉方向 · 每个方向独立 Sheet");
+      sheet.directDownload="case-assets/planning-v2/视觉方向参考商品.xlsx";
+      savePlanningArtifact("research",report);savePlanningArtifact("referenceSheet",sheet);
+      appendTaskHtml(proposalAgentMessage("调研已完成。小样本显示，轻量松弛通勤适合做共同底层；克制实用细节更适合 Amazon 的稳定款，季节性色彩切换适合区分两个波段。TikTok Shop 可用更明确的比例对比作为测试方向。以上判断分别核对了电商供给、社媒传播、品牌采用和趋势资料；互动不等于销量，平台数据未合并。"));
+      appendTaskHtml(`<div class="task-message assistant"><div class="agent-message">${planningV2DirectionMarkup()}</div></div>`);
+      appendTaskHtml(proposalArtifactQuote(report,"4个待确认方向 · 分来源展示时间、样本、证据充分度与数据缺口"));
+      appendTaskHtml(proposalArtifactQuote(sheet,"一个工作簿 · 每个视觉方向一个 Sheet · 点击直接下载","planning-xlsx"));
+      planningFlow.stage="directionReview";
+      document.querySelector("#task-condition").placeholder="可要求调整方向、补充条件或重新调研；也可在上方直接多选…";
+      renderPlanningPanel();
+    }
+
+    function confirmPlanningV2Directions() {
+      if(!planningFlow.selectedTrendIds.length)return;
+      const card=document.querySelector("#planning-direction-v2");
+      const names=planningFlow.selectedTrendIds.map(id=>planningTrendDirections.find(item=>item.id===id)?.name).filter(Boolean);
+      if(card) card.innerHTML=`<div class="planning-component-head"><div><h4>视觉方向已确认</h4><p>${escapeHtml(names.join("、"))}</p></div><span class="planning-component-state">已确认</span></div>`;
+      planningArtifactData.research.status="已确认";
+      planningFlow.stage="structure";
+      const artifact=makeArtifactPayload("planningStructure","商品结构规划.html","planningStructure","渠道 × 波段 × 品类的商品结构建议");
+      savePlanningArtifact("structure",artifact);
+      appendTaskHtml(proposalAgentMessage(`已按你确认的 ${names.length} 个方向完成商品结构规划。Amazon 以宽松、易搭配的稳定款和主力款为主；TikTok Shop 增加比例对比与成套表达测试。无历史销售和 OTB，因此款数、占比与价格梯度均标记为“系统建议 / 待确认假设”。`,planningV2QuickActions([{action:"structure-continue",label:"继续生成 AI 改款",primary:true}])));
+      appendTaskHtml(proposalArtifactQuote(artifact,"品类、款数、价格、波段、色彩、面料、廓形及渠道差异"));
+      document.querySelector("#task-condition").placeholder="可调整品类、款数、价格、波段、色彩、面料或渠道差异…";
+      renderPlanningPanel();
+    }
+
+    function planningV2AiMarkup() {
+      const selected=planningFlow.selectedAiImages;
+      return `<section class="planning-ai-selector" id="planning-ai-selector" data-planning-component="ai-image-selection"><div class="planning-component-head"><div><h4>选择进入新品企划案的 AI 改款图</h4><p>点击图片放大查看；点击右上角勾选。AI 图仅作概念表达，不作为市场证据。</p></div><span class="planning-component-state">已选 ${selected.size}</span></div><div class="planning-ai-grid">${planningV2AiOptions.map(item=>`<article class="planning-ai-item ${selected.has(item.code)?"selected":""}"><img src="${item.assetUrl}" alt="${item.code} ${escapeHtml(item.category)}"><button type="button" class="planning-ai-preview" data-planning-ai-preview="${item.code}" aria-label="放大查看 ${item.code}"></button><button type="button" class="planning-ai-select" data-planning-ai-select="${item.code}" aria-label="${selected.has(item.code)?"取消选择":"选择"} ${item.code}">${selected.has(item.code)?"✓":""}</button><div class="planning-ai-caption"><b>${item.code} · ${escapeHtml(item.category)}</b><small>${escapeHtml(item.line)}${item.revision>1?` · <span class="planning-ai-regenerated">已重生成 V${item.revision}</span>`:""}</small></div></article>`).join("")}</div><div class="planning-component-actions"><span class="planning-selection-summary">${selected.size?`已选择 ${selected.size} 张，只会对这些图片执行重生成或写入企划案。`:"未选择图片"}</span><button type="button" data-planning-ai-regenerate ${selected.size?"":"disabled"}>重新生成</button><button type="button" class="primary" data-planning-ai-generate ${selected.size?"":"disabled"}>生成企划</button></div></section>`;
+    }
+
+    function planningV2RefreshAiSelector() {
+      const shell=document.querySelector("#planning-ai-selector");
+      if(shell)shell.outerHTML=planningV2AiMarkup();
+    }
+
+    function startPlanningV2AiGeneration() {
+      planningFlow.stage="aiGenerating";renderPlanningPanel();
+      appendTaskHtml(agentExecutionMessage({copy:"商品结构已确认，正在生成专业改款提示词与 AI 款式图。",label:"AI 改款生成",details:["将已确认视觉方向、参考商品、商品结构和用户补充内容转成逐款设计约束","生成每款正向提示词、负向提示词、锚点引用与系列一致性要求","完成服装属性完整性检查后生成图片","检查空白图、明显重复和与目标人群不符的结果"],state:"complete"}));
+      planningFlow.stage="aiReview";
+      const artifact=makeArtifactPayload("planningAi","AI 改款结果","planningAi","8张 AI 概念图 · 待选择");
+      savePlanningArtifact("ai",artifact);
+      appendTaskHtml(proposalAgentMessage("8 张 AI 改款图已生成。它们严格继承已确认视觉方向、参考商品特征和商品结构，并按渠道客群区分廓形与表达。请选择需要重新生成或写入最终企划案的图片。"));
+      appendTaskHtml(proposalArtifactQuote(artifact,"专业服装提示词已在内部完成并通过完整性检查 · AI概念表达"));
+      appendTaskHtml(`<div class="task-message assistant"><div class="agent-message">${planningV2AiMarkup()}</div></div>`);
+      document.querySelector("#task-condition").placeholder="可补充修改要求或上传新的参考图；只重跑受影响款…";
+      renderPlanningPanel();
+    }
+
+    function openPlanningV2ImagePreview(code) {
+      const item=planningV2AiOptions.find(option=>option.code===code);if(!item)return;
+      const selected=planningFlow.selectedAiImages.has(code);
+      document.querySelector("#candidate-detail-body").innerHTML=`<div class="planning-image-preview"><img src="${item.assetUrl}" alt="${item.code} ${escapeHtml(item.category)}"><h3>${item.code} · ${escapeHtml(item.category)}</h3><p>${escapeHtml(item.line)} · AI 概念表达 · V${item.revision}<br>该图片用于款式方向确认，不作为市场证据或可直接生产的技术图。</p><div class="candidate-detail-actions"><button type="button" data-planning-image-close>关闭</button><button type="button" class="primary" data-planning-ai-detail-select="${item.code}">${selected?"取消选择":"选择此图"}</button></div></div>`;
+      document.querySelector("#candidate-detail-overlay").hidden=false;
+    }
+
+    function generateFinalPlanningArtifact() {
+      if(!planningFlow.selectedAiImages.size){showToast("请先选择至少一张 AI 改款图");return;}
+      planningFlow.stage="delivery";renderPlanningPanel();
+      planningArtifactData.ai.status="已确认";
+      planningArtifactData.ai.summary=`已确认 ${planningFlow.selectedAiImages.size} 张 AI 改款图`;
+      appendTaskHtml(agentExecutionMessage({copy:"正在将已确认图片、调研依据、视觉方向和商品结构写入新品企划案。",label:"生成新品企划案",details:["锁定用户确认的 AI 款式图","关联调研证据、视觉方向与商品结构","生成统一只读 HTML 查看版本","准备 HTML、PPT、PDF 下载文件"],state:"complete"}));
+      const artifact=makeArtifactPayload("planningFinal","新品企划案.html","planningFinal",`包含 ${planningFlow.selectedAiImages.size} 张已确认 AI 款式图 · 简体中文`);
+      artifact.downloads=[{label:"HTML",name:"新品企划案.html",href:"case-assets/planning-v2/新品企划案.html"},{label:"PPT",name:"新品企划案.pptx",href:"case-assets/planning-v2/新品企划案.pptx"},{label:"PDF",name:"新品企划案.pdf",href:"case-assets/planning-v2/新品企划案.pdf"}];
+      savePlanningArtifact("final",artifact);
+      planningFlow.stage="done";
+      appendTaskHtml(proposalAgentMessage(`新品企划案已完成，已写入 ${planningFlow.selectedAiImages.size} 张你确认的 AI 款式图，并保留调研依据、视觉方向和商品结构。所有内容只读；需要修改时请在输入框提出，系统会生成新版本并只重跑受影响步骤。`));
+      appendTaskHtml(proposalArtifactQuote(artifact,"统一 HTML 查看器 · 可下载 HTML / PPT / PDF · 不支持在线编辑"));
+      document.querySelector("#task-condition").placeholder="继续提出内容修正、图片替换、语言变更或新版本要求…";
+      renderPlanningPanel();
+    }
+
+    function planningV2ResearchViewerHtml() {
+      const selected=new Set(planningFlow.selectedTrendIds);
+      const directions=planningTrendDirections.filter(item=>["ease","contrast","utility","color"].includes(item.id));
+      return `<div class="planning-html-report"><section class="planning-report-hero"><div><h3>调研与视觉方向报告</h3><p>基于当前确认范围的演示数据，按电商、社媒、品牌/独立站和趋势资料分别核对。不同平台不合并销量或热度；单一来源不构成确定趋势。</p></div><div class="planning-report-metrics"><div><strong>${planningFlow.scope.regions.length}</strong><span>调研地区</span></div><div><strong>4 类</strong><span>业务来源</span></div><div><strong>96 条</strong><span>演示有效样本</span></div><div><strong>${selected.size}</strong><span>当前选择方向</span></div></div></section>${directions.map(item=>{const product=planningV2ReferenceProducts[item.id];return `<section class="planning-report-direction"><div class="planning-report-product"><img src="${planningV2DirectionImages[item.id]}" alt="${escapeHtml(item.name)}"><a href="${product.url}" target="_blank" rel="noopener">${escapeHtml(product.platform)} · ${escapeHtml(product.title)} · 原始链接 ↗</a></div><div><h4>${escapeHtml(item.name)} · ${item.confidence==="中高"?"建议作为核心方向":"建议小规模测试"}</h4><p>${escapeHtml(item.summary)}。关键元素：${escapeHtml(item.elements)}</p><div class="planning-report-evidence"><div><b>电商供给 / 竞争</b><span>${escapeHtml(item.ecommerce)}</span></div><div><b>社媒传播</b><span>${escapeHtml(item.social)}</span></div><div><b>趋势资料 / 企业适配</b><span>${escapeHtml(item.source)}；${escapeHtml(item.fit)}</span></div></div><div class="planning-trend-foot"><span>${escapeHtml(item.sample)} · 证据充分度 ${escapeHtml(item.confidence)} · ${escapeHtml(product.evidence)}</span><span>数据缺口：${escapeHtml(item.gap)}</span></div></div></section>`;}).join("")}</div>`;
+    }
+
+    function planningV2StructureViewerHtml() {
+      return `<div class="planning-html-report"><section class="planning-report-hero"><div><h3>商品结构规划</h3><p>依据已确认视觉方向，把渠道、人群、波段、品类、价格和设计语言落到四条产品线。无历史销售与 OTB 时，款数和占比均为待确认建议。</p></div><div class="planning-report-metrics"><div><strong>4</strong><span>渠道 × 波段产品线</span></div><div><strong>5</strong><span>规划品类</span></div><div><strong>USD 10-20</strong><span>零售价带</span></div><div><strong>CNY 35</strong><span>目标成本 · 待询价</span></div></div></section>${planningProductLines.map(line=>structureContent(line)).join("")}</div>`;
+    }
+
+    function planningV2OpenHtmlViewer(title,subtitle,html) {
+      const dialog=document.querySelector(".proposal-preview-dialog");
+      dialog.classList.remove("report-viewer");
+      document.querySelector("#proposal-preview-body").classList.remove("report-body");
+      document.querySelector("#proposal-preview-title").textContent=title;
+      document.querySelector("#proposal-preview-subtitle").textContent=subtitle;
+      document.querySelector("#proposal-preview-body").innerHTML=html;
+      document.querySelector("#proposal-preview-overlay").hidden=false;
+    }
+
+    function renderPlanningPreview(type) {
+      if(type==="planningResearch"){planningV2OpenHtmlViewer("调研与视觉方向报告.html","统一 HTML 查看器 · 只读",planningV2ResearchViewerHtml());return;}
+      if(type==="planningStructure"){planningV2OpenHtmlViewer("商品结构规划.html","统一 HTML 查看器 · 只读",planningV2StructureViewerHtml());return;}
+      if(type==="planningAi"){planningV2OpenHtmlViewer("AI 改款结果","只读结果 · 图片确认在对话中完成",`<div class="planning-html-report"><section class="planning-report-hero"><div><h3>AI 改款结果</h3><p>共 8 张 AI 概念图。请返回对话区进行多选、重生成或生成企划。</p></div><div class="planning-report-metrics"><div><strong>8</strong><span>生成图片</span></div><div><strong>${planningFlow.selectedAiImages.size}</strong><span>当前已选</span></div></div></section><div class="planning-ai-grid">${planningV2AiOptions.map(item=>`<article class="planning-ai-item"><img src="${item.assetUrl}" alt="${item.code}"><div class="planning-ai-caption"><b>${item.code} · ${escapeHtml(item.category)}</b><small>${escapeHtml(item.line)}</small></div></article>`).join("")}</div></div>`);return;}
+      if(type==="planningFinal"){renderPlanningReportViewer();return;}
+    }
+
+    function renderTaskArtifactPreview(artifact) {
+      if(artifact?.type==="planningSheet"){
+        const link=document.createElement("a");link.href="case-assets/planning-v2/视觉方向参考商品.xlsx";link.download="视觉方向参考商品.xlsx";link.click();showToast("已下载 视觉方向参考商品.xlsx");return;
+      }
+      if(String(artifact?.type||"").startsWith("planning"))renderPlanningPreview(artifact.type);else renderProposalPreview(artifact.type);
+    }
+
+    function handlePlanningFollowup(text) {
+      appendTaskHtml(`<div class="task-message user"><div class="user-message-bubble">${escapeHtml(text)}</div></div>`);
+      if(planningFlow.paused){planningFlow.paused=false;document.querySelector("#task-pause").classList.remove("active");document.querySelector("#task-pause").textContent="Ⅱ";appendTaskHtml(proposalAgentMessage("任务已恢复。补充条件只会重跑受影响步骤，其他确认和产物保持不变。"));}
+      if(planningFlow.stage==="understanding"){
+        if(/继续|确认|跳过/.test(text)){renderPlanningScopeSelection();return true;}
+        appendTaskHtml(proposalAgentMessage(`已记录补充：“${text}”。本次输入优先于档案；未补充的字段继续保持未指定。`,planningV2QuickActions([{action:"requirement-continue",label:"继续",primary:true},{action:"requirement-skip",label:"跳过未指定项"}])));return true;
+      }
+      if(planningFlow.stage==="scope"){appendTaskHtml(proposalAgentMessage("已记录补充来源或范围条件。可在上方范围组件中删除、补充并确认；确认后中间调研过程不会反复打断。"));return true;}
+      if(planningFlow.stage==="directionReview"){
+        appendTaskHtml(proposalAgentMessage(`已记录方向调整要求：“${text}”。只重跑调研与视觉方向这一步；商品结构和 AI 改款尚未开始。请在上方重新选择后确认。`));return true;
+      }
+      if(planningFlow.stage==="structure"){
+        if(/继续|确认/.test(text)){startPlanningV2AiGeneration();return true;}
+        planningFlow.structureNote=`${planningFlow.structureNote} ${text}`.trim();
+        planningArtifactData.structure.label="商品结构规划 V2.html";planningArtifactData.structure.status="已更新";
+        appendTaskHtml(proposalAgentMessage(`已按“${text}”更新受影响的商品结构，调研与视觉方向保持不变。请在线查看 V2，确认后点击“继续生成 AI 改款”。`,planningV2QuickActions([{action:"structure-continue",label:"继续生成 AI 改款",primary:true}])));renderPlanningPanel();return true;
+      }
+      if(planningFlow.stage==="aiReview"){
+        appendTaskHtml(proposalAgentMessage(`已记录图片修改要求：“${text}”。请勾选需要处理的图片后点击“重新生成”；未选中的图片不会变化。`));return true;
+      }
+      if(planningFlow.stage==="done"){appendTaskHtml(proposalAgentMessage(`已记录对新品企划案的修改要求：“${text}”。系统会定位受影响步骤并生成新的只读版本，不覆盖当前版本。`));return true;}
+      appendTaskHtml(proposalAgentMessage("请先完成当前选择或确认动作，再继续下一步。"));return true;
+    }
+
+    document.querySelector("#task-chat").addEventListener("click",event=>{
+      const quick=event.target.closest("[data-planning-quick]");
+      if(quick&&planningFlow.active){const action=quick.dataset.planningQuick;if(action==="requirement-continue"||action==="requirement-skip")renderPlanningScopeSelection();if(action==="structure-continue")startPlanningV2AiGeneration();return;}
+      const region=event.target.closest("[data-planning-region]");
+      if(region&&planningFlow.active){const value=region.dataset.planningRegion;const list=planningFlow.scope.regions;if(list.includes(value)){if(list.length===1){showToast("请至少保留一个地区");return;}planningFlow.scope.regions=list.filter(item=>item!==value);}else planningFlow.scope.regions.push(value);const suggested=planningV2SuggestedSources(planningFlow.scope.regions);Object.keys(suggested).forEach(group=>planningFlow.scope.sources[group]=[...new Set([...planningFlow.scope.sources[group].filter(item=>planningFlow.scope.customSources.some(custom=>custom.group===group&&custom.label===item)),...suggested[group]])]);planningV2RefreshScopeCard();return;}
+      const source=event.target.closest("[data-planning-source-label]");
+      if(source&&planningFlow.active){const group=source.dataset.planningSourceGroup,label=source.dataset.planningSourceLabel,list=planningFlow.scope.sources[group];planningFlow.scope.sources[group]=list.includes(label)?list.filter(item=>item!==label):[...list,label];planningV2RefreshScopeCard();return;}
+      if(event.target.closest("[data-planning-scope-add]")&&planningFlow.active){const group=document.querySelector("#planning-source-add-group").value,input=document.querySelector("#planning-source-add-input"),label=input.value.trim();if(!label){input.focus();return;}planningFlow.scope.customSources.push({group,label});planningFlow.scope.sources[group]=[...new Set([...planningFlow.scope.sources[group],label])];planningV2RefreshScopeCard();return;}
+      if(event.target.closest("[data-planning-scope-confirm]")&&planningFlow.active){confirmPlanningScope();return;}
+      const direction=event.target.closest("[data-planning-direction]");
+      if(direction&&planningFlow.active){const id=direction.dataset.planningDirection;planningFlow.selectedTrendIds=planningFlow.selectedTrendIds.includes(id)?planningFlow.selectedTrendIds.filter(item=>item!==id):[...planningFlow.selectedTrendIds,id];planningV2RefreshDirectionSelector();return;}
+      if(event.target.closest("[data-planning-direction-confirm]")&&planningFlow.active){confirmPlanningV2Directions();return;}
+      const preview=event.target.closest("[data-planning-ai-preview]");if(preview&&planningFlow.active){openPlanningV2ImagePreview(preview.dataset.planningAiPreview);return;}
+      const select=event.target.closest("[data-planning-ai-select]");if(select&&planningFlow.active){const code=select.dataset.planningAiSelect;if(planningFlow.selectedAiImages.has(code))planningFlow.selectedAiImages.delete(code);else planningFlow.selectedAiImages.add(code);planningV2RefreshAiSelector();return;}
+      if(event.target.closest("[data-planning-ai-regenerate]")&&planningFlow.active){const codes=[...planningFlow.selectedAiImages];if(!codes.length)return;codes.forEach(code=>{const item=planningV2AiOptions.find(option=>option.code===code);if(item)item.revision+=1;});appendTaskHtml(agentExecutionMessage({copy:`已仅重新生成 ${codes.join("、")}，其他图片保持不变。`,label:"局部重生成 AI 改款",details:["应用输入框中的最新修改要求","复用原锚点、方向和商品结构","更新选中图片并保留未选图片"],state:"complete"}));planningV2RefreshAiSelector();return;}
+      if(event.target.closest("[data-planning-ai-generate]")&&planningFlow.active){generateFinalPlanningArtifact();return;}
+    });
+    document.querySelector("#candidate-detail-overlay").addEventListener("click",event=>{
+      if(event.target.closest("[data-planning-image-close]")||event.target.id==="candidate-detail-overlay"){document.querySelector("#candidate-detail-overlay").hidden=true;return;}
+      const select=event.target.closest("[data-planning-ai-detail-select]");if(select&&planningFlow.active){const code=select.dataset.planningAiDetailSelect;if(planningFlow.selectedAiImages.has(code))planningFlow.selectedAiImages.delete(code);else planningFlow.selectedAiImages.add(code);document.querySelector("#candidate-detail-overlay").hidden=true;planningV2RefreshAiSelector();}
+    });
+
+    const proposalV2Directions = [
+      {id:"ruffle",name:"克制荷叶边实穿化",summary:"把客户偏好的女性化荷叶边收敛到可穿、易搭配的上衣与连衣裙。",match:"匹配 35-50 岁女性、百货日常场景与成熟花卉语言",evidence:"Amazon US 24 件同类样本中 15 件采用袖口或领口局部荷叶边；TikTok Shop US 18 件中 9 件采用宽松衫型。平台数据分别展示。",level:"建议作为核心方向",image:"case-assets/crown-ivy/candidates/C03.jpg"},
+      {id:"botanical",name:"传承植物印花更新",summary:"保留品牌花卉识别度，用更大比例、低对比底色和局部纹样更新视觉。",match:"匹配 Crown & Ivy 的品牌资产与 Fall Transition 波段",evidence:"公开百货与品牌样本中，植物/佩斯利内容持续出现；社媒保存信号较高，但互动不等于购买。",level:"建议作为核心方向",image:"case-assets/crown-ivy/candidates/C11.jpg"},
+      {id:"tailored",name:"柔性套装与轻结构",summary:"以软肩、宽松直筒与可拆分搭配建立轻商务系列感。",match:"匹配 BELK 百货顾客的工作、午餐与周末多场景需求",evidence:"Amazon US 19 件轻结构样本价格与评价分布稳定；品牌站采用可见，缺少统一销量字段。",level:"建议小规模测试",image:"case-assets/crown-ivy/candidates/C19.jpg"},
+      {id:"dress",name:"过渡季连衣裙层次",summary:"用七分袖、柔性腰线和中等长度承接夏末至初秋穿着。",match:"覆盖连衣裙核心品类，并避免过度年轻或礼服化",evidence:"百货站与公开商品页均有过渡季裙装供给；样本覆盖不足，建议保留测试款。",level:"建议小规模测试",image:"case-assets/crown-ivy/candidates/C25.jpg"}
+    ];
+    const proposalV2CandidateFiles = [
+      "C01.jpg","C02.jpg","C03.jpg","C04.jpg","C05.jpg","C06.jpg","C07.jpg","C08.jpg","C09.jpg","C10.jpg",
+      "C11.jpg","C12.jpg","C13.jpg","C14.webp","C15.jpg","C16.jpg","C17.jpg","C18.jpg",
+      "C19.jpg","C20.jpg","C21.jpg","C22.jpg","C23.jpg","C24.jpg",
+      "C25.jpg","C26.jpg","C27.jpg","C28.jpg","C29.jpg","C30.jpg"
+    ];
+    const proposalV2CandidateNames = [
+      "Floral button-down blouse","Smocked ruffle tunic","3/4 sleeve ruffle blouse","Relaxed floral blouse","Puff-sleeve peplum top","Bow-back ruffle blouse","Split-neck flutter top","Layered ruffle popover","Easy floral blouse","Ruffle-cuff tunic",
+      "Painterly botanical blouse","Paisley transition top","Tonal floral shirt","Heritage print popover","Ornamental botanical dress","Border-print tunic","Scattered floral blouse","Botanical midi dress",
+      "Soft tailored shirt","Relaxed matching set","Easy pull-on trouser","Drape-front blouse","Soft shoulder jacket","Wide-leg coordinated set",
+      "Transition midi dress","Tiered shirt dress","Soft waist day dress","Printed column dress","Flutter-sleeve dress","Layer-ready popover dress"
+    ];
+    const proposalV2Candidates = proposalV2CandidateFiles.map((file,index)=>{
+      const number=index+1;
+      const direction=number<=10?"ruffle":number<=18?"botanical":number<=24?"tailored":"dress";
+      const source=number%3===0?"Amazon US":number%3===1?"TikTok Shop US":"BELK / 品牌公开站";
+      return {code:`C${String(number).padStart(2,"0")}`,direction,title:proposalV2CandidateNames[index],source,price:source==="Amazon US"?`USD ${(18+number%9).toFixed(2)}`:source==="TikTok Shop US"?`USD ${(19+number%7).toFixed(2)}`:"平台未返回",reason:`符合“${proposalV2Directions.find(item=>item.id===direction).name}”及 35-50 岁成熟日常场景硬约束`,evidenceId:source==="Amazon US"?"EV-PROP-ECOM-001":source==="TikTok Shop US"?"EV-PROP-SOC-001":"EV-PROP-TRD-001",sourceUrl:source==="Amazon US"?"https://www.amazon.com/":source==="TikTok Shop US"?"https://www.tiktok.com/shop":"https://www.belk.com/",captured:"2026-08-07",assetUrl:`case-assets/crown-ivy/candidates/${file}`};
+    });
+    const proposalV2Concepts = Array.from({length:12},(_,index)=>{
+      const number=index+1,batch=Math.ceil(number/10);
+      return {code:`CI26-${String(number).padStart(3,"0")}`,category:number%4===0?"连衣裙":number%4===1?"上衣":number%4===2?"裤装":"套装",direction:proposalV2Directions[index%proposalV2Directions.length].name,assetUrl:`case-assets/crown-ivy/concepts/batch-${String(batch).padStart(2,"0")}/CI26-${String(number).padStart(3,"0")}.png`,revision:1};
+    });
+    const proposalV2SourceCatalog = {
+      中国:{ecommerce:["淘宝","京东","抖音电商"],social:["小红书","抖音","微博"],brand:["品牌官网/独立站"],other:["中国零售公开网站"]},
+      日本:{ecommerce:["ZOZOTOWN","Rakuten Fashion","Amazon Japan"],social:["Instagram","TikTok","X"],brand:["品牌官网/独立站"],other:["日本零售公开网站"]},
+      北美:{ecommerce:["Amazon US","TikTok Shop US"],social:["TikTok","Instagram","Pinterest"],brand:["BELK","品牌官网/独立站"],other:["美国百货公开网站"]},
+      欧洲:{ecommerce:["Zalando","Amazon Europe"],social:["Instagram","TikTok","Pinterest"],brand:["品牌官网/独立站"],other:["欧洲零售公开网站"]}
+    };
+
+    function proposalV2FreshState(){return {regions:[],sources:{ecommerce:[],social:[],brand:[],other:[]},customSources:[],profileMapped:false,trendLibrary:true,selectedDirections:new Set(),activeDirection:"ruffle",candidatePage:0,selectedCandidates:new Set(),feedback:"",remixPlan:null,selectedAi:new Set(),language:"简体中文"};}
+    function proposalV2MapRegion(value){const source=String(value||"");if(/美国|加拿大|北美/.test(source))return"北美";if(/日本/.test(source))return"日本";if(/欧洲|英国|法国|德国|意大利|西班牙/.test(source))return"欧洲";if(/中国/.test(source))return"中国";return"";}
+    function proposalV2SuggestedSources(regions){const result={ecommerce:[],social:[],brand:[],other:[]};regions.forEach(region=>Object.keys(result).forEach(group=>result[group].push(...(proposalV2SourceCatalog[region]?.[group]||[]))));Object.keys(result).forEach(group=>result[group]=[...new Set(result[group])]);return result;}
+    function proposalV2QuickActions(actions){return `<div class="planning-quick-actions">${actions.map(item=>`<button type="button" class="planning-quick-action ${item.primary?"primary":""}" data-proposal-v2-quick="${escapeHtml(item.action)}">${escapeHtml(item.label)}</button>`).join("")}</div>`;}
+    function proposalV2Requirement(userText,profile,attachments){
+      const parsed=parseProposalRequirement(userText,profile,attachments),crown=/Crown|Ivy|BELK/i.test(userText);
+      const market=/美国|北美|BELK|Crown/i.test(userText)?"美国":parsed.market||"待补充";
+      const audience=crown||/35|50/.test(userText)?"35-50 岁女性":parsed.audience||"待补充";
+      const category=crown?"梭织上衣、连衣裙、裤装、套装":parsed.category||"待补充";
+      const language=/English|英文/i.test(userText)?"English":/日本語|日文/.test(userText)?"日本語":"简体中文";
+      return {client:crown?"Crown & Ivy":"客户名称待补充",goal:"形成可外发的客户方向参考包，并在客户反馈后完成 AI 改款与正式提案",market,audience,category,season:crown?"Fall Transition 2026":parsed.season||"待补充",price:parsed.price||"待补充",style:crown?"成熟女性化、植物印花、克制荷叶边、柔性轻商务":parsed.designDirection||"待从客户资料与参考图提炼",reference:crown?"植物花卉、局部荷叶边、宽松但不臃肿、百货日常表达":parsed.referenceFeatures||((attachments?.length)?"已上传参考图，按可见特征解析":"待补充参考图"),keep:crown?"品牌花卉语言、成熟客群、舒适覆盖度":parsed.keepElements||"待客户反馈确认",exclude:crown?"过度年轻、辣妹风、夸张露肤、直接复刻第三方款式":parsed.excludeElements||"待补充",count:crown?"50 款，原型演示首批 12 款":"待补充",confirm:"视觉方向、候选参考、改款计划与最终 AI 方案",language};
+    }
+    function proposalV2RequirementText(){const r=proposalFlow.requirement;return ["我已整理本次客户需求：",`客户目标：${r.goal}`,`市场与人群：${r.market}；${r.audience}`,`品类与季节：${r.category}；${r.season}`,`价格段：${r.price}`,`设计方向：${r.style}`,`参考图特征：${r.reference}`,`必须保留：${r.keep}`,`必须排除：${r.exclude}`,`期望款数：${r.count}`,`客户最终需要确认：${r.confirm}`,`对外文件语言：${r.language}（后续产物统一沿用）`,`仍为“待补充”的内容不会被系统补造。可继续补充，或直接进入调研范围。`].join("\n");}
+    function proposalV2ProfileContext(profile){return profile?`<div class="task-message profile-context"><div class="applied-profile-card"><div class="applied-profile-head">已应用业务偏好档案：<strong>${escapeHtml(profile.name)}</strong></div><div class="applied-profile-meta"><span>品类：${escapeHtml(profile.categories?.join("、")||"未填写")}</span><span>国家：${escapeHtml(profile.countries?.join("、")||"未填写")}</span><span>渠道：${escapeHtml(profile.channels?.join("、")||"未填写")}</span></div></div></div>`:"";}
+
+    const proposalV2LegacyReset=resetProposalFlow;
+    resetProposalFlow=function(){proposalV2LegacyReset();proposalFlow.v2=proposalV2FreshState();proposalV2Concepts.forEach(item=>item.revision=1);};
+    renderProposalPlanPanel=function(){renderTaskPanel({plans:[],outputs:proposalOutputs(),references:evidenceGroupsFor("proposal",proposalFlow.stage)});};
+    renderProposalInitialConversation=function(userText,profile=null,attachments=[]){
+      proposalFlow.active=true;proposalFlow.stage="understanding";proposalFlow.profile=profile;proposalFlow.firstText=userText;proposalFlow.attachments=attachments;proposalFlow.v2=proposalV2FreshState();proposalFlow.requirement=proposalV2Requirement(userText,profile,attachments);proposalFlow.v2.language=proposalFlow.requirement.language;
+      document.querySelector("#task-chat-inner").innerHTML=`<div class="task-message user"><div class="user-message-bubble">${escapeHtml(userText)}${proposalAttachmentHtml(attachments)}</div></div>${proposalV2ProfileContext(profile)}${agentExecutionMessage({copy:"正在读取客户资料并提炼可确认的业务需求。",label:"解析客户需求",details:["读取文字、参考图和上传文档","提取参考图中可见的廓形、比例、色彩与细节","结合业务偏好档案识别能力边界","区分明确需求、缺失信息与可发散条件"],state:"complete"})}${proposalAgentMessage(proposalV2RequirementText(),proposalV2QuickActions([{action:"requirement-continue",label:"继续",primary:true},{action:"requirement-skip",label:"跳过未指定项"}]))}`;
+      document.querySelector("#task-pause").hidden=false;document.querySelector("#task-condition").placeholder="补充或修正客户、市场、人群、品类、风格、参考图、排除项或文件语言…";renderProposalPlanPanel();scrollTaskChatBottom();
+    };
+    function proposalV2EnsureScope(){const profileRegions=(proposalFlow.profile?.countries||[]).map(proposalV2MapRegion).filter(Boolean),requirementRegion=proposalV2MapRegion(proposalFlow.requirement.market);const regions=[...new Set(profileRegions.length?profileRegions:(requirementRegion?[requirementRegion]:["北美"]))],suggested=proposalV2SuggestedSources(regions);proposalFlow.v2.regions=regions;proposalFlow.v2.sources=suggested;proposalFlow.v2.profileMapped=profileRegions.length>0;}
+    function proposalV2ScopeMarkup(){const state=proposalFlow.v2,labels={ecommerce:"电商平台",social:"社媒平台",brand:"品牌 / 独立站",other:"其他网站"},suggested=proposalV2SuggestedSources(state.regions);const groups=Object.keys(labels).map(group=>{const all=[...new Set([...(suggested[group]||[]),...state.customSources.filter(item=>item.group===group).map(item=>item.label)])];return `<div class="planning-source-group"><span>${labels[group]}</span><div class="planning-chip-list">${all.map(label=>`<button type="button" class="planning-scope-chip ${state.sources[group].includes(label)?"selected":""}" data-proposal-v2-source-group="${group}" data-proposal-v2-source-label="${escapeHtml(label)}">${escapeHtml(label)}<span class="remove">${state.sources[group].includes(label)?"×":"+"}</span></button>`).join("")}</div></div>`;}).join("");return `<section class="planning-scope-card" id="proposal-scope-v2-card" data-proposal-v2-component="research-scope"><div class="planning-component-head"><div><h4>确认本次调研范围</h4><p>地区可多选；平台与网站按地区建议，可删除或补充。</p></div><span class="planning-component-state">待确认</span></div><div class="planning-scope-body"><div class="planning-scope-section"><div class="planning-scope-title"><span>地区（多选）</span><span class="planning-profile-source">${state.profileMapped?"已从企业档案带入，可修改":"已从本次需求带入，可修改"}</span></div><div class="planning-chip-list">${["中国","日本","北美","欧洲"].map(region=>`<button type="button" class="planning-scope-chip ${state.regions.includes(region)?"selected":""}" data-proposal-v2-region="${region}">${region}</button>`).join("")}</div></div><div class="planning-scope-section"><div class="planning-scope-title"><span>平台和网站</span><span>点击已选项可删除</span></div><div class="planning-source-groups">${groups}</div><div class="planning-source-add"><select id="proposal-source-add-group"><option value="ecommerce">电商平台</option><option value="social">社媒平台</option><option value="brand">品牌 / 独立站</option><option value="other">其他网站</option></select><input id="proposal-source-add-input" type="text" maxlength="40" placeholder="补充平台或网站名称"><button type="button" data-proposal-v2-scope-add>添加</button></div></div><div class="planning-scope-section"><div class="planning-scope-title"><span>系统固定研究来源</span></div><div class="planning-chip-list"><span class="planning-scope-chip fixed">趋势资料库</span></div></div></div><div class="planning-component-actions"><span class="planning-component-error" id="proposal-scope-v2-error"></span><button type="button" class="primary" data-proposal-v2-scope-confirm>确认并开始调研</button></div></section>`;}
+    function proposalV2RefreshScope(){const card=document.querySelector("#proposal-scope-v2-card");if(card)card.outerHTML=proposalV2ScopeMarkup();}
+    function proposalV2RenderScope(){proposalFlow.stage="scope";proposalV2EnsureScope();appendTaskHtml(proposalAgentMessage("需求摘要已确认。请确认本次研究地区，以及实际需要覆盖的平台和网站。趋势资料库固定启用；不同平台的数据会分别呈现，不合并为单一销量、销售额或热度。"));appendTaskHtml(`<div class="task-message assistant"><div class="agent-message">${proposalV2ScopeMarkup()}</div></div>`);document.querySelector("#task-condition").placeholder="也可以直接补充品牌、独立站、时间范围或排除条件…";renderProposalPlanPanel();}
+
+    function proposalV2DirectionMarkup(){const selected=proposalFlow.v2.selectedDirections;return `<section class="proposal-v2-selector" id="proposal-v2-directions"><div class="planning-component-head"><div><h4>选择客户提案采用的视觉方向</h4><p>可多选；每个方向均关联市场证据和客户需求匹配点。</p></div><span class="planning-component-state">已选 ${selected.size}</span></div><div class="proposal-v2-direction-grid">${proposalV2Directions.map(item=>`<button type="button" class="proposal-v2-direction ${selected.has(item.id)?"selected":""}" data-proposal-v2-direction="${item.id}" aria-pressed="${selected.has(item.id)}"><img src="${item.image}" alt="${escapeHtml(item.name)}代表图"><div class="proposal-v2-direction-copy"><strong>${escapeHtml(item.name)}</strong><p>${escapeHtml(item.summary)}</p><small>${escapeHtml(item.level)} · ${escapeHtml(item.match)}</small></div></button>`).join("")}</div><div class="planning-component-actions"><span class="planning-component-error">${selected.size?`已选择 ${selected.size} 个方向`:`请至少选择一个方向`}</span><button type="button" class="primary" data-proposal-v2-direction-confirm ${selected.size?"":"disabled"}>确认所选方向</button></div></section>`;}
+    function proposalV2RefreshDirections(){const card=document.querySelector("#proposal-v2-directions");if(card)card.outerHTML=proposalV2DirectionMarkup();}
+    function proposalV2SpreadsheetQuote(artifact){return `<div class="task-message assistant"><div class="agent-message"><section class="proposal-artifact-quote" data-artifact-quote="${artifact.id}"><div class="artifact-quote-icon">□</div><div class="artifact-quote-copy"><strong>${escapeHtml(artifact.label)}</strong><span>视觉方向参考素材 · 已生成</span><small>一个工作簿 · 每个视觉方向一个 Sheet · 包含来源与缺失字段说明</small></div><a class="planning-artifact-direct" href="case-assets/proposal-v2/视觉方向参考素材.xlsx" download="视觉方向参考素材.xlsx">下载 XLSX</a></section></div></div>`;}
+    function proposalV2StartResearch(){
+      const state=proposalFlow.v2,sourceCount=Object.values(state.sources).reduce((sum,list)=>sum+list.length,0);if(!state.regions.length||!sourceCount){const error=document.querySelector("#proposal-scope-v2-error");if(error)error.textContent=!state.regions.length?"请至少选择一个地区":"请至少保留一个平台或网站";return;}
+      const card=document.querySelector("#proposal-scope-v2-card");if(card)card.innerHTML=`<div class="planning-component-head"><div><h4>调研范围已确认</h4><p>${escapeHtml(state.regions.join("、"))} · ${escapeHtml(Object.values(state.sources).flat().join("、"))} · 趋势资料库已启用</p></div><span class="planning-component-state">已确认</span></div>`;
+      proposalFlow.stage="research";renderProposalPlanPanel();appendTaskHtml(agentExecutionMessage({copy:"范围已确认，正在自动完成多来源调研与视觉方向整理。",label:"调研与证据整理",details:["结构化客户需求并生成本地语言关键词与排除词","采集电商、社媒、品牌/独立站和趋势资料","标准化证据并过滤错误市场、人群、性别与品类","验证趋势、竞争和客户适配，整理候选参考素材"],state:"complete"}));
+      state.selectedDirections=new Set(["ruffle","botanical"]);
+      const report=makeArtifactPayload("proposalResearch","客户需求调研与视觉方向.html","proposalV2Research","多来源证据、客户适配与视觉方向");report.downloads=[{label:"HTML",name:"客户需求调研与视觉方向.html",href:"case-assets/proposal-v2/客户需求调研与视觉方向.html"}];
+      const sheet=makeArtifactPayload("proposalReferenceSheet","视觉方向参考素材.xlsx","proposalV2Sheet","每个视觉方向一个 Sheet");sheet.directDownload="case-assets/proposal-v2/视觉方向参考素材.xlsx";
+      saveArtifact("researchV2",report);saveArtifact("referenceSheetV2",sheet);
+      appendTaskHtml(proposalAgentMessage("调研已完成。当前证据更支持“克制荷叶边实穿化”和“传承植物印花更新”作为核心方向；柔性套装与过渡季连衣裙适合小规模验证。判断分别核对了电商供给、社媒内容、品牌/百货采用和趋势资料。社媒互动不等于销量，不同电商平台的数值未合并。"));
+      appendTaskHtml(`<div class="task-message assistant"><div class="agent-message">${proposalV2DirectionMarkup()}</div></div>`);appendTaskHtml(proposalArtifactQuote(report,"4个待确认方向 · 分来源展示样本、时间、充分度与缺口"));appendTaskHtml(proposalV2SpreadsheetQuote(sheet));appendTaskHtml(proposalAgentMessage("本次判断引用以下可追溯证据。右侧参考信息与报告中的证据 ID 指向同一来源对象。",evidenceCitation(["EV-PROP-ECOM-001","EV-PROP-SOC-001","EV-PROP-TRD-001","EV-PROP-FILE-001"])));
+      proposalFlow.stage="directionReview";document.querySelector("#task-condition").placeholder="可调整方向、补充条件或要求重新调研；也可在上方直接多选…";renderProposalPlanPanel();
+    }
+    function proposalV2CandidateMarkup(){const state=proposalFlow.v2,availableDirections=proposalV2Directions.filter(item=>state.selectedDirections.has(item.id)),active=state.selectedDirections.has(state.activeDirection)?state.activeDirection:availableDirections[0]?.id;state.activeDirection=active||"ruffle";const all=proposalV2Candidates.filter(item=>item.direction===state.activeDirection),pages=Math.max(1,Math.ceil(all.length/8));state.candidatePage=Math.min(state.candidatePage,pages-1);const items=all.slice(state.candidatePage*8,state.candidatePage*8+8);return `<section class="proposal-v2-selector" id="proposal-v2-candidates"><div class="planning-component-head"><div><h4>从已取得素材中选择客户参考图</h4><p>每页 8 张；悬停查看来源、售价与匹配理由。点击图片选择，放大按钮不改变选择。</p></div><span class="planning-component-state">已选择 ${state.selectedCandidates.size} 张</span></div><div class="proposal-v2-candidate-tabs">${availableDirections.map(item=>`<button type="button" class="proposal-v2-candidate-tab ${item.id===state.activeDirection?"active":""}" data-proposal-v2-candidate-tab="${item.id}">${escapeHtml(item.name)}</button>`).join("")}</div><div class="proposal-v2-candidate-grid">${items.map(item=>`<article class="proposal-v2-candidate ${state.selectedCandidates.has(item.code)?"selected":""}" data-proposal-v2-candidate="${item.code}"><img loading="lazy" src="${item.assetUrl}" alt="${item.code} ${escapeHtml(item.title)}"><button type="button" class="proposal-v2-candidate-select" data-proposal-v2-candidate-select="${item.code}" aria-label="${state.selectedCandidates.has(item.code)?"取消选择":"选择"} ${item.code}"></button><span class="proposal-v2-candidate-check">✓</span><div class="proposal-v2-candidate-overlay"><strong>${item.code} · ${escapeHtml(item.source)} · ${escapeHtml(item.price)}</strong><small>${escapeHtml(item.reason)}</small></div><button type="button" class="proposal-v2-candidate-preview" data-proposal-v2-candidate-preview="${item.code}" aria-label="放大查看 ${item.code}">⌕</button></article>`).join("")}</div><div class="proposal-v2-pagination"><button type="button" data-proposal-v2-candidate-page="prev" ${state.candidatePage===0?"disabled":""}>‹</button><span>${state.candidatePage+1} / ${pages}</span><button type="button" data-proposal-v2-candidate-page="next" ${state.candidatePage>=pages-1?"disabled":""}>›</button></div><div class="planning-component-actions"><span class="planning-selection-summary">${state.selectedCandidates.size?`已选择 ${state.selectedCandidates.size} 张，将写入客户方向参考包。`:`请至少选择一张图片`}</span><button type="button" class="primary" data-proposal-v2-candidate-confirm ${state.selectedCandidates.size?"":"disabled"}>生成方向参考包</button></div></section>`;}
+    function proposalV2RefreshCandidates(){const card=document.querySelector("#proposal-v2-candidates");if(card)card.outerHTML=proposalV2CandidateMarkup();}
+    function proposalV2ConfirmDirections(){if(!proposalFlow.v2.selectedDirections.size)return;const card=document.querySelector("#proposal-v2-directions"),names=[...proposalFlow.v2.selectedDirections].map(id=>proposalV2Directions.find(item=>item.id===id)?.name).filter(Boolean);if(card)card.innerHTML=`<div class="planning-component-head"><div><h4>视觉方向已确认</h4><p>${escapeHtml(names.join("、"))}</p></div><span class="planning-component-state">已确认</span></div>`;proposalFlow.stage="candidate";appendTaskHtml(proposalAgentMessage(`已确认 ${names.join("、")}。下面只从本轮调研已经取得并完成硬过滤的素材中筛选，不启动第二轮调研。`));appendTaskHtml(`<div class="task-message assistant"><div class="agent-message">${proposalV2CandidateMarkup()}</div></div>`);document.querySelector("#task-condition").placeholder="可补充候选偏好、排除条件或要求补充受影响来源…";renderProposalPlanPanel();}
+    function proposalV2OpenCandidatePreview(code){const item=proposalV2Candidates.find(candidate=>candidate.code===code);if(!item)return;document.querySelector("#candidate-detail-body").innerHTML=`<div class="planning-image-preview"><img src="${item.assetUrl}" alt="${item.code} ${escapeHtml(item.title)}"><h3>${item.code} · ${escapeHtml(item.title)}</h3><p>来源：${escapeHtml(item.source)} · ${escapeHtml(item.price)} · 获取时间 ${item.captured}<br>匹配理由：${escapeHtml(item.reason)}<br>证据 ID：${item.evidenceId}</p><div class="candidate-detail-actions"><button type="button" data-proposal-v2-image-close>关闭</button><a class="primary" href="${item.sourceUrl}" target="_blank" rel="noopener">查看原始来源</a></div></div>`;document.querySelector("#candidate-detail-overlay").hidden=false;}
+    function proposalV2GenerateDirectionPack(){const state=proposalFlow.v2;if(!state.selectedCandidates.size)return;const card=document.querySelector("#proposal-v2-candidates");if(card)card.querySelectorAll("button").forEach(button=>button.disabled=true);const artifact=makeArtifactPayload("proposalDirectionPack","客户方向参考包.html","proposalV2DirectionPack",`${state.selectedCandidates.size} 张已选参考图 · 等待客户反馈`);artifact.downloads=[{label:"HTML",name:"客户方向参考包.html",href:"case-assets/proposal-v2/客户方向参考包.html"},{label:"PPT",name:"客户方向参考包.pptx",href:"case-assets/proposal-v2/客户方向参考包.pptx"},{label:"PDF",name:"客户方向参考包.pdf",href:"case-assets/proposal-v2/客户方向参考包.pdf"}];saveArtifact("directionPackV2",artifact);proposalFlow.stage="waitingFeedback";appendTaskHtml(proposalAgentMessage(`已将 ${state.selectedCandidates.size} 张客户参考图、已确认视觉方向和简洁市场依据整理为对外方向参考包。当前等待客户反馈；可以直接粘贴文字、聊天截图、标注图或文档。`,proposalV2QuickActions([{action:"skip-feedback",label:"暂时跳过客户反馈"}])));appendTaskHtml(proposalArtifactQuote(artifact,"客户可外发 · 在线只读查看 · 下载 HTML/PPT/PDF"));document.querySelector("#task-condition").placeholder="粘贴客户反馈，或上传聊天截图、标注图、PDF、PPT、Word与新参考图…";renderProposalPlanPanel();}
+    function proposalV2RenderFeedbackPlan(text,skipped=false){const state=proposalFlow.v2;state.feedback=text;state.remixPlan={anchors:[...state.selectedCandidates].slice(0,4),keep:skipped?"已确认视觉方向、成熟客群与舒适覆盖度":"客户认可的花卉语言、局部荷叶边与宽松比例",exclude:"过度年轻、夸张露肤、第三方标识与直接复刻",modify:skipped?"基于已选锚点做保守、差异与趋势延展三类发散":"放大花型层次，调整袖型、领口、长度与套装比例",count:12,dispersion:"每款至少改变两个有意义的设计轴；颜色替换不单独计为新款"};proposalFlow.stage="feedbackPlan";appendTaskHtml(proposalAgentMessage(`${skipped?"已暂时跳过客户反馈，以下未指定项将作为待确认假设。":"我已把客户反馈整理为本次改款计划。"}\n采用的基础参考款：${state.remixPlan.anchors.join("、")}\n必须保留：${state.remixPlan.keep}\n必须排除：${state.remixPlan.exclude}\n款式修改方向：${state.remixPlan.modify}\n计划生成：${state.remixPlan.count} 款原型演示概念图\n发散要求：${state.remixPlan.dispersion}\n新增参考图作用：${proposalFlow.attachments?.length?"用于补充可见设计特征，不推断真实面料与成本":"本轮未新增，默认使用已选候选图作为锚点"}`,proposalV2QuickActions([{action:"confirm-remix",label:"确认并生成",primary:true},{action:"skip-feedback",label:"暂时跳过客户反馈"}])));document.querySelector("#task-condition").placeholder="可继续修改改款方向、细节、款数或补充新参考图…";renderProposalPlanPanel();}
+    function proposalV2AiMarkup(){const state=proposalFlow.v2;const itemMarkup=item=>`<article class="planning-ai-item ${state.selectedAi.has(item.code)?"selected":""}"><img loading="lazy" src="${item.assetUrl}" alt="${item.code} ${escapeHtml(item.category)}"><button type="button" class="planning-ai-preview" data-proposal-v2-ai-preview="${item.code}" aria-label="放大查看 ${item.code}"></button><button type="button" class="planning-ai-select" data-proposal-v2-ai-select="${item.code}" aria-label="${state.selectedAi.has(item.code)?"取消选择":"选择"} ${item.code}">${state.selectedAi.has(item.code)?"✓":""}</button><div class="planning-ai-caption"><b>${item.code} · ${escapeHtml(item.category)}</b><small>${escapeHtml(item.direction)}${item.revision>1?` · <span class="planning-ai-regenerated">已重生成 V${item.revision}</span>`:""}</small></div></article>`;const groups=proposalV2Directions.map(direction=>{const items=proposalV2Concepts.filter(item=>item.direction===direction.name);return `<section class="proposal-v2-ai-group"><h5>${escapeHtml(direction.name)} · ${items.length} 款</h5><div class="proposal-v2-ai-grid">${items.map(itemMarkup).join("")}</div></section>`;}).join("");return `<section class="proposal-v2-selector" id="proposal-v2-ai"><div class="planning-component-head"><div><h4>选择进入正式客户提案的 AI 改款图</h4><p>按视觉方向分组；点击图片放大，点击右上角选择。AI 图只作概念表达，不作为市场证据。</p></div><span class="planning-component-state">已选 ${state.selectedAi.size}</span></div><div class="proposal-v2-ai-groups">${groups}</div><div class="planning-component-actions"><span class="planning-selection-summary">${state.selectedAi.size?`已选择 ${state.selectedAi.size} 张。重新生成只影响这些图片。`:`未选择图片`}</span><button type="button" data-proposal-v2-ai-regenerate ${state.selectedAi.size?"":"disabled"}>重新生成</button><button type="button" class="primary" data-proposal-v2-ai-generate ${state.selectedAi.size?"":"disabled"}>生成提案</button></div></section>`;}
+    function proposalV2RefreshAi(){const card=document.querySelector("#proposal-v2-ai");if(card)card.outerHTML=proposalV2AiMarkup();}
+    function proposalV2StartAi(){if(!proposalFlow.v2.remixPlan)return;proposalFlow.stage="aiGenerating";renderProposalPlanPanel();appendTaskHtml(agentExecutionMessage({copy:"改款计划已确认，正在生成专业服装改款提示词与 AI 概念图。",label:"AI 改款生成",details:["将锚点图、保留/修改/排除元素与企业能力边界结构化","生成逐款正向提示词、负向提示词和视觉一致性要求","检查每款至少两个有意义的设计变化轴","通过完整性检查后生成图片，并检查空白、重复与人群偏差"],state:"complete"}));proposalFlow.stage="aiReview";const artifact=makeArtifactPayload("proposalAiResult","AI 改款结果（12张）","proposalV2Ai","12 张 AI 概念图 · 待确认");saveArtifact("aiV2",artifact);appendTaskHtml(proposalAgentMessage("首批 12 张 AI 改款图已完成。已继承客户确认的视觉方向、候选锚点和改款计划，并分别在廓形、比例、结构、花型或细节上形成差异，不以换色充当新款。请选择需要重生成或写入正式提案的图片。"));appendTaskHtml(proposalArtifactQuote(artifact,"服装改款提示词已在后台通过完整性检查 · AI概念表达"));appendTaskHtml(`<div class="task-message assistant"><div class="agent-message">${proposalV2AiMarkup()}</div></div>`);document.querySelector("#task-condition").placeholder="补充图片修改要求或上传新参考图；只重跑受影响款…";renderProposalPlanPanel();}
+    function proposalV2OpenAiPreview(code){const item=proposalV2Concepts.find(concept=>concept.code===code);if(!item)return;document.querySelector("#candidate-detail-body").innerHTML=`<div class="planning-image-preview"><img src="${item.assetUrl}" alt="${item.code} ${escapeHtml(item.category)}"><h3>${item.code} · ${escapeHtml(item.category)}</h3><p>${escapeHtml(item.direction)} · AI 概念表达 · V${item.revision}<br>该图片用于客户方向确认，不作为市场证据、精确制版或可直接生产的技术图。</p><div class="candidate-detail-actions"><button type="button" data-proposal-v2-image-close>关闭</button><button type="button" class="primary" data-proposal-v2-ai-detail-select="${item.code}">${proposalFlow.v2.selectedAi.has(item.code)?"取消选择":"选择此图"}</button></div></div>`;document.querySelector("#candidate-detail-overlay").hidden=false;}
+    function proposalV2GenerateFinal(){const state=proposalFlow.v2;if(!state.selectedAi.size)return;proposalFlow.stage="delivery";proposalArtifactData.aiV2.status="已确认";proposalArtifactData.aiV2.summary=`已确认 ${state.selectedAi.size} 张 AI 改款图`;appendTaskHtml(agentExecutionMessage({copy:"正在将客户需求、市场证据、确认方向、客户反馈和 AI 改款图写入正式客户提案。",label:"生成正式客户提案",details:["锁定用户确认的 AI 改款图","关联市场数据、趋势方向、候选来源与客户反馈","生成单一文件语言的只读 HTML","准备 HTML、PPT、PDF 下载文件"],state:"complete"}));const artifact=makeArtifactPayload("proposalFinalV2","正式客户提案.html","proposalV2Final",`${state.selectedAi.size} 张已确认 AI 改款图 · ${state.language}`);artifact.downloads=[{label:"HTML",name:"正式客户提案.html",href:"case-assets/crown-ivy/final-v2/index.html"},{label:"PPT",name:"正式客户提案.pptx",href:"case-assets/crown-ivy/deliverables/Crown_Ivy_Fall_Transition_2026_Proposal_v2.pptx"},{label:"PDF",name:"正式客户提案.pdf",href:"case-assets/crown-ivy/deliverables/Crown_Ivy_Fall_Transition_2026_Proposal_v2.pdf"}];saveArtifact("finalV2",artifact);proposalFlow.stage="done";appendTaskHtml(proposalAgentMessage(`正式客户提案已完成，已写入 ${state.selectedAi.size} 张确认后的 AI 改款图，并保留客户需求、市场与趋势依据、视觉方向、参考来源、客户反馈和方案对比。未包含内部 Design Brief、BOM、打样、MOQ、成本、交期或供应链计划。`));appendTaskHtml(proposalArtifactQuote(artifact,"统一 HTML 查看器 · 可下载 HTML / PPT / PDF · 不支持在线编辑"));document.querySelector("#task-condition").placeholder="继续提出内容修正、图片替换、语言变更或新版本要求…";renderProposalPlanPanel();}
+
+    function proposalV2ResearchViewer(){return `<div class="planning-html-report"><section class="planning-report-hero"><div><h3>客户需求调研与视觉方向</h3><p>演示数据。依据客户需求硬约束，对电商、社媒、品牌/百货公开站和趋势资料分别核对；不同平台不合并销量或热度，单一来源不构成确定趋势。</p></div><div class="planning-report-metrics"><div><strong>4</strong><span>视觉方向</span></div><div><strong>4 类</strong><span>业务来源</span></div><div><strong>114 条</strong><span>演示有效样本</span></div><div><strong>中</strong><span>整体证据充分度</span></div></div></section>${proposalV2Directions.map(item=>`<section class="planning-report-direction"><div class="planning-report-product"><img src="${item.image}" alt="${escapeHtml(item.name)}"><a href="https://www.belk.com/" target="_blank" rel="noopener">真实参考 · 原始来源 ↗</a></div><div><h4>${escapeHtml(item.name)} · ${escapeHtml(item.level)}</h4><p>${escapeHtml(item.summary)}。客户匹配：${escapeHtml(item.match)}。</p><div class="planning-report-evidence"><div><b>市场依据</b><span>${escapeHtml(item.evidence)}</span></div><div><b>客户适配</b><span>${escapeHtml(item.match)}</span></div><div><b>风险与缺口</b><span>演示样本不代表全市场；缺少统一销量、转化、退货与线下门店数据。</span></div></div><div class="trend-meta"><span>2026-05 至 2026-08</span><span>电商 42 · 社媒 48 · 品牌/百货 22 · 趋势章节 2（演示）</span><span>授权：仅用于方向研究</span></div></div></section>`).join("")}</div>`;}
+    function proposalV2DirectionPackViewer(){const selected=proposalV2Candidates.filter(item=>proposalFlow.v2.selectedCandidates.has(item.code)),english=proposalFlow.v2.language==="English";return `<div class="planning-html-report"><section class="planning-report-hero"><div><h3>${english?"Customer Direction Reference Pack":"客户方向参考包"}</h3><p>${escapeHtml(proposalFlow.requirement.client)} · ${escapeHtml(proposalFlow.requirement.market)} · ${escapeHtml(proposalFlow.requirement.season)}. ${english?"For confirmation of elements to preserve, exclude and modify.":"供客户确认保留、排除与修改意见。"}</p></div><div class="planning-report-metrics"><div><strong>${selected.length}</strong><span>${english?"Selected references":"已选参考图"}</span></div><div><strong>${proposalFlow.v2.selectedDirections.size}</strong><span>${english?"Confirmed directions":"确认方向"}</span></div><div><strong>${escapeHtml(proposalFlow.v2.language)}</strong><span>${english?"File language":"文件语言"}</span></div><div><strong>${english?"Read only":"只读"}</strong><span>${english?"Revise via conversation":"通过对话修改"}</span></div></div></section><div class="proposal-v2-report-visuals">${selected.map(item=>`<figure><img src="${item.assetUrl}" alt="${item.code}"><figcaption>${item.code} · ${escapeHtml(item.source)}<br>${escapeHtml(proposalV2Directions.find(direction=>direction.id===item.direction)?.name||"")}</figcaption></figure>`).join("")}</div><section class="preview-section"><h3>${english?"Client confirmation":"请客户确认"}</h3><p>${english?"Please confirm what must be preserved or excluded, and the preferred neckline, sleeve, length, color, print and concept count. Images are directional anchors and will not be copied directly.":"哪些元素必须保留、哪些必须排除、希望调整的领型/袖型/长度/颜色/花型，以及期望生成款数。图片仅作方向锚点，不要求直接复刻。"}</p></section></div>`;}
+    function proposalV2FinalViewer(){const selected=proposalV2Concepts.filter(item=>proposalFlow.v2.selectedAi.has(item.code)),english=proposalFlow.v2.language==="English";const table=english?`<thead><tr><th>Source</th><th>Time range</th><th>Sample</th><th>Used for</th><th>Data gap</th></tr></thead><tbody><tr><td>Amazon US</td><td>May-Aug 2026</td><td>42 items (demo)</td><td>Supply, price, rating and review distribution</td><td>Unified sales/conversion not returned</td></tr><tr><td>TikTok Shop US</td><td>Jun-Aug 2026</td><td>24 items (demo)</td><td>Public sold count and visual language</td><td>Engagement is not sales</td></tr><tr><td>BELK / brand sites</td><td>Fall Transition 2026</td><td>22 pages (demo)</td><td>Brand adoption and department-store expression</td><td>Not full-market coverage</td></tr><tr><td>Trend sources</td><td>Oct 2025-May 2026</td><td>2 chapters (demo)</td><td>Directional hypotheses</td><td>Cannot prove opportunity alone</td></tr></tbody>`:`<thead><tr><th>来源</th><th>时间范围</th><th>样本</th><th>用于判断</th><th>数据缺口</th></tr></thead><tbody><tr><td>Amazon US</td><td>2026-05 至 2026-08</td><td>42 件（演示）</td><td>供给、价格、评分与评价分布</td><td>统一销量/转化未返回</td></tr><tr><td>TikTok Shop US</td><td>2026-06 至 2026-08</td><td>24 件（演示）</td><td>公开售出量与内容表达</td><td>互动不等于销量</td></tr><tr><td>BELK / 品牌站</td><td>2026 Fall Transition</td><td>22 页（演示）</td><td>品牌采用与百货表达</td><td>不代表全市场</td></tr><tr><td>趋势资料</td><td>2025-10 至 2026-05</td><td>2 章节（演示）</td><td>方向假设</td><td>不能单独证明机会</td></tr></tbody>`;return `<div class="planning-html-report"><section class="planning-report-hero"><div><h3>${english?"Formal Customer Proposal":"正式客户提案"}</h3><p>${escapeHtml(proposalFlow.requirement.client)} · ${escapeHtml(proposalFlow.requirement.season)} · ${escapeHtml(proposalFlow.v2.language)}. ${english?"Customer needs, market evidence, confirmed directions, feedback and AI redesign concepts.":"包含客户需求、市场依据、确认方向、客户反馈与 AI 改款方案。"}</p></div><div class="planning-report-metrics"><div><strong>${selected.length}</strong><span>${english?"Confirmed AI concepts":"确认 AI 方案"}</span></div><div><strong>${proposalFlow.v2.selectedCandidates.size}</strong><span>${english?"Reference anchors":"参考锚点"}</span></div><div><strong>4</strong><span>${english?"Business evidence types":"业务证据来源"}</span></div><div><strong>${english?"Read only":"只读"}</strong><span>${english?"Client-facing":"对外提案"}</span></div></div></section><section class="preview-section"><h3>${english?"Market evidence and data boundaries":"市场依据与数据边界"}</h3><table class="proposal-v2-report-table">${table}</table></section><div class="proposal-v2-report-visuals">${selected.map(item=>`<figure><img src="${item.assetUrl}" alt="${item.code}"><figcaption>${item.code} · ${escapeHtml(item.category)}<br>${escapeHtml(item.direction)} · ${english?"AI concept expression":"AI概念表达"}</figcaption></figure>`).join("")}</div><section class="preview-section"><h3>${english?"Proposal logic":"方案对应关系"}</h3><p>${english?"The primary proposal retains the approved floral language and mature proportion. Alternatives expand differentiation through sleeve, neckline, length, set relationship and print scale. All AI images are concept expressions, not market evidence or production-ready technical drawings.":"主方案优先延续客户认可的花卉语言与成熟比例；备选方案在袖型、领口、长度、套装关系和花型尺度上扩大差异。所有 AI 图均为概念表达，不作为市场证据或可生产技术图。"}</p></section></div>`;}
+    function proposalV2OpenViewer(title,html){planningV2OpenHtmlViewer(title,"统一 HTML 查看器 · 只读",html);}
+    function renderTaskArtifactPreview(artifact){
+      if(artifact?.type==="planningSheet"){const link=document.createElement("a");link.href="case-assets/planning-v2/视觉方向参考商品.xlsx";link.download="视觉方向参考商品.xlsx";link.click();showToast("已下载 视觉方向参考商品.xlsx");return;}
+      if(String(artifact?.type||"").startsWith("planning")){renderPlanningPreview(artifact.type);return;}
+      if(artifact?.type==="proposalV2Sheet"){const link=document.createElement("a");link.href=artifact.directDownload||"case-assets/proposal-v2/视觉方向参考素材.xlsx";link.download="视觉方向参考素材.xlsx";link.click();showToast("已下载 视觉方向参考素材.xlsx");return;}
+      if(artifact?.type==="proposalV2Research"){proposalV2OpenViewer("客户需求调研与视觉方向.html",proposalV2ResearchViewer());return;}
+      if(artifact?.type==="proposalV2DirectionPack"){proposalV2OpenViewer("客户方向参考包.html",proposalV2DirectionPackViewer());return;}
+      if(artifact?.type==="proposalV2Ai"){proposalV2OpenAiPreview([...proposalFlow.v2.selectedAi][0]||proposalV2Concepts[0].code);return;}
+      if(artifact?.type==="proposalV2Final"){proposalV2OpenViewer("正式客户提案.html",proposalV2FinalViewer());return;}
+      renderProposalPreview(artifact.type);
+    }
+    handleProposalFollowup=function(text){appendTaskHtml(`<div class="task-message user"><div class="user-message-bubble">${escapeHtml(text)}</div></div>`);if(proposalFlow.stage==="understanding"){if(/继续|确认|跳过/.test(text)){proposalV2RenderScope();return true;}proposalFlow.firstText=`${proposalFlow.firstText} ${text}`.trim();proposalFlow.requirement=proposalV2Requirement(proposalFlow.firstText,proposalFlow.profile,proposalFlow.attachments);appendTaskHtml(proposalAgentMessage(`已按你的补充更新需求摘要。\n${proposalV2RequirementText()}`,proposalV2QuickActions([{action:"requirement-continue",label:"继续",primary:true},{action:"requirement-skip",label:"跳过未指定项"}])));return true;}if(proposalFlow.stage==="scope"){appendTaskHtml(proposalAgentMessage("已记录这条范围补充。可继续在上方组件中删除、补充并确认；确认后中间调研过程不会反复打断。"));return true;}if(proposalFlow.stage==="directionReview"){appendTaskHtml(proposalAgentMessage(`已记录方向调整：“${text}”。只重跑调研与视觉方向这一步，候选筛选尚未开始。请在上方重新选择后确认。`));return true;}if(proposalFlow.stage==="candidate"){if(/都不合适|重新找|全部排除/.test(text)){proposalFlow.v2.selectedCandidates.clear();proposalFlow.stage="directionReview";appendTaskHtml(proposalAgentMessage("已取消当前候选。请先调整视觉方向或视觉条件；确认后只重新整理受影响候选，不进入 AI 改款。"));appendTaskHtml(`<div class="task-message assistant"><div class="agent-message">${proposalV2DirectionMarkup()}</div></div>`);renderProposalPlanPanel();return true;}appendTaskHtml(proposalAgentMessage(`已记录候选偏好：“${text}”。当前只会调整受影响的候选筛选，不重复执行已完成的全量调研。`));return true;}if(proposalFlow.stage==="waitingFeedback"){proposalV2RenderFeedbackPlan(text,false);return true;}if(proposalFlow.stage==="feedbackPlan"){proposalFlow.v2.feedback=`${proposalFlow.v2.feedback} ${text}`.trim();appendTaskHtml(proposalAgentMessage(`已将“${text}”并入改款计划。未确认前不会开始 AI 生图。`,proposalV2QuickActions([{action:"confirm-remix",label:"确认并生成",primary:true}])));return true;}if(proposalFlow.stage==="aiReview"){appendTaskHtml(proposalAgentMessage(`已记录图片修改要求：“${text}”。请选中需要处理的图片后点击“重新生成”；其他图片不会变化。`));return true;}if(proposalFlow.stage==="done"){appendTaskHtml(proposalAgentMessage(`已记录对客户提案的修改要求：“${text}”。系统会定位受影响步骤并生成新的只读版本，不覆盖当前版本。`));return true;}appendTaskHtml(proposalAgentMessage("请先完成当前选择或确认动作，再继续下一步。"));return true;};
+
+    document.querySelector("#task-chat").addEventListener("click",event=>{
+      if(!proposalFlow.active||planningFlow.active)return;
+      const quick=event.target.closest("[data-proposal-v2-quick]");if(quick){const action=quick.dataset.proposalV2Quick;quick.closest(".planning-quick-actions")?.querySelectorAll("button").forEach(button=>button.disabled=true);if(action==="requirement-continue"||action==="requirement-skip")proposalV2RenderScope();if(action==="confirm-remix")proposalV2StartAi();if(action==="skip-feedback"){if(proposalFlow.stage==="waitingFeedback")proposalV2RenderFeedbackPlan("客户反馈暂未回录",true);else proposalV2StartAi();}return;}
+      const region=event.target.closest("[data-proposal-v2-region]");if(region){const value=region.dataset.proposalV2Region,list=proposalFlow.v2.regions;if(list.includes(value)){if(list.length===1){showToast("请至少保留一个地区");return;}proposalFlow.v2.regions=list.filter(item=>item!==value);}else proposalFlow.v2.regions.push(value);const suggested=proposalV2SuggestedSources(proposalFlow.v2.regions);Object.keys(suggested).forEach(group=>proposalFlow.v2.sources[group]=[...new Set([...proposalFlow.v2.sources[group].filter(item=>proposalFlow.v2.customSources.some(custom=>custom.group===group&&custom.label===item)),...suggested[group]])]);proposalV2RefreshScope();return;}
+      const source=event.target.closest("[data-proposal-v2-source-label]");if(source){const group=source.dataset.proposalV2SourceGroup,label=source.dataset.proposalV2SourceLabel,list=proposalFlow.v2.sources[group];proposalFlow.v2.sources[group]=list.includes(label)?list.filter(item=>item!==label):[...list,label];proposalV2RefreshScope();return;}
+      if(event.target.closest("[data-proposal-v2-scope-add]")){const group=document.querySelector("#proposal-source-add-group").value,input=document.querySelector("#proposal-source-add-input"),label=input.value.trim();if(!label){input.focus();return;}proposalFlow.v2.customSources.push({group,label});proposalFlow.v2.sources[group]=[...new Set([...proposalFlow.v2.sources[group],label])];proposalV2RefreshScope();return;}
+      if(event.target.closest("[data-proposal-v2-scope-confirm]")){proposalV2StartResearch();return;}
+      const direction=event.target.closest("[data-proposal-v2-direction]");if(direction){const id=direction.dataset.proposalV2Direction;if(proposalFlow.v2.selectedDirections.has(id))proposalFlow.v2.selectedDirections.delete(id);else proposalFlow.v2.selectedDirections.add(id);proposalV2RefreshDirections();return;}
+      if(event.target.closest("[data-proposal-v2-direction-confirm]")){proposalV2ConfirmDirections();return;}
+      const tab=event.target.closest("[data-proposal-v2-candidate-tab]");if(tab){proposalFlow.v2.activeDirection=tab.dataset.proposalV2CandidateTab;proposalFlow.v2.candidatePage=0;proposalV2RefreshCandidates();return;}
+      const candidatePage=event.target.closest("[data-proposal-v2-candidate-page]");if(candidatePage){proposalFlow.v2.candidatePage+=candidatePage.dataset.proposalV2CandidatePage==="next"?1:-1;proposalV2RefreshCandidates();return;}
+      const candidatePreview=event.target.closest("[data-proposal-v2-candidate-preview]");if(candidatePreview){proposalV2OpenCandidatePreview(candidatePreview.dataset.proposalV2CandidatePreview);return;}
+      const candidateSelect=event.target.closest("[data-proposal-v2-candidate-select]");if(candidateSelect){const code=candidateSelect.dataset.proposalV2CandidateSelect;if(proposalFlow.v2.selectedCandidates.has(code))proposalFlow.v2.selectedCandidates.delete(code);else proposalFlow.v2.selectedCandidates.add(code);proposalV2RefreshCandidates();return;}
+      if(event.target.closest("[data-proposal-v2-candidate-confirm]")){proposalV2GenerateDirectionPack();return;}
+      const aiPreview=event.target.closest("[data-proposal-v2-ai-preview]");if(aiPreview){proposalV2OpenAiPreview(aiPreview.dataset.proposalV2AiPreview);return;}
+      const aiSelect=event.target.closest("[data-proposal-v2-ai-select]");if(aiSelect){const code=aiSelect.dataset.proposalV2AiSelect;if(proposalFlow.v2.selectedAi.has(code))proposalFlow.v2.selectedAi.delete(code);else proposalFlow.v2.selectedAi.add(code);proposalV2RefreshAi();return;}
+      if(event.target.closest("[data-proposal-v2-ai-regenerate]")){const codes=[...proposalFlow.v2.selectedAi];if(!codes.length)return;codes.forEach(code=>{const item=proposalV2Concepts.find(concept=>concept.code===code);if(item)item.revision+=1;});appendTaskHtml(agentExecutionMessage({copy:`已仅重新生成 ${codes.join("、")}，其他图片和前序确认保持不变。`,label:"局部重生成 AI 改款",details:["应用输入框中的最新修改要求","复用原锚点与改款计划","更新选中图片并保留未选图片"],state:"complete"}));proposalV2RefreshAi();return;}
+      if(event.target.closest("[data-proposal-v2-ai-generate]")){proposalV2GenerateFinal();return;}
+    });
+    document.querySelector("#candidate-detail-overlay").addEventListener("click",event=>{if(event.target.closest("[data-proposal-v2-image-close]")){document.querySelector("#candidate-detail-overlay").hidden=true;return;}const select=event.target.closest("[data-proposal-v2-ai-detail-select]");if(select){const code=select.dataset.proposalV2AiDetailSelect;if(proposalFlow.v2.selectedAi.has(code))proposalFlow.v2.selectedAi.delete(code);else proposalFlow.v2.selectedAi.add(code);document.querySelector("#candidate-detail-overlay").hidden=true;proposalV2RefreshAi();}});
 
     function showTaskPage() {
       if (innerWidth <= 720) setSidebarCollapsed(true);
@@ -4865,6 +5464,9 @@
         ".planning-material-item",
         ".planning-tab",
         ".planning-trend-card",
+        ".planning-artifact-direct",
+        ".proposal-artifact-menu a",
+        ".planning-report-product a",
         ".report-click-source",
         ".proposal-artifact-quote",
         ".ai-remix-item"
@@ -4881,6 +5483,36 @@
       };
 
       const componentTypeOf = (element) => {
+        if (element.matches("[data-proposal-v2-quick]")) return "对话快捷操作按钮";
+        if (element.matches("[data-proposal-v2-region]")) return "地区多选按钮";
+        if (element.matches("[data-proposal-v2-source-label]")) return "调研来源多选标签";
+        if (element.matches("[data-proposal-v2-scope-add]")) return "调研来源添加按钮";
+        if (element.matches("[data-proposal-v2-scope-confirm]")) return "调研范围确认按钮";
+        if (element.matches("[data-proposal-v2-direction]")) return "图文视觉方向多选项";
+        if (element.matches("[data-proposal-v2-direction-confirm]")) return "视觉方向确认按钮";
+        if (element.matches("[data-proposal-v2-candidate-tab]")) return "视觉方向标签页";
+        if (element.matches("[data-proposal-v2-candidate-select]")) return "候选参考图片多选项";
+        if (element.matches("[data-proposal-v2-candidate-preview]")) return "候选参考图片预览按钮";
+        if (element.matches("[data-proposal-v2-candidate-page]")) return "候选图片分页按钮";
+        if (element.matches("[data-proposal-v2-candidate-confirm]")) return "方向参考包生成按钮";
+        if (element.matches("[data-proposal-v2-ai-preview]")) return "AI 图片预览按钮";
+        if (element.matches("[data-proposal-v2-ai-select], [data-proposal-v2-ai-detail-select]")) return "AI 图片多选按钮";
+        if (element.matches("[data-proposal-v2-ai-regenerate]")) return "AI 图片局部重生成按钮";
+        if (element.matches("[data-proposal-v2-ai-generate]")) return "正式提案生成按钮";
+        if (element.matches("[data-planning-quick]")) return "对话快捷操作按钮";
+        if (element.matches("[data-planning-region]")) return "地区多选按钮";
+        if (element.matches("[data-planning-source-label]")) return "调研来源多选标签";
+        if (element.matches("[data-planning-scope-add]")) return "调研来源添加按钮";
+        if (element.matches("[data-planning-scope-confirm]")) return "调研范围确认按钮";
+        if (element.matches("[data-planning-direction]")) return "图文视觉方向多选项";
+        if (element.matches("[data-planning-direction-confirm]")) return "视觉方向确认按钮";
+        if (element.matches("[data-planning-ai-preview]")) return "AI 图片预览按钮";
+        if (element.matches("[data-planning-ai-select], [data-planning-ai-detail-select]")) return "AI 图片多选按钮";
+        if (element.matches("[data-planning-ai-regenerate]")) return "局部重生成按钮";
+        if (element.matches("[data-planning-ai-generate]")) return "生成企划按钮";
+        if (element.matches(".planning-artifact-direct")) return "文件直接下载链接";
+        if (element.matches(".proposal-artifact-menu a")) return "产物格式下载链接";
+        if (element.matches(".planning-report-product a")) return "原始商品来源链接";
         if (element.matches(".execution-trigger")) return "任务执行折叠项";
         if (element.matches(".selection-option")) return element.dataset.value?.startsWith("market:") || element.closest("[data-mode='single']") ? "单选按钮" : "多选按钮";
         if (element.matches(".selection-confirm")) return "选择确认按钮";
@@ -4925,6 +5557,36 @@
       };
 
       const stateChangeOf = (element) => {
+        if (element.matches("[data-proposal-v2-quick]")) return "状态切换：点击执行当前对话消息对应的继续、跳过或确认生成操作；点击后当前组按钮停用，避免重复推进。";
+        if (element.matches("[data-proposal-v2-region]")) return "状态切换：点击选中地区并带出建议来源，再次点击取消；至少保留一个地区，企业档案带入结果仍可修改。";
+        if (element.matches("[data-proposal-v2-source-label]")) return "状态切换：点击已选来源将其删除；点击未选建议来源重新加入。来源按电商、社媒、品牌/独立站和其他网站分组。";
+        if (element.matches("[data-proposal-v2-scope-add]")) return "状态切换：添加自定义平台或网站后显示为已选标签，可再次点击删除。";
+        if (element.matches("[data-proposal-v2-scope-confirm]")) return "状态切换：校验地区与业务来源后收起为只读摘要，并自动完成中间调研，不再反复打断用户。";
+        if (element.matches("[data-proposal-v2-direction]")) return "状态切换：点击选择视觉方向，再次点击取消；选中状态不改变图片尺寸。至少选择一个方向后才能进入候选筛选。";
+        if (element.matches("[data-proposal-v2-direction-confirm]")) return "状态切换：确认已选方向并在对话内展开候选参考图片；不打开独立趋势或候选池弹窗。";
+        if (element.matches("[data-proposal-v2-candidate-tab]")) return "状态切换：按已确认视觉方向切换候选图片，当前选择和分页状态保留。";
+        if (element.matches("[data-proposal-v2-candidate-select]")) return "状态切换：点击选中候选图片，再次点击取消；悬停信息层只展示来源、售价与匹配理由。";
+        if (element.matches("[data-proposal-v2-candidate-preview]")) return "状态切换：打开统一图片预览并显示来源摘要、evidence_id 与原始链接，不改变图片选择状态。";
+        if (element.matches("[data-proposal-v2-candidate-page]")) return "状态切换：每页固定显示最多 8 张候选图片；翻页不清空其他页面的选择。";
+        if (element.matches("[data-proposal-v2-candidate-confirm]")) return "状态切换：至少选择一张图片后可用；生成客户方向参考包并进入等待客户反馈状态。";
+        if (element.matches("[data-proposal-v2-ai-preview]")) return "状态切换：使用统一图片预览放大 AI 概念图，不打开独立 AI 结果弹窗。";
+        if (element.matches("[data-proposal-v2-ai-select], [data-proposal-v2-ai-detail-select]")) return "状态切换：点击选择或取消 AI 改款图；选中后启用重新生成和生成提案。";
+        if (element.matches("[data-proposal-v2-ai-regenerate]")) return "状态切换：无选择时禁用；点击后只重新生成当前选中的图片，其他图片和前序产物保持不变。";
+        if (element.matches("[data-proposal-v2-ai-generate]")) return "状态切换：无选择时禁用；点击后锁定选中图片并生成单一语言的正式客户提案。";
+        if (element.matches("[data-planning-quick]")) return "状态切换：点击后执行当前消息对应的继续或跳过动作；用户仍可使用底部输入框补充内容。";
+        if (element.matches("[data-planning-region]")) return "状态切换：点击选中地区并带出建议来源；再次点击取消。至少保留一个地区，企业档案带入项仍可修改。";
+        if (element.matches("[data-planning-source-label]")) return "状态切换：点击已选来源将其删除；点击未选建议来源重新加入。地区变化后按新地区补充建议来源。";
+        if (element.matches("[data-planning-scope-add]")) return "状态切换：按左侧来源类型添加输入的平台或网站；添加后作为已选标签显示，可再次点击删除。";
+        if (element.matches("[data-planning-scope-confirm]")) return "状态切换：校验至少一个地区及一个业务来源后收起为只读摘要，并自动完成中间调研过程。";
+        if (element.matches("[data-planning-direction]")) return "状态切换：点击选中视觉方向，再次点击取消；选中状态不改变图片和网格尺寸。";
+        if (element.matches("[data-planning-direction-confirm]")) return "状态切换：至少选择一个方向后可用；确认后收起为已确认摘要并进入商品结构规划。";
+        if (element.matches("[data-planning-ai-preview]")) return "状态切换：点击使用统一图片预览弹窗放大查看，不改变当前多选状态。";
+        if (element.matches("[data-planning-ai-select], [data-planning-ai-detail-select]")) return "状态切换：点击选中图片，再次点击取消；选中后启用重新生成和生成企划按钮。";
+        if (element.matches("[data-planning-ai-regenerate]")) return "状态切换：无选择时禁用；点击后只重新生成当前选中的图片，其他图片及前序产物保持不变。";
+        if (element.matches("[data-planning-ai-generate]")) return "状态切换：无选择时禁用；点击后锁定选中图片并生成最终新品企划案。";
+        if (element.matches(".planning-artifact-direct")) return "状态切换：点击直接下载 XLSX 文件，不打开预览弹窗。";
+        if (element.matches(".proposal-artifact-menu a")) return "状态切换：点击直接下载对应 HTML、PPT 或 PDF 文件，不改变在线只读产物状态。";
+        if (element.matches(".planning-report-product a")) return "状态切换：点击在新标签页打开原始业务来源，不触发方向选择或任务重跑。";
         if (element.matches(".execution-trigger")) return "状态切换：点击收起任务执行详情；再次点击重新展开详情。运行中与已完成状态分别使用加载图标和完成图标。";
         if (element.matches(".selection-option[data-value^='market:']")) return "状态切换：点击选中一个主市场，并取消此前选中的主市场；已由需求明确的市场会预选，仍可修改。";
         if (element.matches(".selection-option")) return element.dataset.value?.endsWith("其他") ? "状态切换：点击选中后展开自定义单行输入框；再次点击取消并收起输入框。" : "状态切换：点击选中；再次点击取消。单选卡会同时取消其他选项，多选卡保留其他已选项。";
@@ -4989,6 +5651,34 @@
       };
 
       const descriptionOf = (element) => {
+        if (element.matches("[data-proposal-v2-quick]")) return "客户提案 Agent 正文下方的轻量快捷操作，替代要求用户手动输入“继续”或“跳过”。";
+        if (element.matches("[data-proposal-v2-region]")) return "客户提案与新品企划复用的地区多选交互；企业档案中的国家自动映射为地区。";
+        if (element.matches("[data-proposal-v2-source-label]")) return "本次客户提案实际调研的业务来源；用户侧不展示采集工具、接口或内部路由。";
+        if (element.matches("[data-proposal-v2-scope-add]")) return "补充建议列表之外的电商、社媒、品牌站、独立站或其他公开网站。";
+        if (element.matches("[data-proposal-v2-scope-confirm]")) return "确认后自动执行需求结构化、关键词生成、多来源采集、证据标准化、趋势验证、客户适配与候选素材整理。";
+        if (element.matches("[data-proposal-v2-direction]")) return "必要的视觉方向多选，展示代表图、方向说明、客户匹配点、市场依据摘要和建议等级。";
+        if (element.matches("[data-proposal-v2-direction-confirm]")) return "将已确认方向作为候选参考与后续改款的约束；未确认方向前不进入候选筛选。";
+        if (element.matches("[data-proposal-v2-candidate-tab]")) return "在已确认视觉方向之间切换候选参考图片；步骤 4 仅筛选步骤 3 已取得素材，不默认发起第二轮调研。";
+        if (element.matches("[data-proposal-v2-candidate-select]")) return "对话内候选图片主体，已按市场、人群、性别和品类硬过滤；关键词相似不能覆盖硬约束。";
+        if (element.matches("[data-proposal-v2-candidate-preview]")) return "统一图片预览入口，来源查看与图片选择相互分离。";
+        if (element.matches("[data-proposal-v2-candidate-page]")) return "候选参考图片的上一页/下一页控制，每页默认 8 张。";
+        if (element.matches("[data-proposal-v2-candidate-confirm]")) return "用已确认方向、选中参考图和简洁市场依据生成可外发的客户方向参考包。";
+        if (element.matches("[data-proposal-v2-ai-preview]")) return "放大查看基于客户方向、锚点、反馈、改款计划和企业能力边界生成的 AI 概念图。";
+        if (element.matches("[data-proposal-v2-ai-select], [data-proposal-v2-ai-detail-select]")) return "选择需要重生成或写入最终正式客户提案的 AI 概念图。";
+        if (element.matches("[data-proposal-v2-ai-regenerate]")) return "后台复用已确认改款计划与专业服装提示词，只重做选中图片。";
+        if (element.matches("[data-proposal-v2-ai-generate]")) return "将客户需求、市场依据、确认方向、客户反馈和已选 AI 改款图写入正式客户提案。";
+        if (element.matches("[data-planning-quick]")) return "Agent 正文下方的轻量快捷操作，用于替代要求用户手动输入“继续”或“跳过”。";
+        if (element.matches("[data-planning-region]")) return "新品企划调研地区多选项；业务偏好档案中的国家会自动映射为地区并明确标记来源。";
+        if (element.matches("[data-planning-source-label]")) return "按电商、社媒、品牌/独立站、其他网站分组的业务来源；用户侧不展示采集工具或内部路由。";
+        if (element.matches("[data-planning-scope-add]")) return "补充当前建议列表之外的平台、品牌站或其他公开网站。";
+        if (element.matches("[data-planning-scope-confirm]")) return "确认后自动执行范围解析、关键词生成、多来源采集、证据标准化、趋势验证、竞争与企业适配判断及素材整理。";
+        if (element.matches("[data-planning-direction]")) return "视觉方向必要多选项，固定展示代表图、方向名、一句话说明和建议等级。";
+        if (element.matches("[data-planning-direction-confirm]")) return "确认本次商品结构和 AI 改款采用的视觉方向；用户也可通过输入框要求调整或重新调研。";
+        if (element.matches("[data-planning-ai-preview]")) return "打开统一图片预览，不再打开方向素材池或独立视觉方向板。";
+        if (element.matches("[data-planning-ai-select], [data-planning-ai-detail-select]")) return "选择需要重生成或写入最终企划案的 AI 概念图；AI 图不作为市场证据。";
+        if (element.matches("[data-planning-ai-regenerate]")) return "后台复用已确认方向、参考商品、商品结构和用户补充要求，只重做选中图片。";
+        if (element.matches("[data-planning-ai-generate]")) return "将已确认 AI 款式图、调研依据、视觉方向和商品结构写入最终新品企划案。";
+        if (element.matches(".planning-artifact-direct")) return "视觉方向参考商品工作簿，每个视觉方向一个 Sheet，保留主图、来源链接、价格、尺码、颜色、获取时间和缺失字段。";
         if (element.matches(".execution-trigger")) return "展示 Agent 当前执行的任务名称与状态；展开后查看该任务包含的具体处理步骤，收起后仅保留任务摘要。";
         if (element.matches("[data-selection-option='planning-scope']")) return element.dataset.value.startsWith("market:") ? "新品企划调研范围中的主市场单选项；一个任务只支持一个主市场。" : element.dataset.value.startsWith("ecom:") ? "新品企划调研范围中的电商平台多选项；Amazon US与TikTok Shop US保持独立产品线和独立数据口径。" : "新品企划调研范围中的社媒平台多选项；社媒信号不等同销量，并与电商供给、趋势资料分开呈现。";
         if (element.matches(".selection-confirm") && element.closest("[data-selection-card='planning-scope']")) return "确认美国、电商平台和社媒平台范围；趋势资料库与对话指定的Kohl's默认纳入，确认后执行小样本趋势扫描。";
@@ -5013,7 +5703,7 @@
         if (element.matches("#apply-mapping")) return "只确认冲突、疑似硬性约束和低置信度重要信息；普通信息自动作为默认参考。";
         if (element.matches("#task-scene")) return "展示用户第一句输入的任务总结，最多 20 个字符；编辑后与左侧历史任务名称同步。";
         if (element.matches("#task-profile-trigger")) return "展示本任务启动时应用的档案名称；悬浮卡查看档案快照，但不支持在任务内切换档案。";
-        if (element.matches("#task-condition")) return "需求确认阶段可直接补充或修正，回复“继续”进入调研范围，回复“跳过”保留未指定项；后续补充条件只影响相关步骤。";
+        if (element.matches("#task-condition")) return "用户始终可补充或修正文字、图片和文档；简单继续/跳过优先使用 Agent 正文下方快捷按钮，后续补充只重跑受影响步骤。";
         if (element.matches("[data-trend-select]")) return "趋势方向分析详情中的必要多选项；每项分别披露设计元素、适配理由、社媒信号、电商供给/竞争、趋势资料依据、时间、样本、证据充分度和缺口。";
         if (element.matches(".planning-trend-card")) return "新品企划趋势方向详情。按美国女装共同趋势、渠道差异、波段和品类落位展示，电商、社媒与趋势资料证据分开说明。";
         if (element.matches(".planning-material-item")) return "方向参考素材池的图片主体。只展示符合美国市场、目标人群、品类和禁用项硬约束的素材；悬停查看来源与匹配理由。";
@@ -5046,7 +5736,10 @@
         if (element.matches("[data-artifact-menu]")) return "对话结果矩形的打开方式菜单；下载操作只在这里提供，不在右侧任务产物列表重复展示。";
         if (element.matches(".proposal-inline-action")) return element.dataset.proposalAction === "open-candidates" ? "打开纯图片候选池；桌面悬停显示来源和匹配理由，移动端点击先进入详情层。" : "打开与右侧任务产物同源的只读详情。";
         if (element.matches("#candidate-overlay")) return "候选池大弹窗以图片网格为主体，顶部仅保留关闭、来源筛选、已选数量和确认选择；错误市场、人群、性别或品类候选不会进入。";
-        if (element.matches("#proposal-preview-overlay")) return "只读预览弹窗，展示客户方向参考包或客户提案内容。";
+        if (element.matches("#proposal-preview-overlay")) return "统一 HTML 查看弹窗，承载新品企划调研报告、商品结构、最终企划案以及客户提案只读产物；不支持在线编辑。";
+        if (element.matches(".planning-artifact-direct")) return "视觉方向参考商品工作簿直接下载；Excel 不在统一 HTML 查看器中预览。";
+        if (element.matches(".proposal-artifact-menu a")) return "最终新品企划案的 HTML、PPT、PDF 下载入口，只出现在对话产物矩形的打开方式菜单中。";
+        if (element.matches(".planning-report-product a")) return "调研报告中代表商品的来源入口，关联商品平台、标题和 evidence_id。";
         if (element.matches("[data-artifact-view]")) return "在线查看对应正式产物的只读预览。";
         if (element.matches("[data-artifact-download-inline]")) return "从对话中的结果矩形下载对应正式产物的 HTML 演示文件。";
         if (element.matches("#view-applied-info")) return "打开右侧抽屉，查看本任务的必须遵守、默认参考和仅作证据信息。";
