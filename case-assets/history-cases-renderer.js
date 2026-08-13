@@ -202,11 +202,11 @@
   const originalRenderTaskArtifactPreview = renderTaskArtifactPreview;
   renderTaskArtifactPreview = function(artifact) { if (activeCase()) openCaseArtifact(artifact); else originalRenderTaskArtifactPreview(artifact); };
 
-  const originalFindEvidenceGroup = findEvidenceGroup;
-  findEvidenceGroup = function(id) { return allCaseEvidence().find((group) => group.id === id || group.items.some((item) => item.evidence_id === id)) || originalFindEvidenceGroup(id); };
+  const originalFindEvidenceGroup = typeof window.findEvidenceGroup === "function" ? window.findEvidenceGroup : () => null;
+  window.findEvidenceGroup = function(id) { return allCaseEvidence().find((group) => group.id === id || group.items.some((item) => item.evidence_id === id)) || originalFindEvidenceGroup(id); };
 
-  const originalRenderEvidenceDetail = renderEvidenceDetail;
-  renderEvidenceDetail = function(id) {
+  const originalRenderEvidenceDetail = typeof window.renderEvidenceDetail === "function" ? window.renderEvidenceDetail : () => {};
+  window.renderEvidenceDetail = function(id) {
     const group = allCaseEvidence().find((entry) => entry.id === id || entry.items.some((item) => item.evidence_id === id));
     if (!group) { originalRenderEvidenceDetail(id); return; }
     const metricLabels={price:"价格",sales:"销量/售出量",rating:"评分",review_count:"评价数",ranking:"排名",views:"浏览/播放/搜索量",likes:"点赞/互动",comments:"评论",shares:"分享",saves:"收藏",file_name:"文件名",file_page:"引用页码"};
