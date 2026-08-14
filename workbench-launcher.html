@@ -2798,9 +2798,10 @@
       const remote = item.remoteImage ? ` data-remote-src="${escapeHtml(item.remoteImage)}"` : "";
       return `<img src="${escapeHtml(source)}"${remote} alt="${escapeHtml(item.title)}" loading="lazy">`;
     }
+    const taskPanelStylePreviewLimit = 5;
     function stylePanelSectionMarkup(kind, title, items) {
-      const visible = items.slice(0, 10);
-      const viewAll = items.length > 10 ? `<button type="button" class="task-panel-view-all" data-style-drawer="${kind}">查看全部(${items.length})</button>` : "";
+      const visible = items.slice(0, taskPanelStylePreviewLimit);
+      const viewAll = items.length > taskPanelStylePreviewLimit ? `<button type="button" class="task-panel-view-all" data-style-drawer="${kind}">查看全部(${items.length})</button>` : "";
       return `<section class="task-panel-section styles ${kind}-styles"><div class="task-panel-section-head"><h3>${title}</h3>${viewAll}</div><ul class="task-panel-list">${visible.map((item) => `<li class="task-panel-item"><button type="button" class="task-style-open" data-style-preview="${escapeHtml(item.key)}">${styleImageMarkup(item)}<span class="task-style-copy"><strong>${escapeHtml(item.title)}</strong><small>${escapeHtml(item.subtitle || "")}</small></span></button></li>`).join("")}</ul></section>`;
     }
     const evidenceCatalog = {
