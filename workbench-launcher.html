@@ -994,6 +994,10 @@
     .task-panel-sections { display: grid; gap: 0; padding: 17px; border: 1px solid #383d3b; border-radius: 15px; background: #252826; box-shadow: 0 18px 42px rgba(0,0,0,.18); }
     .task-panel-section + .task-panel-section { margin-top: 16px; padding-top: 16px; border-top: 1px solid #3a3f3d; }
     .task-panel-section h3 { margin: 0 0 9px; color: #9ca5a1; font-size: 13px; font-weight: 600; }
+    .task-panel-section-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+    .task-panel-section-head h3 { margin: 0; }
+    .task-panel-view-all { padding: 0; border: 0; color: #75d8cf; background: transparent; font-size: 10px; cursor: pointer; white-space: nowrap; }
+    .task-panel-view-all:hover { color: #d9faf6; }
     .task-panel-list { display: grid; gap: 3px; margin: 0; padding: 0; list-style: none; }
     .task-panel-item { min-width: 0; display: flex; align-items: flex-start; gap: 9px; padding: 7px 8px; border: 0; border-radius: 7px; color: #d0d6d3; background: transparent; font-size: 11px; line-height: 1.45; }
     .task-panel-item:hover { background: #303431; }
@@ -1007,6 +1011,14 @@
     .artifact-list-open { width: 100%; min-width: 0; display: flex; align-items: center; gap: 9px; padding: 0; border: 0; color: inherit; background: transparent; text-align: left; cursor: pointer; }
     .artifact-list-open:hover .artifact-title { color: #8ce8de; }
     .artifact-list-chevron { margin-left: auto; color: #74837d; font-size: 17px; line-height: 1; }
+    .task-style-open { width: 100%; min-width: 0; display: grid; grid-template-columns: 36px minmax(0,1fr); align-items: center; gap: 9px; padding: 0; border: 0; color: inherit; background: transparent; text-align: left; cursor: pointer; }
+    .task-style-open img { width: 36px; height: 42px; object-fit: cover; border-radius: 4px; background: #353a37; }
+    .task-style-copy { min-width: 0; display: grid; gap: 2px; }
+    .task-style-copy strong, .task-style-copy small { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .task-style-copy strong { color: #d7ddda; font-size: 10px; font-weight: 600; }
+    .task-style-copy small { color: #76817d; font-size: 9px; }
+    .task-panel-section.styles .task-panel-item { align-items: center; padding: 5px 4px; }
+    .task-panel-section.styles .task-panel-item:hover .task-style-copy strong { color: #91e8df; }
     .evidence-group-open { width: 100%; min-width: 0; display: grid; grid-template-columns: 28px minmax(0,1fr) auto auto; align-items: center; gap: 8px; padding: 0; color: inherit; }
     .evidence-group-icon { width: 26px; height: 26px; display: grid; place-items: center; border: 1px solid #3b4944; border-radius: 6px; color: #78d8cf; background: rgba(85,222,211,.06); font-size: 11px; }
     .evidence-group-copy { min-width: 0; display: grid; gap: 2px; }
@@ -1016,6 +1028,22 @@
     .evidence-group-source { color: #88d9d1; font-size: 9px; text-decoration: none; white-space: nowrap; }
     .evidence-group-source:hover { color: #dff8f4; text-decoration: underline; }
     .task-panel-empty { display: none; }
+    .style-drawer-backdrop { position: fixed; inset: 0; z-index: 255; background: rgba(0,0,0,.34); }
+    .style-drawer-backdrop[hidden] { display: none; }
+    .style-drawer { position: absolute; top: 0; right: 0; width: 33.333vw; min-width: 420px; max-width: 600px; height: 100%; display: grid; grid-template-rows: auto minmax(0,1fr); border-left: 1px solid #3b4440; background: #1d211f; box-shadow: -24px 0 64px rgba(0,0,0,.36); animation: styleDrawerIn .18s ease-out; }
+    @keyframes styleDrawerIn { from { transform: translateX(22px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    .style-drawer-head { display: flex; align-items: center; justify-content: space-between; min-height: 68px; padding: 0 20px; border-bottom: 1px solid #353c39; }
+    .style-drawer-head h2 { margin: 0; color: #eef4f1; font-size: 16px; font-weight: 650; }
+    .style-drawer-head p { margin: 4px 0 0; color: #78847f; font-size: 10px; }
+    .style-drawer-close { width: 32px; height: 32px; border: 1px solid #3c4541; border-radius: 7px; color: #b8c2be; background: #272c2a; font-size: 19px; cursor: pointer; }
+    .style-drawer-list { overflow-y: auto; margin: 0; padding: 10px 14px 24px; list-style: none; }
+    .style-drawer-item { border-bottom: 1px solid #303633; }
+    .style-drawer-item button { width: 100%; min-width: 0; display: grid; grid-template-columns: 58px minmax(0,1fr) auto; align-items: center; gap: 12px; padding: 10px 6px; border: 0; color: inherit; background: transparent; text-align: left; cursor: pointer; }
+    .style-drawer-item button:hover { background: #252b28; }
+    .style-drawer-item img { width: 58px; height: 68px; object-fit: cover; border-radius: 4px; background: #343a37; }
+    .style-drawer-item .task-style-copy strong { font-size: 12px; }
+    .style-drawer-item .task-style-copy small { font-size: 10px; }
+    .style-drawer-time { color: #69746f; font-size: 9px; white-space: nowrap; }
     .task-step.rerun { color: #f2b36f; }
     .task-step.updated { color: #90f0e4; }
     .proposal-inline-action { display: inline-flex; align-items: center; gap: 6px; height: 32px; margin-top: 12px; padding: 0 12px; border: 1px solid #3b4642; border-radius: 8px; color: #cfe8e4; background: #242a28; font-size: 12px; cursor: pointer; }
@@ -2013,6 +2041,12 @@
         <div id="candidate-detail-body"></div>
       </div>
     </div>
+    <div class="style-drawer-backdrop" id="style-drawer-backdrop" hidden>
+      <aside class="style-drawer" role="dialog" aria-modal="true" aria-labelledby="style-drawer-title">
+        <header class="style-drawer-head"><div><h2 id="style-drawer-title">参考款式</h2><p id="style-drawer-subtitle"></p></div><button class="style-drawer-close" id="style-drawer-close" type="button" aria-label="关闭列表">×</button></header>
+        <ul class="style-drawer-list" id="style-drawer-list"></ul>
+      </aside>
+    </div>
     <div class="toast" role="status" aria-live="polite"></div>
   </div>
 
@@ -2757,7 +2791,18 @@
       renderSearchResults(searchInput.value);
     }
 
-    const taskPanelData = { plans: [], outputs: [], references: [] };
+    const taskPanelData = { plans: [], outputs: [], references: [], referenceStyles: [], aiStyles: [] };
+    const taskPanelStyleRegistry = new Map();
+    function styleImageMarkup(item, drawer = false) {
+      const source = item.fallback || item.image || "";
+      const remote = item.remoteImage ? ` data-remote-src="${escapeHtml(item.remoteImage)}"` : "";
+      return `<img src="${escapeHtml(source)}"${remote} alt="${escapeHtml(item.title)}" loading="lazy">`;
+    }
+    function stylePanelSectionMarkup(kind, title, items) {
+      const visible = items.slice(0, 10);
+      const viewAll = items.length > 10 ? `<button type="button" class="task-panel-view-all" data-style-drawer="${kind}">查看全部(${items.length})</button>` : "";
+      return `<section class="task-panel-section styles ${kind}-styles"><div class="task-panel-section-head"><h3>${title}</h3>${viewAll}</div><ul class="task-panel-list">${visible.map((item) => `<li class="task-panel-item"><button type="button" class="task-style-open" data-style-preview="${escapeHtml(item.key)}">${styleImageMarkup(item)}<span class="task-style-copy"><strong>${escapeHtml(item.title)}</strong><small>${escapeHtml(item.subtitle || "")}</small></span></button></li>`).join("")}</ul></section>`;
+    }
     const evidenceCatalog = {
       planning: [
         { id:"EVG-PLAN-AMZ", platform:"Amazon US", sourceType:"电商商品/列表", title:"Amazon US 女装商品样本", sampleCount:36, dataTime:"2026-06-01 至 2026-08-05", traceableCount:34, status:"演示数据 · 部分字段缺失", gap:"平台未返回统一销量与转化字段；不与其他平台合并", scope:"美国女装；连衣裙、裤装、上衣、套装、卫衣；USD 10-20", usedBy:"趋势分析、方向参考素材池、新品企划案", items:[
@@ -2977,12 +3022,18 @@
     const planningFlow = { active:false, stage:"idle", paused:false, profile:null, title:"新任务", firstText:"", attachments:[], requirement:{}, scope:{}, selectedTrendIds:[], selectedMaterials:new Set(), activeTab:"amazon-aug", structureNote:"", language:"简体中文", references:[], selectionCards:new Map() };
 
     function renderTaskPanel(next = taskPanelData) {
+      if (typeof closeStyleDrawer === "function") closeStyleDrawer();
       taskPanelData.plans = [];
       taskPanelData.outputs = Array.isArray(next.outputs) ? next.outputs.slice(0, 12) : [];
-      taskPanelData.references = Array.isArray(next.references) ? next.references.slice(0, 12) : [];
+      taskPanelData.references = [];
+      taskPanelData.referenceStyles = Array.isArray(next.referenceStyles) ? next.referenceStyles : [];
+      taskPanelData.aiStyles = Array.isArray(next.aiStyles) ? next.aiStyles : [];
       const groups = [];
-      if (taskPanelData.outputs.length) groups.push(`<section class="task-panel-section outputs"><h3>任务产物</h3><ul class="task-panel-list">${taskPanelData.outputs.map((item) => `<li class="task-panel-item"><button class="artifact-list-open" type="button" data-artifact-view="${escapeHtml(item.id)}"><span class="item-icon">□</span><span class="artifact-title">${escapeHtml(item.label || item)}</span><span class="artifact-list-chevron">›</span></button></li>`).join("")}</ul></section>`);
-      if (taskPanelData.references.length) groups.push(`<section class="task-panel-section references"><h3>参考信息</h3><ul class="task-panel-list">${taskPanelData.references.map(evidenceGroupMarkup).join("")}</ul></section>`);
+      if (taskPanelData.outputs.length) groups.push(`<section class="task-panel-section outputs"><h3>产物</h3><ul class="task-panel-list">${taskPanelData.outputs.map((item) => `<li class="task-panel-item"><button class="artifact-list-open" type="button" data-artifact-view="${escapeHtml(item.id)}"><span class="item-icon">□</span><span class="artifact-title">${escapeHtml(item.label || item)}</span><span class="artifact-list-chevron">›</span></button></li>`).join("")}</ul></section>`);
+      if (taskPanelData.referenceStyles.length) groups.push(stylePanelSectionMarkup("reference", "参考款式", taskPanelData.referenceStyles));
+      if (taskPanelData.aiStyles.length) groups.push(stylePanelSectionMarkup("ai", "AI 款式", taskPanelData.aiStyles));
+      taskPanelStyleRegistry.clear();
+      [...taskPanelData.referenceStyles, ...taskPanelData.aiStyles].forEach((item) => taskPanelStyleRegistry.set(item.key, item));
       const panel = document.querySelector("#task-panel");
       const hasContent = groups.length > 0;
       document.querySelector("#task-panel-sections").innerHTML = groups.join("");
@@ -5417,6 +5468,8 @@
       };
 
       const componentTypeOf = (element) => {
+        if (element.matches("[data-style-drawer]")) return "款式列表查看全部按钮";
+        if (element.matches("[data-style-preview]")) return "款式缩略图列表项";
         if (element.matches("[data-proposal-v2-quick]")) return "对话快捷操作按钮";
         if (element.matches("[data-proposal-v2-region]")) return "地区多选按钮";
         if (element.matches("[data-proposal-v2-source-label]")) return "调研来源多选标签";
@@ -5490,6 +5543,8 @@
       };
 
       const stateChangeOf = (element) => {
+        if (element.matches("[data-style-drawer]")) return "状态切换：点击从右侧向左展开约三分之一屏幕的竖向完整款式列表；关闭后回到任务侧栏。";
+        if (element.matches("[data-style-preview]")) return "状态切换：点击打开统一大图预览弹窗；关闭后保留当前侧栏列表位置。";
         if (element.matches("[data-proposal-v2-quick]")) return "状态切换：点击执行当前对话消息对应的继续、跳过或确认生成操作；点击后当前组按钮停用，避免重复推进。";
         if (element.matches("[data-proposal-v2-region]")) return "状态切换：点击选中地区并带出建议来源，再次点击取消；至少保留一个地区，企业档案带入结果仍可修改。";
         if (element.matches("[data-proposal-v2-source-label]")) return "状态切换：点击已选来源将其删除；点击未选建议来源重新加入。来源按电商、社媒、品牌/独立站和其他网站分组。";
@@ -5578,6 +5633,8 @@
       };
 
       const descriptionOf = (element) => {
+        if (element.matches("[data-style-drawer]")) return "当参考款式或 AI 款式超过 10 条时显示，括号内为本任务累积总数，完整列表按最近获取时间倒序。";
+        if (element.matches("[data-style-preview]")) return "侧栏款式索引行，展示缩略图和标题；点击查看大图及来源/AI 概念说明。";
         if (element.matches("[data-proposal-v2-quick]")) return "客户提案 Agent 正文下方的轻量快捷操作，替代要求用户手动输入“继续”或“跳过”。";
         if (element.matches("[data-proposal-v2-region]")) return "客户提案与新品企划复用的地区多选交互；企业档案中的国家自动映射为地区。";
         if (element.matches("[data-proposal-v2-source-label]")) return "本次客户提案实际调研的业务来源；用户侧不展示采集工具、接口或内部路由。";
@@ -5945,6 +6002,56 @@
       const referenceSection=`<section class="preview-section"><h3>已确认视觉方向与自动采用的参考素材</h3><p>以下素材来自调研 HTML 的已确认方向，由 Agent 自动选为改款锚点；来源链接与市场数据口径继续保留，AI 图不作为市场证据。</p><div class="proposal-v2-report-visuals">${anchors.map(item=>`<figure><img src="${item.assetUrl}" alt="${item.code}"><figcaption>${item.code} · ${escapeHtml(item.source)} · ${escapeHtml(item.price)}<br>${escapeHtml(item.reason)}</figcaption></figure>`).join("")}</div></section>`;
       return html.replace(/<strong>\d+<\/strong><span>参考锚点<\/span>/,"<strong>方向素材</strong><span>调研 HTML 内嵌</span>").replace(/已选候选|候选来源/g,"调研方向素材").replace('<section class="preview-section"><h3>',`${referenceSection}<section class="preview-section"><h3>`);
     };
+    function sortStyleItems(items) {
+      return items.map((item, index) => ({ ...item, _sortIndex: index })).sort((a, b) => {
+        const timeA = Date.parse(a.acquiredAt || "") || 0;
+        const timeB = Date.parse(b.acquiredAt || "") || 0;
+        return timeB - timeA || b._sortIndex - a._sortIndex;
+      });
+    }
+    function planningReferenceStyleItems() {
+      if (!planningFlow.active || !["research","directionReview","structure","aiGenerating","aiReview","delivery","done"].includes(planningFlow.stage)) return [];
+      return sortStyleItems(planningMaterialData.map(item => ({ key:`planning-reference-${item.code}`, image:item.image_url, remoteImage:item.image_url, fallback:planningFallbackImage(item), title:`${item.code} · ${item.category}`, subtitle:`${item.platform} · ${item.wave} · ${item.source}`, acquiredAt:item.captured_at, previewType:"planning-reference", previewId:item.code, data:item })));
+    }
+    function planningAiStyleItems() {
+      if (!planningFlow.active || !["aiReview","delivery","done"].includes(planningFlow.stage)) return [];
+      return sortStyleItems(planningV2AiOptions.map(item => ({ key:`planning-ai-${item.code}`, image:item.assetUrl, title:`${item.code} · ${item.category}`, subtitle:`${item.line} · AI 概念表达`, acquiredAt:item.generatedAt || "2026-08-14", previewType:"planning-ai", previewId:item.code, data:item })));
+    }
+    function proposalReferenceStyleItems() {
+      if (!proposalFlow.active || !["research","directionReview","waitingFeedback","feedbackPlan","aiGenerating","aiReview","delivery","done"].includes(proposalFlow.stage)) return [];
+      return sortStyleItems(proposalV2Candidates.map(item => ({ key:`proposal-reference-${item.code}`, image:item.assetUrl, title:`${item.code} · ${item.title}`, subtitle:`${item.source} · ${item.price}`, acquiredAt:item.captured || "2026-08-14", previewType:"proposal-reference", previewId:item.code, data:item })));
+    }
+    function proposalAiStyleItems() {
+      if (!proposalFlow.active || !["aiReview","delivery","done"].includes(proposalFlow.stage)) return [];
+      return sortStyleItems(proposalV2Concepts.map(item => ({ key:`proposal-ai-${item.code}`, image:item.assetUrl, title:`${item.code} · ${item.category}`, subtitle:`${item.direction} · AI 概念表达`, acquiredAt:item.generatedAt || "2026-08-14", previewType:"proposal-ai", previewId:item.code, data:item })));
+    }
+    renderPlanningPanel=function(){renderTaskPanel({plans:[],outputs:planningOutputs(),referenceStyles:planningReferenceStyleItems(),aiStyles:planningAiStyleItems()});};
+    renderProposalPlanPanel=function(){renderTaskPanel({plans:[],outputs:proposalOutputs(),referenceStyles:proposalReferenceStyleItems(),aiStyles:proposalAiStyleItems()});};
+    function closeStyleDrawer(){document.querySelector("#style-drawer-backdrop").hidden=true;}
+    function openStyleDrawer(kind){
+      const items=kind==="ai"?(planningFlow.active?planningAiStyleItems():proposalAiStyleItems()):(planningFlow.active?planningReferenceStyleItems():proposalReferenceStyleItems());
+      document.querySelector("#style-drawer-title").textContent=kind==="ai"?"AI 款式":"参考款式";
+      document.querySelector("#style-drawer-subtitle").textContent=`共 ${items.length} 条 · 按最近获取时间排序`;
+      document.querySelector("#style-drawer-list").innerHTML=items.map(item=>`<li class="style-drawer-item"><button type="button" data-style-preview="${escapeHtml(item.key)}">${styleImageMarkup(item,true)}<span class="task-style-copy"><strong>${escapeHtml(item.title)}</strong><small>${escapeHtml(item.subtitle||"")}</small></span><span class="style-drawer-time">${escapeHtml(item.acquiredAt||"刚刚")}</span></button></li>`).join("");
+      document.querySelector("#style-drawer-backdrop").hidden=false;
+      hydratePlanningImages(document.querySelector("#style-drawer-list"));
+    }
+    function openSidebarStylePreview(key){
+      const item=taskPanelStyleRegistry.get(key);if(!item)return;
+      const data=item.data||{};
+      const isAi=item.previewType.includes("ai");
+      const source=isAi?"AI 生成款式":(data.source||data.platform||"参考来源");
+      const detail=isAi?`${data.line||data.direction||"AI 概念表达"} · 不作为市场证据`:`${source} · ${data.price||data.wave||"公开来源"}<br>匹配理由：${data.reason||data.match_reason||"用于本任务已确认方向"}`;
+      document.querySelector("#candidate-detail-body").innerHTML=`<div class="planning-image-preview sidebar-style-preview"><img data-sidebar-style-image src="${escapeHtml(item.image||item.fallback||"")}" alt="${escapeHtml(item.title)}"><h3>${escapeHtml(item.title)}</h3><p>${detail}<br>获取时间：${escapeHtml(item.acquiredAt||"刚刚")}</p><div class="candidate-detail-actions"><button type="button" data-sidebar-style-close>关闭</button>${data.sourceUrl||data.source_page_url?`<a class="primary" href="${escapeHtml(data.sourceUrl||data.source_page_url)}" target="_blank" rel="noopener">查看来源</a>`:""}</div></div>`;
+      const previewImage=document.querySelector("[data-sidebar-style-image]");if(previewImage&&item.remoteImage&&item.fallback)previewImage.onerror=()=>{previewImage.onerror=null;previewImage.src=item.fallback;};
+      document.querySelector("#candidate-detail-overlay").hidden=false;
+    }
+    document.addEventListener("click",event=>{
+      const drawer=event.target.closest("[data-style-drawer]");if(drawer){openStyleDrawer(drawer.dataset.styleDrawer);return;}
+      const style=event.target.closest("[data-style-preview]");if(style){openSidebarStylePreview(style.dataset.stylePreview);return;}
+      if(event.target.closest("#style-drawer-close")||event.target.id==="style-drawer-backdrop"){closeStyleDrawer();return;}
+      if(event.target.closest("[data-sidebar-style-close]")){document.querySelector("#candidate-detail-overlay").hidden=true;return;}
+    });
   </script>
   <style>
     .research-material-card{display:flex!important;flex-direction:column;min-width:0;background:#fff;border:1px solid #e7e9e6;border-radius:6px;overflow:hidden}
