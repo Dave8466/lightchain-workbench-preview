@@ -46,9 +46,22 @@
     if (message.type === "agent") return `<div class="task-message assistant"><div class="agent-message"><div class="agent-message-copy">${nl(message.text)}</div></div></div>`;
     if (message.type === "execution") return agentExecutionMessage({ copy: message.copy, label: message.label, details: message.details, state: "complete" });
     if (message.type === "selection") return confirmedCard(message.title, caseData.selectionStates[message.key] || []);
-    if (message.type === "artifact") return artifactQuote(caseData, artifactById(caseData, message.artifactId));
+    if (message.type === "artifact") {
+      const artifact = artifactById(caseData, message.artifactId);
+      return artifact?.type === "external" && /\.html(?:$|\?)/i.test(String(artifact.url || "")) ? artifactQuote(caseData, artifact) : "";
+    }
     if (message.type === "contact") return `<div class="task-message assistant"><div class="agent-message"><article class="case-contact-sheet"><img loading="lazy" src="${safe(message.image)}" alt="${safe(message.title)}联系表"><span class="case-contact-copy"><strong>${safe(message.title)}</strong><span>${safe(message.summary)}</span><button type="button" data-case-artifact-open="${safe(message.artifactId)}">查看全部</button></span></article></div></div>`;
     return "";
+  }
+
+  function historyHtmlArtifacts(caseData) {
+    return (caseData.artifacts || []).filter((item) => item && item.type === "external" && /\.html(?:$|\?)/i.test(String(item.url || ""))).map((item) => ({ ...item, label:/\.html/i.test(item.label) ? item.label : `${item.label}.html` }));
+  }
+
+  function historyReferenceStyles(caseId, caseData) {
+    if (caseId === "crownIvy") return candidateItems().map((item) => ({ key:`history-reference-${item.code}`, image:item.localImage, fallback:item.localImage, title:item.title || "Reference style", previewType:"proposal-reference", previewId:item.code, data:item }));
+    const fallbackImages = ["amz_a1_blouse.webp","amz_a2_dress.webp","amz_a3_wideleg.webp","kohls_blouse_tulip.webp","tts_set_nondenim.webp"];
+    return (caseData.evidenceGroups || []).flatMap((group) => group.items || []).map((item, index) => ({ key:`history-reference-${item.evidence_id}`, image:`case-assets/kaleshu/visual-refs/${fallbackImages[index % fallbackImages.length]}`, fallback:`case-assets/kaleshu/visual-refs/${fallbackImages[index % fallbackImages.length]}`, title:item.title_summary || "Reference style", previewType:"planning-reference", previewId:item.evidence_id, data:item }));
   }
 
   function renderHistoryCase(caseId) {
@@ -68,11 +81,7 @@
     document.querySelector("#task-condition").placeholder = "已完成历史任务 · 可查看对话、产物和参考信息";
     const banner = `<div class="task-message assistant"><div class="agent-message"><div class="history-case-banner"><strong>已完成历史任务</strong><span>${safe(caseData.metadata.sceneLabel)} · ${safe(caseData.metadata.updated)} · 对话与产物为只读复现</span></div></div></div>`;
     document.querySelector("#task-chat-inner").innerHTML = banner + caseData.messages.map((message) => renderCaseMessage(caseData, message)).join("");
-    renderTaskPanel({
-      plans: caseData.steps.map((label) => ({ label, state: "已完成", className: "updated" })),
-      outputs: caseData.artifacts,
-      references: caseData.evidenceGroups
-    });
+    renderTaskPanel({ outputs: historyHtmlArtifacts(caseData), referenceStyles: historyReferenceStyles(caseId, caseData) });
     showTaskPage();
     renderHistory();
     requestAnimationFrame(() => { document.querySelector("#task-chat").scrollTop = 0; });

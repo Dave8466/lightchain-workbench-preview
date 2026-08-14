@@ -2801,8 +2801,8 @@
     const taskPanelStylePreviewLimit = 5;
     function stylePanelSectionMarkup(kind, title, items) {
       const visible = items.slice(0, taskPanelStylePreviewLimit);
-      const viewAll = items.length > taskPanelStylePreviewLimit ? `<button type="button" class="task-panel-view-all" data-style-drawer="${kind}">查看全部(${items.length})</button>` : "";
-      return `<section class="task-panel-section styles ${kind}-styles"><div class="task-panel-section-head"><h3>${title}</h3>${viewAll}</div><ul class="task-panel-list">${visible.map((item) => `<li class="task-panel-item"><button type="button" class="task-style-open" data-style-preview="${escapeHtml(item.key)}">${styleImageMarkup(item)}<span class="task-style-copy"><strong>${escapeHtml(item.title)}</strong><small>${escapeHtml(item.subtitle || "")}</small></span></button></li>`).join("")}</ul></section>`;
+      const viewAll = items.length > taskPanelStylePreviewLimit ? `<button type="button" class="task-panel-view-all" data-style-drawer="${kind}">\u67e5\u770b\u5168\u90e8(${items.length})</button>` : "";
+      return `<section class="task-panel-section styles ${kind}-styles"><div class="task-panel-section-head"><h3>${title}</h3>${viewAll}</div><ul class="task-panel-list">${visible.map((item) => `<li class="task-panel-item"><button type="button" class="task-style-open" data-style-preview="${escapeHtml(item.key)}">${styleImageMarkup(item)}<span class="task-style-copy"><strong>${escapeHtml(item.title)}</strong></span></button></li>`).join("")}</ul></section>`;
     }
     const evidenceCatalog = {
       planning: [
@@ -2893,7 +2893,7 @@
       trend_direction_id: item.direction,
       evidence_summary: `${item.source} · ${item.note} · 竞争${item.competition} · 缺口：${item.gap}`
     }));
-    const proposalArtifactData = { trendAnalysis: null, candidatePool: null, directionPack: null, aiRemix: null, proposal: null, finalAiStylesV2: null };
+    const proposalArtifactData = { trendAnalysis: null, candidatePool: null, directionPack: null, proposal: null };
     const proposalFlow = {
       active: false,
       stage: "idle",
@@ -3019,22 +3019,22 @@
         remote.src = image.dataset.remoteSrc;
       });
     }
-    const planningArtifactData = { trend:null, materialPool:null, visualBoard:null, structure:null, landing:null, final:null, finalAiStyles:null };
+    const planningArtifactData = { trend:null, materialPool:null, visualBoard:null, structure:null, landing:null, final:null };
     const planningFlow = { active:false, stage:"idle", paused:false, profile:null, title:"新任务", firstText:"", attachments:[], requirement:{}, scope:{}, selectedTrendIds:[], selectedMaterials:new Set(), activeTab:"amazon-aug", structureNote:"", language:"简体中文", references:[], selectionCards:new Map() };
 
     function renderTaskPanel(next = taskPanelData) {
       if (typeof closeStyleDrawer === "function") closeStyleDrawer();
+      const isHtmlArtifact = (item) => item && (/\.html/i.test(String(item.label || "")) || /\.html(?:$|\?)/i.test(String(item.url || ""))) && !/xlsx/i.test(String(item.type || "") + String(item.label || ""));
       taskPanelData.plans = [];
-      taskPanelData.outputs = Array.isArray(next.outputs) ? next.outputs.slice(0, 12) : [];
+      taskPanelData.outputs = (Array.isArray(next.outputs) ? next.outputs : []).filter(isHtmlArtifact).slice(0, 12);
       taskPanelData.references = [];
       taskPanelData.referenceStyles = Array.isArray(next.referenceStyles) ? next.referenceStyles : [];
-      taskPanelData.aiStyles = Array.isArray(next.aiStyles) ? next.aiStyles : [];
+      taskPanelData.aiStyles = [];
       const groups = [];
-      if (taskPanelData.outputs.length) groups.push(`<section class="task-panel-section outputs"><h3>产物</h3><ul class="task-panel-list">${taskPanelData.outputs.map((item) => `<li class="task-panel-item"><button class="artifact-list-open" type="button" data-artifact-view="${escapeHtml(item.id)}"><span class="item-icon">□</span><span class="artifact-title">${escapeHtml(item.label || item)}</span><span class="artifact-list-chevron">›</span></button></li>`).join("")}</ul></section>`);
-      if (taskPanelData.referenceStyles.length) groups.push(stylePanelSectionMarkup("reference", "参考款式", taskPanelData.referenceStyles));
-      if (taskPanelData.aiStyles.length) groups.push(stylePanelSectionMarkup("ai", "AI 款式", taskPanelData.aiStyles));
+      if (taskPanelData.outputs.length) groups.push(`<section class="task-panel-section outputs"><h3>\u4efb\u52a1\u4ea7\u7269</h3><ul class="task-panel-list">${taskPanelData.outputs.map((item) => `<li class="task-panel-item"><button class="artifact-list-open" type="button" data-artifact-view="${escapeHtml(item.id)}"><span class="item-icon">&#9656;</span><span class="artifact-title">${escapeHtml(item.label || item)}</span><span class="artifact-list-chevron">&#8250;</span></button></li>`).join("")}</ul></section>`);
+      if (taskPanelData.referenceStyles.length) groups.push(stylePanelSectionMarkup("reference", "\u53c2\u8003\u6b3e\u5f0f", taskPanelData.referenceStyles));
       taskPanelStyleRegistry.clear();
-      [...taskPanelData.referenceStyles, ...taskPanelData.aiStyles].forEach((item) => taskPanelStyleRegistry.set(item.key, item));
+      taskPanelData.referenceStyles.forEach((item) => taskPanelStyleRegistry.set(item.key, item));
       const panel = document.querySelector("#task-panel");
       const hasContent = groups.length > 0;
       document.querySelector("#task-panel-sections").innerHTML = groups.join("");
@@ -3217,7 +3217,7 @@
     }
 
     function proposalOutputs() {
-      return Object.values(proposalArtifactData).filter(Boolean);
+      return Object.values(proposalArtifactData).filter((item) => item && /\.html/i.test(String(item.label || "")) && !/xlsx/i.test(String(item.type || "") + String(item.label || "")));
     }
 
     function renderInitialConversation(userText, profile = null) {
@@ -3683,23 +3683,13 @@
       return { id, label, type, summary, status: "已生成", generatedAt: "刚刚", viewLabel: "在线查看", downloadLabel: "下载 HTML/PPT/PDF" };
     }
 
-    function proposalArtifactQuote(artifact, summary, action = "view") {
-      const actionHtml = action === "candidate"
-        ? `<button class="proposal-inline-action" type="button" data-proposal-action="open-candidates">查看详情</button>`
-        : action === "planning-pool"
-          ? `<button class="proposal-inline-action" type="button" data-planning-action="open-material-pool">查看素材池</button>`
-          : action === "planning-xlsx"
-            ? `<a class="planning-artifact-direct" href="case-assets/planning-v2/视觉方向参考商品.xlsx" download="视觉方向参考商品.xlsx">下载 XLSX</a>`
-            : `<div class="proposal-artifact-actions"><button class="proposal-inline-action" type="button" data-artifact-menu="${escapeHtml(artifact.id)}" aria-expanded="false">打开方式⌄</button><div class="proposal-artifact-menu" hidden><button type="button" data-artifact-view-inline="${escapeHtml(artifact.id)}">在线查看</button>${(artifact.downloads || []).map(file => `<a href="${escapeHtml(file.href)}" download="${escapeHtml(file.name)}">下载 ${escapeHtml(file.label)}</a>`).join("") || `<button type="button" data-artifact-download-inline="${escapeHtml(artifact.id)}">下载 HTML</button>`}</div></div>`;
-      const planningTypeLabels = { planningResearch:"调研与视觉方向报告", planningSheet:"视觉方向参考商品", planningTrend:"趋势与市场方向分析", planningMaterial:"方向参考素材池", planningVisual:"企划视觉方向板", planningStructure:"商品结构规划", planningAi:"AI 改款结果", planningLanding:"企划落地规划", planningFinal:"新品企划案", planningFinalAiStyles:"最终应用 AI 款式", proposalV2Research:"客户需求调研与视觉方向", proposalV2Sheet:"视觉方向参考素材", proposalV2DirectionPack:"客户方向参考包", proposalV2Ai:"AI 改款结果", proposalV2Final:"正式客户提案", proposalV2FinalAiStyles:"最终应用 AI 款式" };
-      const typeLabel = planningTypeLabels[artifact.type] || (artifact.type === "trend" ? "趋势分析" : artifact.type === "candidate" ? "视觉参考池" : artifact.type === "direction" ? "客户方向参考包 · V1" : artifact.type === "ai" ? "AI 改款图" : "客户提案 · V1");
-      return `<div class="task-message assistant"><div class="agent-message"><section class="proposal-artifact-quote" data-artifact-quote="${escapeHtml(artifact.id)}"><div class="artifact-quote-icon">□</div><div class="artifact-quote-copy"><strong>${escapeHtml(artifact.label)}</strong><span>${escapeHtml(typeLabel)} · ${escapeHtml(artifact.status || "已生成")}</span><small>${escapeHtml(artifact.generatedAt || "刚刚")} · ${escapeHtml(summary || artifact.summary || "只读产物引用")}</small></div>${actionHtml}</section></div></div>`;
-    }
-
-    function spreadsheetArtifactQuote(artifact, summary) {
-      const file = artifact.downloads?.[0];
-      if (!file) return "";
-      return `<div class="task-message assistant"><div class="agent-message"><section class="proposal-artifact-quote" data-artifact-quote="${escapeHtml(artifact.id)}"><div class="artifact-quote-icon">□</div><div class="artifact-quote-copy"><strong>${escapeHtml(artifact.label)}</strong><span>最终应用 AI 款式 · ${escapeHtml(artifact.status || "已生成")}</span><small>${escapeHtml(summary || artifact.summary || "与最终 HTML 使用同一版本快照")}</small></div><a class="planning-artifact-direct" href="${escapeHtml(file.href)}" download="${escapeHtml(file.name)}">下载 XLSX</a></section></div></div>`;
+    function proposalArtifactQuote(artifact, summary) {
+      if (!artifact || !/\.html/i.test(String(artifact.label || ""))) return "";
+      if (Array.isArray(artifact.downloads)) artifact.downloads = artifact.downloads.filter((file) => /\.(html?|pptx?|pdf)$/i.test(String(file?.name || file?.href || "")));
+      const actionHtml = `<div class="proposal-artifact-actions"><button class="proposal-inline-action" type="button" data-artifact-menu="${escapeHtml(artifact.id)}" aria-expanded="false">打开方式⌄</button><div class="proposal-artifact-menu" hidden><button type="button" data-artifact-view-inline="${escapeHtml(artifact.id)}">在线查看</button>${(artifact.downloads || []).map(file => `<a href="${escapeHtml(file.href)}" download="${escapeHtml(file.name)}">下载 ${escapeHtml(file.label)}</a>`).join("") || `<button type="button" data-artifact-download-inline="${escapeHtml(artifact.id)}">下载 HTML</button>`}</div></div>`;
+      const typeLabels = { planningResearch:"调研与视觉方向报告", planningStructure:"商品结构规划", planningFinal:"新品企划案", proposalV2Research:"客户需求调研与视觉方向", proposalV2Final:"正式客户提案" };
+      const typeLabel = typeLabels[artifact.type] || "HTML 产物";
+      return `<div class="task-message assistant"><div class="agent-message"><section class="proposal-artifact-quote" data-artifact-quote="${escapeHtml(artifact.id)}"><div class="artifact-quote-icon">□</div><div class="artifact-quote-copy"><strong>${escapeHtml(artifact.label)}</strong><span>${escapeHtml(typeLabel)} · ${escapeHtml(artifact.status || "已生成")}</span><small>${escapeHtml(artifact.generatedAt || "刚刚")} · ${escapeHtml(summary || artifact.summary || "只读 HTML 产物")}</small></div>${actionHtml}</section></div></div>`;
     }
 
     function renderTrendDirectionDetails() {
@@ -4346,7 +4336,7 @@
       return order[planningFlow.stage] ?? 0;
     }
 
-    function planningOutputs() { return Object.values(planningArtifactData).filter(Boolean); }
+    function planningOutputs() { return Object.values(planningArtifactData).filter((item) => item && /\.html/i.test(String(item.label || "")) && !/xlsx/i.test(String(item.type || "") + String(item.label || ""))); }
     function currentTaskArtifacts() { return planningFlow.active ? planningOutputs() : proposalOutputs(); }
 
     function renderPlanningPanel() {
@@ -4948,6 +4938,7 @@
       startPlanningV2Research();
     }
 
+    /* legacy direction/research implementation disabled after encoding corruption
     function planningV2DirectionMarkup() {
       const selected=new Set(planningFlow.selectedTrendIds);
       const directions=planningTrendDirections.filter(item=>["ease","contrast","utility","color"].includes(item.id));
@@ -4960,23 +4951,65 @@
     }
 
     function startPlanningV2Research() {
-      const previousCard=document.querySelector("#planning-direction-v2");
-      if(previousCard){previousCard.removeAttribute("id");previousCard.innerHTML='<div class="planning-component-head"><div><h4>上一版视觉方向</h4><p>已因新的补充要求失效，请以下方最新版为准。</p></div><span class="planning-component-state">已更新</span></div>';}
       planningFlow.researchVersion=(planningFlow.researchVersion||0)+1;
       const version=planningFlow.researchVersion;
-      planningFlow.stage="research";renderPlanningPanel();
-      appendTaskHtml(agentExecutionMessage({copy:version===1?"调研范围已确认，正在自动完成多来源调研与视觉方向整理。":`正在按补充要求局部重跑调研阶段并生成 V${version}。`,label:version===1?"调研与证据整理":`重跑调研与视觉方向 V${version}`,details:["保留已确认的调研范围","更新本地语言关键词、排除词与方向判断","重新整理每个方向关联的真实服装参考素材","重新生成总结、方向组件、调研 HTML 和参考素材 Excel"],state:"complete"}));
+      planningFlow.stage="research";
+      renderPlanningPanel();
+      appendTaskHtml(agentExecutionMessage({copy:version===1?"调研范围已确认，正在自动完成多来源调研与视觉方向整理。`:`正在按补充要求局部重跑调研阶段并生成 V${version}。`,label:version===1?"调研与证据整理`:`重跑调研与视觉方向 V${version}`,details:["保留已确认的调研范围","更新关键词、排除词与方向判断","整理每个方向关联的真实服装参考素材","生成总结、方向组件与调研 HTML"],state:"complete"}));
       planningFlow.selectedTrendIds=["ease","utility","color"];
-      const report=makeArtifactPayload("planningResearch",`调研与视觉方向报告 V${version}.html`,"planningResearch","多来源证据、视觉方向与参考商品");
-      const sheet=makeArtifactPayload("planningReferenceSheet",`视觉方向参考商品 V${version}.xlsx`,"planningSheet","4个视觉方向 · 每个方向独立 Sheet");
-      sheet.directDownload="case-assets/planning-v2/视觉方向参考商品.xlsx";
-      savePlanningArtifact("research",report);savePlanningArtifact("referenceSheet",sheet);
-      appendTaskHtml(proposalAgentMessage(`${version===1?"调研已完成":"调研结果已按补充要求更新"}。小样本显示，轻量松弛通勤适合做共同底层；克制实用细节更适合 Amazon 的稳定款，季节性色彩切换适合区分两个波段。TikTok Shop 可用更明确的比例对比作为测试方向。以上判断分别核对了电商供给、社媒传播、品牌采用和趋势资料；互动不等于销量，平台数据未合并。确认前可继续在输入框补充或修改要求，我只会重跑本阶段。`));
+      const report=makeArtifactPayload("planningResearch",`调研与视觉方向报告 V${version}.html`,"planningResearch","多来源证据、视觉方向与真实参考款式");
+      savePlanningArtifact("research",report);
+      appendTaskHtml(proposalAgentMessage(`${version===1?"调研已完成":"调研结果已按补充要求更新"}。小样本显示轻松通勤、克制实用细节和季节性色彩切换具备方向性依据；平台数据分开呈现，互动不等于销量。确认前可继续在输入框补充或修改要求，我只会重跑本阶段。`));
       appendTaskHtml(`<div class="task-message assistant"><div class="agent-message">${planningV2DirectionMarkup()}</div></div>`);
-      appendTaskHtml(proposalArtifactQuote(report,"4个待确认方向 · 分来源展示时间、样本、证据充分度与数据缺口"));
-      appendTaskHtml(proposalArtifactQuote(sheet,"一个工作簿 · 每个视觉方向一个 Sheet · 点击直接下载","planning-xlsx"));
+      appendTaskHtml(proposalArtifactQuote(report,"4 个待确认方向 · 分来源展示时间、样本、证据充分度与数据缺口"));
       planningFlow.stage="directionReview";
-      document.querySelector("#task-condition").placeholder="可要求调整方向、补充条件或重新调研；也可在上方直接多选…";
+      document.querySelector("#task-condition").placeholder="可要求调整方向、补充条件或重新调研；也可直接在上方多选";
+      renderPlanningPanel();
+    }
+
+    */
+    function planningV2DirectionMarkup() {
+      const selected = new Set(planningFlow.selectedTrendIds || []);
+      const directions = (planningTrendDirections || []).filter(function (item) {
+        return ["ease", "contrast", "utility", "color"].includes(item.id);
+      });
+      const cards = directions.map(function (item) {
+        const isSelected = selected.has(item.id);
+        const image = planningV2DirectionImages[item.id] || "case-assets/planning-v2/visual-direction-default.jpg";
+        const level = item.confidence === "中高" ? "建议作为核心方向" : "建议小规模测试";
+        return '<button type="button" class="planning-direction-option ' + (isSelected ? "selected" : "") + '" data-planning-direction="' + escapeHtml(item.id) + '" aria-pressed="' + isSelected + '">' +
+          '<img src="' + image + '" alt="' + escapeHtml(item.name || "视觉方向") + '代表图">' +
+          '<div class="planning-direction-copy"><strong>' + escapeHtml(item.name || "视觉方向") + '</strong><p>' + escapeHtml(item.summary || "") + '</p><span class="planning-direction-level">' + level + '</span></div></button>';
+      }).join("");
+      const message = selected.size ? "已选择 " + selected.size + " 个方向" : "请至少选择一个方向";
+      return '<section class="planning-direction-selector" id="planning-direction-v2" data-planning-component="visual-direction-selection">' +
+        '<div class="planning-component-head"><div><h4>选择本次企划采用的视觉方向</h4><p>可多选；方向确认后才进入商品结构和 AI 改款。</p></div><span class="planning-component-state">已选 ' + selected.size + '</span></div>' +
+        '<div class="planning-direction-grid">' + cards + '</div>' +
+        '<div class="planning-component-actions"><span class="planning-component-error" id="planning-direction-v2-error">' + message + '</span><button type="button" class="primary" data-planning-direction-confirm ' + (selected.size ? "" : "disabled") + '>确认所选方向</button></div>' +
+        '</section>';
+    }
+
+    function startPlanningV2Research() {
+      planningFlow.researchVersion = (planningFlow.researchVersion || 0) + 1;
+      const version = planningFlow.researchVersion;
+      planningFlow.stage = "research";
+      renderPlanningPanel();
+      appendTaskHtml(agentExecutionMessage({
+        copy: version === 1 ? "调研范围已确认，正在自动完成多来源调研与视觉方向整理。" : "正在按补充要求局部重跑调研阶段并生成新版本。",
+        label: version === 1 ? "调研与证据整理" : "重跑调研与视觉方向 V" + version,
+        details: ["保留已确认的调研范围", "更新关键词、排除词与方向判断", "整理每个方向关联的真实服装参考素材", "生成总结、方向组件与调研 HTML"],
+        state: "complete"
+      }));
+      planningFlow.selectedTrendIds = ["ease", "utility", "color"];
+      const report = makeArtifactPayload("planningResearch", "调研与视觉方向报告 V" + version + ".html", "planningResearch", "多来源证据、视觉方向与真实参考款式");
+      savePlanningArtifact("research", report);
+      planningFlow.referenceStyles = planningReferenceStyleItems();
+      appendTaskHtml(proposalAgentMessage((version === 1 ? "调研已完成" : "调研结果已按补充要求更新") + "。小样本显示轻松通勤、克制实用细节和季节性色彩切换具备方向性依据；平台数据分开呈现，互动不等于销量。确认前可继续在输入框补充或修改要求，我只会重跑本阶段。"));
+      appendTaskHtml('<div class="task-message assistant"><div class="agent-message">' + planningV2DirectionMarkup() + '</div></div>');
+      appendTaskHtml(proposalArtifactQuote(report, "4 个待确认方向 · 分来源展示时间、样本、证据充分度与数据缺口"));
+      planningFlow.stage = "directionReview";
+      const input = document.querySelector("#task-condition");
+      if (input) input.placeholder = "可要求调整方向、补充条件或重新调研；也可直接在上方多选";
       renderPlanningPanel();
     }
 
@@ -5006,15 +5039,13 @@
     }
 
     function startPlanningV2AiGeneration() {
-      planningFlow.stage="aiGenerating";renderPlanningPanel();
+      planningFlow.stage="aiGenerating";
+      renderPlanningPanel();
       appendTaskHtml(agentExecutionMessage({copy:"商品结构已确认，正在生成专业改款提示词与 AI 款式图。",label:"AI 改款生成",details:["将已确认视觉方向、参考商品、商品结构和用户补充内容转成逐款设计约束","生成每款正向提示词、负向提示词、锚点引用与系列一致性要求","完成服装属性完整性检查后生成图片","检查空白图、明显重复和与目标人群不符的结果"],state:"complete"}));
       planningFlow.stage="aiReview";
-      const artifact=makeArtifactPayload("planningAi","AI 改款结果","planningAi","8张 AI 概念图 · 待选择");
-      savePlanningArtifact("ai",artifact);
-      appendTaskHtml(proposalAgentMessage("8 张 AI 改款图已生成。它们严格继承已确认视觉方向、参考商品特征和商品结构，并按渠道客群区分廓形与表达。请选择需要重新生成或写入最终企划案的图片。"));
-      appendTaskHtml(proposalArtifactQuote(artifact,"专业服装提示词已在内部完成并通过完整性检查 · AI概念表达"));
+      appendTaskHtml(proposalAgentMessage("8 张 AI 改款图已生成。它们继承已确认视觉方向、参考商品特征和商品结构，并按渠道客群区分廓形与表达。请选择需要重新生成或写入最终企划案的图片。"));
       appendTaskHtml(`<div class="task-message assistant"><div class="agent-message">${planningV2AiMarkup()}</div></div>`);
-      document.querySelector("#task-condition").placeholder="可补充修改要求或上传新的参考图；只重跑受影响款…";
+      document.querySelector("#task-condition").placeholder="可补充修改要求或上传新的参考图；只重跑受影响款";
       renderPlanningPanel();
     }
 
@@ -5026,22 +5057,17 @@
     }
 
     function generateFinalPlanningArtifact() {
-      if(!planningFlow.selectedAiImages.size){showToast("请先选择至少一张 AI 改款图");return;}
-      planningFlow.stage="delivery";renderPlanningPanel();
-      planningArtifactData.ai.status="已确认";
-      planningArtifactData.ai.summary=`已确认 ${planningFlow.selectedAiImages.size} 张 AI 改款图`;
-      appendTaskHtml(agentExecutionMessage({copy:"正在将已确认图片、调研依据、视觉方向和商品结构写入新品企划案，并整理最终应用 AI 款式明细。",label:"生成新品企划案",details:["锁定用户确认的 AI 款式图","关联调研证据、视觉方向与商品结构","生成统一只读 HTML 查看版本","生成最终应用 AI 款式 XLSX，并与 HTML 使用同一图片快照","准备 HTML、PPT、PDF 下载文件"],state:"complete"}));
+      if (!planningFlow.selectedAiImages.size) { showToast("请先选择至少一张 AI 改款图"); return; }
+      planningFlow.stage="delivery";
+      renderPlanningPanel();
+      appendTaskHtml(agentExecutionMessage({copy:"正在将已确认图片、调研依据、视觉方向和商品结构写入新品企划案。",label:"生成新品企划案",details:["锁定用户确认的 AI 款式图","关联调研证据、视觉方向与商品结构","生成统一只读 HTML 查看版本","准备 HTML、PPT、PDF 下载文件"],state:"complete"}));
       const artifact=makeArtifactPayload("planningFinal","新品企划案.html","planningFinal",`包含 ${planningFlow.selectedAiImages.size} 张已确认 AI 款式图 · 简体中文`);
-      artifact.downloads=[{label:"HTML",name:"新品企划案.html",href:"case-assets/planning-v2/新品企划案.html"},{label:"PPT",name:"新品企划案.pptx",href:"case-assets/planning-v2/新品企划案.pptx"},{label:"PDF",name:"新品企划案.pdf",href:"case-assets/planning-v2/新品企划案.pdf"},{label:"XLSX",name:"最终应用AI款式.xlsx",href:"case-assets/planning-v2/最终应用AI款式.xlsx"}];
-      const finalAiStyles=makeArtifactPayload("planningFinalAiStyles","最终应用AI款式.xlsx","planningFinalAiStyles",`与新品企划案 HTML 同版 · ${planningFlow.selectedAiImages.size} 张已确认 AI 款式图`);
-      finalAiStyles.downloads=[{label:"XLSX",name:"最终应用AI款式.xlsx",href:"case-assets/planning-v2/最终应用AI款式.xlsx"}];
+      artifact.downloads=[{label:"HTML",name:"新品企划案.html",href:"case-assets/planning-v2/新品企划案.html"},{label:"PPT",name:"新品企划案.pptx",href:"case-assets/planning-v2/新品企划案.pptx"},{label:"PDF",name:"新品企划案.pdf",href:"case-assets/planning-v2/新品企划案.pdf"}];
       savePlanningArtifact("final",artifact);
-      savePlanningArtifact("finalAiStyles",finalAiStyles);
       planningFlow.stage="done";
       appendTaskHtml(proposalAgentMessage(`新品企划案已完成，已写入 ${planningFlow.selectedAiImages.size} 张你确认的 AI 款式图，并保留调研依据、视觉方向和商品结构。所有内容只读；需要修改时请在输入框提出，系统会生成新版本并只重跑受影响步骤。`));
-      appendTaskHtml(proposalArtifactQuote(artifact,"统一 HTML 查看器 · 可下载 HTML / PPT / PDF / XLSX · 不支持在线编辑"));
-      appendTaskHtml(spreadsheetArtifactQuote(finalAiStyles,"只收录最终新品企划案 HTML 中实际采用且已确认的 AI 款式；图片、款号和 HTML 使用同一版本快照。"));
-      document.querySelector("#task-condition").placeholder="继续提出内容修正、图片替换、语言变更或新版本要求…";
+      appendTaskHtml(proposalArtifactQuote(artifact,"统一 HTML 查看器 · 可下载 HTML / PPT / PDF · 不支持在线编辑"));
+      document.querySelector("#task-condition").placeholder="继续提出内容修正、图片替换、语言变更或新版本要求";
       renderPlanningPanel();
     }
 
@@ -5068,14 +5094,11 @@
     function renderPlanningPreview(type) {
       if(type==="planningResearch"){planningV2OpenHtmlViewer("调研与视觉方向报告.html","统一 HTML 查看器 · 只读",planningV2ResearchViewerHtml());return;}
       if(type==="planningStructure"){planningV2OpenHtmlViewer("商品结构规划.html","统一 HTML 查看器 · 只读",planningV2StructureViewerHtml());return;}
-      if(type==="planningAi"){planningV2OpenHtmlViewer("AI 改款结果","只读结果 · 图片确认在对话中完成",`<div class="planning-html-report"><section class="planning-report-hero"><div><h3>AI 改款结果</h3><p>共 8 张 AI 概念图。请返回对话区进行多选、重生成或生成企划。</p></div><div class="planning-report-metrics"><div><strong>8</strong><span>生成图片</span></div><div><strong>${planningFlow.selectedAiImages.size}</strong><span>当前已选</span></div></div></section><div class="planning-ai-grid">${planningV2AiOptions.map(item=>`<article class="planning-ai-item"><img src="${item.assetUrl}" alt="${item.code}"><div class="planning-ai-caption"><b>${item.code} · ${escapeHtml(item.category)}</b><small>${escapeHtml(item.line)}</small></div></article>`).join("")}</div></div>`);return;}
       if(type==="planningFinal"){renderPlanningReportViewer();return;}
     }
 
     function renderTaskArtifactPreview(artifact) {
-      if(artifact?.type==="planningSheet"){
-        const link=document.createElement("a");link.href="case-assets/planning-v2/视觉方向参考商品.xlsx";link.download="视觉方向参考商品.xlsx";link.click();showToast("已下载 视觉方向参考商品.xlsx");return;
-      }
+      if(!artifact || !/\.html/i.test(String(artifact.label || ""))) return;
       if(String(artifact?.type||"").startsWith("planning"))renderPlanningPreview(artifact.type);else renderProposalPreview(artifact.type);
     }
 
@@ -5190,7 +5213,7 @@
 
     function proposalV2DirectionMarkup(){const selected=proposalFlow.v2.selectedDirections;return `<section class="proposal-v2-selector" id="proposal-v2-directions"><div class="planning-component-head"><div><h4>选择客户提案采用的视觉方向</h4><p>可多选；每个方向均关联市场证据和客户需求匹配点。</p></div><span class="planning-component-state">已选 ${selected.size}</span></div><div class="proposal-v2-direction-grid">${proposalV2Directions.map(item=>`<button type="button" class="proposal-v2-direction ${selected.has(item.id)?"selected":""}" data-proposal-v2-direction="${item.id}" aria-pressed="${selected.has(item.id)}"><img src="${item.image}" alt="${escapeHtml(item.name)}代表图"><div class="proposal-v2-direction-copy"><strong>${escapeHtml(item.name)}</strong><p>${escapeHtml(item.summary)}</p><small>${escapeHtml(item.level)} · ${escapeHtml(item.match)}</small></div></button>`).join("")}</div><p class="proposal-direction-guidance">如果视觉方案不符合预期，直接在输入框说明需要调整的方向、设计元素或参考偏好，我会只重跑本阶段。</p><div class="planning-component-actions"><span class="planning-component-error">${selected.size?`已选择 ${selected.size} 个方向`:`请至少选择一个方向`}</span><button type="button" class="primary" data-proposal-v2-direction-confirm ${selected.size?"":"disabled"}>确认并生成 AI 改款</button></div></section>`;}
     function proposalV2RefreshDirections(){const card=document.querySelector("#proposal-v2-directions");if(card)card.outerHTML=proposalV2DirectionMarkup();}
-    function proposalV2SpreadsheetQuote(artifact){return `<div class="task-message assistant"><div class="agent-message"><section class="proposal-artifact-quote" data-artifact-quote="${artifact.id}"><div class="artifact-quote-icon">□</div><div class="artifact-quote-copy"><strong>${escapeHtml(artifact.label)}</strong><span>视觉方向参考素材 · 已生成</span><small>一个工作簿 · 每个视觉方向一个 Sheet · 包含来源与缺失字段说明</small></div><a class="planning-artifact-direct" href="case-assets/proposal-v2/视觉方向参考素材.xlsx" download="视觉方向参考素材.xlsx">下载 XLSX</a></section></div></div>`;}
+
     function proposalV2StartResearch(){
       const state=proposalFlow.v2,sourceCount=Object.values(state.sources).reduce((sum,list)=>sum+list.length,0);if(!state.regions.length||!sourceCount){const error=document.querySelector("#proposal-scope-v2-error");if(error)error.textContent=!state.regions.length?"请至少选择一个地区":"请至少保留一个平台或网站";return;}
       const previousCard=document.querySelector("#proposal-v2-directions");if(previousCard){previousCard.removeAttribute("id");previousCard.innerHTML='<div class="planning-component-head"><div><h4>上一版视觉方向</h4><p>已因新的补充要求失效，请以下方最新版为准。</p></div><span class="planning-component-state">已更新</span></div>';}
@@ -5199,10 +5222,9 @@
       proposalFlow.stage="research";renderProposalPlanPanel();appendTaskHtml(agentExecutionMessage({copy:version===1?"范围已确认，正在自动完成多来源调研与视觉方向整理。":`正在按补充要求局部重跑调研阶段并生成 V${version}。`,label:version===1?"调研与证据整理":`重跑调研与视觉方向 V${version}`,details:["保留已确认调研范围","更新方向结论与客户适配判断","重新整理每个方向关联的真实服装参考素材","重新生成总结、方向组件、调研 HTML 和参考素材 Excel"],state:"complete"}));
       state.selectedDirections=new Set(["ruffle","botanical"]);
       const report=makeArtifactPayload("proposalResearch",`客户需求调研与视觉方向 V${version}.html`,"proposalV2Research","多来源证据、客户适配与视觉方向");report.downloads=[{label:"HTML",name:`客户需求调研与视觉方向 V${version}.html`,href:"case-assets/proposal-v2/客户需求调研与视觉方向.html"}];
-      const sheet=makeArtifactPayload("proposalReferenceSheet",`视觉方向参考素材 V${version}.xlsx`,"proposalV2Sheet","每个视觉方向一个 Sheet");sheet.directDownload="case-assets/proposal-v2/视觉方向参考素材.xlsx";
-      saveArtifact("researchV2",report);saveArtifact("referenceSheetV2",sheet);
+      saveArtifact("researchV2",report);
       appendTaskHtml(proposalAgentMessage(`${version===1?"调研已完成":"调研结果已按补充要求更新"}。当前证据更支持“克制荷叶边实穿化”和“传承植物印花更新”作为核心方向；柔性套装与过渡季连衣裙适合小规模验证。判断分别核对了电商供给、社媒内容、品牌/百货采用和趋势资料。社媒互动不等于销量，不同电商平台的数值未合并。确认前可继续在输入框补充或修改要求，我只会重跑本阶段。`));
-      appendTaskHtml(`<div class="task-message assistant"><div class="agent-message">${proposalV2DirectionMarkup()}</div></div>`);appendTaskHtml(proposalArtifactQuote(report,"4个待确认方向 · 分来源展示样本、时间、充分度与缺口"));appendTaskHtml(proposalV2SpreadsheetQuote(sheet));appendTaskHtml(proposalAgentMessage("本次判断综合参考了目标市场电商商品、社媒内容、趋势资料和用户上传资料。具体来源、样本范围与数据缺口可在调研报告中查看。"));
+      appendTaskHtml(`<div class="task-message assistant"><div class="agent-message">${proposalV2DirectionMarkup()}</div></div>`);appendTaskHtml(proposalArtifactQuote(report,"4个待确认方向 · 分来源展示样本、时间、充分度与缺口"));appendTaskHtml(proposalAgentMessage("本次判断综合参考了目标市场电商商品、社媒内容、趋势资料和用户上传资料。具体来源、样本范围与数据缺口可在调研报告中查看。"));
       proposalFlow.stage="directionReview";document.querySelector("#task-condition").placeholder="可调整方向、补充条件或要求重新调研；只有点击确认所选方向后才进入改款计划…";renderProposalPlanPanel();
     }
     function proposalV2CandidateMarkup(){const state=proposalFlow.v2,availableDirections=proposalV2Directions.filter(item=>state.selectedDirections.has(item.id)),active=state.selectedDirections.has(state.activeDirection)?state.activeDirection:availableDirections[0]?.id;state.activeDirection=active||"ruffle";const all=proposalV2Candidates.filter(item=>item.direction===state.activeDirection),pages=Math.max(1,Math.ceil(all.length/8));state.candidatePage=Math.min(state.candidatePage,pages-1);const items=all.slice(state.candidatePage*8,state.candidatePage*8+8);return `<section class="proposal-v2-selector" id="proposal-v2-candidates"><div class="planning-component-head"><div><h4>从已取得素材中选择客户参考图</h4><p>每页 8 张；悬停查看来源、售价与匹配理由。点击图片选择，放大按钮不改变选择。</p></div><span class="planning-component-state">已选择 ${state.selectedCandidates.size} 张</span></div><div class="proposal-v2-candidate-tabs">${availableDirections.map(item=>`<button type="button" class="proposal-v2-candidate-tab ${item.id===state.activeDirection?"active":""}" data-proposal-v2-candidate-tab="${item.id}">${escapeHtml(item.name)}</button>`).join("")}</div><div class="proposal-v2-candidate-grid">${items.map(item=>`<article class="proposal-v2-candidate ${state.selectedCandidates.has(item.code)?"selected":""}" data-proposal-v2-candidate="${item.code}"><img loading="lazy" src="${item.assetUrl}" alt="${item.code} ${escapeHtml(item.title)}"><button type="button" class="proposal-v2-candidate-select" data-proposal-v2-candidate-select="${item.code}" aria-label="${state.selectedCandidates.has(item.code)?"取消选择":"选择"} ${item.code}"></button><span class="proposal-v2-candidate-check">✓</span><div class="proposal-v2-candidate-overlay"><strong>${item.code} · ${escapeHtml(item.source)} · ${escapeHtml(item.price)}</strong><small>${escapeHtml(item.reason)}</small></div><button type="button" class="proposal-v2-candidate-preview" data-proposal-v2-candidate-preview="${item.code}" aria-label="放大查看 ${item.code}">⌕</button></article>`).join("")}</div><div class="proposal-v2-pagination"><button type="button" data-proposal-v2-candidate-page="prev" ${state.candidatePage===0?"disabled":""}>‹</button><span>${state.candidatePage+1} / ${pages}</span><button type="button" data-proposal-v2-candidate-page="next" ${state.candidatePage>=pages-1?"disabled":""}>›</button></div><div class="planning-component-actions"><span class="planning-selection-summary">${state.selectedCandidates.size?`已选择 ${state.selectedCandidates.size} 张，将写入客户方向参考包。`:`请至少选择一张图片`}</span><button type="button" class="primary" data-proposal-v2-candidate-confirm ${state.selectedCandidates.size?"":"disabled"}>生成方向参考包</button></div></section>`;}
@@ -5213,26 +5235,41 @@
      function proposalV2RenderFeedbackPlan(text,draft=false){const state=proposalFlow.v2;state.feedback=text;state.remixPlan={anchors:[...state.selectedCandidates],keep:draft?"已确认视觉方向、成熟客群与舒适覆盖度":"客户认可的花卉语言、局部荷叶边与宽松比例",exclude:"过度年轻、夸张露肤、第三方标识与直接复刻",modify:draft?"基于调研方向素材做稳妥改款、差异改款与趋势延展":"放大花型层次，调整袖型、领口、长度与套装比例",count:12,dispersion:"每款至少改变两个有意义的设计轴；颜色替换不单独计为新款"};proposalFlow.stage="feedbackPlan";appendTaskHtml(proposalAgentMessage(`${draft?"我已基于确认方向先形成改款计划草案，客户反馈仍可继续补充。":"我已把客户反馈整理并更新到本次改款计划。"}\n自动采用的方向素材：${state.remixPlan.anchors.join("、")||"由已确认视觉方向自动选取调研 HTML 中的关联素材"}\n必须保留：${state.remixPlan.keep}\n必须排除：${state.remixPlan.exclude}\n款式修改方向：${state.remixPlan.modify}\n计划生成：${state.remixPlan.count} 款原型演示概念图\n发散要求：${state.remixPlan.dispersion}\n新增参考图作用：${proposalFlow.attachments?.length?"用于补充可见设计特征，不推断真实面料与成本":"本轮未新增，默认使用调研 HTML 中已关联的方向素材作为锚点"}`,proposalV2QuickActions([{action:"confirm-remix",label:"确认并生成",primary:true}])));document.querySelector("#task-condition").placeholder="可继续修改改款方向、细节、款数或补充新参考图…";renderProposalPlanPanel();}
     function proposalV2AiMarkup(){const state=proposalFlow.v2;const itemMarkup=item=>`<article class="planning-ai-item ${state.selectedAi.has(item.code)?"selected":""}"><img loading="lazy" src="${item.assetUrl}" alt="${item.code} ${escapeHtml(item.category)}"><button type="button" class="planning-ai-preview" data-proposal-v2-ai-preview="${item.code}" aria-label="放大查看 ${item.code}"></button><button type="button" class="planning-ai-select" data-proposal-v2-ai-select="${item.code}" aria-label="${state.selectedAi.has(item.code)?"取消选择":"选择"} ${item.code}">${state.selectedAi.has(item.code)?"✓":""}</button><div class="planning-ai-caption"><b>${item.code} · ${escapeHtml(item.category)}</b><small>${escapeHtml(item.direction)}${item.revision>1?` · <span class="planning-ai-regenerated">已重生成 V${item.revision}</span>`:""}</small></div></article>`;return `<section class="proposal-v2-selector" id="proposal-v2-ai"><div class="planning-component-head"><div><h4>选择进入正式客户提案的 AI 改款图</h4><p>全部图片平铺展示；点击图片放大，点击右上角选择。AI 图只作概念表达，不作为市场证据。</p></div><span class="planning-component-state">已选 ${state.selectedAi.size}</span></div><div class="proposal-v2-ai-grid">${proposalV2Concepts.map(itemMarkup).join("")}</div><div class="planning-component-actions"><span class="planning-selection-summary">${state.selectedAi.size?`已选择 ${state.selectedAi.size} 张。重新生成只影响这些图片。`:`未选择图片`}</span><button type="button" data-proposal-v2-ai-regenerate ${state.selectedAi.size?"":"disabled"}>重新生成</button><button type="button" class="primary" data-proposal-v2-ai-generate ${state.selectedAi.size?"":"disabled"}>生成提案</button></div></section>`;}
     function proposalV2RefreshAi(){const card=document.querySelector("#proposal-v2-ai");if(card)card.outerHTML=proposalV2AiMarkup();}
-    function proposalV2StartAi(){if(!proposalFlow.v2.remixPlan)return;proposalFlow.stage="aiGenerating";renderProposalPlanPanel();appendTaskHtml(agentExecutionMessage({copy:"视觉方向已确认，正在生成专业服装改款提示词与 AI 概念图。",label:"AI 改款生成",details:["将调研 HTML 中自动采用的方向素材与需求约束结构化","生成逐款正向提示词、负向提示词和视觉一致性要求","检查每款至少两个有意义的设计变化轴","通过完整性检查后生成图片，并检查空白、重复与人群偏差"],state:"complete"}));proposalFlow.stage="aiReview";const artifact=makeArtifactPayload("proposalAiResult","AI 改款结果（12张）","proposalV2Ai","12 张 AI 概念图 · 待确认");saveArtifact("aiV2",artifact);appendTaskHtml(proposalAgentMessage("首批 12 张 AI 改款图已完成。已继承客户确认的视觉方向和调研 HTML 中自动采用的方向素材，并分别在廓形、比例、结构、花型或细节上形成差异，不以换色充当新款。全部图片在下方平铺展示，请选择需要重生成或写入正式提案的图片。"));appendTaskHtml(proposalArtifactQuote(artifact,"服装改款提示词已在后台通过完整性检查 · AI概念表达"));appendTaskHtml(`<div class="task-message assistant"><div class="agent-message">${proposalV2AiMarkup()}</div></div>`);document.querySelector("#task-condition").placeholder="补充图片修改要求或上传新参考图；只重跑受影响款…";renderProposalPlanPanel();}
+    function proposalV2StartAi(){
+      if(!proposalFlow.v2.remixPlan)return;
+      proposalFlow.stage="aiGenerating";
+      renderProposalPlanPanel();
+      appendTaskHtml(agentExecutionMessage({copy:"视觉方向已确认，正在生成专业服装改款提示词与 AI 概念图。",label:"AI 改款生成",details:["将调研 HTML 中自动采用的方向素材与需求约束结构化","生成逐款正向提示词、负向提示词和视觉一致性要求","检查每款至少两个有意义的设计变化轴","通过完整性检查后生成图片，并检查空白、重复与人群偏差"],state:"complete"}));
+      proposalFlow.stage="aiReview";
+      appendTaskHtml(proposalAgentMessage("首批 12 张 AI 改款图已完成。已继承客户确认的视觉方向和调研 HTML 中自动采用的方向素材，并在廓形、比例、结构、花型或细节上形成差异。全部图片在下方平铺展示，请选择需要重生成或写入正式提案的图片。"));
+      appendTaskHtml(`<div class="task-message assistant"><div class="agent-message">${proposalV2AiMarkup()}</div></div>`);
+      document.querySelector("#task-condition").placeholder="补充图片修改要求或上传新参考图；只重跑受影响款";
+      renderProposalPlanPanel();
+    }
     function proposalV2OpenAiPreview(code){const item=proposalV2Concepts.find(concept=>concept.code===code);if(!item)return;document.querySelector("#candidate-detail-body").innerHTML=`<div class="planning-image-preview"><img src="${item.assetUrl}" alt="${item.code} ${escapeHtml(item.category)}"><h3>${item.code} · ${escapeHtml(item.category)}</h3><p>${escapeHtml(item.direction)} · AI 概念表达 · V${item.revision}<br>该图片用于客户方向确认，不作为市场证据、精确制版或可直接生产的技术图。</p><div class="candidate-detail-actions"><button type="button" data-proposal-v2-image-close>关闭</button><button type="button" class="primary" data-proposal-v2-ai-detail-select="${item.code}">${proposalFlow.v2.selectedAi.has(item.code)?"取消选择":"选择此图"}</button></div></div>`;document.querySelector("#candidate-detail-overlay").hidden=false;}
-    function proposalV2GenerateFinal(){const state=proposalFlow.v2;if(!state.selectedAi.size)return;proposalFlow.stage="delivery";proposalArtifactData.aiV2.status="已确认";proposalArtifactData.aiV2.summary=`已确认 ${state.selectedAi.size} 张 AI 改款图`;appendTaskHtml(agentExecutionMessage({copy:"正在将客户需求、市场证据、确认方向、方向关联素材、客户反馈和 AI 改款图写入正式客户提案，并整理最终应用 AI 款式明细。",label:"生成正式客户提案",details:["锁定用户确认的 AI 改款图","关联市场数据、确认方向、调研 HTML 中的方向素材与客户反馈","生成沿用任务文件语言的只读 HTML","生成最终应用 AI 款式 XLSX，并与 HTML 使用同一图片快照","准备 HTML、PPT、PDF 下载文件"],state:"complete"}));const artifact=makeArtifactPayload("proposalFinalV2","正式客户提案.html","proposalV2Final",`${state.selectedAi.size} 张已确认 AI 改款图 · ${state.language}`);artifact.downloads=[{label:"HTML",name:"正式客户提案.html",href:"case-assets/crown-ivy/final-v2/index.html"},{label:"PPT",name:"正式客户提案.pptx",href:"case-assets/crown-ivy/deliverables/Crown_Ivy_Fall_Transition_2026_Proposal_v2.pptx"},{label:"PDF",name:"正式客户提案.pdf",href:"case-assets/crown-ivy/deliverables/Crown_Ivy_Fall_Transition_2026_Proposal_v2.pdf"},{label:"XLSX",name:"最终应用AI款式.xlsx",href:"case-assets/proposal-v2/最终应用AI款式.xlsx"}];const finalAiStyles=makeArtifactPayload("proposalV2FinalAiStyles","最终应用AI款式.xlsx","proposalV2FinalAiStyles",`与正式客户提案 HTML 同版 · ${state.selectedAi.size} 张已确认 AI 改款图`);finalAiStyles.downloads=[{label:"XLSX",name:"最终应用AI款式.xlsx",href:"case-assets/proposal-v2/最终应用AI款式.xlsx"}];saveArtifact("finalV2",artifact);saveArtifact("finalAiStylesV2",finalAiStyles);proposalFlow.stage="done";appendTaskHtml(proposalAgentMessage(`正式客户提案已完成，已写入 ${state.selectedAi.size} 张确认后的 AI 改款图，并保留客户需求、市场与趋势依据、已确认视觉方向、调研 HTML 中的方向关联素材、客户反馈和方案对比。未包含内部 Design Brief、BOM、打样、MOQ、成本、交期或供应链计划。`));appendTaskHtml(proposalArtifactQuote(artifact,"统一 HTML 查看器 · 可下载 HTML / PPT / PDF / XLSX · 不支持在线编辑"));appendTaskHtml(spreadsheetArtifactQuote(finalAiStyles,"只收录正式客户提案 HTML 中实际采用且已确认的 AI 款式；图片、款号和 HTML 使用同一版本快照。"));document.querySelector("#task-condition").placeholder="继续提出内容修正、图片替换、语言变更或新版本要求…";renderProposalPlanPanel();}
+    function proposalV2GenerateFinal(){
+      const state=proposalFlow.v2;
+      if(!state.selectedAi.size)return;
+      proposalFlow.stage="delivery";
+      appendTaskHtml(agentExecutionMessage({copy:"正在将客户需求、市场证据、确认方向、方向关联素材、客户反馈和 AI 改款图写入正式客户提案。",label:"生成正式客户提案",details:["锁定用户确认的 AI 改款图","关联市场数据、确认方向、调研 HTML 中的方向素材与客户反馈","生成沿用任务文件语言的只读 HTML","准备 HTML、PPT、PDF 下载文件"],state:"complete"}));
+      const artifact=makeArtifactPayload("proposalFinalV2","正式客户提案.html","proposalV2Final",`${state.selectedAi.size} 张已确认 AI 改款图 · ${state.language}`);
+      artifact.downloads=[{label:"HTML",name:"正式客户提案.html",href:"case-assets/crown-ivy/final-v2/index.html"},{label:"PPT",name:"正式客户提案.pptx",href:"case-assets/crown-ivy/deliverables/Crown_Ivy_Fall_Transition_2026_Proposal_v2.pptx"},{label:"PDF",name:"正式客户提案.pdf",href:"case-assets/crown-ivy/deliverables/Crown_Ivy_Fall_Transition_2026_Proposal_v2.pdf"}];
+      saveArtifact("finalV2",artifact);
+      proposalFlow.stage="done";
+      appendTaskHtml(proposalAgentMessage(`正式客户提案已完成，已写入 ${state.selectedAi.size} 张确认后的 AI 改款图，并保留客户需求、市场与趋势依据、已确认视觉方向、调研 HTML 中的方向关联素材、客户反馈和方案对比。`));
+      appendTaskHtml(proposalArtifactQuote(artifact,"统一 HTML 查看器 · 可下载 HTML / PPT / PDF · 不支持在线编辑"));
+      document.querySelector("#task-condition").placeholder="继续提出内容修正、图片替换、语言变更或新版本要求";
+      renderProposalPlanPanel();
+    }
 
     function proposalV2ResearchViewer(){return `<div class="planning-html-report"><section class="planning-report-hero"><div><h3>客户需求调研与视觉方向</h3><p>演示数据。依据客户需求硬约束，对电商、社媒、品牌/百货公开站和趋势资料分别核对；不同平台不合并销量或热度，单一来源不构成确定趋势。</p></div><div class="planning-report-metrics"><div><strong>4</strong><span>视觉方向</span></div><div><strong>4 类</strong><span>业务来源</span></div><div><strong>114 条</strong><span>演示有效样本</span></div><div><strong>中</strong><span>整体证据充分度</span></div></div></section>${proposalV2Directions.map(item=>`<section class="planning-report-direction"><div class="planning-report-product"><img src="${item.image}" alt="${escapeHtml(item.name)}"><a href="https://www.belk.com/" target="_blank" rel="noopener">真实参考 · 原始来源 ↗</a></div><div><h4>${escapeHtml(item.name)} · ${escapeHtml(item.level)}</h4><p>${escapeHtml(item.summary)}。客户匹配：${escapeHtml(item.match)}。</p><div class="planning-report-evidence"><div><b>市场依据</b><span>${escapeHtml(item.evidence)}</span></div><div><b>客户适配</b><span>${escapeHtml(item.match)}</span></div><div><b>风险与缺口</b><span>演示样本不代表全市场；缺少统一销量、转化、退货与线下门店数据。</span></div></div><div class="trend-meta"><span>2026-05 至 2026-08</span><span>电商 42 · 社媒 48 · 品牌/百货 22 · 趋势章节 2（演示）</span><span>授权：仅用于方向研究</span></div></div></section>`).join("")}</div>`;}
     function proposalV2DirectionPackViewer(){const selected=proposalV2Candidates.filter(item=>proposalFlow.v2.selectedCandidates.has(item.code)),english=proposalFlow.v2.language==="English";return `<div class="planning-html-report"><section class="planning-report-hero"><div><h3>${english?"Customer Direction Reference Pack":"客户方向参考包"}</h3><p>${escapeHtml(proposalFlow.requirement.client)} · ${escapeHtml(proposalFlow.requirement.market)} · ${escapeHtml(proposalFlow.requirement.season)}. ${english?"For confirmation of elements to preserve, exclude and modify.":"供客户确认保留、排除与修改意见。"}</p></div><div class="planning-report-metrics"><div><strong>${selected.length}</strong><span>${english?"Selected references":"已选参考图"}</span></div><div><strong>${proposalFlow.v2.selectedDirections.size}</strong><span>${english?"Confirmed directions":"确认方向"}</span></div><div><strong>${escapeHtml(proposalFlow.v2.language)}</strong><span>${english?"File language":"文件语言"}</span></div><div><strong>${english?"Read only":"只读"}</strong><span>${english?"Revise via conversation":"通过对话修改"}</span></div></div></section><div class="proposal-v2-report-visuals">${selected.map(item=>`<figure><img src="${item.assetUrl}" alt="${item.code}"><figcaption>${item.code} · ${escapeHtml(item.source)}<br>${escapeHtml(proposalV2Directions.find(direction=>direction.id===item.direction)?.name||"")}</figcaption></figure>`).join("")}</div><section class="preview-section"><h3>${english?"Client confirmation":"请客户确认"}</h3><p>${english?"Please confirm what must be preserved or excluded, and the preferred neckline, sleeve, length, color, print and concept count. Images are directional anchors and will not be copied directly.":"哪些元素必须保留、哪些必须排除、希望调整的领型/袖型/长度/颜色/花型，以及期望生成款数。图片仅作方向锚点，不要求直接复刻。"}</p></section></div>`;}
     function proposalV2FinalViewer(){const selected=proposalV2Concepts.filter(item=>proposalFlow.v2.selectedAi.has(item.code)),english=proposalFlow.v2.language==="English";const table=english?`<thead><tr><th>Source</th><th>Time range</th><th>Sample</th><th>Used for</th><th>Data gap</th></tr></thead><tbody><tr><td>Amazon US</td><td>May-Aug 2026</td><td>42 items (demo)</td><td>Supply, price, rating and review distribution</td><td>Unified sales/conversion not returned</td></tr><tr><td>TikTok Shop US</td><td>Jun-Aug 2026</td><td>24 items (demo)</td><td>Public sold count and visual language</td><td>Engagement is not sales</td></tr><tr><td>BELK / brand sites</td><td>Fall Transition 2026</td><td>22 pages (demo)</td><td>Brand adoption and department-store expression</td><td>Not full-market coverage</td></tr><tr><td>Trend sources</td><td>Oct 2025-May 2026</td><td>2 chapters (demo)</td><td>Directional hypotheses</td><td>Cannot prove opportunity alone</td></tr></tbody>`:`<thead><tr><th>来源</th><th>时间范围</th><th>样本</th><th>用于判断</th><th>数据缺口</th></tr></thead><tbody><tr><td>Amazon US</td><td>2026-05 至 2026-08</td><td>42 件（演示）</td><td>供给、价格、评分与评价分布</td><td>统一销量/转化未返回</td></tr><tr><td>TikTok Shop US</td><td>2026-06 至 2026-08</td><td>24 件（演示）</td><td>公开售出量与内容表达</td><td>互动不等于销量</td></tr><tr><td>BELK / 品牌站</td><td>2026 Fall Transition</td><td>22 页（演示）</td><td>品牌采用与百货表达</td><td>不代表全市场</td></tr><tr><td>趋势资料</td><td>2025-10 至 2026-05</td><td>2 章节（演示）</td><td>方向假设</td><td>不能单独证明机会</td></tr></tbody>`;return `<div class="planning-html-report"><section class="planning-report-hero"><div><h3>${english?"Formal Customer Proposal":"正式客户提案"}</h3><p>${escapeHtml(proposalFlow.requirement.client)} · ${escapeHtml(proposalFlow.requirement.season)} · ${escapeHtml(proposalFlow.v2.language)}. ${english?"Customer needs, market evidence, confirmed directions, feedback and AI redesign concepts.":"包含客户需求、市场依据、确认方向、客户反馈与 AI 改款方案。"}</p></div><div class="planning-report-metrics"><div><strong>${selected.length}</strong><span>${english?"Confirmed AI concepts":"确认 AI 方案"}</span></div><div><strong>${proposalFlow.v2.selectedCandidates.size}</strong><span>${english?"Reference anchors":"参考锚点"}</span></div><div><strong>4</strong><span>${english?"Business evidence types":"业务证据来源"}</span></div><div><strong>${english?"Read only":"只读"}</strong><span>${english?"Client-facing":"对外提案"}</span></div></div></section><section class="preview-section"><h3>${english?"Market evidence and data boundaries":"市场依据与数据边界"}</h3><table class="proposal-v2-report-table">${table}</table></section><div class="proposal-v2-report-visuals">${selected.map(item=>`<figure><img src="${item.assetUrl}" alt="${item.code}"><figcaption>${item.code} · ${escapeHtml(item.category)}<br>${escapeHtml(item.direction)} · ${english?"AI concept expression":"AI概念表达"}</figcaption></figure>`).join("")}</div><section class="preview-section"><h3>${english?"Proposal logic":"方案对应关系"}</h3><p>${english?"The primary proposal retains the approved floral language and mature proportion. Alternatives expand differentiation through sleeve, neckline, length, set relationship and print scale. All AI images are concept expressions, not market evidence or production-ready technical drawings.":"主方案优先延续客户认可的花卉语言与成熟比例；备选方案在袖型、领口、长度、套装关系和花型尺度上扩大差异。所有 AI 图均为概念表达，不作为市场证据或可生产技术图。"}</p></section></div>`;}
     function proposalV2OpenViewer(title,html){planningV2OpenHtmlViewer(title,"统一 HTML 查看器 · 只读",html);}
     function renderTaskArtifactPreview(artifact){
-      if(["planningFinalAiStyles","proposalV2FinalAiStyles"].includes(artifact?.type)){
-        const file=artifact.downloads?.[0];
-        if(file){const link=document.createElement("a");link.href=file.href;link.download=file.name;link.click();showToast(`已下载 ${file.name}`);}
-        return;
-      }
-      if(artifact?.type==="planningSheet"){const link=document.createElement("a");link.href="case-assets/planning-v2/视觉方向参考商品.xlsx";link.download="视觉方向参考商品.xlsx";link.click();showToast("已下载 视觉方向参考商品.xlsx");return;}
-      if(String(artifact?.type||"").startsWith("planning")){renderPlanningPreview(artifact.type);return;}
-      if(artifact?.type==="proposalV2Sheet"){const link=document.createElement("a");link.href=artifact.directDownload||"case-assets/proposal-v2/视觉方向参考素材.xlsx";link.download="视觉方向参考素材.xlsx";link.click();showToast("已下载 视觉方向参考素材.xlsx");return;}
+      if(!artifact || !/\.html/i.test(String(artifact.label || ""))) return;
+      if(String(artifact.type||"").startsWith("planning")){renderPlanningPreview(artifact.type);return;}
       if(artifact?.type==="proposalV2Research"){proposalV2OpenViewer("客户需求调研与视觉方向.html",proposalV2ResearchViewer());return;}
-      if(artifact?.type==="proposalV2DirectionPack"){return;}
-      if(artifact?.type==="proposalV2Ai"){proposalV2OpenAiPreview([...proposalFlow.v2.selectedAi][0]||proposalV2Concepts[0].code);return;}
       if(artifact?.type==="proposalV2Final"){proposalV2OpenViewer("正式客户提案.html",proposalV2FinalViewer());return;}
       renderProposalPreview(artifact.type);
     }
@@ -6027,7 +6064,7 @@
     }
     function planningReferenceStyleItems() {
       if (!planningFlow.active || !["research","directionReview","structure","aiGenerating","aiReview","delivery","done"].includes(planningFlow.stage)) return [];
-      return sortStyleItems(planningMaterialData.map(item => ({ key:`planning-reference-${item.code}`, image:item.image_url, remoteImage:item.image_url, fallback:planningFallbackImage(item), title:`${item.code} · ${item.category}`, subtitle:`${item.platform} · ${item.wave} · ${item.source}`, acquiredAt:item.captured_at, previewType:"planning-reference", previewId:item.code, data:item })));
+      return sortStyleItems(planningMaterialData.map(item => ({ key:`planning-reference-${item.code}`, image:item.image_url, remoteImage:item.image_url, fallback:planningFallbackImage(item), title:item.title || item.product_name || item.category || "\u53c2\u8003\u6b3e\u5f0f", acquiredAt:item.captured_at, previewType:"planning-reference", previewId:item.code, data:item })));
     }
     function planningAiStyleItems() {
       if (!planningFlow.active || !["aiReview","delivery","done"].includes(planningFlow.stage)) return [];
@@ -6035,20 +6072,20 @@
     }
     function proposalReferenceStyleItems() {
       if (!proposalFlow.active || !["research","directionReview","waitingFeedback","feedbackPlan","aiGenerating","aiReview","delivery","done"].includes(proposalFlow.stage)) return [];
-      return sortStyleItems(proposalV2Candidates.map(item => ({ key:`proposal-reference-${item.code}`, image:item.assetUrl, title:`${item.code} · ${item.title}`, subtitle:`${item.source} · ${item.price}`, acquiredAt:item.captured || "2026-08-14", previewType:"proposal-reference", previewId:item.code, data:item })));
+      return sortStyleItems(proposalV2Candidates.map(item => ({ key:`proposal-reference-${item.code}`, image:item.assetUrl, title:item.title || item.category || "\u53c2\u8003\u6b3e\u5f0f", acquiredAt:item.captured || "2026-08-14", previewType:"proposal-reference", previewId:item.code, data:item })));
     }
     function proposalAiStyleItems() {
       if (!proposalFlow.active || !["aiReview","delivery","done"].includes(proposalFlow.stage)) return [];
       return sortStyleItems(proposalV2Concepts.map(item => ({ key:`proposal-ai-${item.code}`, image:item.assetUrl, title:`${item.code} · ${item.category}`, subtitle:`${item.direction} · AI 概念表达`, acquiredAt:item.generatedAt || "2026-08-14", previewType:"proposal-ai", previewId:item.code, data:item })));
     }
-    renderPlanningPanel=function(){renderTaskPanel({plans:[],outputs:planningOutputs(),referenceStyles:planningReferenceStyleItems(),aiStyles:planningAiStyleItems()});};
-    renderProposalPlanPanel=function(){renderTaskPanel({plans:[],outputs:proposalOutputs(),referenceStyles:proposalReferenceStyleItems(),aiStyles:proposalAiStyleItems()});};
+    renderPlanningPanel=function(){renderTaskPanel({outputs:planningOutputs(),referenceStyles:planningReferenceStyleItems()});};
+    renderProposalPlanPanel=function(){renderTaskPanel({outputs:proposalOutputs(),referenceStyles:proposalReferenceStyleItems()});};
     function closeStyleDrawer(){document.querySelector("#style-drawer-backdrop").hidden=true;}
-    function openStyleDrawer(kind){
-      const items=kind==="ai"?(planningFlow.active?planningAiStyleItems():proposalAiStyleItems()):(planningFlow.active?planningReferenceStyleItems():proposalReferenceStyleItems());
-      document.querySelector("#style-drawer-title").textContent=kind==="ai"?"AI 款式":"参考款式";
-      document.querySelector("#style-drawer-subtitle").textContent=`共 ${items.length} 条 · 按最近获取时间排序`;
-      document.querySelector("#style-drawer-list").innerHTML=items.map(item=>`<li class="style-drawer-item"><button type="button" data-style-preview="${escapeHtml(item.key)}">${styleImageMarkup(item,true)}<span class="task-style-copy"><strong>${escapeHtml(item.title)}</strong><small>${escapeHtml(item.subtitle||"")}</small></span><span class="style-drawer-time">${escapeHtml(item.acquiredAt||"刚刚")}</span></button></li>`).join("");
+    function openStyleDrawer(){
+      const items=planningFlow.active?planningReferenceStyleItems():proposalReferenceStyleItems();
+      document.querySelector("#style-drawer-title").textContent="参考款式";
+      document.querySelector("#style-drawer-subtitle").textContent=`共 ${items.length} 条`;
+      document.querySelector("#style-drawer-list").innerHTML=items.map(item=>`<li class="style-drawer-item"><button type="button" data-style-preview="${escapeHtml(item.key)}">${styleImageMarkup(item,true)}<span class="task-style-copy"><strong>${escapeHtml(item.title)}</strong></span></button></li>`).join("");
       document.querySelector("#style-drawer-backdrop").hidden=false;
       hydratePlanningImages(document.querySelector("#style-drawer-list"));
     }
