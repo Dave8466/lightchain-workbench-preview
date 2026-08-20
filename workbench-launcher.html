@@ -17,6 +17,38 @@
       --accent: #20d0c4;
       --light: #e7ecea;
       --sidebar-width: 246px;
+      --brand-primary: #0bc1b8;
+      --brand-primary-hover: #20d0c4;
+      --brand-primary-disabled: #0d6261;
+      --background-default: #171b1c;
+      --background-secondary: #262a2b;
+      --background-canvas: #0a0b0b;
+      --surface-default: #262a2b;
+      --surface-secondary: #303536;
+      --control-fill-default: #262a2b;
+      --control-fill-hover: #353a3b;
+      --control-fill-focus: #171b1c;
+      --state-hover: rgba(255,255,255,.08);
+      --state-selected: rgba(255,255,255,.12);
+      --text-primary: #fff;
+      --text-secondary: #e3e8e8;
+      --text-tertiary: #aab8b6;
+      --text-placeholder: #7b8a88;
+      --text-brand: #20d0c4;
+      --border-weak: rgba(255,255,255,.10);
+      --border-strong: rgba(255,255,255,.18);
+      --border-brand: #0bc1b8;
+      --shadow-s: 0 2px 4px rgba(0,0,0,.2);
+      --shadow-m: 0 8px 20px rgba(0,0,0,.22);
+      --shadow-l: 0 18px 44px rgba(0,0,0,.28);
+      --motion-standard: 200ms ease-out;
+      --motion-pressed: 100ms ease-out;
+      --radius-s: 4px;
+      --radius-m: 6px;
+      --radius-base: 8px;
+      --radius-l: 12px;
+      --radius-xl: 16px;
+      --radius-max: 999px;
       font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
       color-scheme: dark;
     }
@@ -1837,6 +1869,256 @@
       .proposal-artifact-quote { grid-template-columns: 38px minmax(0,1fr); }
       .proposal-artifact-quote > :last-child { grid-column: 2; justify-self: start; }
     }
+
+    /* Workbench UI alignment: preserve the V5.2 flows while matching the component language of the reference UI. */
+    .task-workbench-page {
+      background: var(--background-default);
+    }
+    .task-layout.panel-visible { grid-template-columns: minmax(620px,1fr) 304px; }
+    .task-conversation {
+      border-right-color: var(--border-weak);
+      background: var(--background-default);
+    }
+    .task-context {
+      min-height: 60px;
+      padding: 0 32px;
+      border-bottom-color: var(--border-weak);
+      background: rgba(23,27,28,.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    #task-scene {
+      height: 36px;
+      padding: 0 8px;
+      border-radius: var(--radius-base);
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 500;
+      transition: color var(--motion-standard), background-color var(--motion-standard), border-color var(--motion-standard);
+    }
+    #task-scene:hover, #task-scene:focus-visible { color: var(--text-primary); border-color: var(--border-weak); background: var(--state-hover); outline: 0; }
+    #task-profile-trigger {
+      height: 28px;
+      padding: 0 10px;
+      border-color: var(--border-weak);
+      border-radius: var(--radius-base);
+      color: var(--text-tertiary);
+      background: var(--state-hover);
+    }
+    #task-profile-trigger:hover, #task-profile-trigger:focus-visible { border-color: var(--border-brand); outline: 0; }
+    .task-chat { padding: 34px clamp(32px,6vw,88px) 32px; scrollbar-color: #49514f transparent; }
+    .task-chat-inner { width: min(720px,100%); }
+    .task-message { margin-bottom: 20px; animation: conversationMessageIn 180ms ease-out both; }
+    .task-message.user { margin-bottom: 24px; }
+    .user-message-bubble {
+      max-width: min(600px,84%);
+      padding: 12px 16px;
+      border-color: var(--border-weak);
+      border-radius: var(--radius-l) var(--radius-l) var(--radius-s) var(--radius-l);
+      color: var(--text-secondary);
+      background: var(--surface-secondary);
+      box-shadow: var(--shadow-s);
+      font-size: 14px;
+      line-height: 24px;
+    }
+    .task-message.assistant { position: relative; padding-left: 32px; margin-bottom: 18px; }
+    .task-message.assistant::before {
+      content: "L";
+      position: absolute;
+      top: 8px;
+      left: 0;
+      width: 22px;
+      height: 22px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(32,208,196,.34);
+      border-radius: var(--radius-m);
+      color: var(--text-brand);
+      background: rgba(32,208,196,.08);
+      font-size: 10px;
+      font-weight: 700;
+    }
+    .agent-message { min-width: 0; padding: 6px 0; }
+    .agent-message-copy { max-width: 688px; color: var(--text-secondary); font-size: 14px; line-height: 24px; }
+    .agent-execution-list { gap: 4px; margin-top: 10px; }
+    .execution-item { width: min(688px,100%); border-radius: var(--radius-base); transition: background-color var(--motion-standard); }
+    .execution-item.expanded { background: rgba(255,255,255,.025); }
+    .execution-trigger { height: 36px; gap: 7px; padding: 0 8px; border-radius: var(--radius-base); color: var(--text-tertiary); }
+    .execution-trigger:hover { color: var(--text-secondary); background: var(--state-hover); }
+    .execution-label { font-size: 13px; font-weight: 500; }
+    .execution-status.complete::before { color: var(--text-brand); background: rgba(32,208,196,.12); }
+    .execution-status.error::before { content: "!"; width: 16px; height: 16px; display: grid; place-items: center; border-radius: 50%; color: #ffd3d3; background: #b84242; font-size: 10px; font-weight: 700; }
+    .execution-content { padding: 3px 12px 10px 35px; }
+    .execution-detail-row { color: var(--text-placeholder); font-size: 12px; line-height: 20px; }
+    .execution-detail-icon { color: #62706d; }
+    .planning-quick-actions { gap: 8px; margin-top: 14px; }
+    .planning-quick-action {
+      height: 34px;
+      padding: 0 14px;
+      border-color: var(--border-weak);
+      border-radius: var(--radius-base);
+      color: var(--text-secondary);
+      background: var(--control-fill-default);
+      font-size: 12px;
+      font-weight: 500;
+      transition: transform var(--motion-pressed), background-color var(--motion-standard), border-color var(--motion-standard);
+    }
+    .planning-quick-action:hover, .planning-quick-action:focus-visible { border-color: var(--border-strong); color: var(--text-primary); background: var(--control-fill-hover); outline: 0; }
+    .planning-quick-action:active { transform: scale(.98); }
+    .planning-quick-action.primary { border-color: var(--brand-primary); color: #111817; background: var(--brand-primary-hover); }
+    .planning-quick-action.primary:hover, .planning-quick-action.primary:focus-visible { border-color: #70ebde; color: #111817; background: #70ebde; }
+    .task-composer-area { padding: 10px clamp(32px,6vw,88px) 20px; background: linear-gradient(180deg,rgba(23,27,28,0),var(--background-default) 30%); }
+    .task-condition-box {
+      width: min(720px,100%);
+      min-height: 108px;
+      padding: 12px;
+      border-color: var(--border-weak);
+      border-radius: var(--radius-xl);
+      background: var(--surface-default);
+      box-shadow: var(--shadow-l);
+      transition: border-color var(--motion-standard), box-shadow var(--motion-standard);
+    }
+    .task-condition-box:focus-within { border-color: rgba(32,208,196,.54); box-shadow: 0 0 0 3px rgba(32,208,196,.08),var(--shadow-l); }
+    .task-condition-box textarea { color: var(--text-secondary); font-size: 13px; line-height: 22px; }
+    .task-condition-box textarea::placeholder { color: var(--text-placeholder); }
+    .task-composer-tool, #check-task-boundary { border-radius: var(--radius-base); transition: transform var(--motion-pressed), background-color var(--motion-standard), color var(--motion-standard); }
+    .task-composer-tool { border-color: transparent; color: var(--text-tertiary); }
+    .task-composer-tool:hover, .task-composer-tool:focus-visible { color: var(--text-primary); background: var(--state-hover); outline: 0; }
+    #check-task-boundary { color: #111817; background: var(--brand-primary-hover); }
+    #check-task-boundary:hover:not(:disabled), #check-task-boundary:focus-visible:not(:disabled) { background: #70ebde; outline: 0; }
+    .task-composer-tool:active, #check-task-boundary:active:not(:disabled) { transform: scale(.94); }
+
+    .planning-scope-card,.planning-direction-selector,.planning-ai-selector,.proposal-v2-selector,.selection-card {
+      width: min(688px,100%);
+      overflow: hidden;
+      border: 1px solid var(--border-weak);
+      border-radius: var(--radius-l);
+      background: var(--surface-default);
+      box-shadow: var(--shadow-s);
+    }
+    .planning-component-head,.selection-card-head { padding: 16px; border-bottom: 1px solid var(--border-weak); }
+    .planning-component-head h4,.selection-card-head h4 { color: var(--text-primary); font-size: 14px; font-weight: 500; line-height: 20px; }
+    .planning-component-head p,.selection-card-head p { margin-top: 4px; color: var(--text-tertiary); font-size: 12px; line-height: 18px; }
+    .planning-component-state,.selection-required {
+      min-height: 22px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 7px;
+      border: 1px solid rgba(32,208,196,.18);
+      border-radius: var(--radius-s);
+      color: var(--text-brand);
+      background: rgba(32,208,196,.08);
+      font-size: 10px;
+      line-height: 16px;
+      white-space: nowrap;
+    }
+    .planning-scope-body { gap: 0; padding: 0 16px; }
+    .planning-scope-section { gap: 10px; padding: 16px 0; }
+    .planning-scope-section + .planning-scope-section { border-top: 1px solid var(--border-weak); }
+    .planning-scope-title { color: var(--text-secondary); font-size: 12px; font-weight: 500; }
+    .planning-profile-source { color: var(--text-brand); font-size: 10px; }
+    .planning-chip-list { gap: 8px; }
+    .planning-scope-chip {
+      min-height: 32px;
+      padding: 5px 10px;
+      border-color: var(--border-weak);
+      border-radius: var(--radius-base);
+      color: var(--text-tertiary);
+      background: transparent;
+      font-size: 11px;
+      transition: color var(--motion-standard), background-color var(--motion-standard), border-color var(--motion-standard), transform var(--motion-pressed);
+    }
+    .planning-scope-chip:hover, .planning-scope-chip:focus-visible { color: var(--text-secondary); border-color: var(--border-strong); background: var(--state-hover); outline: 0; }
+    .planning-scope-chip:active { transform: scale(.98); }
+    .planning-scope-chip.selected { border-color: var(--border-brand); color: var(--text-secondary); background: rgba(32,208,196,.10); }
+    .planning-source-group { grid-template-columns: 116px minmax(0,1fr); gap: 12px; }
+    .planning-source-group > span { color: var(--text-placeholder); font-size: 10px; }
+    .planning-source-add select,.planning-source-add input { height: 34px; border-color: var(--border-weak); border-radius: var(--radius-base); color: var(--text-secondary); background: var(--control-fill-focus); font-size: 11px; }
+    .planning-source-add input:focus,.planning-source-add select:focus { border-color: var(--border-brand); box-shadow: 0 0 0 2px rgba(32,208,196,.08); }
+    .planning-component-actions,.selection-card-actions { min-height: 58px; padding: 12px 16px; border-top: 1px solid var(--border-weak); background: rgba(0,0,0,.08); }
+    .planning-component-actions button,.selection-confirm,.planning-source-add button { height: 34px; padding: 0 14px; border: 1px solid var(--border-weak); border-radius: var(--radius-base); color: var(--text-secondary); background: var(--control-fill-default); font-size: 11px; font-weight: 500; }
+    .planning-component-actions button:hover:not(:disabled),.selection-confirm:hover,.planning-source-add button:hover { border-color: var(--border-strong); color: var(--text-primary); background: var(--control-fill-hover); }
+    .planning-component-actions .primary,.selection-confirm { border-color: var(--brand-primary); color: #111817; background: var(--brand-primary-hover); }
+    .planning-component-actions button:disabled { border-color: transparent; color: rgba(255,255,255,.28); background: #343a3b; }
+    .planning-component-error,.planning-selection-summary { color: var(--text-placeholder); font-size: 10px; }
+
+    .planning-direction-grid,.proposal-v2-direction-grid { gap: 8px; padding: 12px; }
+    .planning-direction-option,.proposal-v2-direction {
+      min-height: 132px;
+      border-color: var(--border-weak);
+      border-radius: var(--radius-base);
+      background: var(--surface-secondary);
+      box-shadow: none;
+      transition: border-color var(--motion-standard), background-color var(--motion-standard), transform var(--motion-pressed);
+    }
+    .planning-direction-option:hover,.planning-direction-option:focus-visible,.proposal-v2-direction:hover,.proposal-v2-direction:focus-visible { border-color: var(--border-strong); background: var(--control-fill-hover); outline: 0; }
+    .planning-direction-option:active,.proposal-v2-direction:active { transform: scale(.99); }
+    .planning-direction-option.selected,.proposal-v2-direction.selected { border-color: var(--border-brand); background: rgba(32,208,196,.07); box-shadow: inset 0 0 0 1px rgba(32,208,196,.24); }
+    .planning-direction-option.selected::after,.proposal-v2-direction.selected::after { width: 22px; height: 22px; border: 2px solid #113331; background: var(--brand-primary-hover); box-shadow: 0 2px 8px rgba(0,0,0,.32); }
+    .planning-direction-option img,.proposal-v2-direction img { border-radius: var(--radius-m); background: var(--background-default); }
+    .planning-direction-copy strong,.proposal-v2-direction-copy strong { color: var(--text-primary); font-size: 12px; font-weight: 500; }
+    .planning-direction-copy p,.proposal-v2-direction-copy p { color: var(--text-tertiary); font-size: 10px; line-height: 16px; }
+    .planning-direction-level { color: var(--text-brand); background: transparent; }
+    .proposal-direction-guidance { margin: 0 12px 12px; padding: 10px 12px; border: 1px solid var(--border-weak); border-left: 2px solid var(--border-brand); border-radius: var(--radius-base); color: var(--text-tertiary); background: rgba(32,208,196,.04); font-size: 11px; line-height: 18px; }
+
+    .planning-ai-grid,.proposal-v2-ai-grid { grid-template-columns: repeat(4,minmax(0,1fr)); gap: 8px; padding: 12px; }
+    .planning-ai-item {
+      border: 2px solid transparent;
+      border-radius: var(--radius-base);
+      background: var(--surface-secondary);
+      box-shadow: inset 0 0 0 1px var(--border-weak);
+      transition: border-color var(--motion-standard), transform var(--motion-pressed), box-shadow var(--motion-standard);
+    }
+    .planning-ai-item:hover,.planning-ai-item:focus-within { box-shadow: inset 0 0 0 1px var(--border-strong),var(--shadow-m); }
+    .planning-ai-item.selected { border-color: var(--border-brand); box-shadow: none; }
+    .planning-ai-item:active { transform: scale(.99); }
+    .planning-ai-select { width: 24px; height: 24px; border: 1px solid rgba(255,255,255,.72); background: rgba(10,11,11,.72); backdrop-filter: blur(8px); }
+    .planning-ai-item.selected .planning-ai-select { border-color: var(--border-brand); background: var(--brand-primary-hover); }
+    .planning-ai-caption { padding: 34px 9px 9px; background: linear-gradient(180deg,transparent,rgba(10,11,11,.92)); font-size: 10px; }
+    .planning-ai-caption small { color: #c1cac7; font-size: 9px; }
+
+    .proposal-artifact-quote {
+      width: min(688px,100%);
+      min-height: 72px;
+      padding: 12px;
+      border-color: var(--border-weak);
+      border-radius: var(--radius-base);
+      background: var(--surface-default);
+      box-shadow: var(--shadow-s);
+    }
+    .proposal-artifact-quote:hover { border-color: var(--border-strong); background: var(--surface-secondary); }
+    .artifact-quote-icon { border-color: rgba(32,208,196,.28); border-radius: var(--radius-base); color: var(--text-brand); background: rgba(32,208,196,.06); }
+    .artifact-quote-copy strong { color: var(--text-primary); font-weight: 500; }
+    .artifact-quote-copy span { border-radius: var(--radius-s); color: var(--text-brand); background: transparent; }
+    .artifact-quote-copy small { color: var(--text-placeholder); }
+    .proposal-inline-action { border-color: var(--border-weak); border-radius: var(--radius-base); color: var(--text-secondary); background: transparent; }
+    .proposal-inline-action:hover,.proposal-inline-action:focus-visible { color: var(--text-primary); background: var(--state-hover); outline: 0; }
+
+    .task-panel { padding: 60px 12px 20px; border-left-color: var(--border-weak); background: var(--background-secondary); scrollbar-color: #4a5350 transparent; }
+    .task-panel-sections { gap: 0; padding: 8px; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+    .task-panel-section + .task-panel-section { margin-top: 18px; padding-top: 18px; border-top-color: var(--border-weak); }
+    .task-panel-section h3 { margin: 0 8px 10px; color: var(--text-secondary); font-size: 12px; font-weight: 500; }
+    .task-panel-section-head { margin: 0 8px 10px; }
+    .task-panel-section-head h3 { margin: 0; }
+    .task-panel-view-all { color: var(--text-brand); font-size: 10px; }
+    .task-panel-item { padding: 8px; border-radius: var(--radius-base); color: var(--text-secondary); }
+    .task-panel-item:hover { background: var(--state-hover); }
+    .artifact-list-open { gap: 10px; min-height: 28px; }
+    .task-panel-section.outputs .item-icon { width: 26px; height: 26px; display: grid; place-items: center; border: 1px solid var(--border-weak); border-radius: var(--radius-m); color: var(--text-brand); font-size: 0; background: rgba(32,208,196,.05); }
+    .task-panel-section.outputs .item-icon::before { content: ""; width: 10px; height: 13px; border: 1px solid currentColor; border-radius: 1px; }
+    .artifact-title { color: var(--text-secondary); font-size: 11px; line-height: 17px; }
+    .artifact-list-chevron { color: var(--text-placeholder); }
+    .task-style-open { grid-template-columns: 40px minmax(0,1fr); gap: 10px; }
+    .task-style-open img { width: 40px; height: 48px; border-radius: var(--radius-m); }
+    .task-style-copy strong { color: var(--text-secondary); font-size: 11px; font-weight: 500; }
+
+    .proposal-preview-dialog { border-color: var(--border-weak); background: var(--background-default); box-shadow: 0 30px 90px rgba(0,0,0,.46); }
+    .proposal-preview-head { border-bottom-color: var(--border-weak); background: rgba(23,27,28,.94); backdrop-filter: blur(16px); }
+
+    @keyframes conversationMessageIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    @media (prefers-reduced-motion: reduce) {
+      *,*::before,*::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
   </style>
 </head>
 <body>
@@ -2851,13 +3133,16 @@
     }
     const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[char]));
 
+    let executionMessageSequence = 0;
     function agentExecutionMessage({ copy, label, details = [], state = "running" }) {
+      const executionId = `execution-${++executionMessageSequence}`;
+      const normalizedState = ["running", "complete", "error"].includes(state) ? state : "running";
       const detailRows = details.map((detail) => `<div class="execution-detail-row"><span class="execution-detail-icon" aria-hidden="true">·</span><span>${escapeHtml(detail)}</span></div>`).join("");
       return `<div class="task-message assistant"><div class="agent-message">
         <div class="agent-message-copy">${escapeHtml(copy)}</div>
-        <div class="agent-execution-list"><article class="execution-item expanded">
-          <button class="execution-trigger" type="button" aria-expanded="true"><span class="execution-status ${state === "complete" ? "complete" : "running"}" aria-hidden="true"></span><span class="execution-label">${escapeHtml(label)}</span><span class="execution-chevron" aria-hidden="true">›</span></button>
-          <div class="execution-content">${detailRows}</div>
+        <div class="agent-execution-list"><article class="execution-item ${normalizedState === "running" ? "expanded" : ""}" data-execution-id="${executionId}">
+          <button class="execution-trigger" type="button" aria-expanded="${normalizedState === "running" ? "true" : "false"}" aria-controls="${executionId}-details"><span class="execution-status ${normalizedState}" aria-hidden="true"></span><span class="execution-label">${escapeHtml(label)}</span><span class="execution-chevron" aria-hidden="true">›</span></button>
+          <div class="execution-content" id="${executionId}-details">${detailRows}</div>
         </article></div>
       </div></div>`;
     }
@@ -3229,7 +3514,7 @@
     }
 
     function proposalAgentMessage(copy, actionHtml = "") {
-      return `<div class="task-message assistant"><div class="agent-message"><div class="agent-message-copy">${escapeHtml(copy)}</div>${actionHtml}</div></div>`;
+      return `<div class="task-message assistant"><div class="agent-message"><div class="agent-message-copy" role="status" aria-live="polite">${escapeHtml(copy)}</div>${actionHtml}</div></div>`;
     }
 
     function proposalAttachmentHtml(attachments = []) {
