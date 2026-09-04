@@ -1,0 +1,1328 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>SaaS 新 AI 能力复盘 | 中国与日本</title>
+  <style>
+    :root {
+      --ink: #172121;
+      --text: #334155;
+      --muted: #66736f;
+      --line: #dce5e2;
+      --line-strong: #bccbc6;
+      --paper: #f4f7f5;
+      --surface: #ffffff;
+      --surface-alt: #eef3f1;
+      --teal: #0f766e;
+      --teal-soft: #dff2ed;
+      --blue: #2563eb;
+      --blue-soft: #e7efff;
+      --orange: #e96d27;
+      --orange-soft: #fff0e7;
+      --green: #15803d;
+      --green-soft: #e7f5e9;
+      --amber: #b45309;
+      --amber-soft: #fff3d6;
+      --red: #b91c1c;
+      --red-soft: #fde8e8;
+      --cn: #176b87;
+      --jp: #ed6a2c;
+      --shadow: 0 12px 34px rgba(23, 33, 33, 0.08);
+      --radius: 6px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--text);
+      font-family: "IBM Plex Sans SC", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+      font-size: 14px;
+      line-height: 1.55;
+      letter-spacing: 0;
+    }
+
+    button, select { font: inherit; }
+
+    button:focus-visible, select:focus-visible, summary:focus-visible, a:focus-visible {
+      outline: 3px solid rgba(37, 99, 235, 0.3);
+      outline-offset: 2px;
+    }
+
+    .shell { min-height: 100vh; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(23, 33, 33, 0.97);
+      color: #fff;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .topbar-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      min-height: 72px;
+      padding: 10px 28px;
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) auto auto;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-family: "STSong", "Songti SC", serif;
+      font-size: 24px;
+      font-weight: 500;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .brand p { margin: 3px 0 0; color: #b9c7c3; font-size: 12px; }
+
+    .tabs, .segment {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      padding: 3px;
+      background: rgba(255,255,255,0.08);
+      border-radius: var(--radius);
+    }
+
+    .tabs button, .segment button {
+      min-height: 36px;
+      padding: 7px 12px;
+      border: 0;
+      border-radius: 4px;
+      background: transparent;
+      color: #cbd8d4;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .tabs button[aria-selected="true"], .segment button[aria-pressed="true"] {
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .print-button {
+      min-height: 38px;
+      padding: 8px 13px;
+      border: 1px solid rgba(255,255,255,0.28);
+      border-radius: 4px;
+      background: transparent;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    main { max-width: 1440px; margin: 0 auto; padding: 28px; }
+
+    [role="tabpanel"][hidden] { display: none; }
+
+    .page-intro {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 20px;
+    }
+
+    .page-intro h2 {
+      margin: 0;
+      color: var(--ink);
+      font-family: "STSong", "Songti SC", serif;
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+
+    .page-intro p { max-width: 760px; margin: 5px 0 0; color: var(--muted); }
+
+    .period { color: var(--muted); font-size: 12px; white-space: nowrap; }
+
+    .warning-band {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 18px;
+      margin-bottom: 20px;
+      padding: 13px 16px;
+      background: var(--amber-soft);
+      border-left: 4px solid var(--amber);
+      border-radius: 0 var(--radius) var(--radius) 0;
+    }
+
+    .warning-band strong { color: var(--amber); }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .kpi {
+      min-height: 122px;
+      padding: 17px 18px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .kpi-label { color: var(--muted); font-size: 12px; font-weight: 500; }
+    .kpi-value { margin-top: 8px; color: var(--ink); font-size: 30px; font-weight: 500; line-height: 1.1; }
+    .kpi-context { margin-top: 9px; color: var(--muted); font-size: 12px; }
+    .kpi[data-accent="teal"] .kpi-value { color: var(--teal); }
+    .kpi[data-accent="blue"] .kpi-value { color: var(--blue); }
+    .kpi[data-accent="green"] .kpi-value { color: var(--green); }
+    .kpi[data-accent="amber"] .kpi-value { color: var(--amber); }
+
+    .conclusion-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      margin-bottom: 22px;
+      background: var(--surface);
+      border-top: 3px solid var(--teal);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .conclusion {
+      padding: 16px 18px;
+      border-right: 1px solid var(--line);
+    }
+
+    .conclusion:last-child { border-right: 0; }
+    .conclusion .eyebrow { color: var(--teal); font-size: 12px; font-weight: 500; }
+    .conclusion h3 { margin: 5px 0 5px; color: var(--ink); font-size: 17px; font-weight: 500; }
+    .conclusion p { margin: 0; color: var(--muted); }
+
+    .analysis-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(360px, 0.75fr);
+      gap: 22px;
+      margin-bottom: 22px;
+    }
+
+    .section {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 16px 18px 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-head h3 { margin: 0; color: var(--ink); font-size: 16px; font-weight: 500; }
+    .section-head p { margin: 3px 0 0; color: var(--muted); font-size: 12px; }
+    .section-body { padding: 16px 18px 18px; }
+
+    .legend { display: flex; align-items: center; gap: 14px; color: var(--muted); font-size: 12px; }
+    .legend span { display: inline-flex; align-items: center; gap: 6px; }
+    .swatch { width: 18px; height: 3px; display: inline-block; }
+    .swatch.cn { background: var(--cn); }
+    .swatch.jp { background: var(--jp); }
+
+    .chart-wrap { position: relative; min-height: 286px; }
+    .line-chart { width: 100%; min-height: 286px; display: block; }
+    .axis-label { fill: var(--muted); font-size: 11px; }
+    .chart-title { fill: var(--text); font-size: 12px; font-weight: 500; }
+    .grid-line { stroke: var(--line); stroke-width: 1; }
+    .plot-line { fill: none; stroke-width: 2.5; vector-effect: non-scaling-stroke; }
+    .plot-dot { stroke: #fff; stroke-width: 2; cursor: pointer; }
+
+    .tooltip {
+      position: absolute;
+      pointer-events: none;
+      min-width: 130px;
+      padding: 8px 10px;
+      background: var(--ink);
+      color: #fff;
+      border-radius: 4px;
+      box-shadow: var(--shadow);
+      font-size: 12px;
+      opacity: 0;
+      transform: translate(-50%, -110%);
+      transition: opacity 120ms ease;
+      z-index: 5;
+    }
+
+    .tooltip.is-visible { opacity: 1; }
+
+    .feature-list { display: grid; gap: 10px; }
+    .feature-row {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 126px 1fr 72px;
+      gap: 10px;
+      align-items: center;
+      min-height: 42px;
+      padding: 5px 0;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .feature-row:last-child { border-bottom: 0; }
+    .feature-row[aria-pressed="true"] .feature-name { color: var(--teal); font-weight: 500; }
+    .feature-name { overflow-wrap: anywhere; }
+    .bar-stack { display: grid; gap: 5px; }
+    .bar-line { display: grid; grid-template-columns: 1fr; gap: 3px; }
+    .bar-track { height: 8px; background: var(--surface-alt); overflow: hidden; border-radius: 2px; }
+    .bar-fill { height: 100%; min-width: 2px; transition: width 260ms ease; }
+    .bar-fill.cn { background: var(--cn); }
+    .bar-fill.jp { background: var(--jp); }
+    .feature-value { text-align: right; color: var(--ink); font-variant-numeric: tabular-nums; }
+
+    .funnel-controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .field { display: grid; gap: 4px; }
+    .field label { color: var(--muted); font-size: 12px; }
+    select {
+      min-height: 38px;
+      min-width: 180px;
+      padding: 7px 34px 7px 10px;
+      border: 1px solid var(--line-strong);
+      border-radius: 4px;
+      background: var(--surface);
+      color: var(--ink);
+    }
+
+    .funnel {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      align-items: end;
+      min-height: 210px;
+      padding-top: 14px;
+    }
+
+    .funnel-step { display: grid; align-content: end; min-width: 0; }
+    .funnel-count { margin-bottom: 6px; color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; }
+    .funnel-bar { min-height: 18px; background: var(--teal); border-radius: 3px 3px 0 0; transition: height 260ms ease; }
+    .funnel-step:nth-child(2) .funnel-bar { background: var(--blue); }
+    .funnel-step:nth-child(3) .funnel-bar { background: var(--orange); }
+    .funnel-step:nth-child(4) .funnel-bar { background: var(--amber); }
+    .funnel-step:nth-child(5) .funnel-bar { background: var(--green); }
+    .funnel-label { min-height: 42px; padding-top: 7px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+    .funnel-rate { color: var(--muted); font-size: 11px; }
+    .funnel-note { margin: 12px 0 0; padding-top: 12px; border-top: 1px solid var(--line); color: var(--muted); }
+
+    .decision-callout {
+      display: grid;
+      grid-template-columns: 130px 1fr 1fr;
+      gap: 18px;
+      align-items: start;
+      padding: 18px;
+      margin-bottom: 22px;
+      background: var(--ink);
+      color: #dfe9e6;
+      border-radius: var(--radius);
+    }
+
+    .decision-callout strong { color: #fff; }
+    .decision-label { color: #8ed3c7; font-weight: 500; }
+
+    .comparison-table, .data-table { width: 100%; border-collapse: collapse; }
+    .table-scroll { overflow-x: auto; }
+    th {
+      padding: 10px 12px;
+      background: var(--surface-alt);
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 500;
+      text-align: left;
+      white-space: nowrap;
+    }
+    td { padding: 11px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+    tbody tr:last-child td { border-bottom: 0; }
+    .highlight-row td { background: rgba(223, 242, 237, 0.55); }
+
+    .ratio-track { min-width: 130px; height: 8px; background: var(--surface-alt); border-radius: 2px; overflow: hidden; }
+    .ratio-fill { height: 100%; background: var(--jp); }
+
+    .filter-bar {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      padding: 14px 0 12px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 8px;
+    }
+    .filter-group { display: flex; gap: 12px; flex-wrap: wrap; }
+    .result-count { color: var(--muted); font-size: 12px; }
+
+    .decision-list { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+    .decision-item { border-bottom: 1px solid var(--line); }
+    .decision-item:last-child { border-bottom: 0; }
+    .decision-item[hidden] { display: none; }
+    .decision-item summary {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 90px 110px minmax(220px, 1fr) 130px 24px;
+      gap: 14px;
+      align-items: center;
+      min-height: 62px;
+      padding: 10px 16px;
+      cursor: pointer;
+    }
+    .decision-item summary::-webkit-details-marker { display: none; }
+    .decision-title { color: var(--ink); font-weight: 500; }
+    .chevron { color: var(--muted); font-size: 18px; transition: transform 160ms ease; }
+    details[open] .chevron { transform: rotate(90deg); }
+
+    .badge {
+      display: inline-block;
+      width: fit-content;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+    .badge.green { color: var(--green); background: var(--green-soft); }
+    .badge.amber { color: var(--amber); background: var(--amber-soft); }
+    .badge.blue { color: var(--blue); background: var(--blue-soft); }
+    .badge.red { color: var(--red); background: var(--red-soft); }
+
+    .decision-detail {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0;
+      padding: 0 16px 16px;
+    }
+    .detail-cell { min-height: 112px; padding: 14px; border-top: 1px solid var(--line); border-right: 1px solid var(--line); }
+    .detail-cell:nth-child(3n) { border-right: 0; }
+    .detail-label { margin-bottom: 6px; color: var(--muted); font-size: 11px; font-weight: 500; text-transform: uppercase; }
+    .detail-cell p { margin: 0; }
+
+    .status-dot { display: inline-block; width: 8px; height: 8px; margin-right: 7px; border-radius: 50%; }
+    .status-dot.ok { background: var(--green); }
+    .status-dot.warn { background: var(--amber); }
+    .status-dot.risk { background: var(--red); }
+
+    .quality-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      margin-bottom: 22px;
+    }
+
+    .priority { font-weight: 500; color: var(--blue); }
+    .source-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 24px; }
+    .source-list a { color: var(--blue); text-decoration: none; overflow-wrap: anywhere; }
+    .source-list a:hover { text-decoration: underline; }
+    .source-item { padding: 10px 0; border-bottom: 1px solid var(--line); }
+    .source-item strong { display: block; color: var(--ink); font-size: 12px; }
+
+    .empty-state { padding: 36px 16px; text-align: center; color: var(--muted); }
+
+    .feature-review-layout {
+      display: grid;
+      grid-template-columns: 252px minmax(0, 1fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .feature-index {
+      position: sticky;
+      top: 96px;
+      display: grid;
+      gap: 4px;
+      padding: 10px;
+      background: var(--ink);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    #featureReviewIndex { display: grid; gap: 4px; }
+
+    .feature-index-title {
+      padding: 9px 10px 8px;
+      color: #9bd3c9;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    .feature-index button {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      width: 100%;
+      padding: 11px 10px;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      background: transparent;
+      color: #dce9e5;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .feature-index button:hover { background: rgba(255,255,255,.08); }
+    .feature-index button[aria-pressed="true"] { background: #fff; color: var(--ink); }
+    .feature-index button strong { display: block; font-size: 13px; font-weight: 600; }
+    .feature-index button small { display: block; margin-top: 2px; color: inherit; opacity: .68; font-size: 11px; }
+    .feature-index .index-decision { align-self: center; font-size: 11px; font-weight: 600; white-space: nowrap; }
+    .feature-index button[aria-pressed="true"] .index-decision { color: var(--teal); }
+
+    .feature-review-detail { display: grid; gap: 18px; min-width: 0; }
+
+    .feature-review-hero {
+      position: relative;
+      overflow: hidden;
+      padding: 24px 26px;
+      background: var(--ink);
+      color: #e4efec;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .feature-review-hero::after {
+      content: "";
+      position: absolute;
+      right: -70px;
+      top: -70px;
+      width: 220px;
+      height: 220px;
+      border: 1px solid rgba(142,211,199,.35);
+      border-radius: 50%;
+      box-shadow: 0 0 0 22px rgba(142,211,199,.06), 0 0 0 44px rgba(142,211,199,.04);
+    }
+
+    .feature-review-hero .eyebrow { color: #8ed3c7; font-size: 11px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; }
+    .feature-review-hero h3 { position: relative; z-index: 1; margin: 5px 0 6px; color: #fff; font-family: "STSong", "Songti SC", serif; font-size: 27px; font-weight: 500; }
+    .feature-review-hero p { position: relative; z-index: 1; max-width: 760px; margin: 0; color: #c5d5d0; }
+    .feature-review-hero .hero-meta { position: relative; z-index: 1; display: flex; gap: 18px; flex-wrap: wrap; margin-top: 15px; color: #9fb6b0; font-size: 12px; }
+    .feature-review-hero .hero-meta strong { color: #edf8f4; font-weight: 500; }
+
+    .review-kpi-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+    .review-kpi { min-height: 96px; padding: 13px 15px; background: var(--surface); border: 1px solid var(--line); border-top: 3px solid var(--teal); border-radius: var(--radius); }
+    .review-kpi:nth-child(2) { border-top-color: var(--blue); }
+    .review-kpi:nth-child(3) { border-top-color: var(--orange); }
+    .review-kpi:nth-child(4) { border-top-color: var(--green); }
+    .review-kpi-label { color: var(--muted); font-size: 11px; }
+    .review-kpi-value { margin-top: 5px; color: var(--ink); font-size: 22px; font-weight: 600; line-height: 1.15; }
+    .review-kpi-note { margin-top: 4px; color: var(--muted); font-size: 11px; }
+
+    .review-proof { display: grid; grid-template-columns: 108px minmax(0, 1fr); gap: 16px; padding: 15px 17px; background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--blue); border-radius: 0 var(--radius) var(--radius) 0; }
+    .review-proof-label { color: var(--blue); font-size: 12px; font-weight: 600; }
+    .review-proof p { margin: 0; color: var(--ink); font-size: 14px; font-weight: 500; }
+    .review-proof small { display: block; margin-top: 6px; color: var(--muted); font-size: 11px; font-weight: 400; }
+
+    .journey { overflow: hidden; }
+    .journey-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; }
+    .journey-step { position: relative; min-height: 126px; padding: 15px 13px 13px; border-right: 1px solid var(--line); }
+    .journey-step:last-child { border-right: 0; }
+    .journey-step::after { content: "→"; position: absolute; right: -9px; top: 43px; z-index: 2; width: 18px; height: 18px; color: var(--muted); background: var(--surface); font-size: 13px; line-height: 18px; text-align: center; }
+    .journey-step:last-child::after { display: none; }
+    .journey-step .step-index { color: var(--teal); font-size: 10px; font-weight: 600; }
+    .journey-step h4 { margin: 4px 0 2px; color: var(--ink); font-size: 13px; font-weight: 600; }
+    .journey-step .step-value { color: var(--ink); font-size: 21px; font-weight: 600; font-variant-numeric: tabular-nums; }
+    .journey-step .step-note { margin-top: 2px; color: var(--muted); font-size: 11px; }
+    .journey-foot { display: flex; gap: 12px; flex-wrap: wrap; padding: 10px 14px; background: var(--surface-alt); border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
+    .journey-foot strong { color: var(--ink); font-weight: 600; }
+
+    .review-question-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .question-card { min-height: 178px; padding: 16px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 0 5px 18px rgba(23,33,33,.045); }
+    .question-card .q-label { display: flex; justify-content: space-between; gap: 8px; color: var(--teal); font-size: 11px; font-weight: 600; letter-spacing: .03em; }
+    .question-card .q-label span:last-child { color: var(--muted); font-weight: 500; }
+    .question-card h4 { margin: 7px 0 8px; color: var(--ink); font-size: 14px; font-weight: 600; }
+    .question-card p { margin: 0; color: var(--text); font-size: 13px; }
+    .question-card p + p { margin-top: 8px; }
+    .question-card .q-source { margin-top: 12px; padding-top: 9px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
+    .question-card .q-source strong { color: var(--ink); font-weight: 600; }
+    .question-card.is-risk { border-top: 3px solid var(--amber); }
+    .question-card.is-decision { border-top: 3px solid var(--teal); }
+
+    .regional-review table { min-width: 700px; }
+    .regional-review td, .regional-review th { padding: 9px 10px; }
+    .regional-review .site-name { font-weight: 600; }
+    .regional-review .site-name.cn { color: var(--cn); }
+    .regional-review .site-name.jp { color: var(--jp); }
+    .review-decision { display: grid; grid-template-columns: 112px minmax(0, 1fr) minmax(0, 1fr); gap: 18px; align-items: start; padding: 18px 20px; background: var(--teal-soft); border-left: 4px solid var(--teal); border-radius: 0 var(--radius) var(--radius) 0; }
+    .review-decision .decision-word { color: var(--teal); font-size: 18px; font-weight: 600; }
+    .review-decision strong { color: var(--ink); font-weight: 600; }
+    .review-decision p { margin: 4px 0 0; color: var(--text); }
+
+    footer {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 28px 28px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    @media (max-width: 1120px) {
+      .topbar-inner { grid-template-columns: 1fr auto; }
+      .tabs { grid-column: 1 / -1; order: 3; overflow-x: auto; }
+      .analysis-grid, .quality-grid { grid-template-columns: 1fr; }
+      .feature-review-layout { grid-template-columns: 1fr; }
+      .feature-index { position: static; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .feature-index-title { grid-column: 1 / -1; }
+      #featureReviewIndex { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .review-question-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .review-kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .review-proof { grid-template-columns: 1fr; gap: 6px; }
+      .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .decision-callout { grid-template-columns: 120px 1fr; }
+      .decision-callout > :last-child { grid-column: 2; }
+      .decision-detail { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .detail-cell:nth-child(3n) { border-right: 1px solid var(--line); }
+      .detail-cell:nth-child(2n) { border-right: 0; }
+    }
+
+    @media (max-width: 760px) {
+      .topbar-inner { padding: 10px 16px; gap: 10px; }
+      .brand h1 { font-size: 20px; }
+      .print-button { display: none; }
+      .segment { justify-self: end; }
+      main { padding: 20px 14px; }
+      .page-intro { align-items: flex-start; flex-direction: column; gap: 4px; }
+      .page-intro h2 { font-size: 24px; }
+      .warning-band { grid-template-columns: 1fr; gap: 3px; }
+      .kpi-grid { grid-template-columns: 1fr 1fr; }
+      .kpi { min-height: 108px; padding: 14px; }
+      .kpi-value { font-size: 24px; }
+      .conclusion-strip { grid-template-columns: 1fr; }
+      .conclusion { border-right: 0; border-bottom: 1px solid var(--line); }
+      .conclusion:last-child { border-bottom: 0; }
+      .section-head { flex-direction: column; }
+      .feature-row { grid-template-columns: 104px 1fr 62px; }
+      .funnel { grid-template-columns: repeat(5, minmax(56px, 1fr)); overflow-x: auto; }
+      .decision-callout { grid-template-columns: 1fr; }
+      .decision-callout > :last-child { grid-column: auto; }
+      .decision-item summary { grid-template-columns: 74px 1fr 24px; }
+      .decision-item summary .decision-date { display: none; }
+      .decision-item summary .badge { grid-column: 1 / 3; }
+      .decision-detail { grid-template-columns: 1fr; }
+      .detail-cell, .detail-cell:nth-child(2n), .detail-cell:nth-child(3n) { border-right: 0; min-height: auto; }
+      .source-list { grid-template-columns: 1fr; }
+      .feature-index { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .feature-index-title { grid-column: 1 / -1; }
+      #featureReviewIndex { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .review-question-grid { grid-template-columns: 1fr; }
+      .journey-grid { grid-template-columns: 1fr; }
+      .journey-step { min-height: auto; border-right: 0; border-bottom: 1px solid var(--line); }
+      .journey-step:last-child { border-bottom: 0; }
+      .journey-step::after { content: "↓"; right: 14px; top: auto; bottom: -10px; }
+      .journey-step:last-child::after { display: none; }
+      .review-decision { grid-template-columns: 1fr; gap: 8px; }
+    }
+
+    @media (max-width: 430px) {
+      .topbar-inner { grid-template-columns: 1fr; }
+      .segment { justify-self: start; }
+      .kpi-grid { grid-template-columns: 1fr; }
+      .tabs button { padding-inline: 9px; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      .topbar { position: static; }
+      .tabs, .segment, .print-button, .filter-bar { display: none; }
+      main { max-width: none; padding: 16px; }
+      [role="tabpanel"] { display: block !important; page-break-before: always; }
+      [role="tabpanel"]:first-of-type { page-break-before: auto; }
+      .section, .kpi { box-shadow: none; break-inside: avoid; }
+      details .decision-detail { display: grid; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { scroll-behavior: auto !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <h1>SaaS 新 AI 能力复盘</h1>
+          <p>中国 / 日本 · 2026-03-01 至 2026-08-31 · Owner 张亿军</p>
+        </div>
+        <nav class="tabs" role="tablist" aria-label="复盘视图">
+          <button type="button" role="tab" aria-selected="true" aria-controls="overview" data-tab="overview">总览</button>
+          <button type="button" role="tab" aria-selected="false" aria-controls="feature-review" data-tab="feature-review">功能复盘</button>
+          <button type="button" role="tab" aria-selected="false" aria-controls="compare" data-tab="compare">中日对比</button>
+          <button type="button" role="tab" aria-selected="false" aria-controls="versions" data-tab="versions">版本决策</button>
+          <button type="button" role="tab" aria-selected="false" aria-controls="metrics" data-tab="metrics">指标口径</button>
+          <button type="button" role="tab" aria-selected="false" aria-controls="quality" data-tab="quality">数据质量</button>
+        </nav>
+        <div style="display:flex;gap:10px;align-items:center">
+          <div class="segment" aria-label="站点筛选">
+            <button type="button" aria-pressed="true" data-site="both">中日</button>
+            <button type="button" aria-pressed="false" data-site="cn">中国</button>
+            <button type="button" aria-pressed="false" data-site="jp">日本</button>
+          </div>
+          <button class="print-button" type="button" id="printReport">打印 / PDF</button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="overview" role="tabpanel" aria-label="总览">
+        <div class="page-intro">
+          <div>
+            <h2>先看结论，再下钻证据</h2>
+            <p>以规模、严格同用户漏斗、结果采用和 7/30 日复用判断产品价值。任务成功与商业结果只在有直接证据时成立。</p>
+          </div>
+          <div class="period" id="siteLabel">两站点合计</div>
+        </div>
+
+        <div class="warning-band">
+          <strong>观察窗口限制</strong>
+          <span>3 月仅从 3 月 23 日开始，连续数据从 3 月 30 日起；V4.10 / V4.11 无可靠上线前基线。Result 仅为 Excel 容量分片，月份按 event_time 重建。</span>
+        </div>
+
+        <div class="kpi-grid" id="kpiGrid" aria-live="polite"></div>
+
+        <div class="conclusion-strip">
+          <article class="conclusion">
+            <div class="eyebrow">数据事实</div>
+            <h3>万能穿搭融合双站点领先</h3>
+            <p>用户规模、启动后采用和 30 日复用均为当前最强任务。</p>
+          </article>
+          <article class="conclusion">
+            <div class="eyebrow">业务解释</div>
+            <h3>设计生产工作台值得继续投入</h3>
+            <p>上线后具备增长势能，但采用与生产交付环节仍需补强。</p>
+          </article>
+          <article class="conclusion">
+            <div class="eyebrow">待验证假设</div>
+            <h3>营销 Agent 需要更聚焦的任务</h3>
+            <p>先提高结果带走和二次任务，再判断是否扩大入口与曝光。</p>
+          </article>
+        </div>
+
+        <div class="analysis-grid">
+          <section class="section">
+            <div class="section-head">
+              <div><h3>月度活跃用户趋势</h3><p>3 月为不完整观察期，不与完整月份直接比较</p></div>
+              <div class="legend" id="trendLegend"></div>
+            </div>
+            <div class="section-body">
+              <div class="chart-wrap" id="trendChart"></div>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section-head">
+              <div><h3>功能用户规模</h3><p>点击功能可联动查看严格漏斗</p></div>
+              <div class="legend" id="featureLegend"></div>
+            </div>
+            <div class="section-body">
+              <div class="feature-list" id="featureBars"></div>
+            </div>
+          </section>
+        </div>
+
+        <section class="section">
+          <div class="section-head">
+            <div><h3>严格同用户漏斗</h3><p>每一步只统计完成上一阶段后的同一去重用户</p></div>
+            <div class="funnel-controls">
+              <div class="field">
+                <label for="featureSelect">功能</label>
+                <select id="featureSelect"></select>
+              </div>
+            </div>
+          </div>
+          <div class="section-body">
+            <div class="funnel" id="funnelChart" aria-live="polite"></div>
+            <p class="funnel-note" id="funnelNote"></p>
+          </div>
+        </section>
+      </section>
+
+      <section id="feature-review" role="tabpanel" aria-label="功能复盘" hidden>
+        <div class="page-intro">
+          <div>
+            <h2>每项能力，从判断走到决策</h2>
+            <p>以功能为单位串起建设背景、目标任务、行为路径、结果采用、复用与商业闭环；每个结论都附口径、边界和下一步。</p>
+          </div>
+          <div class="period" id="featureReviewPeriod">两站点 · 13项版本功能</div>
+        </div>
+
+        <div class="feature-review-layout">
+          <aside class="feature-index" aria-label="功能选择">
+            <div class="feature-index-title">版本功能目录</div>
+            <div id="featureReviewIndex"></div>
+          </aside>
+          <div class="feature-review-detail" id="featureReviewDetail" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section id="compare" role="tabpanel" aria-label="中日对比" hidden>
+        <div class="page-intro">
+          <div>
+            <h2>中日差异</h2>
+            <p>规模比较使用去重用户；效率比较基于同一用户集合。只保留会影响产品决策的差异。</p>
+          </div>
+          <div class="period">中国 / 日本</div>
+        </div>
+
+        <div class="decision-callout">
+          <div class="decision-label">市场分工</div>
+          <div><strong>日本站：</strong>融合规模约为中国 1.9 倍，适合优先打磨批量、模板与指令复用。</div>
+          <div><strong>中国站：</strong>工作台与营销规模更大，适合验证高价值任务和生产交付链路。</div>
+        </div>
+
+        <section class="section">
+          <div class="section-head"><div><h3>功能对比矩阵</h3><p>高亮行为代表当前最值得投入的功能</p></div></div>
+          <div class="table-scroll">
+            <table class="comparison-table">
+              <thead><tr><th>功能</th><th class="num">中国用户</th><th class="num">日本用户</th><th>日本 / 中国</th><th class="num">中国采用</th><th class="num">日本采用</th><th class="num">中国 30 日复用</th><th class="num">日本 30 日复用</th><th>产品含义</th></tr></thead>
+              <tbody id="compareRows"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <section id="versions" role="tabpanel" aria-label="版本决策" hidden>
+        <div class="page-intro">
+          <div>
+            <h2>13 个版本功能决策</h2>
+            <p>同一功能的不同版本分开复盘。展开任意一项，可查看从原判断到止损条件的完整链路。</p>
+          </div>
+          <div class="period">Owner 张亿军</div>
+        </div>
+
+        <div class="filter-bar">
+          <div class="filter-group">
+            <div class="field"><label for="versionFilter">版本</label><select id="versionFilter"><option value="all">全部版本</option></select></div>
+            <div class="field"><label for="decisionFilter">决策</label><select id="decisionFilter"><option value="all">全部决策</option></select></div>
+          </div>
+          <div class="result-count" id="decisionCount" aria-live="polite"></div>
+        </div>
+
+        <div class="decision-list" id="decisionList"></div>
+      </section>
+
+      <section id="metrics" role="tabpanel" aria-label="指标口径" hidden>
+        <div class="page-intro">
+          <div>
+            <h2>指标与埋点口径</h2>
+            <p>用户、租户、会话、事件、任务严格分开。代理指标不会被描述为真实业务结果。</p>
+          </div>
+        </div>
+        <section class="section">
+          <div class="table-scroll">
+            <table class="data-table">
+              <thead><tr><th>对象</th><th>阶段</th><th>证据类型</th><th>口径</th><th>主要埋点 / 页面</th><th>可回答</th><th>不可回答</th><th>粒度</th></tr></thead>
+              <tbody id="metricRows"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <section id="quality" role="tabpanel" aria-label="数据质量" hidden>
+        <div class="page-intro">
+          <div>
+            <h2>数据质量与待补闭环</h2>
+            <p>数据已由业务确认是清洗后的真实用户数据；这里仅检查结构、覆盖与可解释性。</p>
+          </div>
+        </div>
+
+        <div class="quality-grid">
+          <section class="section">
+            <div class="section-head"><div><h3>已确认的数据边界</h3><p>影响结论可信度的关键检查项</p></div></div>
+            <div class="table-scroll"><table class="data-table"><thead><tr><th>检查项</th><th>结论</th><th>处理方式</th><th>状态</th></tr></thead><tbody id="qualityRows"></tbody></table></div>
+          </section>
+          <section class="section">
+            <div class="section-head"><div><h3>下一轮必须补齐</h3><p>P0 直接决定能否判断产品成功与商业价值</p></div></div>
+            <div class="table-scroll"><table class="data-table"><thead><tr><th>字段 / 事件</th><th>解决问题</th><th>范围</th><th>优先级</th><th>Owner</th></tr></thead><tbody id="gapRows"></tbody></table></div>
+          </section>
+        </div>
+
+        <section class="section">
+          <div class="section-head"><div><h3>资料来源</h3><p>规则、字段说明、PRD 与原始行为数据</p></div></div>
+          <div class="section-body"><div class="source-list" id="sourceList"></div></div>
+        </section>
+      </section>
+    </main>
+
+    <footer>本报告中的“结果”可能为行为代理。缺少 CRM、合同、续约和模型成本数据时，只讨论使用相关性，不推断收入或降本。</footer>
+  </div>
+
+  <script>
+    const report = {
+      months: ["3月*", "4月", "5月", "6月", "7月", "8月"],
+      sites: {
+        cn: {
+          label: "中国站点",
+          totalUsers: 10128,
+          totalTenants: 9701,
+          months: {
+            events: [36366, 941472, 1002302, 1590272, 1473691, 1304044],
+            users: [290, 2709, 2174, 3021, 2660, 2141]
+          }
+        },
+        jp: {
+          label: "日本站点",
+          totalUsers: 375,
+          totalTenants: 261,
+          months: {
+            events: [35455, 1588505, 1678842, 2241729, 1868659, 1537634],
+            users: [122, 248, 274, 289, 299, 331]
+          }
+        }
+      },
+      features: [
+        { key: "marketing", name: "万能营销工作台", meaning: "中国规模更大，日本复用率更高；两站点都应继续验证真实交付。", note: "Agent assistant turn 仅作为结果代理，不等于营销任务成功。", cn: { users: 1606, tenants: 1461, enter: 1589, start: 838, result: 697, adopt: 179, repeat30: 0.342 }, jp: { users: 203, tenants: 160, enter: 203, start: 95, result: 68, adopt: 17, repeat30: 0.531 } },
+        { key: "design", name: "设计生产工作台", meaning: "中国规模更大；日本采用率和复用率更高，但样本更小。", note: "结果为 Agent 回复代理；工艺单导出、交付验收和进生产尚不可见。", cn: { users: 1440, tenants: 1318, enter: 1423, start: 535, result: 532, adopt: 88, repeat30: 0.399 }, jp: { users: 219, tenants: 160, enter: 219, start: 93, result: 90, adopt: 22, repeat30: 0.617 } },
+        { key: "tryon", name: "AI 试衣", meaning: "日本采用代理与复用更高；两站点都缺少稳定成功事件。", note: "完成事件无法稳定关联，所以不展示成功率；采用以下载、收藏等行为代理。", cn: { users: 4144, tenants: 3945, enter: 3708, start: 2837, result: null, adopt: 1527, repeat30: 0.407 }, jp: { users: 300, tenants: 223, enter: 292, start: 205, result: null, adopt: 144, repeat30: 0.724 } },
+        { key: "model", name: "模特企划库", meaning: "两站点均为支撑能力；日本样本小但复用代理更高。", note: "无法识别模特资产是否进入 AI 任务或商业交付，建议并入素材选择。", cn: { users: 2071, tenants: 1952, enter: 2047, start: 553, result: null, adopt: 293, repeat30: 0.281 }, jp: { users: 227, tenants: 174, enter: 227, start: 77, result: null, adopt: 59, repeat30: 0.500 } },
+        { key: "fusion", name: "万能穿搭融合", meaning: "中国规模更大；日本采用与复用率显著更高。", note: "当前最稳定的用户任务；下一步应拆分单图、多图、指令复用和批量生产。", cn: { users: 2623, tenants: 2360, enter: 2603, start: 1605, result: 916, adopt: 1026, repeat30: 0.424 }, jp: { users: 342, tenants: 239, enter: 342, start: 334, result: 295, adopt: 315, repeat30: 0.954 } },
+        { key: "editor", name: "图片编辑组件", meaning: "独立复用代理仍应谨慎解释，建议嵌入主要生图工作流。", note: "图片编辑没有独立进入页；应按工具和来源功能监控生成、下载。", cn: { users: 1393, tenants: 1284, enter: null, start: null, result: null, adopt: null, repeat30: 0.275 }, jp: { users: 159, tenants: 108, enter: null, start: null, result: null, adopt: null, repeat30: 0.510 } }
+      ],
+      versions: [
+        { version:"V4.10 遗留", date:"2026-03-30", feature:"支持并发生图", original:"并发可提升整体生图数。", evidence:"单用户生成量、成功率、耗时｜行为表（当前缺 batch_id）", fact:"现有表有启动与结果事件，但无并发批次标识。", cannot:"无法比较并发前后的单人生成量、成功率和耗时。", decision:"继续验证", verify:"新增 batch_id、并发数、单任务耗时与完成状态。", stop:"连续 2 个版本无法量化增量则停止专项投入。" },
+        { version:"V4.10 遗留", date:"2026-03-30", feature:"AI 试衣输入 / 结果优化", original:"平铺、重生成、提示词优化可提升下载 / 收藏。", evidence:"AI 试衣启动→采用、下载 / 收藏｜中日行为表", fact:"启动后采用代理：中国 53.8%，日本 70.2%。", cannot:"缺稳定任务完成事件；无可靠 3 月 30 日前基线。", decision:"调整", verify:"按平铺开关、重生成、提示词优化拆分任务漏斗。", stop:"两轮实验后采用率无显著提升则回退复杂入口。" },
+        { version:"V4.10 遗留", date:"2026-03-30", feature:"模特企划库与结果复用", original:"复用模特资产可减少重复准备。", evidence:"进入→使用、30 日复用｜中日行为表", fact:"模特企划库用户：中国 2,071、日本 227；30 日复用：中国 28.1%，日本 50.0%。", cannot:"无法识别资产是否进入 AI 任务及商业交付。", decision:"合并", verify:"合并到 AI 试衣 / 设计工作台素材选择，记录 asset_id。", stop:"若 90 天任务引用率仍低于 5%，停止独立入口。" },
+        { version:"V4.11", date:"2026-03-30", feature:"内衣试衣", original:"满足内衣客户模特图需求并提升结果可用性。", evidence:"内衣任务成功、收藏、下载｜V4.11 PRD + 行为表", fact:"AI 试衣整体有规模与采用，但数据无内衣品类字段。", cannot:"不能单独判断内衣图的成功、收藏与下载。", decision:"继续验证", verify:"新增 garment_category=lingerie 与结果质量反馈。", stop:"有效样本 N≥200 后采用率仍不高于普通试衣则暂停专项。" },
+        { version:"V4.11", date:"2026-03-30", feature:"AI 试衣套图生图与工作流", original:"套图模式优化可提升收藏 / 下载。", evidence:"多任务模式用户、套图采用｜V4.11 PRD + 定向埋点", fact:"多任务模式持续使用；8 月用户：中国 215，日本 51。", cannot:"未能把套图模式与下载 / 收藏结果串联。", decision:"继续验证", verify:"mode、record_id 贯穿启动、完成、下载、收藏。", stop:"连续 2 月采用率不高于单任务则合并交互。" },
+        { version:"V4.11", date:"2026-03-30", feature:"万能穿搭融合多图操作", original:"多图操作可提高任务生成数。", evidence:"用户、进入→启动、启动→采用、30 日复用｜中日行为表", fact:"融合用户：中国 2,623、日本 342；30 日复用中国 42.4%、日本 95.4%。", cannot:"无法拆出单图 / 多图的成功和单用户增量。", decision:"加强", verify:"按 selected_image_count 分组比较启动、结果、采用。", stop:"多图模式采用率若低于单图 10pp，则收敛批量复杂度。" },
+        { version:"V4.11", date:"2026-03-30", feature:"图片编辑组件", original:"补齐所有生图功能的最后一公里。", evidence:"工具生成事件、用户、30 日复用｜V4.11 PRD + 行为表", fact:"6-8 月生成事件中局部编辑增长明显，去底在日本更强。", cannot:"组件无独立入口和统一结果下载链路。", decision:"合并", verify:"嵌入工作台，按 tool 和来源功能记录生成、下载。", stop:"独立入口 30 日复用持续低于 5% 则不单独扩建。" },
+        { version:"V5.0", date:"2026-05-09", feature:"万能营销工作台 Agent + 画布", original:"验证新产品形态及靠近付费点的营销内容需求。", evidence:"严格漏斗、采用、30 日复用｜V5.0 PRD + 中日行为表", fact:"用户：中国 1,606、日本 203；启动后结果代理 83.2% / 71.6%，采用 21.4% / 17.9%，30 日复用 34.2% / 53.1%。", cannot:"缺订单、商机、收入关联；Agent 回复不等于任务成功。", decision:"调整", verify:"聚焦 3 类高价值营销任务，补结果选用、导出、再次编辑。", stop:"8 周后 30 日复用仍低于 8% 且采用低于 15%，则缩减范围。" },
+        { version:"V5.0", date:"2026-05-09", feature:"万能穿搭融合优化（指令复用 / 模型替换）", original:"满足日本指令复用并降低生图成本。", evidence:"指令用户、实际复用、模型成本｜V5.0 PRD + 定向埋点", fact:"指令相关用户：中国 286、日本 230；融合整体复用强。", cannot:"指令事件含历史选择等代理；成本值缺失，无法验证模型降本。", decision:"加强+验证", verify:"拆分保存 / 打开 / 使用指令；接入模型成本和成功率。", stop:"指令实际复用率低于 10% 则简化；降本不达目标则回滚模型。" },
+        { version:"V5.1", date:"2026-07-02", feature:"设计生产工作台", original:"补全服装设计到生产衔接的 SaaS 能力。", evidence:"用户、严格漏斗、30 日复用、版本窗口｜V5.1 PRD + 行为表", fact:"用户：中国 1,440、日本 219；30 日复用 39.9% / 61.7%。", cannot:"Agent 回复仅为结果代理；工艺单进生产与验收不可见。", decision:"加强+调整", verify:"聚焦工艺单 / 款式裂变，补导出、交付、生产采用。", stop:"90 天核心任务采用低于 12% 且无交付案例，则收缩工具栏。" },
+        { version:"V5.1.3", date:"2026-08-13", feature:"万能穿搭融合批量一键去底", original:"批量去底可快速满足批处理需求。", evidence:"批量入口→去底执行｜V5.1.3 PRD + 定向埋点", fact:"8 月入口→实际执行：中国 396→13，日本 1,190→99。", cannot:"缺曝光与选中图片数；不能判断入口是否在 8 月 13 日前灰度。", decision:"调整", verify:"记录按钮曝光、可点击、执行、成功、图片数与耗时。", stop:"入口→执行连续 4 周低于 15%，则调整入口或合并到批量编辑。" },
+        { version:"V5.1.3", date:"2026-08-13", feature:"设计生产工作台优化", original:"交互、分类、快捷编辑和工艺单优化可提升使用。", evidence:"上线前后 14 天用户、启动、采用｜V5.1.3 PRD + 行为表", fact:"前后 14 天用户：中国 2,234→2,579；日本 381→572。", cannot:"同期趋势与运营影响未控制，不能归因版本。", decision:"加强+验证", verify:"按子工具建立进入→启动→完成→采用，并做分流实验。", stop:"两轮实验核心启动 / 采用均无改善，则回退复杂分类。" },
+        { version:"V5.1.3", date:"2026-08-13", feature:"万能营销案例详情与分享", original:"只读画布与分享链接可提高分享率和点击率。", evidence:"分享事件、外部打开、线索｜V5.1.3 PRD + 定向埋点", fact:"8 月通用案例分享：中国 20 次，日本 31 次；营销专属分享无法确认。", cannot:"缺案例类型、分享链接访问与后续注册链路。", decision:"继续验证", verify:"增加 case_type、share_id、recipient_open、register / lead。", stop:"N≥200 后分享→打开低于 10%，则停止扩大入口。" }
+      ],
+      metrics: [
+        ["全站", "活跃", "直接", "当月出现任意事件的去重 user_id", "event_time + user_id", "月活用户 / 租户 / 会话", "真实激活定义", "用户 / 租户 / 会话"],
+        ["通用", "进入", "直接", "目标功能页面 page_view 的去重用户", "page_view + page_path", "进入用户", "入口曝光", "用户"],
+        ["营销工作台", "启动", "直接", "进入后出现用户输入的同一去重用户", "marketing:agent_turn_user", "进入→启动", "完整必要输入", "用户"],
+        ["营销工作台", "结果", "代理", "启动用户中出现 assistant turn / ai_task_done", "marketing:agent_turn_assistant", "结果代理", "任务真实成功", "用户"],
+        ["设计工作台", "启动", "直接", "进入后出现用户输入或开始任务", "designProduction:agent_turn_user", "进入→启动", "子工具完整输入", "用户"],
+        ["设计工作台", "结果", "代理", "启动用户中出现 assistant turn / ai_task_done", "designProduction:agent_turn_assistant", "结果代理", "交付验收", "用户"],
+        ["AI 试衣", "启动", "直接", "/model 页面中 start-task / start_task_click", "/model + start-task", "启动、采用代理", "稳定成功率", "用户"],
+        ["万能穿搭融合", "启动", "直接", "进入后 integration-one-click / start-task", "/flow/integration", "启动、结果、采用、复用", "单图 / 多图任务差异", "用户"],
+        ["图片编辑", "生成", "直接", "properties.action=generate 按 aiTaskTypeCode 分组", "canvas_image_editor_action", "各工具生成次数 / 用户", "生成后下载", "事件 / 用户"],
+        ["批量一键去底", "执行", "直接", "点击批量一键去底", "multi-toolbar-remove-bg", "执行次数 / 用户", "成功图片数与耗时", "事件 / 用户"],
+        ["案例分享", "分享", "代理", "通用案例卡分享事件", "home:case-item_share", "通用分享次数", "营销专属分享、外部打开", "事件 / 用户"],
+        ["复用", "7 / 30 日", "直接", "首次使用后 7 / 30 日内再次出现目标功能事件，只纳入观察窗成熟用户", "event_time + user_id", "复用率与 N", "复用原因", "用户"],
+        ["商业结果", "付费 / 续约", "不可回答", "需要 CRM / 订单 / 合同 / 续约与功能用户关联", "当前数据无", "无", "试用、商机、合同、到账、续约、增购", "客户 / 合同"]
+      ],
+      quality: [
+        ["Excel 分片", "中国 Result 1-7；日本 Result 1-9；Query 排除", "合并全部 Result 后再统计", "ok"],
+        ["字段结构", "两站点均为 28 列，与字段说明一致", "按列位置与字段表核验", "ok"],
+        ["数据覆盖", "2026-03-23 至 2026-08-31；3 月非完整自然月", "3 月标 *，不作完整月比较", "warn"],
+        ["连续数据起点", "两站点均从 2026-03-30 连续", "V4.10 / V4.11 不做上线前后归因", "warn"],
+        ["事件总量", "中国 6,348,147；日本 8,950,824", "与原表分片汇总复核", "ok"],
+        ["business_id", "自 6 月起与 session_id 完全一致", "不可作为任务 ID", "risk"],
+        ["用户主键", "user_id 覆盖完整", "anonymous_id 仅作质量检查", "ok"],
+        ["去重主键", "真实 user_id / tenant_id 解码后取集合", "同一 ID 只计一次；不使用 Excel 共享字符串索引", "ok"],
+        ["商业 / 成本", "CRM、合同、续约、模型成本缺失", "不归因收入或降本", "risk"]
+      ],
+      gaps: [
+        ["task_id", "真实任务成功率与耗时", "所有 AI 功能", "P0", "研发 + 数据"],
+        ["entry_exposure", "曝光→进入", "首页与工作台入口", "P0", "前端"],
+        ["result_adopt", "结果采用率", "统一结果组件", "P0", "前端 + 业务"],
+        ["feature / version / workflow", "版本与模型对照", "任务创建与完成", "P0", "中台"],
+        ["failure_stage / reason", "定位最大塌陷原因", "全漏斗", "P0", "研发"],
+        ["asset_id / source", "资产是否进入业务", "资源库 / 模特库", "P1", "资产中心"],
+        ["share_id / case_type", "分享真实转化", "案例详情", "P1", "增长 + 前端"],
+        ["crm_customer_id + cost", "商业价值与 ROI", "数据仓库", "P0", "销售运营 + 数据"]
+      ],
+      sources: [
+        ["复盘规则", "https://lightchain.feishu.cn/wiki/EoDowhuOIiCAvAkUdLacYbTAnhp"],
+        ["字段说明", "https://lightchain.feishu.cn/docx/F15hdEn5WoxyOVxtPVBcdOZRnXe"],
+        ["V5.1.3 PRD", "https://lightchain.feishu.cn/wiki/P8y7woxn3iHXB6ku1o4cDy4Hnng"],
+        ["V5.1 PRD", "https://lightchain.feishu.cn/wiki/HOgIw22f0inVhVkxSE3cKHNinVa"],
+        ["V5.0 PRD", "https://lightchain.feishu.cn/wiki/QeuPwV0dEiQZMSkins3c19rOnTf"],
+        ["V4.11 PRD", "https://lightchain.feishu.cn/docx/RYVpdpR3joCLvzx4vZIcsmj3nuc"],
+        ["中国行为数据", "file:///Users/Admin/Downloads/lc_tracking-cn-0301-0831.xlsx"],
+        ["日本行为数据", "file:///Users/Admin/Downloads/lc_tracking-jp-0301-0831.xlsx"]
+      ]
+    };
+
+    const featureReviewMeta = {
+      marketing: {
+        release: "V5.0 · 2026-05-09",
+        position: "用 Agent + 画布验证一种 SaaS 之前没有的新产品形态，并靠近营销内容付费点。",
+        judgment: "用户是否愿意用自然语言协作完成营销内容生成，并把结果带走继续使用？",
+        proof: "数据证明了营销工作台已经形成从进入到结果代理的使用路径，但中日采用代理仅为 21.4% / 17.9%，说明“能生成”尚未等于“愿意带走并复用”。",
+        target: "服装品牌、营销团队和需要快速产出营销内容的企业用户；当前行为数据没有角色字段，只能以用户 / 租户行为观察。",
+        task: "进入营销工作台，用自然语言提出需求，生成并继续编辑、导出或复用营销内容。",
+        source: "中国 / 日本行为数据；Result 分片合并、Query 排除；event_time 分月；user_id / tenant_id 取真实值集合。主要证据：/marketing、marketing:*、assistant turn、下载 / 收藏等采用代理。",
+        commercial: "当前不能回答试用、商机、续约、增购或交付效率价值；缺 CRM customer_id、订单 / 合同关联和导出交付结果。",
+        issue: "入口：进入→启动可见；理解 / 输入：当前埋点不能区分；任务成功：只有 assistant turn 代理；结果质量：无反馈；商业转化：无 CRM / 订单关联。",
+        decision: "调整",
+        action: "聚焦 3 类高价值营销任务，统一记录结果选用、导出、再次编辑和外部分享。",
+        versionFeatures: ["万能营销工作台 Agent + 画布", "万能营销案例详情与分享"]
+      },
+      design: {
+        release: "V5.1 · 2026-07-02",
+        position: "补全服装设计到生产衔接的 SaaS 能力，将设计、印花、矢量、工艺单等工具放进同一工作台。",
+        judgment: "把分散的设计生产工具组织成工作台后，能否形成从进入到任务采用、再到生产交付的连续路径？",
+        proof: "数据证明了设计生产工作台在两站点都有持续用户和 30 日复用，但启动后采用代理仅为中国 16.4%、日本 23.7%，生产交付链路还没有被行为数据证明。",
+        target: "服装设计师、企划人员和生产衔接团队；当前数据不能识别岗位，只能观察工作台行为。",
+        task: "进入设计生产工作台，选择工具或通过 Chatbot 创建任务，完成款式裂变、试衣参考图或工艺单，并导出 / 交付。",
+        source: "中国 / 日本行为数据；Result 分片合并、Query 排除；主要证据：/design-production、designProduction:agent_turn_user / assistant、start_task_click，以及下载 / 导出等采用代理。",
+        commercial: "当前不能回答设计稿是否进入生产、交付效率、续约或增购；缺 task_id、生产单关联、CRM customer_id 和交付状态。",
+        issue: "入口：进入→启动仍是主要塌陷点；理解 / 输入：无法拆分；任务成功：assistant turn 代理；结果质量：无质量反馈；商业转化：进生产、验收和 CRM 不可见。",
+        decision: "加强 + 调整",
+        action: "优先打磨工艺单和款式裂变，补齐导出、进生产、交付验收事件，并按子工具拆分漏斗。",
+        versionFeatures: ["设计生产工作台", "设计生产工作台优化"]
+      },
+      tryon: {
+        release: "V4.10 / V4.11 · 2026-03-30",
+        position: "满足服装客户的模特图、套图和内衣试衣需求，提高生成结果的可用性、收藏与下载。",
+        judgment: "更多试衣输入和套图工作流，能否让用户更稳定地生成并带走可用结果？",
+        proof: "数据证明了 AI 试衣具备较大使用规模，启动后采用代理为中国 53.8%、日本 70.2%，但稳定结果事件缺失，不能把这些行为直接解释为生成成功。",
+        target: "服装客户、企划人员和需要快速生成模特图的团队；内衣客户是 PRD 明确的专项人群，但当前数据没有品类字段。",
+        task: "进入 AI 试衣，上传服装 / 参考图，选择单图或套图模式，生成模特图并下载、收藏或继续使用。",
+        source: "中国 / 日本行为数据；主要证据：/model、start-task、task-mode、task-mode-multiple、下载 / 收藏采用代理；多任务专项用户另有定向埋点。",
+        commercial: "当前不能回答内衣专项的试用、商机、续约、增购或交付效率；缺 garment_category、task_id、CRM 关联和结果质量反馈。",
+        issue: "入口：启动率较高；理解 / 输入：缺模式和输入级失败原因；任务成功：无稳定完成事件；结果质量：只能看下载 / 收藏代理；商业转化：无 CRM / 交付关联。",
+        decision: "继续验证 + 调整",
+        action: "用 task_id / mode / record_id 串联创建、完成、失败、下载和收藏，单独验证内衣与套图质量。",
+        versionFeatures: ["AI 试衣输入 / 结果优化", "AI 试衣套图生图与工作流", "内衣试衣"]
+      },
+      model: {
+        release: "V4.10 遗留 · 2026-03-30",
+        position: "把模特资产沉淀为可复用资源，减少每次试衣或设计任务的准备成本。",
+        judgment: "用户会不会把模特企划库当成后续 AI 任务的资产入口，而不是一次性浏览？",
+        proof: "数据证明了模特企划库有持续使用和 30 日复用，但当前无法把资产使用与后续 AI 任务或交付结果串联，因此只能证明行为存在，不能证明效率收益。",
+        target: "服装企划、设计人员和需要稳定模特资产的客户团队；当前数据不能识别具体客户类型或资产用途。",
+        task: "进入模特企划库，浏览、选择或使用模特资产，并将其带入 AI 试衣或设计任务。",
+        source: "中国 / 日本行为数据；主要证据：模特库页面、library-use / use-image、下载与复用行为；当前缺 asset_id/source 关联。",
+        commercial: "当前不能回答资产是否进入交付、减少多少准备时间、带来续约或增购；缺 asset_id、任务关联、CRM 和交付效率指标。",
+        issue: "入口：独立入口到启动较弱；理解 / 输入：无资产选择原因；任务成功：无后续任务关联；结果质量：无资产使用反馈；商业转化：效率和交付不可见。",
+        decision: "合并",
+        action: "将模特资产选择并入 AI 试衣和设计工作台，记录 asset_id、来源、引用任务和最终交付。",
+        versionFeatures: ["模特企划库与结果复用"]
+      },
+      fusion: {
+        release: "V4.11 / V5.0 / V5.1.3",
+        position: "围绕万能穿搭融合持续扩展多图、历史指令复用和批量去底，验证高频、接近交付的生图任务。",
+        judgment: "融合是否能成为用户持续完成服装生图任务的主工作流，并通过多图、指令复用和批量能力提升效率？",
+        proof: "数据证明了万能穿搭融合是当前最强的连续任务：启动后采用代理为中国 63.9%、日本 94.3%，30 日复用为中国 42.4%、日本 95.4%；但增量来自哪个子能力仍未拆清。",
+        target: "服装设计、营销和企划团队，尤其是需要多图组合与快速批量处理的高频用户。",
+        task: "进入融合工作流，上传一张或多张图片，输入 / 复用指令，生成融合结果并下载、收藏或继续批处理。",
+        source: "中国 / 日本行为数据；主要证据：/flow/integration、integration-one-click、start-task、下载 / 收藏；专项包含多图、指令复用和批量去底埋点。",
+        commercial: "当前不能回答模型替换带来的真实成本下降、付费 / 续约 / 增购或交付效率；缺模型成本、CRM customer_id、task_id 和图片级产出。",
+        issue: "入口：进入→启动和启动→采用都强；理解 / 输入：需按单图、多图、指令拆分；任务成功：有结果代理但缺 task_id；结果质量：无图片级反馈；商业转化：成本、付费和交付不可见。",
+        decision: "加强 + 验证",
+        action: "优先验证高频路径：selected_image_count、指令保存 / 打开 / 使用、批量图片数与成功耗时，并接入模型成本。",
+        versionFeatures: ["万能穿搭融合多图操作", "万能穿搭融合优化（指令复用 / 模型替换）", "万能穿搭融合批量一键去底"]
+      },
+      editor: {
+        release: "V4.11 · 2026-03-30",
+        position: "把局部编辑、高清放大、去底、裁图、扩图和消除打包成所有生图流程都能调用的最后一步。",
+        judgment: "用户在生图后是否需要一组就近可用的编辑工具，从而减少结果离开产品后的处理成本？",
+        proof: "数据证明了编辑工具被实际调用，但没有独立入口和统一下载回流链路；因此只能证明工具使用，不能证明它减少了外部修图或提升了交付效率。",
+        target: "所有需要修改生图结果的服装设计、营销和企划用户；当前数据不能识别具体客户类型。",
+        task: "在生图流程中调用编辑工具，生成修改结果，再下载或回到原工作流继续使用。",
+        source: "中国 / 日本行为数据；properties.action=generate 按 aiTaskTypeCode 分组，主要 track_id 为 canvas_image_editor_action；没有独立进入页。",
+        commercial: "当前不能回答是否减少外部修图、节省多少交付时间、带来付费或续约；缺来源功能、task_id、下载结果和 CRM / 交付关联。",
+        issue: "入口：没有独立入口；理解 / 输入：工具选择原因不可见；任务成功：生成事件可见但缺任务关联；结果质量：下载与回流不可见；商业转化：外部修图节省和交付效率不可见。",
+        decision: "合并",
+        action: "嵌入主要工作台和结果页，统一记录来源功能、tool、task_id、生成、下载和再次使用。",
+        versionFeatures: ["图片编辑组件"]
+      }
+    };
+
+    const reviewFeatureItems = [
+      { id: "v410-concurrent", parent: "fusion", version: "V4.10 遗留", date: "2026-03-30", feature: "支持并发生成图", scope: "专项数据缺失" },
+      { id: "v410-tryon-opt", parent: "tryon", version: "V4.10 遗留", date: "2026-03-30", feature: "AI 试衣输入 / 结果优化", scope: "能力级参考" },
+      { id: "v410-model-library", parent: "model", version: "V4.10 遗留", date: "2026-03-30", feature: "模特企划库与结果复用", scope: "功能级" },
+      { id: "v411-lingerie", parent: "tryon", version: "V4.11", date: "2026-03-30", feature: "内衣试衣", scope: "专项数据缺失" },
+      { id: "v411-tryon-set", parent: "tryon", version: "V4.11", date: "2026-03-30", feature: "AI 试衣套图生图与工作流", scope: "能力级参考" },
+      { id: "v411-fusion-multi", parent: "fusion", version: "V4.11", date: "2026-03-30", feature: "万能穿搭融合多图操作", scope: "能力级参考" },
+      { id: "v411-editor", parent: "editor", version: "V4.11", date: "2026-03-30", feature: "图片编辑组件", scope: "功能级" },
+      { id: "v50-marketing", parent: "marketing", version: "V5.0", date: "2026-05-09", feature: "万能营销工作台 Agent + 画布", scope: "功能级" },
+      { id: "v50-fusion-opt", parent: "fusion", version: "V5.0", date: "2026-05-09", feature: "万能穿搭融合优化（指令复用 / 模型替换）", scope: "专项参考", metrics: { cn: { users: 286, tenants: null, enter: null, start: null, result: null, adopt: null, repeat30: null }, jp: { users: 230, tenants: null, enter: null, start: null, result: null, adopt: null, repeat30: null } } },
+      { id: "v51-design", parent: "design", version: "V5.1", date: "2026-07-02", feature: "设计生产工作台", scope: "功能级" },
+      { id: "v513-bulk-bg", parent: "fusion", version: "V5.1.3", date: "2026-08-13", feature: "万能穿搭融合批量一键去底", scope: "专项级", metrics: { cn: { users: null, tenants: null, enter: 396, start: 13, result: null, adopt: null, repeat30: null }, jp: { users: null, tenants: null, enter: 1190, start: 99, result: null, adopt: null, repeat30: null } } },
+      { id: "v513-design-opt", parent: "design", version: "V5.1.3", date: "2026-08-13", feature: "设计生产工作台优化", scope: "能力级参考" },
+      { id: "v513-case-share", parent: "marketing", version: "V5.1.3", date: "2026-08-13", feature: "万能营销案例详情与分享", scope: "专项数据缺失" }
+    ].map((item, index) => ({ ...report.versions[index], ...item, versionIndex: index }));
+
+    const state = { site: "both", feature: "fusion", reviewFeature: "v411-fusion-multi" };
+    const fmt = new Intl.NumberFormat("zh-CN");
+    const pct = value => value == null ? "不可回答" : `${(value * 100).toFixed(1)}%`;
+    const sum = values => values.reduce((a, b) => a + b, 0);
+    const esc = value => String(value).replace(/[&<>'"]/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[char]));
+
+    function reviewSiteValues(feature, site) {
+      if (site === "both") return siteValues(feature);
+      return feature[site];
+    }
+
+    function renderFeatureReview() {
+      const reviewItem = reviewFeatureItems.find(item => item.id === state.reviewFeature) || reviewFeatureItems[0];
+      const feature = report.features.find(item => item.key === reviewItem.parent);
+      const meta = featureReviewMeta[reviewItem.parent];
+      const unavailable = { users: null, tenants: null, enter: null, start: null, result: null, adopt: null, repeat30: null };
+      const values = reviewItem.metrics
+        ? (state.site === "both" ? siteValues({ cn: reviewItem.metrics.cn, jp: reviewItem.metrics.jp }) : reviewItem.metrics[state.site])
+        : reviewItem.scope === "专项数据缺失" ? unavailable : reviewSiteValues(feature, state.site);
+      const count = value => value == null ? "不可回答" : fmt.format(value);
+      const hasRepeatEvidence = !reviewItem.metrics && reviewItem.scope !== "专项数据缺失";
+      const selectedLabel = state.site === "both" ? "中国 + 日本（站点结果相加）" : report.sites[state.site].label;
+      const adoptionRate = values.start && values.adopt != null ? values.adopt / values.start : null;
+      const resultRate = values.start && values.result != null ? values.result / values.start : null;
+      const repeatText = state.site === "both"
+        ? `中国 ${pct(feature.cn.repeat30)} / 日本 ${pct(feature.jp.repeat30)}`
+        : pct(feature[state.site].repeat30);
+      const decisionClass = meta.decision.includes("加强") ? "green" : meta.decision.includes("合并") ? "blue" : "amber";
+
+      document.getElementById("featureReviewPeriod").textContent = `${selectedLabel} · ${reviewItem.version} · ${reviewItem.date}`;
+      document.getElementById("featureReviewIndex").innerHTML = reviewFeatureItems.map(item => {
+        const itemMeta = featureReviewMeta[item.parent];
+        const parentName = report.features.find(featureItem => featureItem.key === item.parent).name;
+        return `<button type="button" data-review-feature="${item.id}" aria-pressed="${item.id === reviewItem.id}"><span><strong>${item.feature}</strong><small>${item.version} · ${item.date} · ${parentName}</small></span><span class="index-decision">${itemMeta.decision}</span></button>`;
+      }).join("");
+      document.querySelectorAll("[data-review-feature]").forEach(button => button.addEventListener("click", () => {
+        state.reviewFeature = button.dataset.reviewFeature;
+        renderFeatureReview();
+      }));
+
+      const scopeNote = `${reviewItem.scope}；${reviewItem.scope === "功能级" ? "可直接用于本功能判断" : "不能替代本功能独立漏斗"}`;
+      const journey = [
+        ["01", "看到 / 进入", values.enter, values.enter == null ? "没有独立入口事件" : `${scopeNote} · 目标页面去重用户`],
+        ["02", "开始任务", values.start, values.enter && values.start != null ? `进入→启动 ${pct(values.start / values.enter)} · ${scopeNote}` : `启动事件 · ${scopeNote}`],
+        ["03", "出现结果", values.result, values.result == null ? "没有稳定结果事件" : `启动→结果 ${pct(resultRate)} · ${scopeNote}`],
+        ["04", "带走结果", values.adopt, values.adopt == null ? "下载 / 导出 / 收藏未统一" : `启动→采用 ${pct(adoptionRate)} · ${scopeNote}`],
+        ["05", "再次使用", null, values.repeat30 == null ? "没有独立复用指标" : `30 日复用 ${repeatText}`]
+      ];
+      const journeyHtml = journey.map(([index, label, value, note]) => `<div class="journey-step"><div class="step-index">${index}</div><h4>${label}</h4><div class="step-value">${value == null ? (index === "05" ? (values.repeat30 == null ? "不可回答" : (state.site === "both" ? "中 / 日" : pct(feature[state.site].repeat30))) : "不可回答") : count(value)}</div><div class="step-note">${note}</div></div>`).join("");
+
+      const cards = [
+        ["01 · 建设判断", "为什么建设？原本想验证什么？", meta.position, reviewItem.original, `版本：${reviewItem.version} · 上线：${reviewItem.date}`],
+        ["02 · 目标任务", "谁在用？解决什么真实任务？", meta.target, meta.task, "用户类型字段当前未接入，目标用户来自 PRD 与任务定义。"],
+        ["03 · 使用路径", "哪些用户看到了入口并开始任务？", values.enter == null ? "当前数据没有独立入口事件，无法回答看到入口的人数。" : `在${selectedLabel}，${fmt.format(values.enter)} 个去重用户进入目标路径，${fmt.format(values.start)} 个完成启动。`, values.enter && values.start != null ? `进入→启动 ${pct(values.start / values.enter)}；当前为${reviewItem.scope}。` : "需补入口曝光与可点击事件，才能区分没看到、没理解和没点击。", meta.source],
+        ["04 · 结果采用", "多少结果被下载、导出、保存、分享或进入后续业务？", values.adopt == null ? "当前没有统一的结果采用事件，不能给出结果被带走的完整数量。" : `当前可见采用代理为 ${fmt.format(values.adopt)} 个启动后用户。`, values.adopt == null ? "下载、收藏、分享等证据需要通过 task_id / result_id 串联到具体结果。" : `启动→采用 ${pct(adoptionRate)}；这仍是行为代理，不等于业务交付。`, meta.source],
+        ["05 · 用户复用", "是否重复使用？发生在什么类型客户中？", values.repeat30 == null ? "当前功能没有可用的独立复用指标。" : `成熟观察用户的 30 日复用：${repeatText}。`, "当前数据没有客户行业、规模、岗位或付费层级字段，因此不能识别哪类客户更容易复用。", "下一步接入 customer_id、客户类型、套餐与团队规模。"],
+        ["06 · 中日差异", "国内和日本表现是否不同？", reviewItem.scope === "专项数据缺失" ? "当前功能没有可直接比较的中日独立用户漏斗。" : `中国：${fmt.format(feature.cn.users)} 用户 / ${fmt.format(feature.cn.tenants)} 租户；日本：${fmt.format(feature.jp.users)} 用户 / ${fmt.format(feature.jp.tenants)} 租户。`, reviewItem.scope === "专项数据缺失" ? "需要补功能级曝光、启动、成功和采用事件后再比较。" : `采用代理：中国 ${pct(feature.cn.start && feature.cn.adopt != null ? feature.cn.adopt / feature.cn.start : null)}；日本 ${pct(feature.jp.start && feature.jp.adopt != null ? feature.jp.adopt / feature.jp.start : null)}。30 日复用：中国 ${pct(feature.cn.repeat30)}；日本 ${pct(feature.jp.repeat30)}。`, "差异只能描述行为相关性，不能直接归因文化、市场或版本。"],
+        ["07 · 商业价值", "是否产生试用、商机、续约、增购或交付效率价值？", meta.commercial, "这不是当前行为表能回答的问题；现有数据最多说明使用规模与行为路径。", "需要 CRM customer_id、订单 / 合同 / 续约、模型成本和生产交付状态。"],
+        ["08 · 问题位置", "问题出在入口、理解、输入、成功、质量还是商业转化？", meta.issue, `当前最接近证据的位置：${values.enter == null ? "入口与结果链路缺失" : values.start != null && values.enter ? `进入→启动 ${pct(values.start / values.enter)}` : "入口链路"}；结果质量和商业转化仍不可见。`, meta.source],
+        ["09 · 下一阶段", "这条结论会改变什么产品决策？下一步如何验证？", `决策：${reviewItem.decision || meta.decision}。${reviewItem.verify || meta.action}`, "验证要求：用同一 task_id 串起曝光、进入、输入、创建、成功 / 失败、结果采用、复用与商业结果。", `止损条件：${reviewItem.stop || "连续两个观察窗口仍无法回答真实成功或商业价值时收缩范围。"} · Owner：张亿军`]
+      ];
+
+      document.getElementById("featureReviewDetail").innerHTML = `
+        <section class="feature-review-hero"><div class="eyebrow">${reviewItem.version} · ${reviewItem.date} · ${selectedLabel}</div><h3>${reviewItem.feature}</h3><p>${reviewItem.original}</p><div class="hero-meta"><span>所属能力：<strong>${feature.name}</strong></span><span>证据粒度：<strong>${reviewItem.scope}</strong></span><span>当前决策：<strong>${reviewItem.decision || meta.decision}</strong></span></div></section>
+        <div class="review-kpi-grid">
+          <div class="review-kpi"><div class="review-kpi-label">${reviewItem.metrics?.enter != null ? "专项进入" : "用户参考"}</div><div class="review-kpi-value">${reviewItem.metrics?.enter != null ? count(values.enter) : count(values.users)}</div><div class="review-kpi-note">${reviewItem.metrics?.enter != null ? "定向入口事件 / 站点" : `${reviewItem.scope} · 非空真实 user_id 去重`}</div></div>
+          <div class="review-kpi"><div class="review-kpi-label">${reviewItem.metrics?.enter != null ? "专项执行" : "租户参考"}</div><div class="review-kpi-value">${reviewItem.metrics?.enter != null ? count(values.start) : count(values.tenants)}</div><div class="review-kpi-note">${reviewItem.metrics?.enter != null ? "定向事件 / 站点" : `${reviewItem.scope} · 非空真实 tenant_id 去重`}</div></div>
+          <div class="review-kpi"><div class="review-kpi-label">启动后采用</div><div class="review-kpi-value">${values.adopt == null ? "不可回答" : pct(adoptionRate)}</div><div class="review-kpi-note">${values.adopt == null ? "缺统一结果采用事件" : "下载 / 收藏等行为代理"}</div></div>
+          <div class="review-kpi"><div class="review-kpi-label">30 日复用</div><div class="review-kpi-value">${state.site === "both" ? (hasRepeatEvidence ? "中 / 日" : "不可回答") : (hasRepeatEvidence ? pct(feature[state.site].repeat30) : "不可回答")}</div><div class="review-kpi-note">${hasRepeatEvidence ? (state.site === "both" ? repeatText : "成熟观察用户") : "专项复用埋点缺失"}</div></div>
+        </div>
+        <div class="review-proof"><div class="review-proof-label">数据证明</div><div><p>${reviewItem.fact || meta.proof}</p><small>口径与来源：${reviewItem.evidence || meta.source} · ${reviewItem.scope}</small></div></div>
+        <section class="section journey"><div class="section-head"><div><h3>用户行为路径</h3><p>从入口到再次使用；每一步标注可见证据与缺口</p></div><span class="badge ${decisionClass}">${meta.decision}</span></div><div class="journey-grid">${journeyHtml}</div><div class="journey-foot"><strong>口径</strong> 同一站点、统计期内的真实 ID 集合；结果 / 采用为行为代理，商业结果不外推。<strong>来源</strong> ${meta.source}</div></section>
+        <section class="section regional-review"><div class="section-head"><div><h3>中日证据矩阵</h3><p>${reviewItem.scope === "功能级" ? "功能级用户行为证据" : `${reviewItem.scope}：仅展示可直接对应的证据`}</p></div></div><div class="table-scroll"><table class="data-table"><thead><tr><th>站点</th><th class="num">用户</th><th class="num">租户</th><th class="num">进入</th><th class="num">启动 / 执行</th><th class="num">结果</th><th class="num">采用</th><th class="num">30日复用</th></tr></thead><tbody>${["cn","jp"].map(site => { const v = reviewItem.metrics ? reviewItem.metrics[site] : reviewItem.scope === "专项数据缺失" ? unavailable : feature[site]; return `<tr><td class="site-name ${site}">${report.sites[site].label}</td><td class="num">${count(v.users)}</td><td class="num">${count(v.tenants)}</td><td class="num">${count(v.enter)}</td><td class="num">${count(v.start)}</td><td class="num">${count(v.result)}</td><td class="num">${count(v.adopt)}</td><td class="num">${reviewItem.metrics || reviewItem.scope === "专项数据缺失" ? "不可回答" : pct(v.repeat30)}</td></tr>`; }).join("")}</tbody></table></div></section>
+        <section class="review-question-grid">${cards.map(([label, title, body, extra, source]) => `<article class="question-card ${label.startsWith("09") ? "is-decision" : label.startsWith("07") || label.startsWith("08") ? "is-risk" : ""}"><div class="q-label"><span>${label}</span><span>${label.startsWith("09") ? "决策" : "证据"}</span></div><h4>${title}</h4><p>${body}</p><p>${extra}</p><div class="q-source"><strong>口径 / 下一步：</strong>${source}</div></article>`).join("")}</section>
+        <div class="review-decision"><div class="decision-word">${reviewItem.decision || meta.decision}</div><div><strong>产品决策</strong><p>${reviewItem.verify || meta.action}</p></div><div><strong>验证门槛</strong><p>${reviewItem.stop || "连续两个观察窗口仍无法回答真实成功、结果采用或商业价值时，收缩无法量化的范围。"} · Owner：张亿军</p></div></div>
+      `;
+    }
+
+    function siteValues(feature) {
+      if (state.site === "cn" || state.site === "jp") return feature[state.site];
+      const out = {};
+      for (const key of ["users", "tenants", "enter", "start", "result", "adopt"]) {
+        const a = feature.cn[key], b = feature.jp[key];
+        out[key] = a == null || b == null ? null : a + b;
+      }
+      out.repeat30 = null;
+      return out;
+    }
+
+    function renderKpis() {
+      const keys = state.site === "both" ? ["cn", "jp"] : [state.site];
+      const events = sum(keys.flatMap(key => report.sites[key].months.events));
+      const users = sum(keys.map(key => report.sites[key].totalUsers));
+      const tenants = sum(keys.map(key => report.sites[key].totalTenants));
+      const fusion = report.features.find(item => item.key === "fusion");
+      const design = report.features.find(item => item.key === "design");
+      const repeatText = feature => state.site === "both" ? `中 ${pct(feature.cn.repeat30)} / 日 ${pct(feature.jp.repeat30)}` : pct(feature[state.site].repeat30);
+      const contextSite = state.site === "both" ? "两站点加总" : report.sites[state.site].label;
+      document.getElementById("siteLabel").textContent = contextSite;
+      document.getElementById("kpiGrid").innerHTML = [
+        ["事件量", events >= 10000000 ? `${(events / 10000000).toFixed(2)}千万` : `${(events / 10000).toFixed(1)}万`, "统计期内全部事件", "blue"],
+        [state.site === "both" ? "站点去重用户数相加" : "全期去重用户", fmt.format(users), state.site === "both" ? `中国 ${fmt.format(report.sites.cn.totalUsers)} + 日本 ${fmt.format(report.sites.jp.totalUsers)}；租户 ${fmt.format(tenants)}` : `全期去重租户 ${fmt.format(tenants)}`, "teal"],
+        ["融合 30 日复用", repeatText(fusion), "当前最稳定任务", "green"],
+        ["设计工作台 30 日复用", repeatText(design), "需补强结果采用", "amber"]
+      ].map(([label, value, context, accent]) => `<article class="kpi" data-accent="${accent}"><div class="kpi-label">${label}</div><div class="kpi-value">${value}</div><div class="kpi-context">${context}</div></article>`).join("");
+    }
+
+    function niceMax(value) {
+      const magnitude = Math.pow(10, Math.floor(Math.log10(value)));
+      return Math.ceil(value / magnitude) * magnitude;
+    }
+
+    function renderTrend() {
+      const keys = state.site === "both" ? ["cn", "jp"] : [state.site];
+      const series = keys.map(key => ({ key, label: report.sites[key].label, values: report.sites[key].months.users, color: key === "cn" ? "var(--cn)" : "var(--jp)" }));
+      document.getElementById("trendLegend").innerHTML = series.map(s => `<span><i class="swatch ${s.key}"></i>${s.label}</span>`).join("");
+      const width = 760, height = 286, left = 54, right = 18, top = 18, bottom = 38;
+      const plotW = width - left - right, plotH = height - top - bottom;
+      const max = niceMax(Math.max(...series.flatMap(s => s.values)));
+      const x = i => left + (plotW * i / (report.months.length - 1));
+      const y = v => top + plotH - (v / max * plotH);
+      let svg = `<svg class="line-chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="月度活跃用户趋势"><title>月度活跃用户趋势</title><desc>3 月为不完整观察期，6 月活跃用户达到阶段高点。</desc>`;
+      for (let i = 0; i <= 4; i++) {
+        const value = max * i / 4;
+        const yy = y(value);
+        svg += `<line class="grid-line" x1="${left}" y1="${yy}" x2="${width-right}" y2="${yy}"></line><text class="axis-label" x="${left-8}" y="${yy+4}" text-anchor="end">${value >= 10000 ? (value/10000).toFixed(value % 10000 ? 1 : 0) + "万" : fmt.format(value)}</text>`;
+      }
+      report.months.forEach((month, i) => { svg += `<text class="axis-label" x="${x(i)}" y="${height-12}" text-anchor="middle">${month}</text>`; });
+      series.forEach(s => {
+        const points = s.values.map((v, i) => `${x(i)},${y(v)}`).join(" ");
+        svg += `<polyline class="plot-line" points="${points}" style="stroke:${s.color}"></polyline>`;
+        s.values.forEach((v, i) => {
+          svg += `<circle class="plot-dot" tabindex="0" cx="${x(i)}" cy="${y(v)}" r="5" style="fill:${s.color}" data-series="${esc(s.label)}" data-month="${report.months[i]}" data-value="${v}"></circle>`;
+        });
+      });
+      svg += `</svg><div class="tooltip" role="tooltip"></div>`;
+      const wrap = document.getElementById("trendChart");
+      wrap.innerHTML = svg;
+      const tooltip = wrap.querySelector(".tooltip");
+      const show = (target) => {
+        const rect = wrap.getBoundingClientRect();
+        const mark = target.getBoundingClientRect();
+        tooltip.innerHTML = `<strong>${target.dataset.month}</strong><br>${target.dataset.series}：${fmt.format(Number(target.dataset.value))} 用户`;
+        tooltip.style.left = `${mark.left - rect.left + mark.width / 2}px`;
+        tooltip.style.top = `${mark.top - rect.top}px`;
+        tooltip.classList.add("is-visible");
+      };
+      wrap.querySelectorAll(".plot-dot").forEach(dot => {
+        dot.addEventListener("mouseenter", () => show(dot));
+        dot.addEventListener("focus", () => show(dot));
+        dot.addEventListener("mouseleave", () => tooltip.classList.remove("is-visible"));
+        dot.addEventListener("blur", () => tooltip.classList.remove("is-visible"));
+      });
+    }
+
+    function renderFeatureBars() {
+      const max = Math.max(...report.features.flatMap(f => state.site === "both" ? [f.cn.users, f.jp.users] : [f[state.site].users]));
+      document.getElementById("featureLegend").innerHTML = state.site === "both" ? `<span><i class="swatch cn"></i>中国</span><span><i class="swatch jp"></i>日本</span>` : `<span><i class="swatch ${state.site}"></i>${report.sites[state.site].label}</span>`;
+      document.getElementById("featureBars").innerHTML = report.features.map(f => {
+        const values = state.site === "both" ? [["cn", f.cn.users], ["jp", f.jp.users]] : [[state.site, f[state.site].users]];
+        const total = state.site === "both" ? f.cn.users + f.jp.users : f[state.site].users;
+        const bars = values.map(([key, value]) => `<div class="bar-line"><div class="bar-track"><div class="bar-fill ${key}" style="width:${Math.max(0.5, value/max*100)}%"></div></div></div>`).join("");
+        return `<button type="button" class="feature-row" data-feature="${f.key}" aria-pressed="${state.feature === f.key}"><span class="feature-name">${f.name}</span><span class="bar-stack">${bars}</span><span class="feature-value">${fmt.format(total)}</span></button>`;
+      }).join("");
+      document.querySelectorAll(".feature-row").forEach(button => button.addEventListener("click", () => {
+        state.feature = button.dataset.feature;
+        document.getElementById("featureSelect").value = state.feature;
+        renderFeatureBars();
+        renderFunnel();
+      }));
+    }
+
+    function renderFunnel() {
+      const feature = report.features.find(item => item.key === state.feature);
+      const values = siteValues(feature);
+      const stages = [["功能用户", values.users], ["进入", values.enter], ["启动", values.start], ["结果代理", values.result], ["采用", values.adopt]];
+      const max = values.users || 1;
+      document.getElementById("funnelChart").innerHTML = stages.map(([label, value], index) => {
+        const height = value == null ? 18 : Math.max(18, value / max * 150);
+        let rate = "";
+        if (index === 2 && values.enter) rate = `进入→启动 ${pct(values.start / values.enter)}`;
+        if (index === 3 && values.start && value != null) rate = `启动→结果 ${pct(value / values.start)}`;
+        if (index === 4 && values.start && value != null) rate = `启动→采用 ${pct(value / values.start)}`;
+        return `<div class="funnel-step"><div class="funnel-count">${value == null ? "—" : fmt.format(value)}</div><div class="funnel-bar" style="height:${height}px;opacity:${value == null ? 0.18 : 1}"></div><div class="funnel-label">${label}<div class="funnel-rate">${rate}</div></div></div>`;
+      }).join("");
+      const repeat = state.site === "both" ? `30 日复用：中国 ${pct(feature.cn.repeat30)}，日本 ${pct(feature.jp.repeat30)}。` : `30 日复用：${pct(feature[state.site].repeat30)}。`;
+      document.getElementById("funnelNote").textContent = `${repeat}${feature.note}`;
+    }
+
+    function renderCompare() {
+      const maxRatio = Math.max(...report.features.map(f => f.jp.users / f.cn.users));
+      document.getElementById("compareRows").innerHTML = report.features.map(f => {
+        const ratio = f.jp.users / f.cn.users;
+        const cnAdopt = f.cn.start && f.cn.adopt != null ? f.cn.adopt / f.cn.start : null;
+        const jpAdopt = f.jp.start && f.jp.adopt != null ? f.jp.adopt / f.jp.start : null;
+        return `<tr class="${f.key === "fusion" ? "highlight-row" : ""}"><td><strong>${f.name}</strong></td><td class="num">${fmt.format(f.cn.users)}</td><td class="num">${fmt.format(f.jp.users)}</td><td><div>${pct(ratio)}</div><div class="ratio-track"><div class="ratio-fill" style="width:${ratio/maxRatio*100}%"></div></div></td><td class="num">${pct(cnAdopt)}</td><td class="num">${pct(jpAdopt)}</td><td class="num">${pct(f.cn.repeat30)}</td><td class="num">${pct(f.jp.repeat30)}</td><td>${f.meaning}</td></tr>`;
+      }).join("");
+    }
+
+    function badgeClass(decision) {
+      if (decision === "加强") return "green";
+      if (decision === "合并") return "blue";
+      if (decision.includes("调整") || decision.includes("验证")) return "amber";
+      return "red";
+    }
+
+    function renderDecisionList() {
+      const version = document.getElementById("versionFilter").value;
+      const decision = document.getElementById("decisionFilter").value;
+      const filtered = report.versions.filter(item => (version === "all" || item.version === version) && (decision === "all" || item.decision === decision));
+      document.getElementById("decisionCount").textContent = `${filtered.length} / ${report.versions.length} 项`;
+      document.getElementById("decisionList").innerHTML = filtered.length ? filtered.map(item => `<details class="decision-item"><summary><span>${item.version}</span><span class="decision-date">${item.date}</span><span class="decision-title">${item.feature}</span><span class="badge ${badgeClass(item.decision)}">${item.decision}</span><span class="chevron">›</span></summary><div class="decision-detail"><div class="detail-cell"><div class="detail-label">原产品判断</div><p>${item.original}</p></div><div class="detail-cell"><div class="detail-label">指标 / 数据来源</div><p>${item.evidence}</p></div><div class="detail-cell"><div class="detail-label">数据事实</div><p>${item.fact}</p></div><div class="detail-cell"><div class="detail-label">数据暂不能证明</div><p>${item.cannot}</p></div><div class="detail-cell"><div class="detail-label">验证指标 / 动作</div><p>${item.verify}</p></div><div class="detail-cell"><div class="detail-label">止损条件 · Owner 张亿军</div><p>${item.stop}</p></div></div></details>`).join("") : `<div class="empty-state">当前筛选下没有版本功能</div>`;
+    }
+
+    function renderStaticTables() {
+      document.getElementById("metricRows").innerHTML = report.metrics.map(row => `<tr>${row.map((cell, index) => index === 2 ? `<td><span class="badge ${cell === "直接" ? "green" : cell === "代理" ? "amber" : "red"}">${cell}</span></td>` : `<td>${cell}</td>`).join("")}</tr>`).join("");
+      const status = { ok:["已闭环","ok"], warn:["有限","warn"], risk:["风险 / 待补","risk"] };
+      document.getElementById("qualityRows").innerHTML = report.quality.map(row => `<tr><td><strong>${row[0]}</strong></td><td>${row[1]}</td><td>${row[2]}</td><td><span class="status-dot ${status[row[3]][1]}"></span>${status[row[3]][0]}</td></tr>`).join("");
+      document.getElementById("gapRows").innerHTML = report.gaps.map(row => `<tr><td><code>${row[0]}</code></td><td>${row[1]}</td><td>${row[2]}</td><td class="priority">${row[3]}</td><td>${row[4]}</td></tr>`).join("");
+      document.getElementById("sourceList").innerHTML = report.sources.map(([label, url]) => `<div class="source-item"><strong>${label}</strong><a href="${url}" target="_blank" rel="noreferrer">${url.replace("file://", "")}</a></div>`).join("");
+    }
+
+    function setupControls() {
+      document.querySelectorAll("[data-tab]").forEach(button => button.addEventListener("click", () => {
+        document.querySelectorAll("[data-tab]").forEach(tab => tab.setAttribute("aria-selected", String(tab === button)));
+        document.querySelectorAll("[role=tabpanel]").forEach(panel => { panel.hidden = panel.id !== button.dataset.tab; });
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }));
+      document.querySelectorAll("[data-site]").forEach(button => button.addEventListener("click", () => {
+        state.site = button.dataset.site;
+        document.querySelectorAll("[data-site]").forEach(item => item.setAttribute("aria-pressed", String(item === button)));
+        renderKpis(); renderTrend(); renderFeatureBars(); renderFunnel(); renderFeatureReview();
+      }));
+      const featureSelect = document.getElementById("featureSelect");
+      featureSelect.innerHTML = report.features.map(f => `<option value="${f.key}">${f.name}</option>`).join("");
+      featureSelect.value = state.feature;
+      featureSelect.addEventListener("change", () => { state.feature = featureSelect.value; renderFeatureBars(); renderFunnel(); });
+
+      const versions = [...new Set(report.versions.map(item => item.version))];
+      const decisions = [...new Set(report.versions.map(item => item.decision))];
+      document.getElementById("versionFilter").insertAdjacentHTML("beforeend", versions.map(item => `<option value="${item}">${item}</option>`).join(""));
+      document.getElementById("decisionFilter").insertAdjacentHTML("beforeend", decisions.map(item => `<option value="${item}">${item}</option>`).join(""));
+      document.getElementById("versionFilter").addEventListener("change", renderDecisionList);
+      document.getElementById("decisionFilter").addEventListener("change", renderDecisionList);
+      document.getElementById("printReport").addEventListener("click", () => window.print());
+    }
+
+    setupControls();
+    renderKpis();
+    renderTrend();
+    renderFeatureBars();
+    renderFunnel();
+    renderCompare();
+    renderDecisionList();
+    renderStaticTables();
+    renderFeatureReview();
+  </script>
+</body>
+</html>
