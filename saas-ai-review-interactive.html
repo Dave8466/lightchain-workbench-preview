@@ -547,6 +547,10 @@
     .review-proof-label { color: var(--blue); font-size: 12px; font-weight: 600; }
     .review-proof p { margin: 0; color: var(--ink); font-size: 14px; font-weight: 500; }
     .review-proof small { display: block; margin-top: 6px; color: var(--muted); font-size: 11px; font-weight: 400; }
+    .review-rate-chart { padding: 15px 17px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+    .review-rate-chart h3 { margin: 0; color: var(--ink); font-size: 15px; font-weight: 600; }
+    .review-rate-chart p { margin: 4px 0 0; color: var(--muted); font-size: 12px; }
+    .rate-chart-empty { display: grid; place-items: center; min-height: 120px; margin-top: 12px; background: var(--surface-alt); color: var(--muted); font-size: 12px; text-align: center; }
 
     .journey { overflow: hidden; }
     .journey-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; }
@@ -732,9 +736,6 @@
             <p>先提高结果带走和二次任务，再判断是否扩大入口与曝光。</p>
           </article>
         </div>
-        <div class="section-head" style="padding:12px 0 10px;border-bottom:0"><div><h3>其余版本功能点</h3><p>点击展开支撑当前结论的关键数据</p></div></div>
-        <div class="conclusion-grid" id="overviewFeatureConclusions"></div>
-
         <div class="analysis-grid">
           <section class="section">
             <div class="section-head">
@@ -1152,6 +1153,7 @@
           <div class="review-kpi"><div class="review-kpi-label">30 日复用</div><div class="review-kpi-value">${state.site === "both" ? (hasRepeatEvidence ? "中 / 日" : "不可回答") : (hasRepeatEvidence ? pct(feature[state.site].repeat30) : "不可回答")}</div><div class="review-kpi-note">${hasRepeatEvidence ? (state.site === "both" ? repeatText : "成熟观察用户") : "专项复用埋点缺失"}</div></div>
         </div>
         <div class="review-proof"><div class="review-proof-label">数据证明</div><div><p>${reviewItem.fact || meta.proof}</p><small>口径与来源：${reviewItem.evidence || meta.source} · ${reviewItem.scope}</small></div></div>
+        <section class="review-rate-chart"><h3>复用率与带走结果率变化</h3><p>7 日复用、30 日复用、带走结果数 / 开始任务数；按时间窗口拆分后才可观察变化。</p><div class="rate-chart-empty">当前数据仅有全期汇总：7 日复用时间序列、30 日复用时间序列和分窗口带走结果率尚未提供。<br>需补充 cohort_date、task_id、result_id、adopt_event 后生成折线图。</div></section>
         <section class="section journey"><div class="section-head"><div><h3>用户行为路径</h3><p>从入口到再次使用；每一步标注可见证据与缺口</p></div><span class="badge ${decisionClass}">${meta.decision}</span></div><div class="journey-grid">${journeyHtml}</div><div class="journey-foot"><strong>口径</strong> 同一站点、统计期内的真实 ID 集合；结果 / 采用为行为代理，商业结果不外推。<strong>来源</strong> ${meta.source}</div></section>
         <section class="section regional-review"><div class="section-head"><div><h3>中日证据矩阵</h3><p>${reviewItem.scope === "功能级" ? "功能级用户行为证据" : `${reviewItem.scope}：仅展示可直接对应的证据`}</p></div></div><div class="table-scroll"><table class="data-table"><thead><tr><th>站点</th><th class="num">用户</th><th class="num">租户</th><th class="num">进入</th><th class="num">启动 / 执行</th><th class="num">结果</th><th class="num">采用</th><th class="num">30日复用</th></tr></thead><tbody>${["cn","jp"].map(site => { const v = reviewItem.metrics ? reviewItem.metrics[site] : reviewItem.scope === "专项数据缺失" ? unavailable : feature[site]; return `<tr><td class="site-name ${site}">${report.sites[site].label}</td><td class="num">${count(v.users)}</td><td class="num">${count(v.tenants)}</td><td class="num">${count(v.enter)}</td><td class="num">${count(v.start)}</td><td class="num">${count(v.result)}</td><td class="num">${count(v.adopt)}</td><td class="num">${reviewItem.metrics || reviewItem.scope === "专项数据缺失" ? "不可回答" : pct(v.repeat30)}</td></tr>`; }).join("")}</tbody></table></div></section>
         <section class="review-question-grid">${cards.map(([label, title, body, extra, source]) => `<article class="question-card ${label.startsWith("09") ? "is-decision" : label.startsWith("07") || label.startsWith("08") ? "is-risk" : ""}"><div class="q-label"><span>${label}</span><span>${label.startsWith("09") ? "决策" : "证据"}</span></div><h4>${title}</h4><p>${body}</p><p>${extra}</p><div class="q-source"><strong>口径 / 下一步：</strong>${source}</div></article>`).join("")}</section>
