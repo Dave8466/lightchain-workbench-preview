@@ -12964,7 +12964,9 @@
       const decisionClass = meta.decision.includes("加强") ? "green" : meta.decision.includes("合并") ? "blue" : "amber";
       const chartFeatures = { marketing:"marketing", design:"design_production", tryon:"tryon", model:"model_library", fusion:"fusion", editor:"image_editor" };
       const chartSite = state.site === "both" ? "cn" : state.site;
-      const chartData = reviewRateSeries[chartSite]?.[chartFeatures[reviewItem.parent]]?.review_rate_series;
+      const chartData = (!reviewItem.metrics && reviewItem.scope === "功能级")
+        ? reviewRateSeries[chartSite]?.[chartFeatures[reviewItem.parent]]?.review_rate_series
+        : null;
 
       document.getElementById("featureReviewPeriod").textContent = `${selectedLabel} · ${reviewItem.version} · ${reviewItem.date}`;
       document.getElementById("featureReviewIndex").innerHTML = reviewFeatureItems.map(item => {
