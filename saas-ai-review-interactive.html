@@ -186,7 +186,7 @@
 
     .conclusion-strip {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       margin-bottom: 22px;
       background: var(--surface);
       border-top: 3px solid var(--teal);
@@ -202,6 +202,18 @@
     .conclusion .eyebrow { color: var(--teal); font-size: 12px; font-weight: 500; }
     .conclusion h3 { margin: 5px 0 5px; color: var(--ink); font-size: 17px; font-weight: 500; }
     .conclusion p { margin: 0; color: var(--muted); }
+    .conclusion-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 22px; }
+    .conclusion-item { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+    .conclusion-item summary { list-style: none; cursor: pointer; padding: 13px 15px; }
+    .conclusion-item summary::-webkit-details-marker { display: none; }
+    .conclusion-item summary::after { content: "+"; float: right; color: var(--teal); font-size: 18px; line-height: 1; }
+    .conclusion-item[open] summary::after { content: "−"; }
+    .conclusion-item .eyebrow { color: var(--teal); font-size: 11px; font-weight: 600; }
+    .conclusion-item h4 { margin: 4px 22px 3px 0; color: var(--ink); font-size: 14px; font-weight: 600; }
+    .conclusion-item summary p { margin: 0; color: var(--muted); font-size: 12px; }
+    .conclusion-detail { padding: 0 15px 14px; border-top: 1px solid var(--line); color: var(--text); font-size: 12px; }
+    .conclusion-detail p { margin: 10px 0 0; }
+    .conclusion-detail strong { color: var(--ink); }
 
     .analysis-grid {
       display: grid;
@@ -610,7 +622,7 @@
       .kpi-grid { grid-template-columns: 1fr 1fr; }
       .kpi { min-height: 108px; padding: 14px; }
       .kpi-value { font-size: 24px; }
-      .conclusion-strip { grid-template-columns: 1fr; }
+      .conclusion-strip, .conclusion-grid { grid-template-columns: 1fr; }
       .conclusion { border-right: 0; border-bottom: 1px solid var(--line); }
       .conclusion:last-child { border-bottom: 0; }
       .section-head { flex-direction: column; }
@@ -720,6 +732,8 @@
             <p>先提高结果带走和二次任务，再判断是否扩大入口与曝光。</p>
           </article>
         </div>
+        <div class="section-head" style="padding:12px 0 10px;border-bottom:0"><div><h3>其余版本功能点</h3><p>点击展开支撑当前结论的关键数据</p></div></div>
+        <div class="conclusion-grid" id="overviewFeatureConclusions"></div>
 
         <div class="analysis-grid">
           <section class="section">
@@ -1174,6 +1188,19 @@
       ].map(([label, value, context, accent]) => `<article class="kpi" data-accent="${accent}"><div class="kpi-label">${label}</div><div class="kpi-value">${value}</div><div class="kpi-context">${context}</div></article>`).join("");
     }
 
+    function renderOverviewFeatureConclusions() {
+      const container = document.getElementById("overviewFeatureConclusions");
+      if (!container) return;
+      container.innerHTML = reviewFeatureItems.slice(0, 13).map((item) => {
+        const meta = featureReviewMeta[item.parent];
+        const version = report.versions[item.versionIndex] || {};
+        const fact = version.fact || meta.proof;
+        const evidence = version.evidence || meta.source;
+        const action = version.verify || meta.action;
+        return `<details class="conclusion-item"><summary><div class="eyebrow">${item.version} · ${item.date}</div><h4>${item.feature}</h4><p>${meta.decision} · ${item.scope}</p></summary><div class="conclusion-detail"><p><strong>原判断：</strong>${version.original || meta.judgment}</p><p><strong>关键数据：</strong>${fact}</p><p><strong>口径 / 来源：</strong>${evidence}</p><p><strong>暂不能证明：</strong>${version.cannot || meta.commercial}</p><p><strong>下一步：</strong>${action}</p></div></details>`;
+      }).join("");
+    }
+
     function niceMax(value) {
       const magnitude = Math.pow(10, Math.floor(Math.log10(value)));
       return Math.ceil(value / magnitude) * magnitude;
@@ -1316,6 +1343,7 @@
 
     setupControls();
     renderKpis();
+    renderOverviewFeatureConclusions();
     renderTrend();
     renderFeatureBars();
     renderFunnel();
