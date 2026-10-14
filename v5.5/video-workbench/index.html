@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>织影 · AI 视频工作台原型</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap');
+
+    :root {
+      --ink: #e8ece8;
+      --muted: #89918d;
+      --faint: #59635f;
+      --line: rgba(215, 229, 220, .12);
+      --panel: #151b19;
+      --panel-2: #1a2220;
+      --panel-3: #202a27;
+      --canvas: #101513;
+      --lime: #c8f36a;
+      --lime-dark: #76963a;
+      --orange: #f6a36b;
+      --blue: #92bbff;
+      --red: #ff8d84;
+      --shadow: 0 24px 70px rgba(0,0,0,.24);
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; min-width: 1080px; color: var(--ink); background: #0b0f0e; font-family: Manrope, sans-serif; font-size: 13px; }
+    button, input, textarea { font: inherit; color: inherit; }
+    button { border: 0; cursor: pointer; }
+    .app { display: grid; grid-template-columns: 224px 1fr; min-height: 100vh; background: radial-gradient(circle at 75% 0%, rgba(93,131,104,.12), transparent 35%), #0b0f0e; }
+    .sidebar { border-right: 1px solid var(--line); padding: 24px 16px; background: rgba(13,18,16,.86); display: flex; flex-direction: column; }
+    .brand { display: flex; align-items: center; gap: 10px; padding: 0 10px 30px; }
+    .brand-mark { width: 30px; height: 30px; display: grid; place-items: center; border: 1px solid var(--lime); color: var(--lime); font-weight: 800; font-size: 15px; transform: rotate(45deg); }
+    .brand-mark span { transform: rotate(-45deg); }
+    .brand-copy strong { display:block; font-size: 15px; letter-spacing: .08em; }
+    .brand-copy small { color: var(--muted); font-family: 'DM Mono'; font-size: 9px; letter-spacing: .08em; }
+    .nav-label { padding: 0 12px 8px; color: #64706a; font: 10px 'DM Mono'; letter-spacing: .16em; text-transform: uppercase; }
+    .nav { display: grid; gap: 4px; }
+    .nav button { display:flex; align-items:center; gap: 11px; padding: 11px 12px; width:100%; border-radius: 7px; background: transparent; color: #9ba59f; text-align:left; transition: .2s; }
+    .nav button:hover, .nav button.active { background: #1c2722; color: var(--ink); }
+    .nav button.active { box-shadow: inset 2px 0 var(--lime); }
+    .nav .ico { width:18px; color: #697871; text-align:center; font-family:'DM Mono'; }
+    .nav button.active .ico { color: var(--lime); }
+    .side-spacer { flex:1; }
+    .team-card { margin: 16px 4px 0; border: 1px solid var(--line); border-radius: 10px; padding: 12px; background: linear-gradient(135deg, rgba(200,243,106,.08), rgba(200,243,106,0)); }
+    .avatar-row { display:flex; align-items:center; gap: 8px; }
+    .avatar { width: 28px; height:28px; border-radius: 50%; display:grid; place-items:center; color:#111; background: var(--lime); font-size: 11px; font-weight:800; }
+    .team-card strong { font-size: 11px; }
+    .team-card small { display:block; margin-top:3px; color: var(--muted); font-size:10px; }
+
+    .main { min-width: 0; }
+    .topbar { height: 72px; display:flex; align-items:center; justify-content:space-between; padding: 0 28px; border-bottom: 1px solid var(--line); background: rgba(12,17,15,.74); backdrop-filter: blur(16px); }
+    .crumbs { display:flex; align-items:center; gap: 10px; color: var(--muted); }
+    .crumbs strong { color: var(--ink); font-weight:600; }
+    .crumbs span { color: #48534d; }
+    .top-actions { display:flex; align-items:center; gap: 10px; }
+    .points { display:flex; align-items:center; gap:7px; padding: 8px 11px; border:1px solid var(--line); border-radius: 6px; color: #b6c0ba; font: 11px 'DM Mono'; }
+    .points i { display:block; width:6px; height:6px; border-radius:50%; background: var(--lime); box-shadow: 0 0 9px var(--lime); }
+    .outline-btn, .solid-btn { padding: 9px 13px; border-radius: 6px; font-weight: 700; }
+    .outline-btn { background: transparent; color: #cbd3cd; border: 1px solid var(--line); }
+    .outline-btn:hover { border-color: #77867b; }
+    .solid-btn { color: #10140f; background: var(--lime); }
+    .solid-btn:hover { background: #d9ff87; }
+
+    .workspace { display:grid; grid-template-rows: 66px 1fr; height: calc(100vh - 72px); }
+    .workspace-head { display:flex; align-items:center; justify-content:space-between; padding: 0 28px; border-bottom: 1px solid var(--line); }
+    .title-wrap h1 { margin:0; font: 700 22px 'Playfair Display', serif; letter-spacing: .01em; }
+    .title-wrap p { margin: 4px 0 0; color: var(--muted); font-size: 11px; }
+    .mode-toggle { display:flex; padding:3px; background:#151c19; border:1px solid var(--line); border-radius:8px; }
+    .mode-toggle button { padding: 8px 16px; border-radius: 5px; color: #78847d; background:transparent; font-size:11px; font-weight:700; }
+    .mode-toggle button.active { color:#10140f; background: var(--lime); }
+
+    .content { min-height: 0; display:grid; grid-template-columns: 1fr 322px; }
+    .canvas { position:relative; min-width:0; overflow:hidden; background-color: var(--canvas); background-image: radial-gradient(circle, rgba(178,210,188,.11) 1px, transparent 1px); background-size: 22px 22px; }
+    .canvas:before { content:''; position:absolute; inset:0; pointer-events:none; background: radial-gradient(circle at 52% 30%, rgba(81,119,89,.11), transparent 42%), linear-gradient(100deg, rgba(8,12,11,.2), transparent 38%, rgba(8,12,11,.4)); }
+    .canvas-toolbar { position:absolute; z-index:3; top:18px; left:22px; right:22px; display:flex; justify-content:space-between; align-items:center; }
+    .tool-group { display:flex; gap:5px; padding:4px; border:1px solid var(--line); border-radius:8px; background: rgba(20,28,24,.88); box-shadow: 0 8px 24px rgba(0,0,0,.16); }
+    .tool-group button { width:31px; height:29px; border-radius:5px; background:transparent; color:#899690; }
+    .tool-group button:hover, .tool-group button.active { color:var(--lime); background:#26322a; }
+    .canvas-toolbar .hint { color:#66736c; font: 10px 'DM Mono'; letter-spacing:.03em; }
+    .canvas-body { position:relative; z-index:1; width: 980px; height: 650px; margin: 76px auto 0; }
+    .link { position:absolute; height:1px; background: linear-gradient(90deg, #566a5b, #26352d); transform-origin: left center; opacity:.8; }
+    .link:after { content:''; position:absolute; right:-4px; top:-3px; width:6px; height:6px; border-radius:50%; background:#809a82; }
+    .link.l1 { left: 246px; top: 174px; width: 110px; transform: rotate(0deg); }
+    .link.l2 { left: 606px; top: 174px; width: 110px; transform: rotate(0deg); }
+    .link.l3 { left: 792px; top: 262px; width: 2px; height: 72px; transform: rotate(0deg); background: linear-gradient(#566a5b,#26352d); }
+    .node { position:absolute; width: 230px; border:1px solid rgba(216,229,220,.16); border-radius: 9px; overflow:hidden; background: #17201c; box-shadow: 0 16px 34px rgba(0,0,0,.25); transition: border-color .2s, transform .2s, box-shadow .2s; }
+    .node:hover, .node.selected { border-color: rgba(200,243,106,.7); box-shadow: 0 0 0 1px rgba(200,243,106,.15), 0 18px 38px rgba(0,0,0,.32); transform: translateY(-2px); }
+    .node.n1 { left: 20px; top: 88px; }
+    .node.n2 { left: 356px; top: 88px; }
+    .node.n3 { left: 716px; top: 88px; }
+    .node.n4 { left: 716px; top: 334px; }
+    .node-head { display:flex; align-items:center; justify-content:space-between; padding: 11px 12px; background: #1e2a24; border-bottom:1px solid var(--line); }
+    .node-title { display:flex; align-items:center; gap:8px; font-size:11px; font-weight:800; }
+    .node-dot { width:7px; height:7px; border-radius:50%; background:var(--lime); box-shadow:0 0 7px rgba(200,243,106,.5); }
+    .node-type { color: #718076; font: 9px 'DM Mono'; }
+    .node-body { padding: 11px 12px 12px; }
+    .node-body p { margin:0 0 10px; color:#b6c2bb; font-size:11px; line-height:1.55; }
+    .node-tags { display:flex; flex-wrap:wrap; gap:5px; }
+    .tag { padding:4px 6px; border-radius:4px; color:#93a198; background:#27332c; font-size:9px; }
+    .tag.green { color:var(--lime); background: rgba(200,243,106,.1); }
+    .asset-strip { display:flex; gap:5px; }
+    .asset-thumb { width:45px; height:39px; border-radius:4px; background-size:cover; background-position:center; border:1px solid rgba(255,255,255,.1); }
+    .node-footer { display:flex; align-items:center; justify-content:space-between; margin-top:11px; color:#65746b; font:9px 'DM Mono'; }
+    .node-action { color:var(--lime); cursor:pointer; }
+    .preview-strip { display:flex; gap:6px; margin-top: 4px; }
+    .preview-strip img { width:53px; height:45px; object-fit:cover; border-radius:4px; border:1px solid rgba(255,255,255,.12); }
+    .status-dot { display:inline-block; width:6px; height:6px; margin-right:4px; border-radius:50%; background:var(--orange); }
+    .status-dot.done { background:var(--lime); }
+    .zoom { position:absolute; z-index:3; bottom:18px; left:22px; display:flex; align-items:center; gap:9px; padding:6px 8px; border:1px solid var(--line); border-radius:7px; background:rgba(20,28,24,.9); color:#7e8a82; font:10px 'DM Mono'; }
+    .zoom button { background:transparent; color:#a3afa7; width:20px; font-size:15px; }
+
+    .inspector { border-left:1px solid var(--line); background:#121917; overflow:auto; }
+    .inspector-head { display:flex; align-items:center; justify-content:space-between; padding:20px 20px 15px; border-bottom:1px solid var(--line); }
+    .inspector-head h2 { margin:0; font-size:13px; }
+    .inspector-head small { color:var(--muted); font:10px 'DM Mono'; }
+    .inspector-section { padding: 16px 20px; border-bottom:1px solid var(--line); }
+    .inspector-section h3 { margin:0 0 11px; color:#87948b; font: 10px 'DM Mono'; letter-spacing:.13em; text-transform:uppercase; }
+    .field { margin-bottom: 12px; }
+    .field label { display:flex; justify-content:space-between; margin-bottom:6px; color:#b6c0ba; font-size:11px; }
+    .field label em { color:#68766d; font-style:normal; font-size:10px; }
+    .select, .input, .textarea { width:100%; border:1px solid var(--line); border-radius:6px; background:#1b2420; color:#d0d8d2; padding:9px 10px; outline:none; }
+    .textarea { min-height: 72px; resize:vertical; line-height:1.5; }
+    .select:focus, .input:focus, .textarea:focus { border-color: var(--lime-dark); }
+    .chip-row { display:flex; flex-wrap:wrap; gap:6px; }
+    .chip { padding:7px 8px; border-radius:5px; border:1px solid var(--line); color:#8d9a91; background:#1b2420; font-size:10px; }
+    .chip.active { color:#10140f; background:var(--lime); border-color:var(--lime); }
+    .switch-row { display:flex; align-items:center; justify-content:space-between; padding:6px 0; color:#aeb9b1; }
+    .switch { position:relative; width:31px; height:18px; border-radius:20px; background:#36433b; cursor:pointer; }
+    .switch:after { content:''; position:absolute; top:3px; left:3px; width:12px; height:12px; border-radius:50%; background:#849188; transition:.2s; }
+    .switch.on { background:var(--lime-dark); }
+    .switch.on:after { left:16px; background:var(--lime); }
+    .inspector-actions { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+    .inspector-actions button { padding:10px; border-radius:6px; font-size:11px; font-weight:700; }
+    .helper { color:#657269; font-size:10px; line-height:1.6; }
+
+    .quick-view { position:absolute; inset:0; z-index:5; overflow:auto; background: #111816; display:none; }
+    .quick-view.show { display:block; animation:fade .25s ease-out; }
+    @keyframes fade { from {opacity:0; transform:translateY(7px)} to {opacity:1; transform:none} }
+    .quick-inner { max-width: 920px; margin:0 auto; padding: 46px 48px 100px; }
+    .quick-kicker { color:var(--lime); font:10px 'DM Mono'; letter-spacing:.17em; text-transform:uppercase; }
+    .quick-inner h2 { max-width:600px; margin:11px 0 10px; font: 700 36px/1.14 'Playfair Display', serif; }
+    .quick-inner > p { max-width:600px; margin:0; color:#89958d; line-height:1.7; }
+    .quick-grid { display:grid; grid-template-columns: 1.2fr .8fr; gap:24px; margin-top:34px; }
+    .quick-card { border:1px solid var(--line); border-radius:10px; padding:20px; background:#17201c; }
+    .quick-card h3 { margin:0 0 16px; font-size:12px; }
+    .template-grid { display:grid; grid-template-columns: repeat(2, 1fr); gap:8px; }
+    .template { position:relative; overflow:hidden; min-height:106px; padding:13px; border:1px solid var(--line); border-radius:8px; background-size:cover; background-position:center; text-align:left; }
+    .template:after { content:''; position:absolute; inset:0; background:linear-gradient(135deg, rgba(12,17,15,.25), rgba(12,17,15,.88)); }
+    .template > * { position:relative; z-index:1; }
+    .template strong { display:block; margin-top:50px; font-size:11px; }
+    .template small { color:#9da9a0; font-size:9px; }
+    .template.active { border-color:var(--lime); box-shadow:inset 0 0 0 1px var(--lime); }
+    .upload { min-height:150px; display:grid; place-items:center; border:1px dashed #4a5a50; border-radius:8px; text-align:center; background:linear-gradient(135deg, rgba(200,243,106,.05), transparent); }
+    .upload strong { display:block; margin-top:8px; font-size:11px; }
+    .upload small { display:block; margin-top:4px; color:var(--muted); font-size:10px; }
+    .upload .plus { display:grid; place-items:center; width:31px; height:31px; margin:auto; border:1px solid var(--lime); border-radius:50%; color:var(--lime); font-size:20px; }
+    .quick-step { display:flex; align-items:flex-start; gap:11px; margin-bottom:16px; }
+    .quick-step:last-child { margin-bottom:0; }
+    .step-num { flex:0 0 auto; display:grid; place-items:center; width:23px; height:23px; border-radius:50%; color:#10140f; background:var(--lime); font:10px 'DM Mono'; }
+    .quick-step strong { display:block; font-size:11px; }
+    .quick-step p { margin:4px 0 0; color:var(--muted); font-size:10px; line-height:1.5; }
+    .quick-footer { display:flex; align-items:center; justify-content:space-between; margin-top:28px; padding-top:18px; border-top:1px solid var(--line); }
+    .quick-footer .back { color:#849087; background:transparent; }
+    .quick-footer .solid-btn { padding:12px 18px; }
+
+    .toast { position:fixed; right:26px; bottom:24px; z-index:20; max-width:320px; padding:12px 15px; border:1px solid rgba(200,243,106,.4); border-radius:8px; background:#1d2a21; color:#d5e7d3; box-shadow:var(--shadow); opacity:0; transform:translateY(10px); pointer-events:none; transition:.25s; font-size:11px; }
+    .toast.show { opacity:1; transform:none; }
+    .loading-bar { height:3px; width:0; margin-top:7px; border-radius:4px; background:var(--lime); transition:width 1.8s ease; }
+    .node.generating .loading-bar { width:100%; }
+    .node.generating .status-dot { background:var(--lime); animation:pulse 1s infinite; }
+    @keyframes pulse { 50% { opacity:.25; } }
+
+    .lib-start { position:absolute; z-index:4; left:50%; top:50%; transform:translate(-50%,-55%); display:flex; flex-direction:column; align-items:center; gap:20px; transition:.25s; }
+    .lib-start.hidden { opacity:0; pointer-events:none; transform:translate(-50%,-62%); }
+    .lib-start-note { display:flex; align-items:center; gap:9px; color:#a5a5a5; }
+    .mouse-dot { width:14px; height:18px; border:2px solid #999; border-radius:8px; position:relative; }
+    .mouse-dot:after { content:''; position:absolute; top:3px; left:5px; width:2px; height:4px; border-radius:2px; background:#bbb; }
+    .lib-start-actions { display:flex; gap:8px; }
+    .lib-start-actions button { min-width:198px; height:56px; display:flex; align-items:center; gap:12px; padding:0 16px; border:1px solid #404040; border-radius:13px; background:linear-gradient(#2b2b2b,#242424); color:#f0f0f0; text-align:left; box-shadow:0 10px 25px rgba(0,0,0,.28); transition:.2s; }
+    .lib-start-actions button:hover { background:#333; border-color:#666; transform:translateY(-2px); }
+    .lib-start-actions b { width:32px; height:32px; display:grid; place-items:center; border-radius:9px; background:#3a3a3a; color:#e6e6e6; font-size:18px; }
+    .lib-start-actions span { font-size:13px; }
+
+    /* LibTV-inspired full-canvas shell */
+    body { min-width: 0; background: #111; }
+    .app { display: block; min-height: 100vh; background: #111; }
+    .sidebar { display: none; }
+    .main { width: 100%; height: 100vh; }
+    .topbar { position: absolute; z-index: 12; top: 10px; left: 10px; right: 10px; height: 38px; padding: 0; border: 0; background: transparent; }
+    .crumbs, .top-actions { display: none; }
+    .workspace { display: block; height: 100vh; }
+    .workspace-head { display: none; }
+    .content { display: block; height: 100vh; }
+    .canvas { height: 100vh; }
+    .canvas-toolbar { top: 74px; left: 18px; right: 18px; }
+    .canvas-toolbar .hint { display: none; }
+    .tool-group { background: rgba(37,37,37,.94); border-color: #3d3d3d; }
+    .canvas-body { margin-top: 0; width: 100%; height: 100%; }
+    .node.n1 { left: 23%; top: 26%; }
+    .node.n2 { left: 54%; top: 26%; }
+    .node.n3 { left: 43%; top: 57%; }
+    .node.n4 { left: 70%; top: 58%; }
+    .link.l1 { left: calc(23% + 230px); top: calc(26% + 86px); width: calc(31% - 230px); }
+    .link.l2 { left: calc(54% + 230px); top: calc(26% + 86px); width: calc(16% - 230px); }
+    .link.l3 { display: none; }
+    .zoom { left: 20px; bottom: 20px; background: transparent; border: 0; box-shadow: none; }
+    .inspector { position: absolute; z-index: 10; display: none; top: 58px; right: 16px; width: 330px; height: auto; max-height: calc(100vh - 140px); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); }
+    .inspector.open { display: block; }
+    .quick-view { background: rgba(17,17,17,.98); }
+    .quick-view.show { display: block; }
+    .quick-inner { max-width: 850px; padding-top: 120px; }
+    .quick-inner h2 { font-family: Manrope, sans-serif; font-size: 30px; }
+    .quick-grid { grid-template-columns: 1fr 1fr; }
+    @media (max-width: 1180px) { .canvas-body { transform: none; } .node.n1 { left: 15%; } .node.n2 { left: 54%; } .node.n3 { left: 32%; } .node.n4 { left: 70%; } }
+
+    @media (max-width: 1180px) {
+      body { min-width: 960px; }
+      .app { grid-template-columns: 190px 1fr; }
+      .content { grid-template-columns: 1fr 290px; }
+      .canvas-body { transform:scale(.88); transform-origin: top left; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark"><span>织</span></div>
+        <div class="brand-copy"><strong>织影</strong><small>AI VIDEO STUDIO</small></div>
+      </div>
+      <div class="nav-label">工作区</div>
+      <nav class="nav">
+        <button class="active"><span class="ico">◈</span>视频工作台</button>
+        <button><span class="ico">▦</span>我的项目</button>
+        <button><span class="ico">◫</span>资产库</button>
+        <button><span class="ico">◌</span>任务中心 <small style="margin-left:auto;color:var(--orange);font:9px 'DM Mono'">2</small></button>
+      </nav>
+      <div class="nav-label" style="margin-top:28px">团队资源</div>
+      <nav class="nav">
+        <button><span class="ico">◇</span>企业模板</button>
+        <button><span class="ico">⌁</span>品牌规范</button>
+      </nav>
+      <div class="side-spacer"></div>
+      <div class="team-card">
+        <div class="avatar-row"><div class="avatar">林</div><div><strong>林野内容组</strong><small>专业版 · 8 位成员</small></div></div>
+        <div style="display:flex;justify-content:space-between;margin-top:13px;color:#7f8d83;font:9px 'DM Mono'"><span>本月积分</span><span style="color:var(--lime)">8,420 / 10,000</span></div>
+        <div style="height:3px;margin-top:6px;border-radius:4px;background:#2b372f"><div style="width:84%;height:100%;border-radius:4px;background:var(--lime)"></div></div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div class="crumbs"><span>视频工作台</span><b>›</b><strong>秋冬羊毛大衣 · 上新种草</strong></div>
+        <div class="top-actions"><div class="points"><i></i> 8,420 积分</div><button class="outline-btn" id="saveBtn">保存项目</button><button class="solid-btn" id="exportTop">导出预览</button></div>
+      </header>
+
+      <section class="workspace">
+        <div class="workspace-head">
+          <div class="title-wrap"><h1>秋冬羊毛大衣 · 上新种草</h1><p>最后编辑于刚刚 · 5 个镜头 · 9:16 竖屏</p></div>
+          <div class="mode-toggle"><button id="quickModeBtn">快速模式</button><button class="active" id="proModeBtn">专业画布</button></div>
+        </div>
+        <div class="content">
+          <section class="canvas" id="canvas">
+            <div class="lib-start" id="libStart">
+              <div class="lib-start-note"><span class="mouse-dot"></span><span>双击画布 自由生成节点</span></div>
+              <div class="lib-start-actions">
+                <button data-lib-action="image"><b>▧</b><span>图片生成</span></button>
+                <button data-lib-action="video"><b>▣</b><span>视频生成</span></button>
+                <button data-lib-action="audio"><b>◫</b><span>音频生成</span></button>
+                <button data-lib-action="script"><b>⌑</b><span>剧本生成</span></button>
+                <button data-lib-action="edit"><b>✣</b><span>智能剪辑</span></button>
+              </div>
+            </div>
+            <div class="canvas-toolbar"><div class="tool-group"><button class="active" title="选择">↖</button><button title="添加节点">＋</button><button title="连接">⌁</button><button title="画布注释">T</button><button title="撤销">↶</button></div><div class="hint">画布已自动保存 · 节点 08 / 14</div></div>
+            <div class="canvas-body">
+              <div class="link l1"></div><div class="link l2"></div><div class="link l3"></div>
+              <article class="node n1 selected" data-node="goal">
+                <div class="node-head"><div class="node-title"><span class="node-dot"></span>视频目标</div><span class="node-type">BRIEF</span></div>
+                <div class="node-body"><p>让用户在 15 秒内看清大衣的廓形、保暖感和通勤搭配。</p><div class="node-tags"><span class="tag green">新品上新</span><span class="tag">小红书</span><span class="tag">9:16</span></div><div class="node-footer"><span>业务目标</span><span class="node-action">已完成</span></div></div>
+              </article>
+              <article class="node n2" data-node="shotlist">
+                <div class="node-head"><div class="node-title"><span class="node-dot" style="background:var(--orange)"></span>脚本 / 分镜</div><span class="node-type">5 SHOTS</span></div>
+                <div class="node-body"><p>吸引注意 → 看清廓形 → 行走动态 → 细节证明 → 上新收尾</p><div class="preview-strip"><img src="https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?w=160&q=80" /><img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=160&q=80" /><img src="https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?w=160&q=80" /></div><div class="node-footer"><span><span class="status-dot done"></span>方案已确认</span><span class="node-action">展开</span></div></div>
+              </article>
+              <article class="node n3" data-node="generate">
+                <div class="node-head"><div class="node-title"><span class="node-dot" style="background:var(--blue)"></span>镜头生成</div><span class="node-type">SCENE</span></div>
+                <div class="node-body"><p>镜头 03 · 侧向跟拍展示大衣下摆，保持面料纹理与人物一致。</p><div class="node-tags"><span class="tag">参考生视频</span><span class="tag">可灵 2.6</span><span class="tag">5s</span></div><div class="node-footer"><span><span class="status-dot done"></span>已生成 3 个候选</span><span class="node-action">重做</span></div></div>
+              </article>
+              <article class="node n4" data-node="check">
+                <div class="node-head"><div class="node-title"><span class="node-dot" style="background:var(--orange)"></span>连续性检查</div><span class="node-type">QA</span></div>
+                <div class="node-body"><p>发现 1 个需确认的问题：第 03 镜头袖口纹理与主参考图略有差异。</p><div class="node-tags"><span class="tag" style="color:var(--orange);background:rgba(246,163,107,.1)">需确认 1</span><span class="tag">可局部重做</span></div><div class="node-footer"><span>检查完成</span><span class="node-action" id="fixIssue">去处理 →</span></div></div>
+              </article>
+            </div>
+            <div class="zoom"><button>−</button><span>82%</span><button>＋</button><span style="margin-left:3px;color:#536158">适配画布</span></div>
+
+            <div class="quick-view" id="quickView">
+              <div class="quick-inner">
+                <div class="quick-kicker">织影 / QUICK START</div>
+                <h2>不用先学会拍摄，先把这条视频做出来。</h2>
+                <p>告诉我们这条视频要卖什么、给谁看、发布到哪里。系统会帮你安排一套可编辑的服装镜头。</p>
+                <div class="quick-grid">
+                  <div class="quick-card"><h3>01 · 选择这条视频的任务</h3><div class="template-grid">
+                    <button class="template active" data-template="商品展示" style="background-image:url('https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=480&q=80')"><strong>新品上身展示</strong><small>先看清衣服，再看穿着效果</small></button>
+                    <button class="template" data-template="社媒种草" style="background-image:url('https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=480&q=80')"><strong>社媒种草</strong><small>更生活化，更像真实推荐</small></button>
+                    <button class="template" data-template="面料工艺" style="background-image:url('https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=480&q=80')"><strong>面料 / 工艺展示</strong><small>把触感和细节拍成证据</small></button>
+                    <button class="template" data-template="品牌形象" style="background-image:url('https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=480&q=80')"><strong>品牌系列形象</strong><small>统一氛围，讲清系列语言</small></button>
+                  </div></div>
+                  <div class="quick-card"><h3>02 · 交给系统的素材</h3><div class="upload" id="uploadBox"><div><div class="plus">＋</div><strong id="uploadTitle">拖入衣服图或点击上传</strong><small id="uploadHint">建议 1 张主图 + 1–3 张细节图</small></div></div><div style="margin-top:14px"><label style="display:block;margin-bottom:6px;color:#b6c0ba;font-size:11px">这件衣服最想让人看懂什么？</label><textarea class="textarea" id="briefInput">展示羊毛大衣的宽松廓形、挺括质感和通勤搭配。</textarea></div></div>
+                </div>
+                <div class="quick-footer"><button class="back" id="closeQuick">← 返回专业画布</button><button class="solid-btn" id="makePlan">生成我的镜头方案 <span style="margin-left:6px">→</span></button></div>
+              </div>
+            </div>
+          </section>
+
+          <aside class="inspector" id="inspector">
+            <div class="inspector-head"><div><h2 id="inspectorTitle">视频目标</h2><small id="inspectorSub">项目级设置</small></div><button class="outline-btn" style="padding:5px 8px;font-size:10px" id="closeInspector">×</button></div>
+            <div id="inspectorBody">
+              <div class="inspector-section"><h3>这条视频要完成什么</h3><div class="field"><label>业务目标 <em>项目级</em></label><select class="select"><option>新品上身展示</option><option>社媒种草</option><option>面料 / 工艺展示</option><option>品牌系列形象</option></select></div><div class="field"><label>发布平台</label><div class="chip-row"><button class="chip active">小红书</button><button class="chip">抖音</button><button class="chip">视频号</button><button class="chip">商品详情页</button></div></div><div class="field"><label>画幅</label><div class="chip-row"><button class="chip active">9:16 竖屏</button><button class="chip">16:9 横屏</button><button class="chip">1:1 方形</button></div></div></div>
+              <div class="inspector-section"><h3>视觉锁定</h3><div class="switch-row"><span>保持服装颜色与图案</span><span class="switch on"></span></div><div class="switch-row"><span>保持人物面容与发型</span><span class="switch on"></span></div><div class="switch-row"><span>统一镜头光线方向</span><span class="switch"></span></div><p class="helper" style="margin:9px 0 0">锁定的内容会沿着节点连线传递给每个镜头。</p></div>
+              <div class="inspector-section"><h3>项目说明</h3><textarea class="textarea">让用户在 15 秒内看清大衣的廓形、保暖感和通勤搭配。</textarea></div>
+              <div class="inspector-section"><div class="inspector-actions"><button class="outline-btn" id="duplicateBtn">复制节点</button><button class="solid-btn" id="saveNodeBtn">保存修改</button></div></div>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script>
+    const $ = (s) => document.querySelector(s);
+    const $$ = (s) => [...document.querySelectorAll(s)];
+    const toast = (message) => { const el = $('#toast'); el.textContent = message; el.classList.add('show'); clearTimeout(window.toastTimer); window.toastTimer = setTimeout(() => el.classList.remove('show'), 2600); };
+    const quickView = $('#quickView');
+    const setMode = (mode) => { const quick = mode === 'quick'; quickView.classList.toggle('show', quick); $('#quickModeBtn').classList.toggle('active', quick); $('#proModeBtn').classList.toggle('active', !quick); };
+    $('#quickModeBtn').addEventListener('click', () => setMode('quick'));
+    $('#proModeBtn').addEventListener('click', () => setMode('pro'));
+    $('#closeQuick').addEventListener('click', () => setMode('pro'));
+    $$('.template').forEach((button) => button.addEventListener('click', () => { $$('.template').forEach(x => x.classList.remove('active')); button.classList.add('active'); toast('已切换为「' + button.dataset.template + '」模板'); }));
+    $('#uploadBox').addEventListener('click', () => { $('#uploadTitle').textContent = '已添加 3 张服装素材'; $('#uploadHint').textContent = '主图、领口细节、面料近景'; $('#uploadBox').style.borderColor = 'var(--lime)'; toast('素材已加入资产包，系统已标记服装主参考'); });
+    $('#makePlan').addEventListener('click', () => { setMode('pro'); toast('镜头方案已生成，已回到专业画布继续编辑'); $('.node.n2').classList.add('selected'); setTimeout(() => $('.node.n2').classList.remove('selected'), 1200); });
+    const nodeInfo = {
+      goal: ['视频目标', '项目级设置'],
+      shotlist: ['脚本 / 分镜', '5 个镜头 · 可编辑方案'],
+      generate: ['镜头生成', '镜头 03 · 场景能力'],
+      check: ['连续性检查', '1 个问题待确认']
+    };
+    $$('.node').forEach((node) => node.addEventListener('click', () => { $$('.node').forEach(x => x.classList.remove('selected')); node.classList.add('selected'); const info = nodeInfo[node.dataset.node]; $('#inspectorTitle').textContent = info[0]; $('#inspectorSub').textContent = info[1]; if (node.dataset.node === 'generate') { $('#inspectorBody').innerHTML = generateInspector(); bindDynamic(); } else if (node.dataset.node === 'check') { $('#inspectorBody').innerHTML = checkInspector(); bindDynamic(); } else if (node.dataset.node === 'shotlist') { $('#inspectorBody').innerHTML = shotInspector(); bindDynamic(); } else { $('#inspectorBody').innerHTML = goalInspector(); bindDynamic(); } }));
+    const goalInspector = () => `<div class="inspector-section"><h3>这条视频要完成什么</h3><div class="field"><label>业务目标 <em>项目级</em></label><select class="select"><option>新品上身展示</option><option>社媒种草</option><option>面料 / 工艺展示</option><option>品牌系列形象</option></select></div><div class="field"><label>发布平台</label><div class="chip-row"><button class="chip active">小红书</button><button class="chip">抖音</button><button class="chip">视频号</button><button class="chip">商品详情页</button></div></div><div class="field"><label>画幅</label><div class="chip-row"><button class="chip active">9:16 竖屏</button><button class="chip">16:9 横屏</button><button class="chip">1:1 方形</button></div></div></div><div class="inspector-section"><h3>视觉锁定</h3><div class="switch-row"><span>保持服装颜色与图案</span><span class="switch on"></span></div><div class="switch-row"><span>保持人物面容与发型</span><span class="switch on"></span></div><div class="switch-row"><span>统一镜头光线方向</span><span class="switch"></span></div><p class="helper" style="margin:9px 0 0">锁定的内容会沿着节点连线传递给每个镜头。</p></div><div class="inspector-section"><h3>项目说明</h3><textarea class="textarea">让用户在 15 秒内看清大衣的廓形、保暖感和通勤搭配。</textarea></div><div class="inspector-section"><div class="inspector-actions"><button class="outline-btn" id="duplicateBtn">复制节点</button><button class="solid-btn" id="saveNodeBtn">保存修改</button></div></div>`;
+    const shotInspector = () => `<div class="inspector-section"><h3>分镜结构</h3><div class="field"><label>镜头数量 <em>建议 5 个</em></label><div class="chip-row"><button class="chip">3</button><button class="chip active">5</button><button class="chip">7</button></div></div><div class="field"><label>镜头顺序</label><div style="display:grid;gap:6px"><div class="tag green">01 · 先抓住注意力</div><div class="tag">02 · 看清整体廓形</div><div class="tag">03 · 行走展示动态</div><div class="tag">04 · 近景证明面料</div><div class="tag">05 · 上新信息收尾</div></div></div></div><div class="inspector-section"><h3>分镜操作</h3><div class="inspector-actions"><button class="outline-btn" id="expandShot">展开镜头节点</button><button class="solid-btn" id="regenShot">重新规划</button></div></div><div class="inspector-section"><p class="helper">系统会根据“观众要看懂什么”推荐景别、动作和时长。你可以先接受结构，再逐镜头调整。</p></div>`;
+    const generateInspector = () => `<div class="inspector-section"><h3>这个镜头要怎么拍</h3><div class="field"><label>镜头任务 <em>镜头 03</em></label><select class="select"><option>展示大衣下摆动态</option><option>展示整体廓形</option><option>展示面料细节</option><option>建立品牌氛围</option></select></div><div class="field"><label>人物动作</label><div class="chip-row"><button class="chip">站立</button><button class="chip active">侧向行走</button><button class="chip">缓慢转身</button><button class="chip">整理衣领</button></div></div><div class="field"><label>摄像机运动</label><div class="chip-row"><button class="chip">轻推近</button><button class="chip active">侧向跟拍</button><button class="chip">缓慢环绕</button></div></div></div><div class="inspector-section"><h3>模型与质量</h3><div class="field"><label>场景能力 <em>用户任务</em></label><select class="select"><option>参考生视频</option><option>图生视频</option><option>首尾帧控制</option><option>镜头延长</option></select></div><div class="field"><label>模型</label><select class="select"><option>可灵 2.6 · 动作优先</option><option>Seedream 2.0 · 细节优先</option><option>专业模型 · 可控优先</option></select></div><div class="field"><label>时长与成本</label><div style="display:flex;justify-content:space-between;padding:10px;border:1px solid var(--line);border-radius:6px;background:#1b2420;color:#bbc6bd"><span>5 秒 · 1080p</span><b style="color:var(--lime);font:11px 'DM Mono'">240 积分</b></div></div></div><div class="inspector-section"><div class="inspector-actions"><button class="outline-btn" id="candidateBtn">生成 3 个候选</button><button class="solid-btn" id="generateBtn">重新生成</button></div><p class="helper" style="margin:10px 0 0">只重做当前镜头，其他镜头和版本保持不变。</p></div>`;
+    const checkInspector = () => `<div class="inspector-section"><h3>发现 1 个问题</h3><div style="padding:12px;border:1px solid rgba(246,163,107,.35);border-radius:7px;background:rgba(246,163,107,.06)"><div style="color:var(--orange);font-size:11px;font-weight:700">镜头 03 · 袖口纹理略有差异</div><p class="helper" style="margin:7px 0 0">建议补充袖口近景作为服装参考，或降低动作幅度后局部重做。</p></div></div><div class="inspector-section"><h3>处理方式</h3><div class="field"><label>影响范围</label><div class="chip-row"><button class="chip active">仅镜头 03</button><button class="chip">整条成片</button></div></div><div class="inspector-actions"><button class="outline-btn" id="addRefBtn">补充参考图</button><button class="solid-btn" id="fixBtn">局部重做</button></div></div><div class="inspector-section"><p class="helper">连续性检查关注服装颜色、图案、人物、动作、光线和镜头方向。它只提供风险提示，最终由你确认结果。</p></div>`;
+    const bindDynamic = () => { $$('.chip').forEach(c => c.addEventListener('click', () => { const group = c.parentElement; if (group.classList.contains('chip-row')) { [...group.children].forEach(x => x.classList.remove('active')); c.classList.add('active'); } })); $$('.switch').forEach(s => s.addEventListener('click', () => s.classList.toggle('on'))); $('#saveNodeBtn')?.addEventListener('click', () => toast('节点修改已保存，版本 v08 已更新')); $('#duplicateBtn')?.addEventListener('click', () => toast('已复制节点，可连接到另一个镜头')); $('#expandShot')?.addEventListener('click', () => toast('已展开镜头节点，可逐镜头调整')); $('#regenShot')?.addEventListener('click', () => toast('正在根据新的镜头数量重新规划')); $('#candidateBtn')?.addEventListener('click', () => toast('已提交 3 个候选任务，预计消耗 720 积分')); $('#generateBtn')?.addEventListener('click', generateCurrent); $('#fixBtn')?.addEventListener('click', () => { toast('已创建镜头 03 局部重做任务'); $('.node.n3').classList.add('generating'); setTimeout(() => $('.node.n3').classList.remove('generating'), 1900); }); $('#addRefBtn')?.addEventListener('click', () => toast('请在画布中添加“参考素材”节点')); };
+    const generateCurrent = () => { const n = $('.node.n3'); n.classList.add('generating'); toast('镜头 03 正在重新生成，其他镜头保持不变'); setTimeout(() => { n.classList.remove('generating'); toast('镜头 03 已生成新候选，连续性检查已更新'); }, 1900); };
+    bindDynamic();
+    $('#fixIssue').addEventListener('click', (e) => { e.stopPropagation(); $('.node.n4').click(); });
+    $('#saveBtn').addEventListener('click', () => toast('项目已保存 · 所有节点和版本记录已同步'));
+    $('#exportTop').addEventListener('click', () => toast('预览导出已开始，完成后可在任务中心下载'));
+    $('#closeInspector').addEventListener('click', () => { $('.inspector').style.opacity = $('.inspector').style.opacity === '0.45' ? '1' : '0.45'; toast('检查器已折叠，可再次点击恢复'); });
+    $$('.lib-start-actions button').forEach((button) => button.addEventListener('click', () => {
+      $('#libStart').classList.add('hidden');
+      const action = button.dataset.libAction;
+      if (action === 'edit') { toast('智能剪辑节点已准备，可连接镜头、音频和字幕'); return; }
+      const target = document.querySelector('.node.' + (action === 'image' ? 'n2' : action === 'script' ? 'n1' : action === 'audio' ? 'n4' : 'n3'));
+      if (target) { target.classList.add('selected'); setTimeout(() => target.classList.remove('selected'), 1600); }
+      if (action === 'video') $('#quickModeBtn').click();
+      toast(button.textContent.trim() + '节点已创建，可以继续配置');
+    }));
+  </script>
+</body>
+</html>
