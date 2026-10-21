@@ -15,103 +15,602 @@
 .bottom{display:flex;position:absolute;z-index:55;left:50%;bottom:15px;transform:translateX(-50%);height:46px;align-items:center;gap:4px;padding:5px 7px;border:1px solid #405052;border-radius:11px;background:#20292bf2;box-shadow:0 15px 40px #0006}.workspace:not(.editing) .bottom{left:auto;right:16px;bottom:16px;transform:none;height:auto;padding:0;border:0;background:transparent;box-shadow:none}.workspace:not(.editing) .bottom button:not(.templates),.workspace:not(.editing) .bottom .sep{display:none}.workspace:not(.editing) .bottom .templates{height:38px;padding:0 12px;border:1px solid #3d6263;border-radius:8px;box-shadow:0 8px 22px #0005}.editing .bottom{display:flex}.bottom button{height:34px;padding:0 9px;border-radius:7px;background:none;color:#aebbb9;font-size:10px;white-space:nowrap}.bottom button:hover{background:#364345;color:white}.bottom .add{width:34px;padding:0;background:#e8efee;color:#1d292a;font-size:22px}.bottom .sep{width:1px;height:22px;background:#465657;margin:0 3px}.bottom .templates{background:#1b4243;color:var(--teal)}.hud{display:none;position:absolute;z-index:50;bottom:18px;align-items:center;gap:8px;color:#91a0a0;font-size:10px}.editing .hud{display:flex}.zoom{left:16px}.help{right:16px}.hud button{background:none;color:#aab7b6;font-size:15px}.hud kbd{padding:3px 5px;border:1px solid #455456;border-radius:4px}
 .menu,.mentions,.config{display:none;position:absolute;z-index:100;border:1px solid #465759;border-radius:9px;background:#222c2e;box-shadow:var(--shadow);overflow:hidden}.menu.open,.mentions.open,.config.open{display:block}.menu{width:188px;padding:6px}.menu button{width:100%;padding:9px;border-radius:6px;background:none;text-align:left;color:#d0d9d8;font-size:10px}.menu button:hover{background:#354446}.menu button i{display:inline-block;width:22px;color:var(--teal);font-style:normal}.menu small{display:block;border-top:1px solid #384749;margin-top:4px;padding:8px 8px 3px;color:#738283;font-size:9px}.mentions{width:245px;max-height:270px;padding:6px}.mentions-title{padding:4px 7px;color:#899797;font-size:9px}.mention-item{width:100%;display:flex;align-items:center;gap:8px;padding:6px;border-radius:6px;background:none;text-align:left}.mention-item:hover{background:#354446}.mention-item img{width:31px;height:31px;border-radius:5px;object-fit:cover}.mention-item span{display:flex;flex-direction:column;gap:3px;color:#dce5e4;font-size:10px}.mention-item small{color:#839191;font-size:9px}.mention-library{border-top:1px solid #3b4a4c;margin-top:4px;padding-top:5px}.mention-library button{width:100%;padding:8px;border-radius:5px;background:#2d4e4f;color:var(--teal);font-size:10px}.config{width:270px;padding:12px}.config h4{margin:0 0 11px;font-size:11px}.config-row{margin:10px 0}.config-row header{display:flex;justify-content:space-between;color:#899798;font-size:9px;margin-bottom:6px}.config-row header b{color:#d6e0df;font-weight:500}.config-options{display:flex;gap:5px}.config-options button{flex:1;padding:6px 4px;border-radius:5px;background:#303b3d;color:#aeb9b8;font-size:9px}.config-options button.active{background:#28595a;color:#e1fffa}.config input[type=range]{width:100%;accent-color:var(--teal)}
 .backdrop{display:none;position:absolute;z-index:110;inset:0;align-items:center;justify-content:center;background:#020708bb;backdrop-filter:blur(5px)}.backdrop.open{display:flex}.modal{width:min(760px,90vw);max-height:86vh;overflow:auto;border:1px solid #4b595b;border-radius:14px;background:#222c2e;box-shadow:var(--shadow)}.modal-head{display:flex;align-items:center;justify-content:space-between;padding:17px 20px;border-bottom:1px solid #3b494b}.modal-head h2{margin:0;font-size:16px}.modal-head p{margin:5px 0 0;color:#899696;font-size:10px}.close{width:27px;height:27px;border-radius:6px;background:#303b3d;color:#b7c2c1;font-size:17px}.library-body{padding:16px 20px}.upload-actions{display:flex;gap:8px;margin-bottom:13px}.upload-actions button{padding:8px 10px;border-radius:6px;background:#2e5152;color:var(--teal);font-size:10px}.upload-actions button+button{background:#303b3d;color:#c3cecd}.library-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.library-card{border:1px solid #405052;border-radius:8px;overflow:hidden;background:#293436;cursor:pointer}.library-card:hover{border-color:var(--teal)}.library-thumb{height:76px;background:center/cover}.library-thumb.video{position:relative}.library-thumb.video:after{content:"▶";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:23px;height:23px;display:grid;place-items:center;border-radius:50%;background:#0009}.library-card p{padding:7px;margin:0;color:#dbe4e3;font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.modal-note{padding:10px 0 0;color:#758485;font-size:9px}
-.template-modal{width:min(980px,92vw)}.template-grid{display:grid;grid-template-columns:185px 1fr}.template-side{padding:14px 10px;border-right:1px solid #3a484a}.template-side h3{margin:3px 8px 11px;font-size:11px;color:#dce5e4}.type{width:100%;padding:10px;border-radius:6px;background:none;text-align:left;color:#9eaaaa;font-size:10px;margin-bottom:3px}.type:hover,.type.active{background:#334446;color:#e2fffa}.type.active{box-shadow:inset 2px 0 var(--teal)}.template-content{padding:17px 19px}.template-preview{display:grid;grid-template-columns:1fr 220px;gap:17px}.cover{height:235px;border-radius:9px;background:center/cover;position:relative;overflow:hidden}.cover:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 40%,#000b)}.cover-play{position:absolute;z-index:1;left:50%;top:50%;transform:translate(-50%,-50%);width:43px;height:43px;border-radius:50%;display:grid;place-items:center;background:#0008;font-size:18px}.cover-caption{position:absolute;z-index:1;left:14px;bottom:13px}.cover-caption strong{display:block;font-size:14px}.cover-caption span{display:block;margin-top:4px;color:#bdc8c7;font-size:9px}.template-copy h3{margin:0 0 8px;font-size:13px}.template-copy p{margin:0;color:#95a2a2;line-height:1.6;font-size:10px}.points{display:grid;gap:8px;margin-top:15px;color:#b3bfbe;font-size:9px}.points i{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--teal);margin-right:6px}.template-uploads{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:14px}.template-upload{height:62px;border:1px dashed #57696a;border-radius:8px;background:#293638;display:flex;align-items:center;gap:9px;padding:8px;text-align:left;color:#b7c3c2;font-size:10px}.template-upload:hover{border-color:var(--teal)}.template-upload b{width:34px;height:34px;border-radius:6px;background:#3a4a4b;color:var(--teal);display:grid;place-items:center;font-size:16px}.template-upload small{color:#819091;font-size:9px}.template-foot{display:flex;justify-content:flex-end;gap:8px;padding:12px 19px;border-top:1px solid #3b494b}.template-foot button{padding:9px 14px;border-radius:6px;background:#303b3d;color:#c5cfce;font-size:10px}.template-foot .edit-template{background:#2f5152;color:#dcfffb}.template-foot .go{background:var(--teal);color:#112829;font-weight:700}.template-foot em{font-style:normal;margin-left:5px;opacity:.65;font-weight:500}.toast{position:absolute;z-index:160;left:50%;top:62px;transform:translate(-50%,-7px);padding:9px 13px;border:1px solid #4d7778;border-radius:7px;background:#20393a;color:#d1fffa;font-size:10px;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:translate(-50%,0)}.file-input{display:none}
-@keyframes pulse{50%{opacity:.35}}@media(max-width:950px){.quick{grid-template-columns:repeat(3,1fr)}.quick button:nth-child(n+4){display:none}.library-grid{grid-template-columns:repeat(3,1fr)}}
+.template-modal{width:min(980px,92vw)}.template-grid{display:grid;grid-template-columns:185px 1fr}.template-side{padding:14px 10px;border-right:1px solid #3a484a}.template-side h3{margin:3px 8px 11px;font-size:11px;color:#dce5e4}.type{width:100%;padding:10px;border-radius:6px;background:none;text-align:left;color:#9eaaaa;font-size:10px;margin-bottom:3px}.type:hover,.type.active{background:#334446;color:#e2fffa}.type.active{box-shadow:inset 2px 0 var(--teal)}.template-content{padding:17px 19px}.template-preview{display:grid;grid-template-columns:1fr 220px;gap:17px}.cover{height:235px;border-radius:9px;background:center/cover;position:relative;overflow:hidden}.cover:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 40%,#000b)}.cover-play{position:absolute;z-index:1;left:50%;top:50%;transform:translate(-50%,-50%);width:43px;height:43px;border-radius:50%;display:grid;place-items:center;background:#0008;font-size:18px}.cover-caption{position:absolute;z-index:1;left:14px;bottom:13px}.cover-caption strong{display:block;font-size:14px}.cover-caption span{display:block;margin-top:4px;color:#bdc8c7;font-size:9px}.template-copy h3{margin:0 0 8px;font-size:13px}.template-copy p{margin:0;color:#95a2a2;line-height:1.6;font-size:10px}.points{display:grid;gap:8px;margin-top:15px;color:#b3bfbe;font-size:9px}.points i{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--teal);margin-right:6px}.template-info-cards{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:13px}.template-info-cards>div{padding:8px;border:1px solid #3e4d4f;border-radius:7px;background:#293537}.template-info-cards b{display:block;color:#dce7e5;font-size:9px}.template-info-cards span{display:block;margin-top:4px;color:#849393;font-size:8px}.template-info-cards>div:hover{border-color:var(--teal);background:#304142}.template-uploads{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:14px}.template-upload{height:62px;border:1px dashed #57696a;border-radius:8px;background:#293638;display:flex;align-items:center;gap:9px;padding:8px;text-align:left;color:#b7c3c2;font-size:10px}.template-upload:hover{border-color:var(--teal)}.template-upload b{width:34px;height:34px;border-radius:6px;background:#3a4a4b;color:var(--teal);display:grid;place-items:center;font-size:16px}.template-upload small{color:#819091;font-size:9px}.template-foot{display:flex;justify-content:flex-end;gap:8px;padding:12px 19px;border-top:1px solid #3b494b}.template-foot button{padding:9px 14px;border-radius:6px;background:#303b3d;color:#c5cfce;font-size:10px}.template-foot .edit-template{background:#2f5152;color:#dcfffb}.template-foot .go{background:var(--teal);color:#112829;font-weight:700}.template-foot em{font-style:normal;margin-left:5px;opacity:.65;font-weight:500}.toast{position:absolute;z-index:160;left:50%;top:62px;transform:translate(-50%,-7px);padding:9px 13px;border:1px solid #4d7778;border-radius:7px;background:#20393a;color:#d1fffa;font-size:10px;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1;transform:translate(-50%,0)}.file-input{display:none}
+@keyframes pulse{50%{opacity:.35}}@media(max-width:950px){.quick{grid-template-columns:repeat(3,1fr)}.library-grid{grid-template-columns:repeat(3,1fr)}}
+
+.node{width:370px}.node-body{padding:10px 12px}.port.node-out{right:-7px;left:auto;top:51px}.port.in.connectable{border-color:#b8ffdf;background:#2a7e66;box-shadow:0 0 0 5px #61e7ba22}.asset-in{left:-7px;top:51px}.result-edge{stroke:#567c7a;stroke-dasharray:4 3}.ref{overflow:visible}.ref small{position:absolute;left:2px;top:2px;padding:2px 3px;border-radius:3px;background:#101718dc;color:#eafffa;font-size:7px}.ref-remove{position:absolute;right:-5px;top:-5px;width:15px;height:15px;border-radius:50%;background:#111a1b;color:#e4eeee;border:1px solid #617476;display:none;font-size:10px;line-height:13px;padding:0}.ref:hover .ref-remove{display:block}.prompt-tools{display:flex;gap:4px;margin-top:5px;flex-wrap:wrap}.prompt-tools button{padding:4px 6px;border-radius:4px;background:#263234;color:#869696;font-size:8px}.prompt-tools button:hover{color:#e2fffa;background:#335052}.prompt-tools [data-expand]{color:#9fe7df}.prompt-tools button:disabled{opacity:.5}.quality-note,.config-tip{display:block;color:#778888;font-size:8px;line-height:1.4;margin:0 0 7px}.config-ratios{flex-wrap:wrap}.config-ratios button{min-width:52px}.upscale-source{display:flex;align-items:center;gap:9px;padding:4px 0 11px}.upscale-source b{display:block;color:#dbe5e4;font-size:10px}.upscale-source small{display:block;color:#819090;font-size:8px;margin-top:4px}.upscale-thumb{width:57px;height:38px;flex:0 0 57px;border-radius:5px;background:center/cover;display:grid;place-items:center}.upscale-thumb span{width:20px;height:20px;border-radius:50%;background:#0009;display:grid;place-items:center;font-size:9px}.upscale-empty{padding:10px;border:1px dashed #516263;border-radius:6px;color:#869595;font-size:9px;width:100%}.upscale-option{margin-bottom:8px}.generate:disabled{opacity:.42;cursor:not-allowed}.template-info-card{min-height:54px;cursor:help}.template-info-card b{display:flex!important;align-items:center;gap:6px}.template-info-card b>img{width:27px;height:27px;object-fit:cover;border-radius:4px}.template-info-card:hover{transform:translateY(-1px)}.template-tooltip{position:fixed;z-index:260;display:none;max-width:270px;padding:9px 11px;border:1px solid #5a7475;border-radius:7px;background:#142021;color:#dbe8e6;box-shadow:0 12px 30px #000b;font-size:9px;line-height:1.55;pointer-events:none}.template-tooltip.open{display:block}.cover{transition:background-size .7s ease}.cover.playing{background-size:108%;filter:saturate(1.15)}.cover.playing:before{content:'正在预览模板成片';position:absolute;z-index:2;right:10px;top:10px;padding:5px 7px;background:#0b1113c9;border-radius:4px;color:#e0fffa;font-size:9px}.cover-play{border:1px solid #ffffff40;cursor:pointer}.library-card small{display:block;padding:0 7px 7px;color:#849393;font-size:8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.library-empty{grid-column:1/-1;padding:26px;text-align:center;color:#8e9b9b;font-size:10px}.prompt-modal{width:min(620px,90vw)}.prompt-modal-body{padding:16px 20px}.prompt-modal-body textarea{width:100%;min-height:210px;resize:vertical;padding:12px;border:1px solid #48585a;border-radius:8px;outline:none;background:#151d1f;color:#dce6e5;line-height:1.6}.prompt-modal-body textarea:focus{border-color:var(--teal)}.prompt-library-body{padding:14px 20px;display:grid;gap:8px}.history-list{padding:14px 20px}.prompt-sample{padding:11px;border:1px solid #405052;border-radius:7px;background:#293436;color:#dce5e4;text-align:left;line-height:1.5}.prompt-sample:hover{border-color:var(--teal)}.prompt-sample small{display:block;margin-top:5px;color:#839191;font-size:8px}.quick-edit-panel{display:none;position:fixed;z-index:125;width:310px;padding:10px;border:1px solid #4c6061;border-radius:9px;background:#222d2f;box-shadow:var(--shadow)}.quick-edit-panel.open{display:block}.quick-edit-title{color:#e1ecea;font-size:10px;margin:0 0 8px}.quick-edit-panel>div:last-child{display:flex;gap:5px}.quick-edit-panel button{padding:6px 8px;border-radius:5px;background:#303d3f;color:#b9c6c5;font-size:9px}.quick-edit-panel button:hover{background:#315657;color:#eafffa}.template-info-cards>div{transition:transform .15s,border-color .15s}.template-foot .go{min-width:120px}.legacy-note{padding:7px 9px;border-left:2px solid #728c8b;background:#273335;color:#8c9a9a;font-size:9px;line-height:1.45}.legacy-foot{color:#869494;font-size:8px}
+@media(max-width:950px){.node{width:min(370px,calc(100vw - 36px))}.template-preview{grid-template-columns:1fr}.template-preview .cover{height:190px}.template-grid{grid-template-columns:130px 1fr}.template-side{max-height:58vh;overflow:auto}.template-info-cards{grid-template-columns:1fr 1fr}.quick-edit-panel{width:min(310px,90vw)}}
 </style>
 </head>
 <body>
 <header class="topbar"><div class="top-left"><div class="logo"><span class="logo-mark">L</span>LIGHTCHAIN</div><div class="lang">◎ 简体中文⌄</div></div><div class="top-right"><button class="top-link">◫ 帮助中心</button><button class="top-link">◔ 联系我们</button><div class="credit"><i></i>15281227 积分</div><button class="avatar">林</button></div></header>
 <main class="workspace" id="workspace">
 <div class="project"><div class="project-head"><i>▣</i>视频工作台</div><button class="project-row"><b>‹</b>Untitled<em>⌄</em></button></div>
-<section class="empty" id="empty"><h1>从一个视频想法开始</h1><p>选一个快捷入口，或者在画布里组合服装素材与生成节点</p><div class="quick"><button class="primary" data-action="template"><i>✦</i>热门模板<small>先选一个案例</small></button><button data-action="image"><i>▧</i>图片生成<small>创建图片节点</small></button><button data-action="video"><i>◈</i>视频生成<small>创建视频节点</small></button><button data-action="extend"><i>↗</i>视频延长<small>延长已有片段</small></button><button data-action="edit"><i>✣</i>视频编辑<small>进入编辑节点</small></button></div><div class="tip">双击空白处添加视频生成 · 右键查看更多操作</div></section>
+<section class="empty" id="empty"><h1>从一个视频想法开始</h1><p>选一个快捷入口，或者在画布里组合服装素材与生成节点</p><div class="quick"><button class="primary" data-action="template"><i>✦</i>视频模板<small>先选一个案例</small></button><button data-action="image"><i>▧</i>素材生成<small>创建素材节点</small></button><button data-action="video"><i>◈</i>视频生成<small>创建视频节点</small></button><button data-action="clone"><i>⧉</i>视频复刻<small>复刻参考视频</small></button><button data-action="edit"><i>✣</i>视频编辑<small>进入编辑节点</small></button></div><div class="tip">双击空白处添加视频生成 · 右键查看更多操作</div></section>
 <div class="canvas" id="canvas"><svg class="edges" id="edges"></svg><div id="assets"></div><div id="nodes"></div></div>
 <div class="toolbar" id="toolbar"></div>
-<div class="menu" id="menu"><button data-create="video"><i>◈</i>视频生成</button><button data-create="image"><i>▧</i>图片生成</button><button data-create="template"><i>✦</i>模板视频生成</button><small>在画布空白处创建节点</small></div>
+<div class="menu" id="menu"><button data-create="image"><i>▧</i>新增 · 素材生成</button><button data-create="video"><i>◈</i>新增 · 视频生成</button><button data-create="upload"><i>＋</i>上传图片 / 视频（最多 9 个）</button><button data-create="paste"><i>⌘</i>粘贴画布</button></div>
 <div class="mentions" id="mentions"></div><div class="config" id="config"></div>
-<div class="bottom"><button class="add" id="add">＋</button><button id="addImage">▧ 图片素材</button><button id="addVideo">▶ 视频素材</button><span class="sep"></span><button>➤ 选择</button><button>◷ 历史</button><span class="sep"></span><button class="templates" id="templateButton">✦ 视频模板</button></div>
-<div class="hud zoom"><button id="zoomDown">−</button><span id="zoomLabel">100%</span><button id="zoomUp">＋</button></div><div class="hud help">连线跟随光标 · <kbd>Esc</kbd> 取消 · <kbd>Delete</kbd> 删除选中连线</div>
+<div class="bottom"><button class="add" id="add">＋</button><button id="addImage">▧ 图片素材</button><button id="addVideo">▶ 视频素材</button><span class="sep"></span><button>➤ 选择</button><button id="historyButton">◷ 历史节点</button><span class="sep"></span><button class="templates" id="templateButton">✦ 视频模板</button></div>
+<div class="hud zoom"><button id="zoomDown">−</button><span id="zoomLabel">100%</span><button id="zoomUp">＋</button></div><div class="hud help">从素材端口拖到节点端口连线 · 点击空白处取消 · <kbd>Delete</kbd> 删除选中连线</div>
 <div class="backdrop" id="libraryModal"><section class="modal"><div class="modal-head"><div><h2>素材库</h2><p>选择画布素材作为参考，或上传新的图片 / 视频</p></div><button class="close" data-close="libraryModal">×</button></div><div class="library-body"><div class="upload-actions"><button id="uploadImg">＋ 上传图片</button><button id="uploadVid">＋ 上传视频</button></div><div class="library-grid" id="libraryGrid"></div><div class="modal-note">选择后会加入当前节点参考列表，也可以在提示词里继续用 @ 引用。</div></div></section></div>
-<div class="backdrop" id="templateModal"><section class="modal template-modal"><div class="modal-head"><div><h2>热门视频模板</h2><p>选择服装视频案例，再决定立即生成或带入画布继续编辑</p></div><button class="close" data-close="templateModal">×</button></div><div class="template-grid"><aside class="template-side"><h3>视频类型</h3><button class="type active" data-type="电商视频">电商视频</button><button class="type" data-type="博主种草">博主种草</button><button class="type" data-type="高级秀场">高级秀场</button><button class="type" data-type="品牌故事">品牌故事</button><button class="type" data-type="新品预热">新品预热</button><button class="type" data-type="面料工艺">面料工艺</button><button class="type" data-type="直播预热视频">直播预热视频</button><button class="type" data-type="招商订货">招商订货</button></aside><div class="template-content"><div class="template-preview"><div class="cover" id="cover"><div class="cover-play">▶</div><div class="cover-caption"><strong id="coverTitle">秋冬大衣 · 商品展示</strong><span id="coverSub">正面看款式 · 侧面看廓形 · 动态看垂坠</span></div></div><div class="template-copy"><h3 id="templateTypeTitle">电商视频</h3><p id="templateDesc">让消费者快速看清衣服的款式、版型、穿着效果和购买理由。</p><div class="points"><span><i></i>默认 5 个镜头，适合 9:16 竖屏</span><span><i></i>服装图、模特图均可替换</span><span><i></i>带入画布后可继续调整节点</span></div></div></div><div class="template-uploads"><button class="template-upload" id="garmentUpload"><b>▧</b><span>上传服装图<br><small>非必填 · 替换模板商品</small></span></button><button class="template-upload" id="modelUpload"><b>♙</b><span>上传模特图<br><small>非必填 · 替换模板人物</small></span></button></div></div></div><div class="template-foot"><button class="edit-template" id="editTemplate">编辑模板</button><button class="go" id="generateTemplate">立即生成 <em>✦ 80 积分</em></button></div></section></div>
-<input class="file-input" type="file" id="imageInput" accept="image/*"><input class="file-input" type="file" id="videoInput" accept="video/*"><div class="toast" id="toast"></div>
+<div class="backdrop" id="templateModal"><section class="modal template-modal"><div class="modal-head"><div><h2>热门视频模板</h2><p>选择服装视频案例，再决定立即生成或带入画布继续编辑</p></div><button class="close" data-close="templateModal">×</button></div><div class="template-grid"><aside class="template-side"><h3>视频类型</h3><button class="type active" data-type="电商视频">电商视频</button><button class="type" data-type="博主种草">博主种草</button><button class="type" data-type="高级秀场">高级秀场</button><button class="type" data-type="品牌故事">品牌故事</button><button class="type" data-type="新品预热">新品预热</button><button class="type" data-type="面料工艺">面料工艺</button><button class="type" data-type="直播预热视频">直播预热视频</button><button class="type" data-type="招商订货">招商订货</button></aside><div class="template-content"><div class="template-preview"><div class="cover" id="cover"><button class="cover-play" id="coverPlay" type="button" aria-label="播放预览">▶</button><div class="cover-caption"><strong id="coverTitle">秋冬大衣 · 商品展示</strong><span id="coverSub">正面看款式 · 侧面看廓形 · 动态看垂坠</span></div></div><div class="template-copy"><h3 id="templateTypeTitle">电商视频</h3><p id="templateDesc">让消费者快速看清衣服的款式、版型、穿着效果和购买理由。</p><div class="template-info-cards" id="templateInfoCards"><div><b>商品主体</b><span>服装图 · 可替换</span></div><div><b>模特形象</b><span>模特图 · 可替换</span></div><div><b>分镜数量</b><span>5 个镜头</span></div><div><b>生成配置</b><span>9:16 · 768p · 5 秒</span></div></div><div class="points"><span><i></i>默认 5 个镜头，适合 9:16 竖屏</span><span><i></i>悬停信息卡查看模板配置</span><span><i></i>带入画布后可继续调整节点</span></div></div></div><div class="template-uploads"><button class="template-upload" id="garmentUpload"><b>▧</b><span>上传服装图<br><small>非必填 · 替换模板商品</small></span></button><button class="template-upload" id="modelUpload"><b>♙</b><span>上传模特图<br><small>非必填 · 替换模板人物</small></span></button></div></div></div><div class="template-foot"><button data-close="templateModal">取消</button><button class="edit-template" id="editTemplate">编辑模板</button><button class="go" id="generateTemplate">立即生成 <em>✦ 80 积分</em></button></div></section></div>
+<div class="backdrop" id="historyModal"><section class="modal prompt-modal"><div class="modal-head"><div><h2>历史节点</h2><p>旧画布中的素材、提示词和配置继续保留，生成入口收起。</p></div><button class="close" data-close="historyModal">×</button></div><div class="prompt-library-body history-list" id="historyList"><button class="prompt-sample" data-legacy="short">服装短视频<small>历史视频节点 · 保留原参考图和设置</small></button><button class="prompt-sample" data-legacy="storyboard-image">分镜图生成<small>历史图片节点 · 保留原提示词和图片结果</small></button><button class="prompt-sample" data-legacy="storyboard-video">分镜成片<small>历史视频节点 · 保留原参考素材和设置</small></button></div></section></div><div class="backdrop" id="promptModal"><section class="modal prompt-modal"><div class="modal-head"><div><h2>编辑提示词</h2><p>补充服装、动作和场景细节</p></div><button class="close" data-close="promptModal">×</button></div><div class="prompt-modal-body"><textarea id="largePromptInput" maxlength="5000"></textarea></div><div class="template-foot"><button data-close="promptModal">取消</button><button class="go" id="largePromptSave">保存提示词</button></div></section></div><div class="backdrop" id="promptLibraryModal"><section class="modal prompt-modal"><div class="modal-head"><div><h2>提示词库</h2><p>选择一条服装视频常用描述放入当前节点</p></div><button class="close" data-close="promptLibraryModal">×</button></div><div class="prompt-library-body" id="promptLibraryList"></div></section></div><div class="template-tooltip" id="templateTooltip"></div><div class="quick-edit-panel" id="quickEditPanel"><div class="quick-edit-title">快捷编辑</div><div><button data-quick-edit="裁切">裁切</button><button data-quick-edit="旋转">旋转</button><button data-quick-edit="调色">调色</button><button data-quick-edit="背景处理">背景处理</button></div></div><input class="file-input" type="file" id="imageInput" accept="image/*" multiple><input class="file-input" type="file" id="videoInput" accept="video/*" multiple><div class="toast" id="toast"></div>
 </main>
 <script>
 (function(){
 const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
-const workspace=$('#workspace'), assetBox=$('#assets'), nodeBox=$('#nodes'), edgeSvg=$('#edges');
-const imgA='https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=640&q=80',imgB='https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=640&q=80',imgC='https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=640&q=80',imgD='https://images.unsplash.com/photo-1485968579580-b6d095142e6e?w=640&q=80',vidA='https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=640&q=80';
-const s={editing:false,assets:[],nodes:[],edges:[],selected:null,edge:null,pending:null,menuAt:{x:350,y:180},mention:null,config:null,uploadTarget:null,template:'电商视频',templateUploads:{},wire:null,wireFollow:null};
+const workspace=$('#workspace'),canvas=$('#canvas'),assetBox=$('#assets'),nodeBox=$('#nodes'),edgeSvg=$('#edges');
+const imgA='https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=640&q=80';
+const imgB='https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=640&q=80';
+const imgC='https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=640&q=80';
+const imgD='https://images.unsplash.com/photo-1485968579580-b6d095142e6e?w=640&q=80';
+const vidA='https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=640&q=80';
+const ratios=['21:9','9:16','16:9','1:1','3:4','4:3','自适应'];
+const s={editing:false,assets:[],nodes:[],edges:[],outputs:[],selected:null,edge:null,wire:null,mention:null,mentionRange:null,config:null,uploadTarget:null,template:'电商视频',templateUploads:{garment:null,model:null},previewPlaying:false,promptTarget:null,quickEditAsset:null};
 const templates={
-'电商视频':['秋冬大衣 · 商品展示','正面看款式 · 侧面看廓形 · 动态看垂坠','让消费者快速看清衣服的款式、版型、穿着效果和购买理由。',imgA],
-'博主种草':['通勤穿搭 · 真实种草','生活场景开场 · 上身对比 · 搭配建议','用更生活化的镜头和口播，讲清楚这件衣服适合谁、怎么搭。',imgB],
-'高级秀场':['系列秀场 · 造型大片','氛围开场 · 多套造型 · 统一视觉收尾','适合品牌系列发布和 Lookbook，重点保持人物与服装连续。',imgC],
-'品牌故事':['品牌故事 · 设计表达','灵感来源 · 工艺细节 · 品牌记忆点','通过人物、场景和细节，让观众理解品牌为何做这件衣服。',imgD],
-'新品预热':['新品预热 · 上新倒计时','局部细节 · 日期信息 · 行动提示','在正式上新前建立期待，突出新品细节和发布信息。',imgA],
-'面料工艺':['面料工艺 · 细节证明','肌理近景 · 光泽变化 · 成衣应用','把面料纹理、垂坠和工艺做成可观察的画面证据。',imgB],
-'直播预热视频':['直播预热 · 重点卖点','人物出场 · 卖点口播 · 开播提醒','快速告诉观众直播时间、重点单品和进入直播间的理由。',imgC],
-'招商订货':['招商订货 · 系列与供货','系列展示 · 工艺能力 · 合作信息','帮助采购商看懂产品系列、工艺能力和合作价值。',imgD]};
+'电商视频':['秋冬大衣 · 商品展示','正面看款式 · 侧面看廓形 · 动态看垂坠','让消费者快速看清衣服的款式、版型、穿着效果和购买理由。',imgA,'适合商品详情页、店铺首页和上新主图视频。'],
+'博主种草':['通勤穿搭 · 真实种草','生活场景开场 · 上身对比 · 搭配建议','用更生活化的镜头和口播，讲清楚这件衣服适合谁、怎么搭。',imgB,'适合社媒种草、达人合作和日常穿搭推荐。'],
+'高级秀场':['系列秀场 · 造型大片','氛围开场 · 多套造型 · 统一视觉收尾','适合品牌系列发布和 Lookbook，重点保持人物与服装连续。',imgC,'适合新品发布、系列展示和品牌形象宣传。'],
+'品牌故事':['品牌故事 · 设计表达','灵感来源 · 工艺细节 · 品牌记忆点','通过人物、场景和细节，让观众理解品牌为何做这件衣服。',imgD,'适合讲设计理念、品牌历史和核心工艺。'],
+'新品预热':['新品预热 · 上新倒计时','局部细节 · 日期信息 · 行动提示','在正式上新前建立期待，突出新品细节和发布信息。',imgA,'适合上新预告、活动预告和新品首发。'],
+'面料工艺':['面料工艺 · 细节证明','肌理近景 · 光泽变化 · 成衣应用','把面料纹理、垂坠和工艺做成可观察的画面证据。',imgB,'适合面料介绍、工艺说明和品质展示。'],
+'直播预热视频':['直播预热 · 重点卖点','人物出场 · 卖点口播 · 开播提醒','快速告诉观众直播时间、重点单品和进入直播间的理由。',imgC,'适合直播预告、福利提醒和重点款介绍。'],
+'招商订货':['招商订货 · 系列与供货','系列展示 · 工艺能力 · 合作信息','帮助采购商看懂产品系列、工艺能力和合作价值。',imgD,'适合订货会、招商介绍和渠道合作沟通。']};
 const id=p=>p+'_'+Math.random().toString(36).slice(2,8);
-const esc=x=>String(x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function say(t){const e=$('#toast');e.textContent=t;e.classList.add('show');clearTimeout(window.__t);window.__t=setTimeout(()=>e.classList.remove('show'),2200)}
-function getAsset(i){return s.assets.find(a=>a.id===i)}function getNode(i){return s.nodes.find(n=>n.id===i)}
-function seed(){if(s.assets.length)return;s.assets.push({id:'img_001',type:'image',name:'参考图 001',desc:'羊毛大衣 · 商品正面',thumb:imgA,x:28,y:100},{id:'img_002',type:'image',name:'参考图 002',desc:'面料与领口细节',thumb:imgC,x:28,y:285},{id:'vid_001',type:'video',name:'参考视频 001',desc:'秀场行走 · 参考片段',thumb:vidA,x:28,y:470})}
-function editing(){if(!s.editing){s.editing=true;workspace.classList.add('editing');seed()}render()}
-function makeNode(kind,x,y,extra){const n=Object.assign({id:id('n'),kind:kind,title:({video:'视频生成',extend:'视频延长',edit:'视频编辑',upscale:'视频高清放大',image:'图片生成'})[kind],x:x,y:y,speed:'快速',videoMode:'首尾帧',quality:'720p',duration:5,ratio:'9:16',imageMode:'通用',imageQuality:'1080p',imageRatio:'1:1',refs:[],prompt:''},extra||{});s.nodes.push(n);return n}
-function makeAsset(type,x,y,extra){const a=Object.assign({id:id(type==='image'?'img':'vid'),type:type,name:(type==='image'?'参考图 ':'参考视频 ')+String(s.assets.length+1).padStart(3,'0'),desc:type==='image'?'商品图片素材':'视频参考素材',thumb:type==='image'?imgB:vidA,x:x,y:y},extra||{});s.assets.push(a);return a}
-function title(n){return n.title}
-function cost(n){if(n.kind==='upscale')return n.quality==='1080p'?18:10;if(n.kind==='image')return n.imageMode==='多视角'?24:n.imageMode==='三视图'?28:n.imageMode==='模特试衣'?32:18;let v=n.kind==='video'?30:n.kind==='extend'?26:28;if(n.kind==='video'&&n.videoMode==='多参考')v+=8;if(n.speed==='专业')v+=20;if(n.quality==='1080p')v+=8;v+=Math.max(0,n.duration-5);return v}
-function refsHTML(n){if(!n.refs.length)return '';return '<div class="refs">'+n.refs.map((aid,i)=>{const a=getAsset(aid);return a?'<div class="ref" title="'+esc(a.name)+'" style="background-image:url(&quot;'+a.thumb+'&quot;)"><span>'+(i+1)+'</span>'+(a.type==='video'?'<b>▶</b>':'')+'</div>':''}).join('')+'</div>'}
-function videoBody(n){let modes=n.kind==='video'?'<div class="tabs"><button class="tab '+(n.videoMode==='首尾帧'?'active':'')+'" data-change="videoMode" data-val="首尾帧" data-node="'+n.id+'">首尾帧模式</button><button class="tab '+(n.videoMode==='多参考'?'active':'')+'" data-change="videoMode" data-val="多参考" data-node="'+n.id+'">多参考模式</button></div>':'';return modes+'<div class="speedrow"><span>生成模式影响积分</span><button class="speed '+(n.speed==='快速'?'active':'')+'" data-change="speed" data-val="快速" data-node="'+n.id+'">快速</button><button class="speed '+(n.speed==='专业'?'active':'')+'" data-change="speed" data-val="专业" data-node="'+n.id+'">专业</button></div><div class="refrow"><button class="ref-add" data-ref="'+n.id+'">＋ 参考图片 / 视频</button><span class="ref-count">'+(n.refs.length?'已选 '+n.refs.length+' 个素材':'可上传图片或视频')+'</span></div>'+refsHTML(n)+'<div class="prompt"><div class="editor" contenteditable="true" data-editor="'+n.id+'" data-placeholder="描述镜头、服装动作和场景，输入 @ 引用画布素材">'+n.prompt+'</div><span class="loader">正在扩写…</span></div>'}
-function imageBody(n){const choices=['通用','分镜图','多视角','模特试衣','三视图'];return '<div class="refrow"><button class="ref-add" data-ref="'+n.id+'">＋ 参考图片</button><span class="ref-count">'+(n.refs.length?'已选 '+n.refs.length+' 张':'可连接图片素材')+'</span></div>'+refsHTML(n)+'<div class="image-options"><div class="option"><strong>生成内容</strong>'+choices.map(x=>'<button class="chip '+(n.imageMode===x?'active':'')+'" data-change="imageMode" data-val="'+x+'" data-node="'+n.id+'">'+x+'</button>').join('')+'</div><div class="option"><strong>分辨率</strong>'+['720p','1080p'].map(x=>'<button class="chip '+(n.imageQuality===x?'active':'')+'" data-change="imageQuality" data-val="'+x+'" data-node="'+n.id+'">'+x+'</button>').join('')+'</div><div class="option"><strong>图片比例</strong>'+['1:1','3:4','9:16'].map(x=>'<button class="chip '+(n.imageRatio===x?'active':'')+'" data-change="imageRatio" data-val="'+x+'" data-node="'+n.id+'">'+x+'</button>').join('')+'</div><div class="prompt"><div class="editor" contenteditable="true" data-editor="'+n.id+'" data-placeholder="描述要生成的服装图片，输入 @ 引用商品图">'+n.prompt+'</div><span class="loader">正在扩写…</span></div></div>'}
-function nodeHTML(n){let body='',foot='';if(n.kind==='upscale'){body='<div style="padding:4px 0 12px;color:#aab8b7;font-size:10px;line-height:1.6">将当前视频放大并补足细节，适合发布前提升清晰度。</div><div class="option"><strong>输出清晰度</strong>'+['720p','1080p'].map(x=>'<button class="chip '+(n.quality===x?'active':'')+'" data-change="quality" data-val="'+x+'" data-node="'+n.id+'">'+x+'</button>').join('')+'</div>';foot='<div class="foot"><span class="ref-count">输出 '+n.quality+'</span><button class="generate" data-generate="'+n.id+'">生成 <em>✦ '+cost(n)+' 积分</em></button></div>'}else if(n.kind==='image'){body=imageBody(n);foot='<div class="foot"><span class="ref-count">'+(n.refs.length?'参考素材已连接':'')+'</span><button class="generate" data-generate="'+n.id+'">生成 <em>✦ '+cost(n)+' 积分</em></button></div>'}else{body=videoBody(n);foot='<div class="foot"><button data-config="'+n.id+'">▣ '+n.quality+' · '+n.duration+'s · '+n.ratio+'</button><button data-expand="'+n.id+'">✦ 扩写提示词</button><button class="generate" data-generate="'+n.id+'">生成 <em>✦ '+cost(n)+' 积分</em></button></div>'}
-const sym=n.kind==='image'?'▧':n.kind==='upscale'?'HD':n.kind==='extend'?'↗':n.kind==='edit'?'✣':'◈';return '<article class="node '+(s.selected==='n:'+n.id?'selected':'')+'" data-node-card="'+n.id+'" style="left:'+n.x+'px;top:'+n.y+'px"><span class="port in" data-target="'+n.id+'"></span><div class="node-head"><span class="symbol">'+sym+'</span><strong>'+title(n)+'</strong><small>'+(n.kind==='image'?'图片节点':'视频节点')+'</small><button class="more" data-more="'+n.id+'">···</button></div><div class="node-body">'+body+'</div>'+foot+'</article>'}
-function assetHTML(a){return '<article class="asset '+(s.selected==='a:'+a.id?'selected':'')+'" data-asset-card="'+a.id+'" style="left:'+a.x+'px;top:'+a.y+'px"><div class="thumb" style="background-image:url(&quot;'+a.thumb+'&quot;)"><span class="badge">'+(a.type==='image'?'图片素材':'视频素材')+'</span>'+(a.type==='video'?'<span class="play">▶</span>':'')+'</div><div class="asset-meta"><div class="asset-name"><i>'+(a.type==='video'?'▶':'▧')+'</i>'+esc(a.name)+'</div><div class="asset-desc">'+esc(a.desc||'画布素材')+'</div></div><span class="port out" data-source="'+a.id+'"></span></article>'}
-function render(){assetBox.innerHTML=s.assets.map(assetHTML).join('');nodeBox.innerHTML=s.nodes.map(nodeHTML).join('');bindCards();bindNodeControls();draw();toolbar();if(s.config)showConfig(s.config)}
-function bindCards(){$$('.asset').forEach(el=>{el.addEventListener('click',e=>{if(e.target.closest('.port'))return;select('a:'+el.dataset.assetCard)});drag(el,'asset')});$$('.node').forEach(el=>{el.addEventListener('click',e=>{if(e.target.closest('button,.port,.editor,.chip,.tab,.speed'))return;select('n:'+el.dataset.nodeCard)});drag(el,'node')});$$('[data-source]').forEach(p=>p.addEventListener('pointerdown',startWire))}
-function drag(el,type){el.addEventListener('pointerdown',e=>{if(e.target.closest('button,.port,.editor,.chip,.tab,.speed,input'))return;const isA=type==='asset',obj=isA?getAsset(el.dataset.assetCard):getNode(el.dataset.nodeCard),sx=e.clientX,sy=e.clientY,ox=obj.x,oy=obj.y;select((isA?'a:':'n:')+obj.id,false);el.setPointerCapture(e.pointerId);const move=ev=>{obj.x=Math.max(8,ox+ev.clientX-sx);obj.y=Math.max(50,oy+ev.clientY-sy);el.style.left=obj.x+'px';el.style.top=obj.y+'px';draw();placeToolbar()};const up=()=>{el.removeEventListener('pointermove',move);el.removeEventListener('pointerup',up)};el.addEventListener('pointermove',move);el.addEventListener('pointerup',up)})}
-function select(value,redraw){s.selected=value;s.edge=null;if(redraw!==false)render();else{$$('.asset,.node').forEach(x=>x.classList.remove('selected'));const el=document.querySelector(value.startsWith('a:')?'[data-asset-card="'+value.slice(2)+'"]':'[data-node-card="'+value.slice(2)+'"]');if(el)el.classList.add('selected');toolbar()}}
-function stopWire(){if(s.wireFollow){document.removeEventListener('pointermove',s.wireFollow);s.wireFollow=null}if(s.wire){s.wire=null;draw()}}
-function followWire(){if(s.wireFollow)return;s.wireFollow=ev=>{if(!s.wire)return;s.wire.x=ev.clientX;s.wire.y=ev.clientY;draw()};document.addEventListener('pointermove',s.wireFollow)}
-function connect(aid,nid){const a=getAsset(aid),n=getNode(nid);if(!a||!n)return;const allowed=a.type==='image'&&(n.kind==='image'||['video','extend','edit','upscale'].includes(n.kind))||a.type==='video'&&['video','extend','edit','upscale'].includes(n.kind);if(!allowed){say(a.type==='video'?'视频素材只能连接视频类节点':'该素材不能连接到此节点');return}if(s.edges.some(e=>e.a===aid&&e.n===nid)){stopWire();say('素材已连接');return}s.edges.push({id:id('e'),a:aid,n:nid});if(!n.refs.includes(aid))n.refs.push(aid);s.pending=null;stopWire();render();select('n:'+nid);say('素材已连接并加入节点参考列表')}
-function startWire(e){e.preventDefault();e.stopPropagation();const aid=e.currentTarget.dataset.source;if(s.wire&&s.wire.aid===aid){stopWire();return}s.wire={aid:aid,x:e.clientX,y:e.clientY};e.currentTarget.classList.add('connecting');const move=ev=>{if(!s.wire)return;s.wire.x=ev.clientX;s.wire.y=ev.clientY;draw()};const up=ev=>{const target=document.elementFromPoint(ev.clientX,ev.clientY);const p=target&&target.closest('[data-target]');if(p)connect(aid,p.dataset.target);else{if(s.wire){s.wire.x=ev.clientX;s.wire.y=ev.clientY;followWire();draw();say('连线已吸附到光标，点击兼容节点的输入端口完成连接，Esc 取消')}}e.currentTarget.classList.remove('connecting');document.removeEventListener('pointermove',move);document.removeEventListener('pointerup',up)};document.addEventListener('pointermove',move);document.addEventListener('pointerup',up)}
-function draw(){const r=$('#canvas').getBoundingClientRect();let html='';s.edges.forEach(e=>{const a=document.querySelector('[data-asset-card="'+e.a+'"] .port.out'),n=document.querySelector('[data-node-card="'+e.n+'"] .port.in');if(!a||!n)return;const ar=a.getBoundingClientRect(),nr=n.getBoundingClientRect(),x1=ar.left+ar.width/2-r.left,y1=ar.top+ar.height/2-r.top,x2=nr.left+nr.width/2-r.left,y2=nr.top+nr.height/2-r.top,c=Math.max(45,Math.abs(x2-x1)*.4),d='M '+x1+' '+y1+' C '+(x1+c)+' '+y1+', '+(x2-c)+' '+y2+', '+x2+' '+y2;html+='<path class="edge '+(s.edge===e.id?'selected':'')+'" d="'+d+'"></path><path class="edge-hit '+(s.edge===e.id?'selected':'')+'" data-edge="'+e.id+'" d="'+d+'"></path>'});if(s.wire){const p=document.querySelector('[data-asset-card="'+s.wire.aid+'"] .port.out');if(p){const pr=p.getBoundingClientRect(),x1=pr.left+pr.width/2-r.left,y1=pr.top+pr.height/2-r.top,x2=s.wire.x-r.left,y2=s.wire.y-r.top,c=Math.max(45,Math.abs(x2-x1)*.4);html+='<path class="edge selected" d="M '+x1+' '+y1+' C '+(x1+c)+' '+y1+', '+(x2-c)+' '+y2+', '+x2+' '+y2+'"></path>'}}edgeSvg.innerHTML=html;$$('[data-edge]').forEach(p=>p.addEventListener('click',e=>{e.stopPropagation();s.edge=p.dataset.edge;s.selected=null;draw()}))}
-function toolbar(){const t=$('#toolbar');t.innerHTML='';t.classList.remove('open');if(!s.selected)return;const a=s.selected.startsWith('a:')?getAsset(s.selected.slice(2)):null;let actions=a?(a.type==='image'?[['video','◈ 视频生成'],['image','▧ 图片生成']]:[['extend','↗ 视频延长'],['edit','✣ 视频编辑'],['upscale','HD 高清放大']]):[['video','◈ 视频生成'],['extend','↗ 视频延长'],['edit','✣ 视频编辑'],['upscale','HD 高清放大']];t.innerHTML=actions.map(x=>'<button data-tool="'+x[0]+'">'+x[1]+'</button>').join('');$$('[data-tool]').forEach(b=>b.addEventListener('click',()=>{const action=b.dataset.tool;if(a&&a.type==='video'&&action==='video')return;const pos=a?{x:a.x+230,y:a.y+15}:{x:(getNode(s.selected.slice(2))||{x:400}).x+35,y:(getNode(s.selected.slice(2))||{y:200}).y+100};const n=makeNode(action,pos.x,pos.y);if(a&&((a.type==='image'&&(action==='video'||action==='image'))||(a.type==='video'&&['extend','edit','upscale'].includes(action)))){n.refs.push(a.id);s.edges.push({id:id('e'),a:a.id,n:n.id})}render();select('n:'+n.id)}));t.classList.add('open');placeToolbar()}
-function placeToolbar(){const t=$('#toolbar');if(!t.classList.contains('open')||!s.selected)return;const el=document.querySelector(s.selected.startsWith('a:')?'[data-asset-card="'+s.selected.slice(2)+'"]':'[data-node-card="'+s.selected.slice(2)+'"]');if(!el)return;const r=el.getBoundingClientRect(),w=workspace.getBoundingClientRect();t.style.left=(r.left-w.left+r.width/2)+'px';t.style.top=(r.top-w.top-7)+'px'}
-function bindNodeControls(){$$('[data-target]').forEach(p=>p.addEventListener('click',e=>{if(!s.wire)return;e.stopPropagation();connect(s.wire.aid,p.dataset.target)}));$$('[data-change]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();const n=getNode(b.dataset.node),key=b.dataset.change;n[key]=b.dataset.val;render()}));$$('[data-ref]').forEach(b=>b.addEventListener('click',()=>{s.uploadTarget=b.dataset.ref;openLibrary()}));$$('[data-config]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();s.config=b.dataset.config;showConfig(s.config)}));$$('[data-expand]').forEach(b=>b.addEventListener('click',()=>expand(b.dataset.expand)));$$('[data-generate]').forEach(b=>b.addEventListener('click',()=>generate(b.dataset.generate)));$$('[data-editor]').forEach(ed=>{ed.addEventListener('input',()=>{const n=getNode(ed.dataset.editor);if(n)n.prompt=ed.innerHTML;if((ed.innerText||'').trimEnd().endsWith('@'))openMentions(ed.dataset.editor,ed)});ed.addEventListener('keydown',e=>{if(e.key==='Escape')hideMentions()})});$$('[data-more]').forEach(b=>b.addEventListener('click',()=>say('节点更多操作将在后续版本开放')))}
-function createAt(kind){hideMenu();editing();const n=makeNode(kind,s.menuAt.x,s.menuAt.y);render();select('n:'+n.id)}
-function openMenu(x,y){const m=$('#menu'),r=workspace.getBoundingClientRect();s.menuAt={x:x,y:y};m.style.left=Math.min(x,r.width-200)+'px';m.style.top=Math.min(y,r.height-175)+'px';m.classList.add('open')}
+const esc=x=>String(x==null?'':x).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const plain=x=>{const d=document.createElement('div');d.innerHTML=x||'';return (d.innerText||d.textContent||'').trim()};
+function say(t){const e=$('#toast');e.textContent=t;e.classList.add('show');clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>e.classList.remove('show'),2300)}
+function getAsset(i){return s.assets.find(a=>a.id===i)}
+function getNode(i){return s.nodes.find(n=>n.id===i)}
+function workspacePoint(e){const r=workspace.getBoundingClientRect();return {x:e.clientX-r.left,y:e.clientY-r.top}}
+function nextPosition(){
+ const w=workspace.clientWidth;
+ return {x:Math.max(240,Math.min(w-395,330+s.nodes.length%3*42)),y:115+s.nodes.length%4*38}
+}
+function editing(){s.editing=true;workspace.classList.add('editing');render()}
+function nodeDefaults(kind,x,y,extra){
+ const titles={video:'视频生成',image:'素材生成',upscale:'视频高清放大',edit:'视频编辑'};
+ const n={id:id('n'),kind:kind,title:titles[kind]||'视频生成',x:x,y:y,speed:'快速',videoMode:'服装短视频',quality:kind==='upscale'?'720p':'768p',duration:5,ratio:'自适应',audio:'智能',imageMode:'快捷编辑',imageQuality:'2k',imageRatio:'智能',refs:[],prompt:'',clone:false,legacy:false};
+ Object.assign(n,extra||{});
+ if(n.clone){n.title='视频复刻';n.videoMode='服装短视频'}
+ if(n.kind==='edit')n.title='视频编辑';
+ return n
+}
+function addNode(kind,x,y,extra){
+ const n=nodeDefaults(kind,x,y,extra);s.nodes.push(n);return n
+}
+function addAsset(type,x,y,extra){
+ const offset=s.assets.length,columns=Math.max(1,Math.floor((workspace.clientWidth-245)/210));
+ const p=x==null?{x:235+(offset%columns)*205,y:100+Math.floor(offset/columns)*176}:{x:x,y:y};
+ const a=Object.assign({id:id(type==='image'?'img':'vid'),type:type,name:(type==='image'?'参考图 ':'参考视频 ')+String(offset+1).padStart(3,'0'),desc:type==='image'?'服装图片素材':'视频参考素材',thumb:type==='image'?imgB:vidA,x:p.x,y:p.y,origin:'upload'},extra||{});
+ s.assets.push(a);return a
+}
+function templateCost(){return 80+(s.templateUploads.garment?8:0)+(s.templateUploads.model?8:0)}
+function cost(n){
+ if(n.kind==='upscale')return n.quality==='1080p'?18:10;
+ if(n.kind==='image'){const base=n.imageMode==='多视角'?24:n.imageMode==='分镜图'?28:20;return base+(n.imageQuality==='1k'?-5:n.imageQuality==='4k'?18:0)}
+ let base=n.clone?34:n.videoMode==='分镜成片'?38:30;
+ if(n.speed==='专业')base+=24;
+ if(n.quality==='1080p')base+=12;else if(n.quality==='2k')base+=8;else if(n.quality==='720p')base+=6;
+ base+=Math.max(0,n.duration-5)*(n.speed==='专业'?3:2);
+ if(n.ratio==='21:9')base+=4;
+ if(n.audio==='静音')base-=2;
+ return base
+}
+function connectedEdge(aid,nid){return s.edges.find(e=>e.a===aid&&e.n===nid)}
+function removeReference(nid,aid){
+ const n=getNode(nid);if(!n)return;
+ n.refs=n.refs.filter(x=>x!==aid);
+ s.edges=s.edges.filter(e=>!(e.a===aid&&e.n===nid));
+}
+function counts(n,type){return n.refs.map(getAsset).filter(a=>a&&a.type===type).length}
+function limits(n,type){
+ if(n.kind==='image')return type==='image'?9:0;
+ if(n.kind==='upscale')return type==='video'?1:0;
+ if(n.clone)return type==='video'?1:0;
+ if(n.kind==='edit')return type==='video'?1:9;
+ if(n.videoMode==='服装短视频')return type==='image'?2:0;
+ return type==='image'?9:(n.speed==='快速'?3:9)
+}
+function canAttach(a,n,showMessage){
+ if(!a||!n)return false;
+ const allowed=a.type==='image'?(n.kind==='image'||['video','edit'].includes(n.kind)):(a.type==='video'&&['video','edit','upscale'].includes(n.kind));
+ if(!allowed){if(showMessage)say(a.type==='video'?'视频素材只能连接到视频类节点':'该素材不能连接到此节点');return false}
+ if(n.refs.includes(a.id))return true;
+ if(counts(n,a.type)>=limits(n,a.type)){if(showMessage)say(a.type==='image'?'此模式下参考图片已达上限':'此模式下参考视频已达上限');return false}
+ return true
+}
+function attachAsset(aid,nid,announce){
+ const a=getAsset(aid),n=getNode(nid);if(!canAttach(a,n,true))return false;
+ if(!n.refs.includes(aid)){n.refs.push(aid);s.edges.push({id:id('e'),a:aid,n:nid})}
+ if(announce)say('已加入'+(a.type==='image'?'参考图':'参考视频')+'列表');
+ return true
+}
+function makeRefsHTML(n){
+ if(!n.refs.length)return '';
+ let imageIndex=0,videoIndex=0;
+ return '<div class="refs">'+n.refs.map(aid=>{
+  const a=getAsset(aid);if(!a)return '';
+  const num=a.type==='image'?++imageIndex:++videoIndex;
+  const role=n.kind==='video'&&!n.clone&&n.videoMode==='服装短视频'&&a.type==='image'?(num===1?'首帧':'尾帧'):'';
+  return '<div class="ref" title="'+esc(a.name)+'" style="background-image:url(&quot;'+esc(a.thumb)+'&quot;)"><span>'+num+'</span>'+(a.type==='video'?'<b>▶</b>':'')+(role?'<small>'+role+'</small>':'')+'<button class="ref-remove" data-unref="'+n.id+'" data-asset="'+a.id+'" aria-label="移除参考素材">×</button></div>'
+ }).join('')+'</div>'
+}
+function promptBox(n,limit){
+ const label=plain(n.prompt)?'提示词扩写':'提示词生成';
+ return '<div class="prompt"><div class="editor" contenteditable="true" data-editor="'+n.id+'" data-limit="'+limit+'" data-placeholder="描述服装、人物动作和场景；输入 @ 可引用画布素材">'+(n.prompt||'')+'</div><span class="loader">正在整理提示词…</span></div><div class="prompt-tools"><button data-expand="'+n.id+'">'+label+'</button><button data-prompt-expand="'+n.id+'">放大输入框</button><button data-save-prompt="'+n.id+'">保存提示词</button><button data-prompt-library="'+n.id+'">提示词库</button></div>'
+}
+function videoBody(n){
+ const clone=n.clone,edit=n.kind==='edit';
+ const mode=clone?'<div class="mode-note"><b>视频复刻</b><span>主画面由原视频决定，可补充参考图和提示词。</span></div>':
+  (edit?'<div class="mode-note"><b>视频编辑</b><span>添加要修改的视频，再描述希望调整的内容。</span></div>':
+  '<div class="tabs"><button class="tab '+(n.videoMode==='服装短视频'?'active':'')+'" data-change="videoMode" data-val="服装短视频" data-node="'+n.id+'">服装短视频</button><button class="tab '+(n.videoMode==='分镜成片'?'active':'')+'" data-change="videoMode" data-val="分镜成片" data-node="'+n.id+'">分镜成片</button></div>');
+ const modelName=n.speed==='快速'?'MiniMax H3':'Seedance 2.5';
+ const qualityNote=n.speed==='专业'?'<small class="quality-note">480P 低成本快速出片，满意后可选中视频进行高清放大</small>':'';
+ const speed='<div class="speedrow"><span>生成档位 · '+modelName+'</span><button class="speed '+(n.speed==='快速'?'active':'')+'" data-change="speed" data-val="快速" data-node="'+n.id+'">快速</button><button class="speed '+(n.speed==='专业'?'active':'')+'" data-change="speed" data-val="专业" data-node="'+n.id+'">专业</button></div>';
+ const note=clone?'<div class="refrow"><span class="ref-count">先添加参考视频；视频复刻不需要商品主图。</span><button class="ref-add" data-ref="'+n.id+'">＋ 选择素材</button></div>':'<div class="refrow"><button class="ref-add" data-ref="'+n.id+'">＋ 参考图片 / 视频</button><span class="ref-count">'+(n.refs.length?'已选 '+n.refs.length+' 个素材':'支持拖入素材，也可输入 @ 引用')+'</span></div>';
+ return mode+speed+qualityNote+note+makeRefsHTML(n)+promptBox(n,5000)
+}
+function imageBody(n){
+ const modes=['快捷编辑','多视角','分镜图'];
+ const ratios=['智能','2:3','3:4','4:5','9:16','1:1','3:2','4:3','5:4','16:9','21:9'];
+ return '<div class="tabs">'+modes.map(x=>'<button class="tab '+(n.imageMode===x?'active':'')+'" data-change="imageMode" data-val="'+x+'" data-node="'+n.id+'">'+x+'</button>').join('')+'</div><div class="refrow"><button class="ref-add" data-ref="'+n.id+'">＋ 参考图片</button><span class="ref-count">'+(n.refs.length?'已选 '+n.refs.length+' 张':'可连接图片素材')+'</span></div>'+makeRefsHTML(n)+'<div class="image-options"><div class="option"><strong>分辨率</strong>'+['1k','2k','4k'].map(x=>'<button class="chip '+(n.imageQuality===x?'active':'')+'" data-change="imageQuality" data-val="'+x+'" data-node="'+n.id+'">'+x+'</button>').join('')+'</div><div class="option"><strong>图片比例</strong>'+ratios.map(x=>'<button class="chip '+(n.imageRatio===x?'active':'')+'" data-change="imageRatio" data-val="'+x+'" data-node="'+n.id+'">'+x+'</button>').join('')+'</div></div>'+promptBox(n,2000)
+}
+function upscaleBody(n){
+ const a=n.refs.map(getAsset).find(x=>x&&x.type==='video');
+ return '<div class="upscale-source">'+(a?'<div class="upscale-thumb" style="background-image:url(&quot;'+esc(a.thumb)+'&quot;)"><span>▶</span></div><div><b>'+esc(a.name)+'</b><small>原视频保留，放大后另存为新素材</small></div>':'<div class="upscale-empty">请连接或上传需要放大的视频</div>')+'</div><div class="option upscale-option"><strong>清晰度</strong>'+['720p','1080p'].map(x=>'<button class="chip '+(n.quality===x?'active':'')+'" data-change="quality" data-val="'+x+'" data-node="'+n.id+'">'+x+'</button>').join('')+'</div>'
+}
+function nodeHTML(n){
+ let body='',foot='',symbol='◈';
+ if(n.kind==='image'){body=imageBody(n);symbol='▧';foot='<div class="foot"><span class="ref-count">图片生成 · '+n.imageQuality+' · '+n.imageRatio+'</span><button class="generate" data-generate="'+n.id+'">生成 <em>✦ '+cost(n)+' 积分</em></button></div>'}
+ else if(n.kind==='upscale'){body=upscaleBody(n);symbol='HD';foot='<div class="foot"><span class="ref-count">输出 '+n.quality+'</span><button class="generate" data-generate="'+n.id+'" '+(!n.refs.some(x=>{const a=getAsset(x);return a&&a.type==='video'})?'disabled':'')+'>生成 <em>✦ '+cost(n)+' 积分</em></button></div>'}
+ else{body=videoBody(n);symbol=n.clone?'⧉':n.kind==='edit'?'✣':'◈';foot='<div class="foot video-foot"><button data-config="'+n.id+'">▣ '+n.quality+' · '+n.duration+'s · '+n.ratio+' · '+n.audio+'</button><button class="generate" data-generate="'+n.id+'">生成 <em>✦ '+cost(n)+' 积分</em></button></div>'}
+ if(n.legacy){foot='<div class="foot legacy-foot"><span>历史节点 · 保留原素材、提示词和配置</span></div>';body='<div class="legacy-note">旧版任务可以继续查看、移动和连线，生成入口已收起。</div>'+body}
+ const badge=n.kind==='image'?'图片节点':'视频节点';
+ return '<article class="node '+(s.selected==='n:'+n.id?'selected':'')+'" data-node-card="'+n.id+'" style="left:'+n.x+'px;top:'+n.y+'px"><span class="port in" data-target="'+n.id+'"></span><span class="port out node-out" data-node-output="'+n.id+'"></span><div class="node-head"><span class="symbol">'+symbol+'</span><strong>'+esc(n.title)+'</strong><small>'+badge+'</small><button class="more" data-more="'+n.id+'" title="节点操作">···</button></div><div class="node-body">'+body+'</div>'+foot+'</article>'
+}
+function assetHTML(a){
+ return '<article class="asset '+(s.selected==='a:'+a.id?'selected':'')+(a.origin==='generated'?' result-asset':'')+'" data-asset-card="'+a.id+'" style="left:'+a.x+'px;top:'+a.y+'px">'+(a.origin==='generated'?'<span class="port in asset-in" data-asset-input="'+a.id+'"></span>':'')+'<div class="thumb" style="background-image:url(&quot;'+esc(a.thumb)+'&quot;)"><span class="badge">'+(a.type==='image'?'图片素材':'视频素材')+'</span>'+(a.type==='video'?'<span class="play">▶</span>':'')+'</div><div class="asset-meta"><div class="asset-name"><i>'+(a.type==='video'?'▶':'▧')+'</i>'+esc(a.name)+'</div><div class="asset-desc">'+esc(a.desc||'画布素材')+'</div></div><span class="port out" data-source="'+a.id+'"></span></article>'
+}
+function render(){
+ assetBox.innerHTML=s.assets.map(assetHTML).join('');
+ nodeBox.innerHTML=s.nodes.map(nodeHTML).join('');
+ bindCards();bindNodeControls();draw();toolbar();
+ if(s.config)showConfig(s.config,false);
+ if(s.quickEditAsset)positionQuickEdit();
+}
+function bindCards(){
+ $$('.asset').forEach(el=>{el.addEventListener('click',e=>{if(e.target.closest('.port'))return;select('a:'+el.dataset.assetCard)});drag(el,'asset')});
+ $$('.node').forEach(el=>{el.addEventListener('click',e=>{if(e.target.closest('button,.port,.editor,.chip,.tab,.speed,.prompt-tools'))return;select('n:'+el.dataset.nodeCard)});drag(el,'node')});
+ $$('[data-source]').forEach(p=>p.addEventListener('pointerdown',startWire));
+}
+function drag(el,type){
+ el.addEventListener('pointerdown',e=>{
+  if(e.target.closest('button,.port,.editor,.chip,.tab,.speed,input,.prompt-tools'))return;
+  const isAsset=type==='asset',obj=isAsset?getAsset(el.dataset.assetCard):getNode(el.dataset.nodeCard),sx=e.clientX,sy=e.clientY,ox=obj.x,oy=obj.y;
+  select((isAsset?'a:':'n:')+obj.id,false);
+  el.setPointerCapture(e.pointerId);
+  const move=ev=>{obj.x=Math.max(8,ox+ev.clientX-sx);obj.y=Math.max(50,oy+ev.clientY-sy);el.style.left=obj.x+'px';el.style.top=obj.y+'px';draw();placeToolbar()};
+  const up=()=>{el.removeEventListener('pointermove',move);el.removeEventListener('pointerup',up)};
+  el.addEventListener('pointermove',move);el.addEventListener('pointerup',up);
+ })
+}
+function select(value,redraw){
+ s.selected=value;s.edge=null;
+ if(redraw!==false)render();
+ else{$$('.asset,.node').forEach(x=>x.classList.remove('selected'));const el=document.querySelector(value.startsWith('a:')?'[data-asset-card="'+value.slice(2)+'"]':'[data-node-card="'+value.slice(2)+'"]');if(el)el.classList.add('selected');toolbar()}
+}
+function wireTarget(ev,aid){
+ const found=document.elementFromPoint(ev.clientX,ev.clientY),port=found&&found.closest('[data-target]');
+ $$('.port.in').forEach(p=>p.classList.remove('connectable'));
+ if(port){const a=getAsset(aid),n=getNode(port.dataset.target);if(canAttach(a,n,false))port.classList.add('connectable')}
+ return port
+}
+function stopWire(){if(s.wire){s.wire=null;draw()}$$('.port.in').forEach(p=>p.classList.remove('connectable'))}
+function connect(aid,nid){
+ const a=getAsset(aid),n=getNode(nid);
+ if(!canAttach(a,n,true)){stopWire();return}
+ if(connectedEdge(aid,nid)){stopWire();return}
+ n.refs.push(aid);s.edges.push({id:id('e'),a:aid,n:nid});stopWire();render();select('n:'+nid);say('素材已连接并加入参考列表')
+}
+function startWire(e){
+ e.preventDefault();e.stopPropagation();
+ const aid=e.currentTarget.dataset.source;
+ if(s.wire){stopWire();return}
+ s.wire={aid:aid,x:e.clientX,y:e.clientY};
+ const move=ev=>{if(!s.wire)return;s.wire.x=ev.clientX;s.wire.y=ev.clientY;wireTarget(ev,aid);draw()};
+ const up=ev=>{
+  const target=wireTarget(ev,aid);
+  if(target&&target.classList.contains('connectable'))connect(aid,target.dataset.target);
+  else{stopWire();say('此处不能连接，连线已取消')}
+  document.removeEventListener('pointermove',move);document.removeEventListener('pointerup',up)
+ };
+ document.addEventListener('pointermove',move);document.addEventListener('pointerup',up)
+}
+function draw(){
+ const r=canvas.getBoundingClientRect();let html='';
+ s.outputs.forEach(e=>{
+  const n=document.querySelector('[data-node-card="'+e.n+'"] .node-out'),a=document.querySelector('[data-asset-card="'+e.a+'"] .asset-in');if(!n||!a)return;
+  const nr=n.getBoundingClientRect(),ar=a.getBoundingClientRect(),x1=nr.left+nr.width/2-r.left,y1=nr.top+nr.height/2-r.top,x2=ar.left+ar.width/2-r.left,y2=ar.top+ar.height/2-r.top,c=Math.max(45,Math.abs(x2-x1)*.38),d='M '+x1+' '+y1+' C '+(x1+c)+' '+y1+', '+(x2-c)+' '+y2+', '+x2+' '+y2;
+  html+='<path class="edge result-edge '+(s.edge===e.id?'selected':'')+'" d="'+d+'"></path><path class="edge-hit" data-edge="'+e.id+'" d="'+d+'"></path>'
+ });
+ s.edges.forEach(e=>{
+  const a=document.querySelector('[data-asset-card="'+e.a+'"] .port.out'),n=document.querySelector('[data-node-card="'+e.n+'"] .port.in');if(!a||!n)return;
+  const ar=a.getBoundingClientRect(),nr=n.getBoundingClientRect(),x1=ar.left+ar.width/2-r.left,y1=ar.top+ar.height/2-r.top,x2=nr.left+nr.width/2-r.left,y2=nr.top+nr.height/2-r.top,c=Math.max(45,Math.abs(x2-x1)*.4),d='M '+x1+' '+y1+' C '+(x1+c)+' '+y1+', '+(x2-c)+' '+y2+', '+x2+' '+y2;
+  html+='<path class="edge '+(s.edge===e.id?'selected':'')+'" d="'+d+'"></path><path class="edge-hit" data-edge="'+e.id+'" d="'+d+'"></path>'
+ });
+ if(s.wire){
+  const p=document.querySelector('[data-asset-card="'+s.wire.aid+'"] .port.out');
+  if(p){const pr=p.getBoundingClientRect(),x1=pr.left+pr.width/2-r.left,y1=pr.top+pr.height/2-r.top,x2=s.wire.x-r.left,y2=s.wire.y-r.top,c=Math.max(45,Math.abs(x2-x1)*.4);html+='<path class="edge selected wire-edge" d="M '+x1+' '+y1+' C '+(x1+c)+' '+y1+', '+(x2-c)+' '+y2+', '+x2+' '+y2+'"></path>'}
+ }
+ edgeSvg.innerHTML=html;
+ $$("[data-edge]").forEach(path=>path.addEventListener("click",e=>{e.stopPropagation();s.edge=path.dataset.edge;s.selected=null;toolbar();draw()}));
+}
+function toolbar(){
+ const t=$('#toolbar');t.innerHTML='';t.classList.remove('open');
+ if(!s.selected||!s.selected.startsWith('a:'))return;
+ const a=getAsset(s.selected.slice(2));if(!a)return;
+ const actions=a.type==='image'?[
+  ['quick','✣ 快捷编辑'],['angles','▧ 多视角'],['story','▤ 分镜图'],['short','◈ 服装短视频'],['storyVideo','◈ 分镜成片'],['clone','⧉ 视频复刻'],['save','☆ 收藏至资源库'],['upscale','HD 高清放大'],['download','↓ 下载'],['send','➤ 发送到']
+ ]:[
+  ['clone','⧉ 视频复刻'],['edit','✣ 视频修改'],['upscale','HD 高清放大'],['save','☆ 收藏至资源库'],['download','↓ 下载']
+ ];
+ t.innerHTML=actions.map(x=>'<button data-tool="'+x[0]+'">'+x[1]+'</button>').join('');
+ $$('[data-tool]').forEach(b=>b.addEventListener('click',()=>runTool(a,b.dataset.tool)));
+ t.classList.add('open');placeToolbar()
+}
+function runTool(a,action){
+ const p=nextPosition();let n;
+ if(action==='quick'){s.quickEditAsset=a.id;$('#quickEditPanel').classList.add('open');render();return}
+ if(action==='angles'||action==='story'){
+  n=addNode('image',p.x,p.y,{imageMode:action==='angles'?'多视角':'分镜图',prompt:'围绕当前服装素材生成'+(action==='angles'?'正面、侧面、背面和细节视角。':'连贯的服装分镜画面。')});
+  attachAsset(a.id,n.id,false)
+ }else if(action==='short'||action==='storyVideo'){
+  n=addNode('video',p.x,p.y,{videoMode:action==='short'?'服装短视频':'分镜成片'});
+  attachAsset(a.id,n.id,false)
+ }else if(action==='clone'){
+  n=addNode('video',p.x,p.y,{clone:true});
+  attachAsset(a.id,n.id,false)
+ }else if(action==='edit'){
+  n=addNode('edit',p.x,p.y,{prompt:'描述希望如何调整这段服装视频。'});
+  attachAsset(a.id,n.id,false)
+ }else if(action==='upscale'){
+  if(a.type==='video'){n=addNode('upscale',p.x,p.y);attachAsset(a.id,n.id,false)}
+  else{say('图片高清放大将在素材快捷编辑中操作');return}
+ }else if(action==='save'){say('已收藏到资源库');return}
+ else if(action==='download'){say('原型中已保留下载入口');return}
+ else if(action==='send'){say('已打开发送到入口');return}
+ if(n){render();select('n:'+n.id);say('已创建'+n.title+'节点')}
+}
+function placeToolbar(){
+ const t=$('#toolbar');if(!t.classList.contains('open')||!s.selected)return;
+ const el=document.querySelector('[data-asset-card="'+s.selected.slice(2)+'"]');if(!el)return;
+ const r=el.getBoundingClientRect(),w=workspace.getBoundingClientRect();
+ t.style.left=Math.max(180,Math.min(w.width-180,r.left-w.left+r.width/2))+'px';t.style.top=Math.max(55,r.top-w.top-7)+'px'
+}
+function bindNodeControls(){
+ $$('[data-change]').forEach(b=>b.addEventListener('click',e=>{
+  e.stopPropagation();const n=getNode(b.dataset.node),key=b.dataset.change,value=b.dataset.val;
+  if(!n)return;
+  if(key==='videoMode'){n.videoMode=value;n.prompt='';n.refs.slice().forEach(a=>removeReference(n.id,a));n.duration=5;n.ratio='自适应';n.audio='智能';n.quality=n.speed==='快速'?'768p':'样片模式';say('切换模式后已清空提示词和参考素材')}
+  else if(key==='speed'){n.speed=value;n.quality=value==='快速'?'768p':'样片模式';if(n.duration>(value==='快速'?15:30))n.duration=value==='快速'?15:30}
+  else n[key]=value;
+  render();if(s.config)showConfig(s.config,false)
+ }));
+ $$('[data-ref]').forEach(b=>b.addEventListener('click',()=>{s.uploadTarget=b.dataset.ref;openLibrary()}));
+ $$('[data-config]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();s.config=b.dataset.config;showConfig(s.config,true)}));
+ $$('[data-expand]').forEach(b=>b.addEventListener('click',()=>expandPrompt(b.dataset.expand)));
+ $$('[data-prompt-expand]').forEach(b=>b.addEventListener('click',()=>openPromptModal(b.dataset.promptExpand)));
+ $$('[data-prompt-library]').forEach(b=>b.addEventListener('click',()=>openPromptLibrary(b.dataset.promptLibrary)));
+ $$('[data-save-prompt]').forEach(b=>b.addEventListener('click',()=>savePrompt(b.dataset.savePrompt)));
+ $$('[data-generate]').forEach(b=>b.addEventListener('click',()=>generate(b.dataset.generate)));
+ $$('[data-editor]').forEach(ed=>{
+  ed.addEventListener('input',()=>onPromptInput(ed));
+  ed.addEventListener('keyup',()=>checkMention(ed));
+  ed.addEventListener('click',()=>checkMention(ed));
+  ed.addEventListener('keydown',e=>{if(e.key==='Escape')hideMentions()});
+ });
+ $$('[data-more]').forEach(b=>b.addEventListener('click',e=>{e.stopPropagation();say('节点更多操作')}));
+}
+function openMenu(x,y){
+ const m=$('#menu'),r=workspace.getBoundingClientRect();s.menuAt={x:x,y:y};m.style.left=Math.max(8,Math.min(x,r.width-198))+'px';m.style.top=Math.max(52,Math.min(y,r.height-185))+'px';m.classList.add('open')
+}
 function hideMenu(){$('#menu').classList.remove('open')}
-function openLibrary(){hideMentions();renderLibrary();$('#libraryModal').classList.add('open')}
-function renderLibrary(){let assets=s.assets;if(s.uploadTarget){const n=getNode(s.uploadTarget);if(n)assets=assets.filter(a=>a.type==='image'&&(n.kind==='image'||['video','extend','edit','upscale'].includes(n.kind))||a.type==='video'&&['video','extend','edit','upscale'].includes(n.kind))}$('#libraryGrid').innerHTML=assets.map(a=>'<article class="library-card" data-pick="'+a.id+'"><div class="library-thumb '+a.type+'" style="background-image:url(&quot;'+a.thumb+'&quot;)"></div><p>'+esc(a.name)+'</p></article>').join('')}
-function openMentions(nid,ed){s.mention={nid:nid,ed:ed};const n=getNode(nid),allowed=s.assets.filter(a=>a.type==='image'&&(n.kind==='image'||['video','extend','edit','upscale'].includes(n.kind))||a.type==='video'&&['video','extend','edit','upscale'].includes(n.kind));const m=$('#mentions');m.innerHTML='<div class="mentions-title">引用画布中的素材</div>'+(allowed.length?allowed.map(a=>'<button class="mention-item" data-mention="'+a.id+'"><img src="'+a.thumb+'"><span>'+esc(a.name)+'<small>'+(a.type==='video'?'视频素材':'图片素材')+'</small></span></button>').join(''):'<div class="mentions-title">没有可引用素材</div>')+'<div class="mention-library"><button id="mentionLibraryButton">▣ 从素材库选择 / 上传</button></div>';const wr=workspace.getBoundingClientRect(),r=ed.getBoundingClientRect(),sel=window.getSelection();let caret=r;if(sel&&sel.rangeCount&&ed.contains(sel.getRangeAt(0).commonAncestorContainer)){const cr=sel.getRangeAt(0).getBoundingClientRect();if(cr.width||cr.height)caret=cr}m.style.left=Math.min(caret.left-wr.left,wr.width-255)+'px';m.style.top=Math.min(caret.bottom-wr.top+6,wr.height-285)+'px';m.classList.add('open');$$('[data-mention]').forEach(b=>{b.addEventListener('mousedown',e=>e.preventDefault());b.addEventListener('click',()=>insertMention(b.dataset.mention))});$('#mentionLibraryButton').addEventListener('mousedown',e=>e.preventDefault());$('#mentionLibraryButton').addEventListener('click',()=>{s.uploadTarget=nid;openLibrary()})}
-function insertMention(aid){if(!s.mention)return;const a=getAsset(aid),n=getNode(s.mention.nid),ed=s.mention.ed;if(!a||!ed||!n)return;const sel=window.getSelection();let range=sel.rangeCount?sel.getRangeAt(0):document.createRange();if(!ed.contains(range.commonAncestorContainer)){range.selectNodeContents(ed);range.collapse(false)}if(range.startContainer.nodeType===3&&range.startContainer.textContent.slice(0,range.startOffset).endsWith('@')){range.setStart(range.startContainer,range.startOffset-1);range.deleteContents()}const tag=document.createElement('span');tag.className='tag';tag.contentEditable='false';tag.dataset.asset=aid;tag.innerHTML='<img src="'+a.thumb+'">'+esc(a.name)+'<button type="button" title="移除引用">×</button>';range.insertNode(tag);range.setStartAfter(tag);range.collapse(true);sel.removeAllRanges();sel.addRange(range);if(!n.refs.includes(aid))n.refs.push(aid);if(!s.edges.some(x=>x.a===aid&&x.n===n.id))s.edges.push({id:id('e'),a:aid,n:n.id});n.prompt=ed.innerHTML;hideMentions();render();select('n:'+n.id);say('已引用 '+a.name)}
-function hideMentions(){s.mention=null;$('#mentions').classList.remove('open')}
-function expand(nid){const n=getNode(nid),ed=document.querySelector('[data-editor="'+nid+'"]'),wrap=ed&&ed.parentElement;if(!n||!wrap)return;wrap.classList.add('loading');setTimeout(()=>{n.prompt='都市女性穿着秋冬羊毛大衣，自然行走并回头展示版型；镜头从半身推进至全身，重点呈现面料纹理、肩线和衣摆垂坠，保持人物造型与服装细节一致，呈现克制高级的商业服装短片质感。';render();select('n:'+nid);say('提示词已扩写')},900)}
-function showConfig(nid){const n=getNode(nid),p=$('#config');if(!n)return;p.innerHTML='<h4>视频配置</h4><div class="config-row"><header><span>清晰度</span><b>'+n.quality+'</b></header><div class="config-options">'+['720p','1080p'].map(x=>'<button class="'+(n.quality===x?'active':'')+'" data-cchange="quality" data-val="'+x+'">'+x+'</button>').join('')+'</div></div><div class="config-row"><header><span>时长</span><b id="durationValue">'+n.duration+' 秒</b></header><input type="range" min="5" max="30" step="5" value="'+n.duration+'" id="durationRange"></div><div class="config-row"><header><span>视频比例</span><b>'+n.ratio+'</b></header><div class="config-options">'+['9:16','16:9','1:1'].map(x=>'<button class="'+(n.ratio===x?'active':'')+'" data-cchange="ratio" data-val="'+x+'">'+x+'</button>').join('')+'</div></div>';p.classList.add('open');const b=document.querySelector('[data-config="'+nid+'"]');if(b){const r=b.getBoundingClientRect(),w=workspace.getBoundingClientRect();p.style.left=Math.min(r.left-w.left,w.width-280)+'px';p.style.top=Math.max(58,r.top-w.top-p.offsetHeight-7)+'px'}$$('[data-cchange]').forEach(x=>x.addEventListener('click',()=>{n[x.dataset.cchange]=x.dataset.val;render();s.config=nid;showConfig(nid)}));$('#durationRange').addEventListener('input',e=>{n.duration=Number(e.target.value);$('#durationValue').textContent=n.duration+' 秒';const card=document.querySelector('[data-node-card="'+nid+'"] [data-config]');if(card)card.textContent='▣ '+n.quality+' · '+n.duration+'s · '+n.ratio;const gen=document.querySelector('[data-node-card="'+nid+'"] .generate em');if(gen)gen.textContent='✦ '+cost(n)+' 积分'})}
-function generate(nid){const n=getNode(nid);if(!n)return;const type=n.kind==='image'?'image':'video';const asset=makeAsset(type,n.x+365,n.y+30,{name:(type==='image'?'生成图片 ':'生成视频 ')+String(s.assets.length+1).padStart(3,'0'),desc:'由「'+n.title+'」生成 · '+(type==='image'?n.imageMode:n.quality+' · '+n.duration+' 秒'),thumb:type==='image'?imgD:vidA});render();say('已提交生成任务 · '+cost(n)+' 积分')}
-function closeModal(name){$('#'+name).classList.remove('open');if(name==='libraryModal')s.uploadTarget=null}
-function templateUpdate(type){s.template=type;const d=templates[type];$('#cover').style.backgroundImage='url('+d[3]+')';$('#coverTitle').textContent=d[0];$('#coverSub').textContent=d[1];$('#templateTypeTitle').textContent=type;$('#templateDesc').textContent=d[2]}
-function openTemplate(){$('#templateModal').classList.add('open');templateUpdate(s.template)}
-function templateWorkflow(){closeModal('templateModal');editing();const image=makeNode('image',250,210,{imageMode:'模特试衣',prompt:'替换为所选模板的商品服装，生成干净的商品主图。'});const result=makeAsset('image',625,240,{name:'生成图片 001',desc:'图片生成节点结果 · 模板商品图',thumb:s.templateUploads.garment||imgB});const video=makeNode('video',900,225,{videoMode:'多参考',prompt:'模特穿着模板商品，在城市街景中自然行走，突出服装廓形和细节。'});s.edges.push({id:id('e'),a:result.id,n:video.id});render();select('n:'+image.id);say('模板节点已添加，图片结果已连接到视频生成节点')}
-function templateGenerate(){closeModal('templateModal');editing();const v=makeAsset('video',470,210,{name:'模板视频生成中',desc:s.template+' · 正在生成',thumb:templates[s.template][3]});say('已提交「'+s.template+'」模板生成 · 80 积分')}
-function beginFile(type,target){s.uploadTarget=target||null;(type==='image'?$('#imageInput'):$('#videoInput')).click()}
-function handleFile(file,type){if(!file)return;const url=URL.createObjectURL(file);if(typeof s.uploadTarget==='string'&&s.uploadTarget.indexOf('template:')===0){const key=s.uploadTarget.split(':')[1];s.templateUploads[key]=url;const b=$('#'+(key==='garment'?'garmentUpload':'modelUpload'));b.querySelector('span').innerHTML=esc(file.name)+'<br><small>已选择，可替换模板素材</small>';s.uploadTarget=null;return}editing();const a=makeAsset(type,250+s.assets.length%3*205,125+Math.floor(s.assets.length/3)*170,{name:(type==='image'?'参考图 ':'参考视频 ')+String(s.assets.length+1).padStart(3,'0'),desc:file.name,thumb:url});render();if(s.uploadTarget){const n=getNode(s.uploadTarget);if(n){const allowed=type==='image'&&(n.kind==='image'||['video','extend','edit','upscale'].includes(n.kind))||type==='video'&&['video','extend','edit','upscale'].includes(n.kind);if(allowed){n.refs.push(a.id);s.edges.push({id:id('e'),a:a.id,n:n.id})}else say('该类型素材不能连接到此节点')}}render();closeModal('libraryModal');s.uploadTarget=null}
-function outsideClose(e){if(!e.target.closest('.menu'))hideMenu();if(!e.target.closest('.mentions')&&!e.target.closest('.editor'))hideMentions();if(!e.target.closest('.config')&&!e.target.closest('[data-config]')){s.config=null;$('#config').classList.remove('open')}}
-document.addEventListener('click',outsideClose);
-$('#workspace').addEventListener('contextmenu',e=>{if(e.target.closest('.asset,.node,.project,.bottom,.backdrop'))return;e.preventDefault();editing();const r=workspace.getBoundingClientRect();openMenu(e.clientX-r.left,e.clientY-r.top)});
-$('#workspace').addEventListener('dblclick',e=>{if(e.target.closest('.asset,.node,.project,.bottom,.backdrop'))return;editing();const r=workspace.getBoundingClientRect(),n=makeNode('video',e.clientX-r.left,e.clientY-r.top);render();select('n:'+n.id)});
-$('#menu').addEventListener('click',e=>{const b=e.target.closest('[data-create]');if(!b)return;if(b.dataset.create==='template'){hideMenu();openTemplate()}else createAt(b.dataset.create)});
-$$('[data-action]').forEach(b=>b.addEventListener('click',()=>{const action=b.dataset.action;if(action==='template'){editing();openTemplate();return}editing();const n=makeNode(action,390+s.nodes.length*28,145+s.nodes.length*26);render();select('n:'+n.id)}));
-$('#add').addEventListener('click',e=>{const r=e.currentTarget.getBoundingClientRect(),w=workspace.getBoundingClientRect();openMenu(r.left-w.left,r.top-w.top-175)});
-$('#addImage').addEventListener('click',()=>{s.uploadTarget=null;openLibrary()});$('#addVideo').addEventListener('click',()=>{s.uploadTarget=null;openLibrary()});$('#templateButton').addEventListener('click',openTemplate);
-$('#uploadImg').addEventListener('click',()=>beginFile('image',s.uploadTarget));$('#uploadVid').addEventListener('click',()=>beginFile('video',s.uploadTarget));$('#imageInput').addEventListener('change',e=>{handleFile(e.target.files[0],'image');e.target.value=''});$('#videoInput').addEventListener('change',e=>{handleFile(e.target.files[0],'video');e.target.value=''});
-$('#libraryGrid').addEventListener('click',e=>{const c=e.target.closest('[data-pick]');if(!c)return;const a=getAsset(c.dataset.pick),n=getNode(s.uploadTarget);if(n){const ok=a.type==='image'&&(n.kind==='image'||['video','extend','edit','upscale'].includes(n.kind))||a.type==='video'&&['video','extend','edit','upscale'].includes(n.kind);if(!ok){say('该素材类型不能连接到此节点');return}if(!n.refs.includes(a.id))n.refs.push(a.id);if(!s.edges.some(x=>x.a===a.id&&x.n===n.id))s.edges.push({id:id('e'),a:a.id,n:n.id});closeModal('libraryModal');render();select('n:'+n.id);say('素材已加入节点参考列表')}else{closeModal('libraryModal');select('a:'+a.id)}});
-$$('[data-close]').forEach(b=>b.addEventListener('click',()=>closeModal(b.dataset.close)));$$('[data-type]').forEach(b=>b.addEventListener('click',()=>{$$('[data-type]').forEach(x=>x.classList.remove('active'));b.classList.add('active');templateUpdate(b.dataset.type)}));
-$('#garmentUpload').addEventListener('click',()=>beginFile('image','template:garment'));$('#modelUpload').addEventListener('click',()=>beginFile('image','template:model'));$('#editTemplate').addEventListener('click',templateWorkflow);$('#generateTemplate').addEventListener('click',templateGenerate);
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(s.wire)stopWire();hideMenu();hideMentions();$$('.backdrop').forEach(x=>x.classList.remove('open'));$('#config').classList.remove('open')}if((e.key==='Delete'||e.key==='Backspace')&&s.edge&&!e.target.closest('.editor,[contenteditable=\"true\"]')){s.edges=s.edges.filter(x=>x.id!==s.edge);s.edge=null;render();say('连线已删除')}});
-document.addEventListener('click',e=>{const x=e.target.closest('.tag button');if(x){const tag=x.closest('.tag'),nid=tag.closest('[data-editor]')&&tag.closest('[data-editor]').dataset.editor,aid=tag.dataset.asset,n=getNode(nid);if(n){n.refs=n.refs.filter(i=>i!==aid);s.edges=s.edges.filter(edge=>!(edge.a===aid&&edge.n===n.id))}tag.remove();if(n)n.prompt=tag.closest('.editor').innerHTML;render()}});
-$('#zoomDown').addEventListener('click',()=>{$('#zoomLabel').textContent=Math.max(50,parseInt($('#zoomLabel').textContent)-10)+'%'});$('#zoomUp').addEventListener('click',()=>{$('#zoomLabel').textContent=Math.min(150,parseInt($('#zoomLabel').textContent)+10)+'%'});
-window.addEventListener('resize',()=>{draw();placeToolbar()});
+function openLibrary(){
+ hideMentions();hideMenu();renderLibrary();$('#libraryModal').classList.add('open')
+}
+function renderLibrary(){
+ let assets=s.assets;
+ if(s.uploadTarget){const n=getNode(s.uploadTarget);if(n)assets=assets.filter(a=>canAttach(a,n,false))}
+ $('#libraryGrid').innerHTML=assets.length?assets.map(a=>'<article class="library-card" data-pick="'+a.id+'"><div class="library-thumb '+a.type+'" style="background-image:url(&quot;'+esc(a.thumb)+'&quot;)"></div><p>'+esc(a.name)+'</p><small>'+esc(a.desc)+'</small></article>').join(''):'<div class="library-empty">还没有可用素材。你可以先上传图片或视频。</div>'
+}
+function checkMention(ed){
+ const sel=window.getSelection();if(!sel||!sel.rangeCount||!ed.contains(sel.anchorNode))return;
+ const range=sel.getRangeAt(0).cloneRange(),before=document.createRange();
+ before.selectNodeContents(ed);before.setEnd(range.endContainer,range.endOffset);
+ if(before.toString().endsWith('@'))openMentions(ed.dataset.editor,ed,range)
+}
+function onPromptInput(ed){
+ const n=getNode(ed.dataset.editor);if(!n)return;
+ const limit=Number(ed.dataset.limit||5000);
+ if(plain(ed.innerHTML).length>limit){ed.textContent=plain(ed.innerHTML).slice(0,limit);say('提示词最多 '+limit+' 字')}
+ n.prompt=ed.innerHTML;checkMention(ed)
+}
+function openMentions(nid,ed,range){
+ const n=getNode(nid);if(!n)return;
+ s.mention={nid:nid,ed:ed};s.mentionRange=range.cloneRange();
+ const list=s.assets.filter(a=>canAttach(a,n,false));
+ const m=$('#mentions');
+ m.innerHTML='<div class="mentions-title">引用画布中的素材</div>'+(list.length?list.map(a=>'<button class="mention-item" data-mention="'+a.id+'"><img src="'+esc(a.thumb)+'"><span>'+esc(a.name)+'<small>'+(a.type==='video'?'视频素材':'图片素材')+'</small></span></button>').join(''):'<div class="mentions-title">当前节点还没有参考素材</div>')+'<div class="mention-library"><button id="mentionLibraryButton">▣ 从素材库选择 / 上传</button></div>';
+ const wr=workspace.getBoundingClientRect(),cr=range.getBoundingClientRect(),er=ed.getBoundingClientRect();
+ const left=cr.width||cr.height?cr.left-wr.left:er.left-wr.left;
+ const top=cr.width||cr.height?cr.bottom-wr.top+6:er.bottom-wr.top;
+ m.style.left=Math.max(8,Math.min(left,wr.width-255))+'px';m.style.top=Math.max(52,Math.min(top,wr.height-280))+'px';m.classList.add('open');
+ $$('[data-mention]').forEach(b=>{b.addEventListener('mousedown',e=>e.preventDefault());b.addEventListener('click',()=>insertMention(b.dataset.mention))});
+ $('#mentionLibraryButton').addEventListener('mousedown',e=>e.preventDefault());
+ $('#mentionLibraryButton').addEventListener('click',()=>{s.uploadTarget=nid;openLibrary()})
+}
+function insertMention(aid){
+ if(!s.mention||!s.mentionRange)return;
+ const a=getAsset(aid),n=getNode(s.mention.nid),ed=s.mention.ed;if(!a||!n||!ed)return;
+ const range=s.mentionRange.cloneRange();
+ if(range.startContainer.nodeType===Node.TEXT_NODE){
+  const before=range.startContainer.textContent.slice(0,range.startOffset);
+  if(before.endsWith('@')){range.setStart(range.startContainer,range.startOffset-1);range.deleteContents()}
+ }
+ const tag=document.createElement('span');tag.className='tag';tag.contentEditable='false';tag.dataset.asset=aid;
+ tag.innerHTML='<img src="'+esc(a.thumb)+'">'+esc(a.name)+'<button type="button" title="移除引用">×</button>';
+ range.insertNode(tag);range.setStartAfter(tag);range.collapse(true);
+ const sel=window.getSelection();sel.removeAllRanges();sel.addRange(range);
+ if(!n.refs.includes(aid))attachAsset(aid,n.id,false);
+ n.prompt=ed.innerHTML;hideMentions();render();select('n:'+n.id)
+}
+function hideMentions(){s.mention=null;s.mentionRange=null;$('#mentions').classList.remove('open')}
+function showConfig(nid,position){
+ const n=getNode(nid),p=$('#config');if(!n)return;
+ if(n.kind==='image'){s.config=null;p.classList.remove('open');return}
+ const qualities=n.kind==='upscale'?['720p','1080p']:(n.speed==='快速'?['768p','2k']:['样片模式','720p','1080p']);
+ const qrow='<div class="config-row"><header><span>清晰度</span><b>'+n.quality+'</b></header><div class="config-options">'+qualities.map(x=>'<button class="'+(n.quality===x?'active':'')+'" data-cchange="quality" data-val="'+x+'">'+x+'</button>').join('')+'</div>'+(n.speed==='专业'&&n.kind!=='upscale'?'<small class="config-tip">480P 低成本快速出片，满意后可选中视频进行高清放大</small>':'')+'</div>';
+ const duration=n.kind==='upscale'?'':'<div class="config-row"><header><span>时长</span><b id="durationValue">'+n.duration+' 秒</b></header><input type="range" min="5" max="'+(n.speed==='快速'?15:30)+'" step="1" value="'+n.duration+'" id="durationRange"></div>';
+ const rrow=n.kind==='upscale'?'':'<div class="config-row"><header><span>视频比例</span><b>'+n.ratio+'</b></header><div class="config-options config-ratios">'+ratios.map(x=>'<button class="'+(n.ratio===x?'active':'')+'" data-cchange="ratio" data-val="'+x+'">'+x+'</button>').join('')+'</div></div>';
+ const audio=n.kind==='upscale'?'':'<div class="config-row"><header><span>音频</span><b>'+n.audio+'</b></header><div class="config-options">'+(n.speed==='快速'?['智能']:['智能','静音']).map(x=>'<button class="'+(n.audio===x?'active':'')+'" data-cchange="audio" data-val="'+x+'">'+x+'</button>').join('')+'</div></div>';
+ p.innerHTML='<h4>视频配置</h4>'+qrow+duration+rrow+audio;
+ p.classList.add('open');
+ if(position!==false){
+  const b=document.querySelector('[data-config="'+nid+'"]');
+  if(b){const r=b.getBoundingClientRect(),w=workspace.getBoundingClientRect();p.style.left=Math.min(w.width-285,Math.max(8,r.left-w.left))+'px';p.style.top=Math.max(52,r.top-w.top-p.offsetHeight-8)+'px'}
+ }
+ $$('[data-cchange]').forEach(x=>x.addEventListener('click',()=>{
+  n[x.dataset.cchange]=x.dataset.val;
+  if(x.dataset.cchange==='quality'&&n.kind==='upscale')n.quality=x.dataset.val;
+  render();s.config=nid;showConfig(nid,true)
+ }));
+ const range=$('#durationRange');
+ if(range)range.addEventListener('input',e=>{
+  n.duration=Number(e.target.value);
+  $('#durationValue').textContent=n.duration+' 秒';
+  const card=document.querySelector('[data-node-card="'+nid+'"] [data-config]');
+  if(card)card.textContent='▣ '+n.quality+' · '+n.duration+'s · '+n.ratio+' · '+n.audio;
+  const gen=document.querySelector('[data-node-card="'+nid+'"] .generate em');
+  if(gen)gen.textContent='✦ '+cost(n)+' 积分'
+ })
+}
+function expandPrompt(nid){
+ const n=getNode(nid),ed=document.querySelector('[data-editor="'+nid+'"]'),box=ed&&ed.closest('.prompt');if(!n||!ed||!box)return;
+ box.classList.add('loading');const button=document.querySelector('[data-expand="'+nid+'"]');if(button)button.disabled=true;
+ setTimeout(()=>{
+  const base=plain(n.prompt);
+  const text=(base?base+'，':'')+(n.kind==='image'?'服装款式保持与参考图一致，清晰呈现面料纹理、版型轮廓、颜色和关键工艺，画面干净，适合服装商品展示。':'人物穿着参考服装自然活动，镜头由整体逐步推进至面料和版型细节，服装颜色、廓形和人物形象保持一致，画面适合服装商业展示。');
+  n.prompt=esc(text);render();if(s.config)showConfig(s.config,false);say(base?'提示词已扩写':'已生成一段服装提示词')
+ },900)
+}
+function openPromptModal(nid){
+ const n=getNode(nid),modal=$('#promptModal'),area=$('#largePromptInput');if(!n)return;
+ s.promptTarget=nid;area.value=plain(n.prompt);area.maxLength=n.kind==='image'?2000:5000;modal.classList.add('open');setTimeout(()=>area.focus(),0)
+}
+function openPromptLibrary(nid){
+ const items=['重点展示服装版型和面料质感，人物自然行走并转身看向镜头。','以服装细节开场，逐步展示整体穿搭，突出上身效果和搭配方式。','保持模特和服装一致，使用简洁背景与柔和光线，呈现真实穿着效果。'];
+ $('#promptLibraryList').innerHTML=items.map((x,i)=>'<button class="prompt-sample" data-prompt-index="'+i+'">'+esc(x)+'<small>服装视频 · 常用提示词</small></button>').join('');
+ $('#promptLibraryModal').classList.add('open');s.promptTarget=nid
+}
+function savePrompt(nid){
+ const n=getNode(nid);if(!n||!plain(n.prompt)){say('先输入提示词再保存');return}
+ const saved=JSON.parse(localStorage.getItem('v55SavedPrompts')||'[]');saved.unshift({text:plain(n.prompt),date:new Date().toLocaleDateString()});localStorage.setItem('v55SavedPrompts',JSON.stringify(saved.slice(0,20)));say('提示词已保存到我的提示词')
+}
+function outputPosition(n){
+ const width=workspace.clientWidth,height=workspace.clientHeight,x=n.x+405,y=n.y+35;
+ if(x+200<width-8)return {x:x,y:y};
+ const lowerY=n.y+390;
+ if(lowerY+150<height)return {x:Math.min(width-205,n.x+82),y:lowerY};
+ return {x:Math.max(235,width-205),y:Math.max(52,height-165)}
+}
+function generate(nid){
+ const n=getNode(nid);if(!n)return;
+ if(n.kind==='upscale'&&!n.refs.some(x=>{const a=getAsset(x);return a&&a.type==='video'})){say('请先连接一个视频素材');return}
+ const type=n.kind==='image'?'image':'video';
+ const out=outputPosition(n);const a=addAsset(type,out.x,out.y,{name:(type==='image'?'生成图片 ':'生成视频 ')+String(s.assets.length+1).padStart(3,'0'),desc:'由「'+n.title+'」生成 · '+(type==='image'?n.imageMode:n.quality+' · '+n.duration+' 秒'),thumb:type==='image'?imgD:vidA,origin:'generated'});
+ s.outputs.push({id:id('o'),n:n.id,a:a.id});render();say('已提交生成任务 · '+cost(n)+' 积分')
+}
+function openTemplate(){
+ hideMenu();hideMentions();s.config=null;$('#config').classList.remove('open');$('#templateModal').classList.add('open');templateUpdate(s.template)
+}
+function templateUpdate(type){
+ s.template=type;const d=templates[type];if(!d)return;
+ $('#cover').style.backgroundImage='url('+d[3]+')';
+ $('#coverTitle').textContent=d[0];$('#coverSub').textContent=d[1];
+ $('#templateTypeTitle').textContent=type;$('#templateDesc').textContent=d[2];$('#generateTemplate em').textContent='✦ '+templateCost()+' 积分';
+ const cards=$('#templateInfoCards');
+ const garment=s.templateUploads.garment,model=s.templateUploads.model;
+ cards.innerHTML='<div class="template-info-card" data-info="商品主体" data-detail="商品主体：'+esc(garment?garment.name:'秋冬羊毛大衣')+'。模板会优先使用这张服装图；未上传时使用模板示意商品。"><b>'+(garment?'<img src="'+esc(garment.url)+'" alt="">':'▧')+' 商品主体</b><span>'+(garment?esc(garment.name):'服装图 · 可替换')+'</span></div><div class="template-info-card" data-info="模特形象" data-detail="模特形象：'+esc(model?model.name:'通勤女性模特')+'。上传模特图后会作为人物参考；未上传时由模板默认形象生成。"><b>'+(model?'<img src="'+esc(model.url)+'" alt="">':'♙')+' 模特形象</b><span>'+(model?esc(model.name):'通勤女性 · 默认形象')+'</span></div><div class="template-info-card" data-info="分镜数量" data-detail="分镜数量：5 个镜头，预计成片约 15 秒。镜头包括服装整体、版型、面料细节和动态展示。"><b>▤ 分镜数量</b><span>5 个镜头 · 约 15 秒</span></div><div class="template-info-card" data-info="生成配置" data-detail="生成配置：9:16 竖屏、768p 清晰度、15 秒。应用模板后可在视频生成节点继续调整。"><b>⚙ 生成配置</b><span>15 秒 · 768p · 9:16</span></div>';
+ $$('.template-info-card').forEach(card=>{card.addEventListener('mouseenter',()=>showTemplateTooltip(card));card.addEventListener('mouseleave',hideTemplateTooltip)});
+ const garmentButton=$('#garmentUpload'),modelButton=$('#modelUpload');
+ updateTemplateUploadButton(garmentButton,garment,'上传服装图','非必填 · 替换模板商品');
+ updateTemplateUploadButton(modelButton,model,'上传模特图','非必填 · 替换模板人物');
+}
+function updateTemplateUploadButton(button,item,title,sub){
+ button.innerHTML='<b>'+(item?'<img src="'+esc(item.url)+'" alt="">':'＋')+'</b><span>'+(item?esc(item.name):title)+'<br><small>'+(item?'已选择，可重新选择':sub)+'</small></span>'
+}
+function showTemplateTooltip(card){
+ const t=$('#templateTooltip'),r=card.getBoundingClientRect();t.textContent=card.dataset.detail||'';t.classList.add('open');
+ t.style.left=Math.max(8,Math.min(window.innerWidth-t.offsetWidth-8,r.left+r.width/2-t.offsetWidth/2))+'px';
+ t.style.top=Math.max(8,r.top-t.offsetHeight-8)+'px'
+}
+function hideTemplateTooltip(){$('#templateTooltip').classList.remove('open')}
+function templateWorkflow(){
+ $('#templateModal').classList.remove('open');hideTemplateTooltip();editing();
+ const p={x:225,y:170};
+ const image=addNode('image',p.x,p.y,{imageMode:'快捷编辑',prompt:'使用上传的服装图和模特图生成模板商品画面，保持服装款式、颜色与版型一致。'});
+ if(s.templateUploads.garment){const a=addAsset('image',30,190,{name:'服装参考图',desc:s.templateUploads.garment.name,thumb:s.templateUploads.garment.url});attachAsset(a.id,image.id,false)}
+ if(s.templateUploads.model){const a=addAsset('image',30,360,{name:'模特参考图',desc:s.templateUploads.model.name,thumb:s.templateUploads.model.url});attachAsset(a.id,image.id,false)}
+ const result=addAsset('image',p.x+410,p.y+42,{name:'生成图片 001',desc:'素材生成节点结果 · 模板商品图',thumb:s.templateUploads.garment?s.templateUploads.garment.url:imgB,origin:'generated'});
+ s.outputs.push({id:id('o'),n:image.id,a:result.id});
+ const video=addNode('video',p.x+650,p.y+5,{videoMode:'服装短视频',duration:15,ratio:'9:16',prompt:'模特穿着模板商品，在日常场景中自然行走并展示版型和面料细节。'});
+ attachAsset(result.id,video.id,false);
+ render();select('n:'+image.id);say('模板工作流已加入画布，可逐个修改图片和视频节点')
+}
+function templateGenerate(){
+ $('#templateModal').classList.remove('open');editing();
+ const p=nextPosition();addAsset('video',p.x,p.y,{name:s.template+' · 生成中',desc:'模板成片 · 预计 15 秒 · 9:16',thumb:templates[s.template][3],origin:'generated'});
+ render();say('已提交「'+s.template+'」模板生成 · '+templateCost()+' 积分')
+}
+function closeModal(name){
+ $('#'+name).classList.remove('open');
+ if(name==='libraryModal')s.uploadTarget=null;
+ if(name==='promptLibraryModal')s.promptTarget=null;
+}
+function beginFile(type,target){
+ s.uploadTarget=target||s.uploadTarget||null;
+ const input=type==='image'?$('#imageInput'):$('#videoInput');input.value='';input.click()
+}
+function handleFiles(files,type){
+ const list=Array.from(files||[]);if(!list.length)return;
+ if(list.length>9){say('一次最多上传 9 个素材');return}
+ const target=s.uploadTarget;
+ if(typeof target==='string'&&target.indexOf('template:')===0){
+  const key=target.split(':')[1],file=list[0],url=URL.createObjectURL(file);
+  s.templateUploads[key]={url:url,name:file.name};s.uploadTarget=null;templateUpdate(s.template);say((key==='garment'?'服装图':'模特图')+'已添加');return
+ }
+ if(target){const n=getNode(target);if(!n)return}
+ editing();
+ list.forEach(file=>{
+  const url=URL.createObjectURL(file),a=addAsset(type,null,null,{name:(type==='image'?'参考图 ':'参考视频 ')+String(s.assets.length+1).padStart(3,'0'),desc:file.name,thumb:url});
+  if(target)attachAsset(a.id,target,false)
+ });
+ s.uploadTarget=null;$('#libraryModal').classList.remove('open');render();say('已添加 '+list.length+' 个'+(type==='image'?'图片':'视频')+'素材')
+}
+function handleLibraryPick(e){
+ const card=e.target.closest('[data-pick]');if(!card)return;
+ const a=getAsset(card.dataset.pick);if(!a)return;
+ if(s.uploadTarget){const nid=s.uploadTarget;if(attachAsset(a.id,nid,true)){closeModal('libraryModal');render();select('n:'+nid)}return}
+ closeModal('libraryModal');select('a:'+a.id)
+}
+function outsideClose(e){
+ if(!e.target.closest('.menu')&&!e.target.closest('#add'))hideMenu();
+ if(!e.target.closest('.mentions')&&!e.target.closest('.editor'))hideMentions();
+ if(!e.target.closest('.config')&&!e.target.closest('[data-config]')){s.config=null;$('#config').classList.remove('open')}
+ if(!e.target.closest('#quickEditPanel')&&!e.target.closest('#toolbar')){s.quickEditAsset=null;$('#quickEditPanel').classList.remove('open')}
+}
+function positionQuickEdit(){
+ const a=getAsset(s.quickEditAsset),panel=$('#quickEditPanel');if(!a)return;
+ const el=document.querySelector('[data-asset-card="'+a.id+'"]');if(!el)return;
+ const r=el.getBoundingClientRect();panel.style.left=Math.max(8,Math.min(window.innerWidth-330,r.left))+'px';panel.style.top=Math.min(window.innerHeight-90,r.bottom+8)+'px'
+}
+function createAt(kind){
+ hideMenu();editing();
+ if(kind==='upload'){s.uploadTarget=null;openLibrary();return}
+ if(kind==='paste'){say('请在画布中使用粘贴快捷键导入已有画布');return}
+ const p=s.menuAt,n=addNode(kind==='image'?'image':'video',p.x,p.y);render();select('n:'+n.id)
+}
+function rightClickMenu(e){
+ if(e.target.closest('.asset,.node,.project,.bottom,.backdrop,.toolbar,.menu,.mentions,.config'))return;
+ e.preventDefault();editing();const p=workspacePoint(e);openMenu(p.x,p.y)
+}
+function toolActionFromQuick(action){
+ editing();
+ if(action==='template'){openTemplate();return}
+ const kind=action==='image'?'image':'video',p=nextPosition(),extra=action==='clone'?{clone:true}:action==='edit'?{kind:'edit'}:{};
+ const n=addNode(kind,p.x,p.y,extra);render();select('n:'+n.id)
+}
+function bind(){
+ document.addEventListener('click',outsideClose);
+ $$('[data-close]').forEach(b=>b.addEventListener('click',()=>closeModal(b.dataset.close)));
+ $$('.backdrop').forEach(backdrop=>backdrop.addEventListener('click',e=>{if(e.target===backdrop)closeModal(backdrop.id)}));
+ canvas.addEventListener('click',e=>{
+  if(e.target.closest('.asset,.node,.edge-hit,.toolbar,.menu,.mentions,.config'))return;
+  if(s.wire){stopWire();say('连线已取消');return}
+  s.selected=null;s.edge=null;hideMenu();hideMentions();s.config=null;$('#config').classList.remove('open');render()
+ });
+ workspace.addEventListener('contextmenu',rightClickMenu);
+ workspace.addEventListener('dblclick',e=>{
+  if(e.target.closest('.asset,.node,.project,.bottom,.backdrop,.toolbar,.menu,.mentions,.config'))return;
+  editing();const p=workspacePoint(e),n=addNode('video',p.x,p.y);render();select('n:'+n.id)
+ });
+ $('#menu').addEventListener('click',e=>{const b=e.target.closest('[data-create]');if(b)createAt(b.dataset.create)});
+ $$('[data-action]').forEach(b=>b.addEventListener('click',()=>toolActionFromQuick(b.dataset.action)));
+ $('#add').addEventListener('click',e=>{const p=workspacePoint({clientX:e.clientX,clientY:e.clientY});openMenu(p.x,p.y-170)});
+ $('#addImage').addEventListener('click',()=>{s.uploadTarget=null;openLibrary()});
+ $('#addVideo').addEventListener('click',()=>{s.uploadTarget=null;openLibrary()});
+ $('#templateButton').addEventListener('click',openTemplate);
+ $('#historyButton').addEventListener('click',()=>$('#historyModal').classList.add('open'));
+ $('#historyList').addEventListener('click',e=>{
+  const b=e.target.closest('[data-legacy]');if(!b)return;
+  const spec={
+   short:{kind:'video',title:'服装短视频',videoMode:'服装短视频',prompt:'历史任务提示词：模特穿着大衣自然行走，展示服装廓形。'},
+   'storyboard-image':{kind:'image',title:'分镜图生成',imageMode:'分镜图',prompt:'历史任务提示词：生成展示服装细节的连续分镜。'},
+   'storyboard-video':{kind:'video',title:'分镜成片',videoMode:'分镜成片',prompt:'历史任务提示词：按分镜展示服装整体、面料和穿着效果。'}
+  }[b.dataset.legacy];
+  if(!spec)return;
+  const p=nextPosition(),n=addNode(spec.kind,p.x,p.y,Object.assign({legacy:true},spec));
+  closeModal('historyModal');render();select('n:'+n.id);say('历史节点已加入画布，旧生成入口已收起')
+ });
+ $('#uploadImg').addEventListener('click',()=>beginFile('image',s.uploadTarget));
+ $('#uploadVid').addEventListener('click',()=>beginFile('video',s.uploadTarget));
+ $('#imageInput').addEventListener('change',e=>{handleFiles(e.target.files,'image');e.target.value=''});
+ $('#videoInput').addEventListener('change',e=>{handleFiles(e.target.files,'video');e.target.value=''});
+ $('#libraryGrid').addEventListener('click',handleLibraryPick);
+ $$('[data-type]').forEach(b=>b.addEventListener('click',()=>{$$('[data-type]').forEach(x=>x.classList.remove('active'));b.classList.add('active');templateUpdate(b.dataset.type)}));
+ $('#garmentUpload').addEventListener('click',()=>beginFile('image','template:garment'));
+ $('#modelUpload').addEventListener('click',()=>beginFile('image','template:model'));
+ $('#editTemplate').addEventListener('click',templateWorkflow);
+ $('#generateTemplate').addEventListener('click',templateGenerate);
+ $('#coverPlay').addEventListener('click',()=>{
+  s.previewPlaying=!s.previewPlaying;$('#cover').classList.toggle('playing',s.previewPlaying);
+  $('#coverPlay').textContent=s.previewPlaying?'Ⅱ':'▶';say(s.previewPlaying?'模板预览播放中':'模板预览已暂停')
+ });
+ $('#quickEditPanel').addEventListener('click',e=>{const b=e.target.closest('[data-quick-edit]');if(!b)return;say('已选择'+b.dataset.quickEdit+'，应用后保留为图片素材');s.quickEditAsset=null;$('#quickEditPanel').classList.remove('open')});
+ $('#largePromptSave').addEventListener('click',()=>{
+  const n=getNode(s.promptTarget),area=$('#largePromptInput');if(n){n.prompt=esc(area.value);render();say('提示词已更新')}$('#promptModal').classList.remove('open')
+ });
+ $('#promptLibraryList').addEventListener('click',e=>{
+  const b=e.target.closest('[data-prompt-index]');if(!b)return;
+  const n=getNode(s.promptTarget),items=['重点展示服装版型和面料质感，人物自然行走并转身看向镜头。','以服装细节开场，逐步展示整体穿搭，突出上身效果和搭配方式。','保持模特和服装一致，使用简洁背景与柔和光线，呈现真实穿着效果。'];
+  if(n){n.prompt=esc(items[Number(b.dataset.promptIndex)]);render()}$('#promptLibraryModal').classList.remove('open')
+ });
+ document.addEventListener('click',e=>{
+  const unref=e.target.closest('[data-unref]');if(unref){e.stopPropagation();removeReference(unref.dataset.unref,unref.dataset.asset);render();return}
+  const removeTag=e.target.closest('.tag button');if(removeTag){
+   const tag=removeTag.closest('.tag'),ed=tag.closest('[data-editor]'),nid=ed&&ed.dataset.editor,aid=tag.dataset.asset;
+   if(nid)removeReference(nid,aid);tag.remove();const n=getNode(nid);if(n)n.prompt=ed.innerHTML;render();return
+  }
+ });
+ document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){if(s.wire)stopWire();hideMenu();hideMentions();hideTemplateTooltip();$$('.backdrop').forEach(x=>x.classList.remove('open'));$('#config').classList.remove('open');s.config=null}
+  const inEditor=e.target&&typeof e.target.closest==='function'&&e.target.closest('.editor,[contenteditable="true"],textarea,input');
+  if(e.key==='Delete'&&s.edge&&!inEditor){
+   const edge=s.edges.find(x=>x.id===s.edge);
+   if(edge){const n=getNode(edge.n);if(n)n.refs=n.refs.filter(aid=>aid!==edge.a);s.edges=s.edges.filter(x=>x.id!==s.edge)}
+   s.outputs=s.outputs.filter(x=>x.id!==s.edge);s.edge=null;render();say('连线已删除')
+  }
+ });
+ $('#zoomDown').addEventListener('click',()=>$('#zoomLabel').textContent=Math.max(50,parseInt($('#zoomLabel').textContent)-10)+'%');
+ $('#zoomUp').addEventListener('click',()=>$('#zoomLabel').textContent=Math.min(150,parseInt($('#zoomLabel').textContent)+10)+'%');
+ window.addEventListener('resize',()=>{draw();placeToolbar();if(s.quickEditAsset)positionQuickEdit()})
+}
+$('#imageInput').multiple=true;$('#videoInput').multiple=true;
+bind();templateUpdate(s.template);
 })();
+
 </script>
 </main>
 </body>
