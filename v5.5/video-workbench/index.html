@@ -188,8 +188,7 @@ function videoBody(n){
 }
 function imageBody(n){
  const modes=['快捷编辑','多视角','分镜图'];
- const ratios=['智能','2:3','3:4','4:5','9:16','1:1','3:2','4:3','5:4','16:9','21:9'];
- return '<div class="tabs">'+modes.map(x=>'<button class="tab '+(n.imageMode===x?'active':'')+'" data-change="imageMode" data-val="'+x+'" data-node="'+n.id+'">'+x+'</button>').join('')+'</div><div class="refrow"><button class="ref-add" data-ref="'+n.id+'">＋ 参考图片</button><span class="ref-count">'+(n.refs.length?'已选 '+n.refs.length+' 张':'可连接图片素材')+'</span></div>'+makeRefsHTML(n)+'<div class="image-options"><div class="option"><strong>分辨率</strong>'+['1k','2k','4k'].map(x=>'<button class="chip '+(n.imageQuality===x?'active':'')+'" data-change="imageQuality" data-val="'+x+'" data-node="'+n.id+'">'+x+'</button>').join('')+'</div><div class="option"><strong>图片比例</strong>'+ratios.map(x=>'<button class="chip '+(n.imageRatio===x?'active':'')+'" data-change="imageRatio" data-val="'+x+'" data-node="'+n.id+'">'+x+'</button>').join('')+'</div></div>'+promptBox(n,2000)
+ return '<div class="tabs">'+modes.map(x=>'<button class="tab '+(n.imageMode===x?'active':'')+'" data-change="imageMode" data-val="'+x+'" data-node="'+n.id+'">'+x+'</button>').join('')+'</div><div class="refrow"><button class="ref-add" data-ref="'+n.id+'">＋ 参考图片</button><span class="ref-count">'+(n.refs.length?'已选 '+n.refs.length+' 张':'可连接图片素材')+'</span></div>'+makeRefsHTML(n)+promptBox(n,2000)
 }
 function upscaleBody(n){
  const a=n.refs.map(getAsset).find(x=>x&&x.type==='video');
@@ -197,7 +196,7 @@ function upscaleBody(n){
 }
 function nodeHTML(n){
  let body='',foot='',symbol='◈';
- if(n.kind==='image'){body=imageBody(n);symbol='▧';foot='<div class="foot"><span class="ref-count">图片生成 · '+n.imageQuality+' · '+n.imageRatio+'</span><button class="generate" data-generate="'+n.id+'">生成 <em>✦ '+cost(n)+' 积分</em></button></div>'}
+ if(n.kind==='image'){body=imageBody(n);symbol='▧';foot='<div class="foot"><button data-config="'+n.id+'">▣ '+n.imageQuality+' · '+n.imageRatio+'</button><button class="generate" data-generate="'+n.id+'">生成 <em>✦ '+cost(n)+' 积分</em></button></div>'}
  else if(n.kind==='upscale'){body=upscaleBody(n);symbol='HD';foot='<div class="foot"><span class="ref-count">输出 '+n.quality+'</span><button class="generate" data-generate="'+n.id+'" '+(!n.refs.some(x=>{const a=getAsset(x);return a&&a.type==='video'})?'disabled':'')+'>生成 <em>✦ '+cost(n)+' 积分</em></button></div>'}
  else{body=videoBody(n);symbol=n.clone?'⧉':n.kind==='edit'?'✣':'◈';foot='<div class="foot video-foot"><button data-config="'+n.id+'">▣ '+n.quality+' · '+n.duration+'s · '+n.ratio+' · '+n.audio+'</button><button class="generate" data-generate="'+n.id+'">生成 <em>✦ '+cost(n)+' 积分</em></button></div>'}
  if(n.legacy){foot='<div class="foot legacy-foot"><span>历史节点 · 保留原素材、提示词和配置</span></div>';body='<div class="legacy-note">旧版任务可以继续查看、移动和连线，生成入口已收起。</div>'+body}
@@ -403,19 +402,29 @@ function insertMention(aid){
 function hideMentions(){s.mention=null;s.mentionRange=null;$('#mentions').classList.remove('open')}
 function showConfig(nid,position){
  const n=getNode(nid),p=$('#config');if(!n)return;
- if(n.kind==='image'){s.config=null;p.classList.remove('open');return}
- const qualities=n.kind==='upscale'?['720p','1080p']:(n.speed==='快速'?['768p','2k']:['样片模式','720p','1080p']);
- const qrow='<div class="config-row"><header><span>清晰度</span><b>'+n.quality+'</b></header><div class="config-options">'+qualities.map(x=>'<button class="'+(n.quality===x?'active':'')+'" data-cchange="quality" data-val="'+x+'">'+x+'</button>').join('')+'</div>'+(n.speed==='专业'&&n.kind!=='upscale'?'<small class="config-tip">480P 低成本快速出片，满意后可选中视频进行高清放大</small>':'')+'</div>';
- const duration=n.kind==='upscale'?'':'<div class="config-row"><header><span>时长</span><b id="durationValue">'+n.duration+' 秒</b></header><input type="range" min="5" max="'+(n.speed==='快速'?15:30)+'" step="1" value="'+n.duration+'" id="durationRange"></div>';
- const rrow=n.kind==='upscale'?'':'<div class="config-row"><header><span>视频比例</span><b>'+n.ratio+'</b></header><div class="config-options config-ratios">'+ratios.map(x=>'<button class="'+(n.ratio===x?'active':'')+'" data-cchange="ratio" data-val="'+x+'">'+x+'</button>').join('')+'</div></div>';
- const audio=n.kind==='upscale'?'':'<div class="config-row"><header><span>音频</span><b>'+n.audio+'</b></header><div class="config-options">'+(n.speed==='快速'?['智能']:['智能','静音']).map(x=>'<button class="'+(n.audio===x?'active':'')+'" data-cchange="audio" data-val="'+x+'">'+x+'</button>').join('')+'</div></div>';
- p.innerHTML='<h4>视频配置</h4>'+qrow+duration+rrow+audio;
+ const isImage=n.kind==='image';
+ const imageRatios=['智能','2:3','3:4','4:5','9:16','1:1','3:2','4:3','5:4','16:9','21:9'];
+ let title,qrow,rrow,duration='',audio='';
+ if(isImage){
+  title='图片配置';
+  qrow='<div class="config-row"><header><span>分辨率</span><b>'+n.imageQuality+'</b></header><div class="config-options">'+['1k','2k','4k'].map(x=>'<button class="'+(n.imageQuality===x?'active':'')+'" data-cchange="imageQuality" data-val="'+x+'">'+x+'</button>').join('')+'</div></div>';
+  rrow='<div class="config-row"><header><span>图片比例</span><b>'+n.imageRatio+'</b></header><div class="config-options config-ratios">'+imageRatios.map(x=>'<button class="'+(n.imageRatio===x?'active':'')+'" data-cchange="imageRatio" data-val="'+x+'">'+x+'</button>').join('')+'</div></div>';
+ }else{
+  title='视频配置';
+  const qualities=n.kind==='upscale'?['720p','1080p']:(n.speed==='快速'?['768p','2k']:['样片模式','720p','1080p']);
+  qrow='<div class="config-row"><header><span>清晰度</span><b>'+n.quality+'</b></header><div class="config-options">'+qualities.map(x=>'<button class="'+(n.quality===x?'active':'')+'" data-cchange="quality" data-val="'+x+'">'+x+'</button>').join('')+'</div>'+(n.speed==='专业'&&n.kind!=='upscale'?'<small class="config-tip">480P 低成本快速出片，满意后可选中视频进行高清放大</small>':'')+'</div>';
+  duration=n.kind==='upscale'?'':'<div class="config-row"><header><span>时长</span><b id="durationValue">'+n.duration+' 秒</b></header><input type="range" min="5" max="'+(n.speed==='快速'?15:30)+'" step="1" value="'+n.duration+'" id="durationRange"></div>';
+  rrow=n.kind==='upscale'?'':'<div class="config-row"><header><span>视频比例</span><b>'+n.ratio+'</b></header><div class="config-options config-ratios">'+ratios.map(x=>'<button class="'+(n.ratio===x?'active':'')+'" data-cchange="ratio" data-val="'+x+'">'+x+'</button>').join('')+'</div></div>';
+  audio=n.kind==='upscale'?'':'<div class="config-row"><header><span>音频</span><b>'+n.audio+'</b></header><div class="config-options">'+(n.speed==='快速'?['智能']:['智能','静音']).map(x=>'<button class="'+(n.audio===x?'active':'')+'" data-cchange="audio" data-val="'+x+'">'+x+'</button>').join('')+'</div></div>';
+ }
+ p.innerHTML='<h4>'+title+'</h4>'+qrow+duration+rrow+audio;
  p.classList.add('open');
  if(position!==false){
   const b=document.querySelector('[data-config="'+nid+'"]');
   if(b){const r=b.getBoundingClientRect(),w=workspace.getBoundingClientRect();p.style.left=Math.min(w.width-285,Math.max(8,r.left-w.left))+'px';p.style.top=Math.max(52,r.top-w.top-p.offsetHeight-8)+'px'}
  }
- $$('[data-cchange]').forEach(x=>x.addEventListener('click',()=>{
+ $$('[data-cchange]').forEach(x=>x.addEventListener('click',e=>{
+  e.stopPropagation();
   n[x.dataset.cchange]=x.dataset.val;
   if(x.dataset.cchange==='quality'&&n.kind==='upscale')n.quality=x.dataset.val;
   render();s.config=nid;showConfig(nid,true)
