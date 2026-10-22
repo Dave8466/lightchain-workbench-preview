@@ -32,7 +32,7 @@
 <div class="menu" id="menu"><button data-create="image"><i>▧</i>新增 · 素材生成</button><button data-create="video"><i>◈</i>新增 · 视频生成</button><button data-create="upload"><i>＋</i>上传图片 / 视频（最多 9 个）</button><button data-create="paste"><i>⌘</i>粘贴画布</button></div>
 <div class="mentions" id="mentions"></div><div class="config" id="config"></div>
 <div class="bottom"><button class="add" id="add">＋</button><button id="addImage">▧ 图片素材</button><button id="addVideo">▶ 视频素材</button><span class="sep"></span><button>➤ 选择</button><button id="historyButton">◷ 历史节点</button><span class="sep"></span><button class="templates" id="templateButton">✦ 视频模板</button></div>
-<div class="hud zoom"><button id="zoomDown">−</button><span id="zoomLabel">100%</span><button id="zoomUp">＋</button></div><div class="hud help">从素材端口拖到节点端口连线 · 点击空白处取消 · <kbd>Delete</kbd> 删除选中连线</div>
+<div class="hud zoom"><button id="zoomDown">−</button><span id="zoomLabel">100%</span><button id="zoomUp">＋</button></div><div class="hud help">从素材端口拖到节点端口连线 · 点击空白处取消 · <kbd>Delete</kbd> 删除选中节点、素材或连线</div>
 <div class="backdrop" id="libraryModal"><section class="modal"><div class="modal-head"><div><h2>素材库</h2><p>选择画布素材作为参考，或上传新的图片 / 视频</p></div><button class="close" data-close="libraryModal">×</button></div><div class="library-body"><div class="upload-actions"><button id="uploadImg">＋ 上传图片</button><button id="uploadVid">＋ 上传视频</button></div><div class="library-grid" id="libraryGrid"></div><div class="modal-note">选择后会加入当前节点参考列表，也可以在提示词里继续用 @ 引用。</div></div></section></div>
 <div class="backdrop" id="templateModal"><section class="modal template-modal"><div class="modal-head"><div><h2>热门视频模板</h2><p>选择服装视频案例，再决定立即生成或带入画布继续编辑</p></div><button class="close" data-close="templateModal">×</button></div><div class="template-grid"><aside class="template-side"><h3>视频类型</h3><button class="type active" data-type="电商视频">电商视频</button><button class="type" data-type="博主种草">博主种草</button><button class="type" data-type="高级秀场">高级秀场</button><button class="type" data-type="品牌故事">品牌故事</button><button class="type" data-type="新品预热">新品预热</button><button class="type" data-type="面料工艺">面料工艺</button><button class="type" data-type="直播预热视频">直播预热视频</button><button class="type" data-type="招商订货">招商订货</button></aside><div class="template-content"><div class="template-preview"><div class="cover" id="cover"><button class="cover-play" id="coverPlay" type="button" aria-label="播放预览">▶</button><div class="cover-caption"><strong id="coverTitle">秋冬大衣 · 商品展示</strong><span id="coverSub">正面看款式 · 侧面看廓形 · 动态看垂坠</span></div></div><div class="template-copy"><h3 id="templateTypeTitle">电商视频</h3><p id="templateDesc">让消费者快速看清衣服的款式、版型、穿着效果和购买理由。</p><div class="template-info-cards" id="templateInfoCards"><div><b>商品主体</b><span>服装图 · 可替换</span></div><div><b>模特形象</b><span>模特图 · 可替换</span></div><div><b>分镜数量</b><span>5 个镜头</span></div><div><b>生成配置</b><span>9:16 · 768p · 5 秒</span></div></div><div class="points"><span><i></i>默认 5 个镜头，适合 9:16 竖屏</span><span><i></i>悬停信息卡查看模板配置</span><span><i></i>带入画布后可继续调整节点</span></div></div></div><div class="template-uploads"><button class="template-upload" id="garmentUpload"><b>▧</b><span>上传服装图<br><small>非必填 · 替换模板商品</small></span></button><button class="template-upload" id="modelUpload"><b>♙</b><span>上传模特图<br><small>非必填 · 替换模板人物</small></span></button></div></div></div><div class="template-foot"><button data-close="templateModal">取消</button><button class="edit-template" id="editTemplate">编辑模板</button><button class="go" id="generateTemplate">立即生成 <em>✦ 80 积分</em></button></div></section></div>
 <div class="backdrop" id="historyModal"><section class="modal prompt-modal"><div class="modal-head"><div><h2>历史节点</h2><p>旧画布中的素材、提示词和配置继续保留，生成入口收起。</p></div><button class="close" data-close="historyModal">×</button></div><div class="prompt-library-body history-list" id="historyList"><button class="prompt-sample" data-legacy="short">服装短视频<small>历史视频节点 · 保留原参考图和设置</small></button><button class="prompt-sample" data-legacy="storyboard-image">分镜图生成<small>历史图片节点 · 保留原提示词和图片结果</small></button><button class="prompt-sample" data-legacy="storyboard-video">分镜成片<small>历史视频节点 · 保留原参考素材和设置</small></button></div></section></div><div class="backdrop" id="promptModal"><section class="modal prompt-modal"><div class="modal-head"><div><h2>编辑提示词</h2><p>补充服装、动作和场景细节</p></div><button class="close" data-close="promptModal">×</button></div><div class="prompt-modal-body"><textarea id="largePromptInput" maxlength="5000"></textarea></div><div class="template-foot"><button data-close="promptModal">取消</button><button class="go" id="largePromptSave">保存提示词</button></div></section></div><div class="backdrop" id="promptLibraryModal"><section class="modal prompt-modal"><div class="modal-head"><div><h2>提示词库</h2><p>选择一条服装视频常用描述放入当前节点</p></div><button class="close" data-close="promptLibraryModal">×</button></div><div class="prompt-library-body" id="promptLibraryList"></div></section></div><div class="template-tooltip" id="templateTooltip"></div><div class="quick-edit-panel" id="quickEditPanel"><div class="quick-edit-title">快捷编辑</div><div><button data-quick-edit="裁切">裁切</button><button data-quick-edit="旋转">旋转</button><button data-quick-edit="调色">调色</button><button data-quick-edit="背景处理">背景处理</button></div></div><input class="file-input" type="file" id="imageInput" accept="image/*" multiple><input class="file-input" type="file" id="videoInput" accept="video/*" multiple><div class="toast" id="toast"></div>
@@ -103,6 +103,40 @@ function removeReference(nid,aid){
  const n=getNode(nid);if(!n)return;
  n.refs=n.refs.filter(x=>x!==aid);
  s.edges=s.edges.filter(e=>!(e.a===aid&&e.n===nid));
+}
+function removeAssetMention(html,aid){
+ const holder=document.createElement('div');holder.innerHTML=html||'';
+ holder.querySelectorAll('.tag[data-asset]').forEach(tag=>{if(tag.dataset.asset===aid)tag.remove()});
+ return holder.innerHTML
+}
+function deleteSelection(){
+ if(s.edge){
+  const edgeId=s.edge,edge=s.edges.find(x=>x.id===edgeId);
+  if(edge){const n=getNode(edge.n);if(n)n.refs=n.refs.filter(aid=>aid!==edge.a);s.edges=s.edges.filter(x=>x.id!==edgeId)}
+  s.outputs=s.outputs.filter(x=>x.id!==edgeId);s.edge=null;s.selected=null;render();say('连线已删除');return true
+ }
+ if(!s.selected)return false;
+ const [type,targetId]=s.selected.split(':');
+ if(type==='n'){
+  const n=getNode(targetId);if(!n)return false;
+  s.nodes=s.nodes.filter(x=>x.id!==targetId);
+  s.edges=s.edges.filter(x=>x.n!==targetId);
+  s.outputs=s.outputs.filter(x=>x.n!==targetId);
+  if(s.config===targetId){s.config=null;$('#config').classList.remove('open')}
+  s.selected=null;render();say(n.title+'节点已删除');return true
+ }
+ if(type==='a'){
+  const a=getAsset(targetId);if(!a)return false;
+  s.assets=s.assets.filter(x=>x.id!==targetId);
+  s.nodes.forEach(n=>{n.refs=n.refs.filter(aid=>aid!==targetId);n.prompt=removeAssetMention(n.prompt,targetId)});
+  s.edges=s.edges.filter(x=>x.a!==targetId);
+  s.outputs=s.outputs.filter(x=>x.a!==targetId);
+  if(s.wire&&s.wire.aid===targetId)stopWire();
+  if(s.quickEditAsset===targetId){s.quickEditAsset=null;$('#quickEditPanel').classList.remove('open')}
+  if(a.thumb&&a.thumb.startsWith('blob:'))URL.revokeObjectURL(a.thumb);
+  s.selected=null;s.edge=null;render();say(a.name+'已删除');return true
+ }
+ return false
 }
 function counts(n,type){return n.refs.map(getAsset).filter(a=>a&&a.type===type).length}
 function limits(n,type){
@@ -597,11 +631,7 @@ function bind(){
  document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){if(s.wire)stopWire();hideMenu();hideMentions();hideTemplateTooltip();$$('.backdrop').forEach(x=>x.classList.remove('open'));$('#config').classList.remove('open');s.config=null}
   const inEditor=e.target&&typeof e.target.closest==='function'&&e.target.closest('.editor,[contenteditable="true"],textarea,input');
-  if(e.key==='Delete'&&s.edge&&!inEditor){
-   const edge=s.edges.find(x=>x.id===s.edge);
-   if(edge){const n=getNode(edge.n);if(n)n.refs=n.refs.filter(aid=>aid!==edge.a);s.edges=s.edges.filter(x=>x.id!==s.edge)}
-   s.outputs=s.outputs.filter(x=>x.id!==s.edge);s.edge=null;render();say('连线已删除')
-  }
+  if((e.key==='Delete'||e.key==='Backspace')&&!inEditor&&!$('.backdrop.open')&&deleteSelection())e.preventDefault()
  });
  $('#zoomDown').addEventListener('click',()=>$('#zoomLabel').textContent=Math.max(50,parseInt($('#zoomLabel').textContent)-10)+'%');
  $('#zoomUp').addEventListener('click',()=>$('#zoomLabel').textContent=Math.min(150,parseInt($('#zoomLabel').textContent)+10)+'%');
