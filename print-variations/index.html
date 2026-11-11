@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>印花裂变 · LIGHTCHAIN 工作台</title><link rel="stylesheet" href="static/css/style.css"><script src="static/js/main.js" defer></script></head>
+<body>
+<header class="global"><div class="brand"><span class="brand-mark">◉</span> LIGHTCHAIN</div><span class="global-lang">◎ 简体中文⌄</span><span class="moon">☾</span><span class="demo-indicator"><i></i> 交互原型 · 示例解析与结果</span><div class="global-right"><span>♧ 帮助中心</span><span>♧ 联系我们</span><span class="credit">购买积分 ✦ 15122970</span><span class="avatar">Z</span></div></header>
+<main id="workspace" aria-label="设计画布">
+ <div class="project"><div><span class="project-symbol">❖</span> 设计生产工作台</div><div class="project-name">‹ <span>植物花卉 · 印花探索</span></div></div>
+ <div class="canvas-caption">PRINT DESIGN STUDIO <span>01 / BOTANICAL STUDY</span></div>
+ <div id="world"><div class="image-object selected" id="original" tabindex="0" role="button" aria-label="原图，可拖动移动"><div class="object-label"><span>原图</span><span>植物花卉.svg</span></div><img src="static/images/original.svg" alt="米白底蓝灰色植物花卉印花" draggable="false"><div class="selection"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div id="outputs"></div></div>
+ <div id="context" class="context-bar" role="toolbar" aria-label="图片功能工具栏"><span class="context-item">✧ 快捷编辑</span><span class="context-item">♧ 款式⌄</span><div class="print-control"><button id="print-menu" class="print-trigger" aria-expanded="false">❀ 印花 <span>⌄</span></button><div id="dropdown" class="dropdown" hidden><button id="launch"><span>✣</span><span>印花裂变</span><b class="new">NEW</b></button><div class="menu-static">▧ <span>印花设计</span></div><div class="menu-static">◉ <span>风格迁移</span></div><div class="menu-static">▦ <span>四方连续</span></div></div></div><span class="context-item">▧ 面料⌄</span><span class="context-item">♧ 线稿⌄</span><span class="context-item">···</span><span class="bar-sep"></span><span class="context-item">▣ 工艺单</span><span class="context-item">▢ 文字编辑</span><span class="context-item tail">↗</span><span class="context-item tail">⇩</span></div>
+ <aside class="side-tools"><span>▱</span><span>❖</span><span>◷</span></aside>
+ <section id="panel" class="panel" aria-label="印花裂变操作栏" hidden>
+  <div class="panel-header"><div class="panel-title"><span class="feature-icon">✣</span><strong>印花裂变</strong><span class="panel-sub">PRINT VARIATIONS</span></div><button id="close-panel" class="icon-btn" aria-label="收起操作栏">⌄</button></div>
+  <div id="parsing" class="parsing"><div class="parse-art"><img src="static/images/original.svg" alt="正在解析的原图"><span class="scan"></span></div><div><div class="parse-title"><span class="spinner"></span>正在解析图案设计点</div><p>识别元素、绘画语言、组织关系与配色特征</p><div class="parse-chips"><i></i><i></i><i></i></div></div></div>
+  <div id="configuration" hidden>
+   <div class="design-points"><div class="section-label"><span>保留设计点 <small>多选</small></span><span class="selection-count" id="selection-count">已选 3 项</span></div><p class="helper">选择希望延续的特征，其余部分由 AI 重新演绎</p><div id="tags" class="tags"></div></div>
+   <div class="settings"><div class="setting"><span class="setting-label">裂变模式</span><div class="segmented" id="mode" role="group" aria-label="裂变模式"><button class="active" aria-pressed="true" data-value="extension">✧ 设计延伸</button><button aria-pressed="false" data-value="inspiration">✦ 灵感发散</button></div><span id="mode-hint" class="mode-hint">延续设计关系，开发同系列新图案</span></div><div class="setting"><span class="setting-label">变化程度</span><div class="segmented compact" id="strength" role="group" aria-label="变化程度"><button data-value="weak" aria-pressed="false">弱</button><button data-value="medium" class="active" aria-pressed="true">中</button><button data-value="strong" aria-pressed="false">强</button></div><span id="strength-hint" class="mode-hint">保留设计联系，形成新的视觉表达</span></div></div>
+   <div class="panel-footer"><div class="count-control"><span>生成张数</span><div id="count" class="number-tabs" role="group" aria-label="生成张数"><button class="active" aria-pressed="true" data-value="1">1</button><button aria-pressed="false" data-value="2">2</button><button aria-pressed="false" data-value="3">3</button><button aria-pressed="false" data-value="4">4</button></div></div><div class="generate-wrap"><span class="demo-cost">演示 · 不扣费</span><button id="generate" class="generate">生成 <span>↑</span></button></div></div>
+  </div>
+ </section>
+ <button id="reopen" class="reopen" hidden>✣ 印花裂变 <span>展开操作栏 ↑</span></button>
+ <div id="status" class="status" role="status" hidden></div>
+ <div class="bottom-tools"><span class="tool-selected">➤</span><span>♧</span><span>↶</span><span>↷</span><i></i><span>□</span><span>⊞</span><span>Ｔ</span><span>▧</span></div>
+ <div class="zoom-tools"><span>▦</span><span>◴</span><span class="zoom">⌕ <b id="zoom-label">100%</b>⌄</span><span>◧</span><span>▣</span></div>
+ <div class="canvas-note">拖动图片可调整位置 <span>·</span> 其他工具仅作界面示意</div>
+</main>
+</body></html>
